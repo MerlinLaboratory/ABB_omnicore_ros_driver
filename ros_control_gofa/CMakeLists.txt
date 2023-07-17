@@ -8,13 +8,22 @@ project(ros_control_gofa)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  urdf
+  rosparam_shortcuts
   control_msgs
-  ros_control
-  ros_controllers
+  control_toolbox
+  controller_manager
+  hardware_interface
+  joint_limits_interface
   roscpp
   rospy
   std_msgs
+  abb_libegm
+  abb_librws
 )
+
+find_package(Poco 1.9.2 REQUIRED COMPONENTS Net Util Foundation XML) # TAG_POCO added io
+link_directories("/usr/local/lib")
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -109,7 +118,7 @@ catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES ros_control_gofa
 #  CATKIN_DEPENDS control_msgs ros_control ros_controllers roscpp rospy std_msgs
-#  DEPENDS system_lib
+   DEPENDS Poco
 )
 
 ###########
@@ -119,8 +128,9 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-# include
+  include
   ${catkin_INCLUDE_DIRS}
+  ${Poco_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
@@ -195,15 +205,7 @@ include_directories(
 #   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 # )
 
-#############
-## Testing ##
-#############
-
-## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_ros_control_gofa.cpp)
-# if(TARGET ${PROJECT_NAME}-test)
-#   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
-# endif()
-
-## Add folders to be run by python nosetests
-# catkin_add_nosetests(test)
+add_executable(gofa_control_node src/gofa_hw_main.cpp src/gofa_hw_interface.cpp src/gofa_hw_control_loop.cpp)
+set_target_properties(gofa_control_node PROPERTIES OUTPUT_NAME gofa_control_node PREFIX "")
+add_dependencies(gofa_control_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(gofa_control_node ${catkin_LIBRARIES} PocoNetSSL)

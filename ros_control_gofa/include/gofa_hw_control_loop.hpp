@@ -1,63 +1,61 @@
 #include <time.h>
 #include <controller_manager/controller_manager.h>
-#include <hardware_interface/robot_hw.h>
+#include <gofa_hw_interface.hpp>
 
 namespace ros_control_gofa
 {
-// Used to convert seconds elapsed to nanoseconds
-static const double BILLION = 1000000000.0;
+  // Used to convert seconds elapsed to nanoseconds
+  static const double BILLION = 1000000000.0;
 
-/**
- * \brief The control loop - repeatidly calls read() and write() to the hardware interface at a
- * specified frequency
- *        We use MONOTONIC time to ensure robustness in the event of system time updates/change.
- *        See
- * http://stackoverflow.com/questions/3523442/difference-between-clock-realtime-and-clock-monotonic
- */
-class GofaHWControlLoop
-{
-public:
   /**
-   * \brief Constructor
-   * \param NodeHandle
-   * \param hardware_interface - the robot-specific hardware interface to be use with your robot
+   * \brief The control loop - repeatidly calls read() and write() to the hardware interface at a
+   * specified frequency
+   *        We use MONOTONIC time to ensure robustness in the event of system time updates/change.
+   *        See
+   * http://stackoverflow.com/questions/3523442/difference-between-clock-realtime-and-clock-monotonic
    */
-  GofaHWControlLoop(ros::NodeHandle& nh, std::shared_ptr<hardware_interface::RobotHW> hardware_interface);
+  class GofaHWControlLoop
+  {
+    public:
+      /**
+       * \brief Constructor
+       * \param NodeHandle
+       * \param hardware_interface - the robot-specific hardware interface to be use with your robot
+       */
+      GofaHWControlLoop(ros::NodeHandle &nh, std::shared_ptr<ros_control_gofa::GofaHWInterface> gofa_hardware_interface);
 
-  // Run the control loop (blocking)
-  void run();
+      // Run the control loop (blocking)
+      void run();
 
-protected:
-  // Update funcion called with loop_hz_ rate
-  void update();
+    private:
+      // Update funcion called with loop_hz_ rate
+      void update();
 
-  // Startup and shutdown of the internal node inside a roscpp program
-  ros::NodeHandle nh_;
+      // Startup and shutdown of the internal node inside a roscpp program
+      ros::NodeHandle nh_;
 
-  // Name of this class
-  std::string name_ = "gofa_hw_control_loop";
+      // Name of this class
+      std::string name_ = "gofa_hw_control_loop";
 
-  // Settings
-  ros::Duration desired_update_period_;
-  double cycle_time_error_threshold_;
+      // Settings
+      ros::Duration desired_update_period_;
+      double cycle_time_error_threshold_;
 
-  // Timing
-  ros::Duration elapsed_time_;
-  double loop_hz_;
-  struct timespec last_time_;
-  struct timespec current_time_;
+      // Timing
+      double loop_hz_;
+      struct timespec last_time_;
 
-  /** \brief ROS Controller Manager and Runner
-   *
-   * This class advertises a ROS interface for loading, unloading, starting, and
-   * stopping ros_control-based controllers. It also serializes execution of all
-   * running controllers in \ref update.
-   */
-  std::shared_ptr<controller_manager::ControllerManager> controller_manager_;
+      /** \brief ROS Controller Manager and Runner
+       *
+       * This class advertises a ROS interface for loading, unloading, starting, and
+       * stopping ros_control-based controllers. It also serializes execution of all
+       * running controllers in \ref update.
+       */
+      std::shared_ptr<controller_manager::ControllerManager> controller_manager;
 
-  /** \brief Abstract Hardware Interface for your robot */
-  std::shared_ptr<hardware_interface::RobotHW> hardware_interface_;
+      /** \brief Abstract Hardware Interface for your robot */
+      std::shared_ptr<ros_control_gofa::GofaHWInterface> hardware_interface;
 
-};  // end class
+  }; // end class
 
-}  // namespace ros_control_boilerplate
+} // namespace ros_control_boilerplate

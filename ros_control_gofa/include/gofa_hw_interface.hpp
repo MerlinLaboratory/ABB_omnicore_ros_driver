@@ -16,8 +16,14 @@
 #include <joint_limits_interface/joint_limits_urdf.h>
 #include <limits>
 
-// ROS parameter loading
-#include <rosparam_shortcuts/rosparam_shortcuts.h>
+// ABB libraries
+#include <abb_librws/rws_state_machine_interface.h>
+#include <abb_librws/rws_interface.h>
+#include <abb_libegm/egm_controller_interface.h>
+
+// Boost
+#include <boost/scoped_ptr.hpp>
+#include <boost/thread/condition.hpp>
 
 namespace ros_control_gofa
 {
@@ -86,40 +92,33 @@ namespace ros_control_gofa
     /** \brief Helper for debugging a joint's command */
     std::string printCommandHelper();
 
-  protected:
-    /** \brief Get the URDF XML from the parameter server */
-    virtual void loadURDF(const ros::NodeHandle &nh, std::string param_name);
+    /** \brief This functions set through RWS the EGM params specified in the configuration file .yaml */
+    bool SetEGMParameters();
+    bool EGMStartSignal();
 
-    // Short name of this class
+  private :
     std::string name;
-
-    // Startup and shutdown of the internal node inside a roscpp program
     ros::NodeHandle nh;
 
+    // --------------------------------------------------------------- //
+    // ------------------ Variables for ros_control ------------------ //
+    // --------------------------------------------------------------- //
+
     // Hardware interfaces
-    hardware_interface::JointStateInterface    joint_state_interface;
+    hardware_interface::JointStateInterface joint_state_interface;
     hardware_interface::PositionJointInterface position_joint_interface;
     hardware_interface::VelocityJointInterface velocity_joint_interface;
-    hardware_interface::EffortJointInterface   effort_joint_interface;
+    hardware_interface::EffortJointInterface effort_joint_interface;
 
     // Joint limits interfaces - Saturation
     joint_limits_interface::PositionJointSaturationInterface pos_jnt_sat_interface;
     joint_limits_interface::VelocityJointSaturationInterface vel_jnt_sat_interface;
     joint_limits_interface::EffortJointSaturationInterface eff_jnt_sat_interface;
 
-    // Joint limits interfaces - Soft limits
-    // joint_limits_interface::PositionJointSoftLimitsInterface pos_jnt_soft_limits_;
-    // joint_limits_interface::VelocityJointSoftLimitsInterface vel_jnt_soft_limits_;
-    // joint_limits_interface::EffortJointSoftLimitsInterface eff_jnt_soft_limits_;
-
     // Robot configuration
     std::vector<std::string> joint_names;
     std::size_t num_joints;
     urdf::Model *urdf_model;
-
-    // Parameters
-    // bool use_rosparam_joint_limits;
-    // bool use_soft_limits_if_available;
 
     // States
     std::vector<double> joint_position;
@@ -136,6 +135,31 @@ namespace ros_control_gofa
     std::vector<double> joint_position_upper_limits;
     std::vector<double> joint_velocity_limits;
     std::vector<double> joint_effort_limits;
+
+    /** \brief Get the URDF XML from the parameter server */
+    virtual void loadURDF(const ros::NodeHandle &nh, std::string param_name);
+
+    // --------------------------------------------------------------- //
+    // -------------- Variables for connecting to Robot -------------- //
+    // --------------------------------------------------------------- //
+
+    // Generic data
+    std::string ip_robot;
+    int port_robot_rws;
+    int port_robot_egm;
+    std::string task_robot;
+
+    // Boost components for managing asynchronous UDP socket(s).
+	  boost::thread_group thread_group_;
+	  boost::asio::io_service io_service_;
+
+    // EGM parameters
+    int pos_corr_gain;
+    int max_speed_deviation;
+
+    // Interfaces
+    abb::rws::RWSStateMachineInterface* p_rws_interface;
+	  abb::egm::EGMControllerInterface*   p_egm_interface;
 
   }; // class
 

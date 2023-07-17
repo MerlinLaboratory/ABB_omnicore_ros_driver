@@ -2,16 +2,25 @@
 
 namespace ros_control_gofa
 {
-   GofaHWInterface::GofaHWInterface(const ros::NodeHandle &nh): name("Gofa_hw_interface"), nh(nh) 
+   GofaHWInterface::GofaHWInterface(const ros::NodeHandle &nh): nh(nh) 
    {
       // Load the URDF model needs to be loaded
       loadURDF(nh, "robot_description");
 
       // Load rosparams
-      ros::NodeHandle rpnh(nh, "hardware_interface"); 
-      std::size_t error = 0;
-      error += !rosparam_shortcuts::get(this->name, rpnh, "joints", this->joint_names);
-      rosparam_shortcuts::shutdownIfError(this->name, error);
+
+      // Loading parameters from configuration.yaml
+      nh.getParam("ip_robot"           , this->ip_robot           );
+      nh.getParam("robot_port_rws"     , this->port_robot_rws     );
+      nh.getParam("robot_port_egm"     , this->port_robot_egm     );
+      nh.getParam("name_robot"         , this->name               );
+      nh.getParam("task_robot"         , this->task_robot         );
+      nh.getParam("pos_corr_gain"      , this->pos_corr_gain      );
+      nh.getParam("max_speed_deviation", this->max_speed_deviation);
+      nh.getParam("joints"             , this->joint_names        );
+	   ROS_INFO("Connecting to ip: %s and port for RWS: %s", this->ip_robot.c_str(), std::to_string(this->port_robot_rws).c_str());
+	   ROS_INFO("Port for EGM: %s", std::to_string(this->port_robot_egm).c_str());
+
    }
 
    // ! TODO: check if the Gofa supports all these interfaces
@@ -70,16 +79,65 @@ namespace ros_control_gofa
       // ! TODO: Initialise connection with Gofa EGM interface
       // ! 
 
-      ROS_INFO_STREAM_NAMED(this->name, "GofaHWInterface Ready.");
+      // --------------------------------------------------------------- //
+      // ----------  Ensablishing connection with RWS and EGM ---------- //
+      // --------------------------------------------------------------- //
+	   const Poco::Net::Context::Ptr ptrContext(new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, "", "", "", Poco::Net::Context::VERIFY_NONE));
+	   this->p_rws_interface = new abb::rws::RWSStateMachineInterface(this->ip_robot, this->port_robot_rws, ptrContext);
+
+      this->p_rws_interface->stopRAPIDExecution();
+      // usleep(250000);
+      this->p_rws_interface->requestMasterShip();
+      // usleep(250000);
+      this->p_rws_interface->resetRAPIDProgramPointer();
+      // usleep(250000);
+      this->p_rws_interface->releaseMasterShip();
+      // usleep(250000);
+      this->p_rws_interface->startRAPIDExecution();
+      usleep(250000);
+
+      if( SetEGMParameters() == false )
+         ROS_WARN("Could not set EGM parameters");
+      
+      // Setting the EGM signal to START to communicate RobotStudio to start the EGM communication
+      this->EGMStartSignal();
+      this->p_egm_interface = new abb::egm::EGMControllerInterface(io_service_, this->port_robot_egm);
+		this->thread_group_.create_thread(boost::bind(&boost::asio::io_service::run, &io_service_));
+
+		if (!this->p_egm_interface->isInitialized())
+			ROS_ERROR("EGM interface failed to initialize (e.g. due to port already bound)");
+      
+      // Loop to detect if EGM is connected and initialised
+      bool wait_for_egm_connection = true;
+      while(ros::ok() && wait_for_egm_connection)
+      {
+         if (this->p_egm_interface->isConnected())
+			{
+				if (this->p_egm_interface->getStatus().rapid_execution_state() == abb::egm::wrapper::Status_RAPIDExecutionState_RAPID_UNDEFINED)
+					ROS_WARN("RAPID execution state is UNDEFINED (might happen first time after controller start/restart). Try to restart the RAPID program.");
+				else
+					wait_for_egm_connection = this->p_egm_interface->getStatus().rapid_execution_state() != abb::egm::wrapper::Status_RAPIDExecutionState_RAPID_RUNNING;
+			}
+			else
+				ROS_INFO("EGM is NOT CONNECTED");
+      }
+
+      ROS_INFO_STREAM_NAMED(this->name, "Gofa HW Interface Ready!");
    }
 
    void GofaHWInterface::read(ros::Duration &elapsed_time)
    {
+      // TODO
+		ROS_INFO("Reading Joints");
+
       return;
    }
 
    void GofaHWInterface::write(ros::Duration &elapsed_time)
    {
+      // TODO
+		ROS_INFO("Writing Joints");
+
       return;
    }
 
@@ -165,6 +223,36 @@ namespace ros_control_gofa
       // Reset joint limits state, in case of mode switch or e-stop
       this->pos_jnt_sat_interface.reset();
       // this->pos_jnt_soft_limits.reset();
+   }
+
+   // ----------------------------------------------------------------- //
+   // --------------- Functions for connecting to Robot --------------- //
+   // ----------------------------------------------------------------- //
+
+   bool GofaHWInterface::SetEGMParameters()
+   {
+	   abb::rws::RWSStateMachineInterface::EGMSettings egm_settings;
+      if (this->p_rws_interface->services().egm().getSettings(this->task_robot, &egm_settings)) // safer way to apply settings
+      {
+         p_rws_interface->requestMasterShip();
+
+         egm_settings.activate.max_speed_deviation.value = this->max_speed_deviation; // TODO: Don't know what it means
+         egm_settings.allow_egm_motions.value            = true;                      // Brief Flag indicating if EGM motions are allowed to start
+         egm_settings.run.pos_corr_gain.value            = this->pos_corr_gain;       // 0=velocity 1=position
+         egm_settings.run.cond_time.value                = 599.0;                     // TODO: Don't know what it means
+
+         p_rws_interface->services().egm().setSettings(task_robot, egm_settings);
+         p_rws_interface->releaseMasterShip();
+      }
+      else
+         return false;
+      
+      return true;
+   }
+
+   bool GofaHWInterface::EGMStartSignal()
+   {
+      return this->p_rws_interface->setIOSignal("EGM_START_JOINT", "1");
    }
 
    // ----------------------------------------------------------------- // 
