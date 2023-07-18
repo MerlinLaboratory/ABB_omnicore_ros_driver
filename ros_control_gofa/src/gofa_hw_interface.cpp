@@ -10,13 +10,13 @@ namespace ros_control_gofa
       // Load rosparams
 
       // Loading parameters from configuration.yaml
-      nh.getParam("ip_robot"                       , this->ip_robot           );
-      nh.getParam("robot_port_rws"                 , this->port_robot_rws     );
-      nh.getParam("robot_port_egm"                 , this->port_robot_egm     );
-      nh.getParam("name_robot"                     , this->name               );
-      nh.getParam("task_robot"                     , this->task_robot         );
-      nh.getParam("pos_corr_gain"                  , this->pos_corr_gain      );
-      nh.getParam("max_speed_deviation"            , this->max_speed_deviation);
+      nh.getParam("/Gofa/ip_robot"                       , this->ip_robot           );
+      nh.getParam("/Gofa/robot_port_rws"                 , this->port_robot_rws     );
+      nh.getParam("/Gofa/robot_port_egm"                 , this->port_robot_egm     );
+      nh.getParam("/Gofa/name_robot"                     , this->name               );
+      nh.getParam("/Gofa/task_robot"                     , this->task_robot         );
+      nh.getParam("/Gofa/pos_corr_gain"                  , this->pos_corr_gain      );
+      nh.getParam("/Gofa/max_speed_deviation"            , this->max_speed_deviation);
       nh.getParam("/gofa_hardware_interface/joints", this->joint_names        );
 	   ROS_INFO("For RWS, connecting to ip: %s and port: %s", this->ip_robot.c_str(), std::to_string(this->port_robot_rws).c_str());
 	   ROS_INFO("For EGM, port: %s", std::to_string(this->port_robot_egm).c_str());
@@ -73,10 +73,6 @@ namespace ros_control_gofa
       registerInterface(&position_joint_interface); // From RobotHW base class
       registerInterface(&velocity_joint_interface); // From RobotHW base class
       // registerInterface(&effort_joint_interface);   // From RobotHW base class -> Not supported by Gofa :(
-      
-      // ! 
-      // ! TODO: Initialise connection with Gofa EGM interface
-      // ! 
 
       // --------------------------------------------------------------- //
       // ----------  Ensablishing connection with RWS and EGM ---------- //
@@ -126,29 +122,41 @@ namespace ros_control_gofa
       }
 
       ROS_INFO_STREAM_NAMED(this->name, "Gofa HW Interface Ready!");
+
+      // TODO: It would be better to change this code but I have no idea how to do it
+      // It is necessary to set the initial command to send to the robot the actual joint values read from 
+      // right at this moment. We could try to don't send anything to the robot but I don't know if EGm will complain about it
+      // Read the message received from the EGM client
+      this->data_from_egm.Clear();
+      this->p_egm_interface->read(&this->data_from_egm);
+
+
+      for(int index = 0; index < this->num_joints; index++)
+      {
+         this->joint_position_command[index] = this->data_from_egm.feedback().robot().joints().position().values(index); // [Deg]
+         this->joint_velocity_command[index] = 0.0;                                                                      // [Deg/s]
+      } 
+
+      // Setting the space for data to egm
+      this->data_to_egm.mutable_robot()->mutable_joints()->mutable_position()->CopyFrom(this->data_from_egm.feedback().robot().joints().position());
    }
 
    void GofaHWInterface::read(ros::Duration &elapsed_time)
    {
-      // TODO
-
-      if (this->p_egm_interface->waitForMessage(500))
-	   {
-         // Read the message received from the EGM client.
-         abb::egm::wrapper::Input input = abb::egm::wrapper::Input();
-         input.Clear();
-         this->p_egm_interface->read(&input);
-
-         for(int index = 0; index < this->num_joints; index++)
-         {
-            this->joint_position[index] = input.feedback().robot().joints().position().values(index) * 3.14159265358979323846 / 180.0; // [rad]
-            this->joint_velocity[index] = input.feedback().robot().joints().velocity().values(index) * 3.14159265358979323846 / 180.0; // [rad/s]
-         }
-      }
-      else
+      if (this->p_egm_interface->waitForMessage(500)  == false)
       {
          ROS_ERROR("Timeout for reading");
          return;
+      }
+
+      // Read the message received from the EGM client
+      this->data_from_egm.Clear();
+      this->p_egm_interface->read(&data_from_egm);
+
+      for(int index = 0; index < this->num_joints; index++)
+      {
+         this->joint_position[index] = this->data_from_egm.feedback().robot().joints().position().values(index) * 3.14159265358979323846 / 180.0; // [rad]
+         this->joint_velocity[index] = this->data_from_egm.feedback().robot().joints().velocity().values(index) * 3.14159265358979323846 / 180.0; // [rad/s]
       }
 
       return;
@@ -157,7 +165,31 @@ namespace ros_control_gofa
    void GofaHWInterface::write(ros::Duration &elapsed_time)
    {
       // TODO
-		// ROS_INFO("Writing Joints");
+
+      // Enforcing limits
+      this->pos_jnt_sat_interface.enforceLimits(elapsed_time);
+      
+      // TODO: EGM takes data in Deg
+      for(int index = 0; index < this->num_joints; index++)
+      {
+		   if (!std::isnan(this->joint_position_command[index]) && !std::isinf(std::isnan(this->joint_position_command[index])) &&
+             !std::isnan(this->joint_velocity_command[index]) && !std::isinf(std::isnan(this->joint_velocity_command[index])) )
+         {
+            // this->data_to_egm.mutable_robot()->mutable_joints()->mutable_position()->set_values(index, joint_position_command[index] / 3.14159265358979323846 * 180.0);
+            // this->data_to_egm.mutable_robot()->mutable_joints()->mutable_velocity()->set_values(index, joint_velocity_command[index] / 3.14159265358979323846 * 180.0);
+
+         }
+      }
+
+      ROS_INFO("Joints: [%lf, %lf, %lf, %lf, %lf, %lf]", joint_position_command[0],
+                                                         joint_position_command[1],
+                                                         joint_position_command[2],
+                                                         joint_position_command[3],
+                                                         joint_position_command[4],
+                                                         joint_position_command[5]);
+
+      // Uncomment to die
+		// this->p_egm_interface->write(output);
 
       return;
    }

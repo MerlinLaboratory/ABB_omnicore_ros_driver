@@ -159,6 +159,11 @@ namespace ros_control_gofa
     abb::rws::RWSStateMachineInterface* p_rws_interface;
 	  abb::egm::EGMControllerInterface*   p_egm_interface;
 
+    // Data from and to the robot
+    abb::egm::wrapper::Input data_from_egm;
+    abb::egm::wrapper::Output data_to_egm;
+    
+
   }; // class
 
 } // namespace ros_control_boilerplate

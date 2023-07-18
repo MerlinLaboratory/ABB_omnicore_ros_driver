@@ -2,18 +2,15 @@
   <arg name="yamlFile" default="$(find ros_control_gofa)/config/gofa_cfg.yaml" />
   <rosparam command="load" file="$(arg yamlFile)" />
 
-  <group ns="Gofa">
+  <!-- Load the URDF pkg -->
+  <include file="$(find robots_description)/launch/display.launch">
+    <arg name="robot" value="gofa" />
+  </include>
 
-    <!-- Load the URDF pkg -->
-    <include file="$(find robots_description)/launch/display.launch">
-      <arg name="robot" value="gofa" />
-    </include>
+  <node pkg="ros_control_gofa" name="gofa_hw_interface" type="gofa_control_node" output="screen" />
 
-    <node pkg="ros_control_gofa" name="gofa_hw_interface" type="gofa_control_node" output="screen" />
-
-    <!-- Load controller manager -->
-    <node name="ros_control_controller_manager" pkg="controller_manager" type="controller_manager" respawn="false"
-          output="screen" args="spawn joint_state_controller" />
-  </group>
+  <!-- Load controller manager -->
+  <node name="ros_control_controller_manager" pkg="controller_manager" type="controller_manager" respawn="false"
+        output="screen" args="spawn joint_state_controller gofa_arm_controller" />
 
 </launch>

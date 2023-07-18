@@ -48,9 +48,7 @@ namespace ros_control_gofa
     }
 
     // Input
-    ROS_INFO("Starting Reading");
     this->hardware_interface->read(elapsed_time_);
-    ROS_INFO("Finished Reading");
 
     // Control
     this->controller_manager->update(now, elapsed_time_);
