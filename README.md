@@ -167,7 +167,7 @@ set WAN IP = 192.168.131.200**
 
 The MGMT port have a fixed IP address (*192.168.125.1* ) and a DHCP server.
 
-If you are using the MGMT port make sure that the connected computer running ROS is on the same natwork (*192.168.125.xx* ) or the DHCP is enabled.
+If you are using the MGMT port make sure that the connected computer running ROS is on the same network (*192.168.125.xx* ) or the DHCP is enabled.
 
 ### Setup the UDP device
 Configure the IP address and the port to use for the UDP protocol. **This IP address must be the same of the PC running ROS.**
@@ -204,7 +204,7 @@ Enable on the public network the following services:
 * RobotWebServices
 * UDPUC (available from RW 7.3.2)
 
-  <img src="images/robotstudio8.png" alt="RobotStudio">
+  <img src="Resources/images/robotstudio8.png" alt="RobotStudio">
 
 ### Configure the user privileges
 This package use the [Robot Web Services 2.0](https://developercenter.robotstudio.com/api/RWS) (RWS) to control the robot.
@@ -217,15 +217,15 @@ By default, the **Default User** does not have the grant *Remote Start and Stop 
 
 The steps to configure the user account are:
 1. Using RobotStudio log-in on the controller as Administrator (usually with the user **Admin** and password **robotics**).
-  <img src="images/robotstudio12.png" alt="RobotStudio">
-  <img src="images/robotstudio13.png" alt="RobotStudio" width="50%" height="50%">
+  <img src="Resources/images/robotstudio12.png" alt="RobotStudio">
+  <img src="Resources/images/robotstudio13.png" alt="RobotStudio" width="50%" height="50%">
 
 2. On the Controller tab, in the Access group, click Authenticate and then click `Edit User Account`.
-   <img src="images/robotstudio10.png" alt="RobotStudio">
+   <img src="Resourcesimages/robotstudio10.png" alt="RobotStudio">
 
 3. On the tab roles check if the grant *Remote Start and Stop in Auto* is checked for the role of the Default User.
 
-   <img src="images/robotstudio11.png" alt="RobotStudio">
+   <img src="Resources/images/robotstudio11.png" alt="RobotStudio">
 
 4. Apply.
 
