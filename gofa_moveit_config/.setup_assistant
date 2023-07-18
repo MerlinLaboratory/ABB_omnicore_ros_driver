@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: robots_description
+    relative_path: xacro/robot.urdf.xacro
+    xacro_args: name:=gofa
+  SRDF:
+    relative_path: config/robot.srdf
+  CONFIG:
+    author_name: Niccolo Lucci
+    author_email: niccolo.lucci@polimi.it
+    generated_timestamp: 1689692540
