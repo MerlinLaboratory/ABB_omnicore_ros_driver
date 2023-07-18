@@ -1,6 +1,6 @@
 Gofa:
   ip_robot: "192.168.131.200"
-  # port_robot: 80 for virtual robot (robotstudio)
+  # port_robot: 80 # for virtual robot (robotstudio)
   port_robot: 443
   name_robot: "ROB_1"
   task_robot: "T_ROB1"
