@@ -138,7 +138,13 @@ namespace ros_control_gofa
       } 
 
       // Setting the space for data to egm
+      this->data_to_egm.mutable_robot()->mutable_joints()->mutable_position()->Clear();
+		this->data_to_egm.mutable_robot()->mutable_joints()->Clear();
+		this->data_to_egm.mutable_robot()->Clear();
+		this->data_to_egm.Clear();
+
       this->data_to_egm.mutable_robot()->mutable_joints()->mutable_position()->CopyFrom(this->data_from_egm.feedback().robot().joints().position());
+      this->data_to_egm.mutable_robot()->mutable_joints()->mutable_velocity()->CopyFrom(this->data_from_egm.feedback().robot().joints().velocity());
    }
 
    void GofaHWInterface::read(ros::Duration &elapsed_time)
@@ -164,32 +170,28 @@ namespace ros_control_gofa
 
    void GofaHWInterface::write(ros::Duration &elapsed_time)
    {
-      // TODO
-
       // Enforcing limits
       this->pos_jnt_sat_interface.enforceLimits(elapsed_time);
       
-      // TODO: EGM takes data in Deg
       for(int index = 0; index < this->num_joints; index++)
       {
 		   if (!std::isnan(this->joint_position_command[index]) && !std::isinf(std::isnan(this->joint_position_command[index])) &&
              !std::isnan(this->joint_velocity_command[index]) && !std::isinf(std::isnan(this->joint_velocity_command[index])) )
          {
-            // this->data_to_egm.mutable_robot()->mutable_joints()->mutable_position()->set_values(index, joint_position_command[index] / 3.14159265358979323846 * 180.0);
-            // this->data_to_egm.mutable_robot()->mutable_joints()->mutable_velocity()->set_values(index, joint_velocity_command[index] / 3.14159265358979323846 * 180.0);
-
+            this->data_to_egm.mutable_robot()->mutable_joints()->mutable_position()->set_values(index, joint_position_command[index] / 3.14159265358979323846 * 180.0);
+            this->data_to_egm.mutable_robot()->mutable_joints()->mutable_velocity()->set_values(index, joint_velocity_command[index] / 3.14159265358979323846 * 180.0);
          }
       }
 
-      ROS_INFO("Joints: [%lf, %lf, %lf, %lf, %lf, %lf]", joint_position_command[0],
-                                                         joint_position_command[1],
-                                                         joint_position_command[2],
-                                                         joint_position_command[3],
-                                                         joint_position_command[4],
-                                                         joint_position_command[5]);
+      // ROS_INFO("Joints: [%lf, %lf, %lf, %lf, %lf, %lf]", joint_position_command[0] / 3.14159265358979323846 * 180.0,
+      //                                                    joint_position_command[1] / 3.14159265358979323846 * 180.0,
+      //                                                    joint_position_command[2] / 3.14159265358979323846 * 180.0,
+      //                                                    joint_position_command[3] / 3.14159265358979323846 * 180.0,
+      //                                                    joint_position_command[4] / 3.14159265358979323846 * 180.0,
+      //                                                    joint_position_command[5] / 3.14159265358979323846 * 180.0);
 
       // Uncomment to die
-		// this->p_egm_interface->write(output);
+		this->p_egm_interface->write(this->data_to_egm);
 
       return;
    }

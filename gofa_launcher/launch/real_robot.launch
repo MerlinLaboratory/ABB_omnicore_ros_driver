@@ -1,0 +1,20 @@
+<launch>
+
+    <!-- Launching ros-control pkg -->
+    <include file="$(find ros_control_gofa)/launch/gofa_control.launch">
+        <arg name="yamlFile" value="$(find ros_control_gofa)/config/gofa_cfg.yaml"/> <!-- Path to configuration file for Gofa and ros_control -->
+    </include>
+
+    <!-- Launching moveit pkg -->
+    <include file="$(find gofa_moveit_config)/launch/demo.launch">
+        <arg name="pipeline" default="pilz_industrial_motion_planner" /> <!-- specify the planning pipeline -->
+        <arg name="debug" default="false" />                             <!-- By default, we are not in debug mode -->
+        <arg name="load_robot_description" default="false"/>             <!-- By default, we will load or override the robot_description -->        
+        <arg name="moveit_controller_manager" default="simple" />        <!-- Choose controller manager: fake, simple, or ros_control -->
+        <arg name="use_rviz" default="false" />                          <!-- By default, hide joint_state_publisher's GUI in 'fake' controller_manager mode -->
+      </include>
+    
+    <!-- Run Rviz and load the default config to see the state of the move_group node -->
+    <node name="rviz_2" pkg="rviz" type="rviz" args="-d $(find gofa_launcher)/config/config.rviz"/>
+
+</launch>

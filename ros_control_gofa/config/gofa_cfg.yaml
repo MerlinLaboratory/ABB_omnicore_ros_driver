@@ -3,10 +3,10 @@
 ###############################################
 
 Gofa:
-  # ip_robot: "192.168.131.200"
-  # robot_port_rws: 443
-  ip_robot: "192.168.56.101" # for virtual robot (robotstudio)
-  robot_port_rws: 80 # for virtual robot (robotstudio)
+  ip_robot: "192.168.131.200"
+  robot_port_rws: 443
+  # ip_robot: "192.168.56.101" # for virtual robot (robotstudio)
+  # robot_port_rws: 80 # for virtual robot (robotstudio)
   name_robot: "ROB_1"
   task_robot: "T_ROB1"
   pos_corr_gain: 1
@@ -62,26 +62,30 @@ gofa_arm_controller:
     goal_time: 5.0
     #stopped_position_tolerance: 0.4 # Defaults to 0.01
     J1:
-      trajectory: 0.01
+      trajectory: 0.05
       goal:       0.01
     J2:
-      trajectory: 0.01
+      trajectory: 0.05
       goal:       0.01
     J3:
-      trajectory: 0.01
+      trajectory: 0.05
       goal:       0.01
     J4:
-      trajectory: 0.01
+      trajectory: 0.05
       goal:       0.01
     J5:
-      trajectory: 0.01
+      trajectory: 0.05
       goal:       0.01
     J6:
-      trajectory: 0.01
+      trajectory: 0.05
       goal:       0.01
    # gains:
    #     joint1: {p: 2.0,  i: 0.0, d: 0.01, i_clamp: 1}
    #     joint2: {p: 2.0,  i: 0.0, d: 0.01, i_clamp: 1}
+   #     joint3: {p: 2.0,  i: 0.0, d: 0.01, i_clamp: 1}
+   #     joint4: {p: 2.0,  i: 0.0, d: 0.01, i_clamp: 1}
+   #     joint5: {p: 2.0,  i: 0.0, d: 0.01, i_clamp: 1}
+   #     joint6: {p: 2.0,  i: 0.0, d: 0.01, i_clamp: 1}
 
   state_publish_rate:  100     # Defaults to 50
   #action_monitor_rate: 20     # Defaults to 20
