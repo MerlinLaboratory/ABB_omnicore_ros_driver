@@ -86,23 +86,24 @@ namespace ros_control_gofa
 	   this->p_rws_interface = new abb::rws::RWSStateMachineInterface(this->ip_robot, this->port_robot_rws, ptrContext);
 
       this->p_rws_interface->stopRAPIDExecution();
-      // usleep(250000);
+      usleep(250000);
       this->p_rws_interface->requestMasterShip();
-      // usleep(250000);
+      usleep(250000);
       this->p_rws_interface->resetRAPIDProgramPointer();
-      // usleep(250000);
+      usleep(250000);
       this->p_rws_interface->releaseMasterShip();
-      // usleep(250000);
+      usleep(250000);
       this->p_rws_interface->startRAPIDExecution();
       usleep(250000);
+
+      this->p_egm_interface = new abb::egm::EGMControllerInterface(io_service_, this->port_robot_egm);
+		this->thread_group_.create_thread(boost::bind(&boost::asio::io_service::run, &io_service_));
 
       if( SetEGMParameters() == false )
          ROS_WARN("Could not set EGM parameters");
       
       // Setting the EGM signal to START to communicate RobotStudio to start the EGM communication
       this->EGMStartSignal();
-      this->p_egm_interface = new abb::egm::EGMControllerInterface(io_service_, this->port_robot_egm);
-		this->thread_group_.create_thread(boost::bind(&boost::asio::io_service::run, &io_service_));
 
 		if (!this->p_egm_interface->isInitialized())
 			ROS_ERROR("EGM interface failed to initialize (e.g. due to port already bound)");
@@ -119,7 +120,10 @@ namespace ros_control_gofa
 					wait_for_egm_connection = this->p_egm_interface->getStatus().rapid_execution_state() != abb::egm::wrapper::Status_RAPIDExecutionState_RAPID_RUNNING;
 			}
 			else
+         {
 				ROS_INFO("EGM is NOT CONNECTED");
+            // this->EGMStartSignal();
+         }
       }
 
       ROS_INFO_STREAM_NAMED(this->name, "Gofa HW Interface Ready!");
@@ -252,7 +256,11 @@ namespace ros_control_gofa
 
    bool GofaHWInterface::EGMStartSignal()
    {
-      return this->p_rws_interface->setIOSignal("EGM_START_JOINT", "1");
+		if(this->p_rws_interface->pulseIOSignal("EGM_START_JOINT", 500000))
+         return true;
+
+      ROS_ERROR("Cannot trigger Signal EGM_START_JOINT");
+      return false;
    }
 
    // ----------------------------------------------------------------- // 

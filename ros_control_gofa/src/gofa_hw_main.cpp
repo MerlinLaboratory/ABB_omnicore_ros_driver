@@ -11,7 +11,7 @@ int main(int argc, char** argv)
   spinner.start();
 
   // Create the hardware interface specific to your robot
-  std::shared_ptr<ros_control_gofa::GofaHWInterface> gofa_hw_interface(new ros_control_gofa::GofaHWInterface(nh));
+  std::shared_ptr<ros_control_gofa::GofaHWInterface> gofa_hw_interface = std::make_shared<ros_control_gofa::GofaHWInterface>(nh);
   gofa_hw_interface->init();
 
   // Start the control loop
