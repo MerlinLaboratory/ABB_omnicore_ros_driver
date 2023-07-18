@@ -20,7 +20,7 @@ Gofa:
 ###############################################
 
 gofa_hw_control_loop:
-  loop_hz: 250
+  loop_hz: 100
   cycle_time_error_threshold: 0.004
 
 ###############################################
@@ -28,10 +28,19 @@ gofa_hw_control_loop:
 ###############################################
 
 gofa_hardware_interface:
-   joints:
-      - joint1
-      - joint2
-      - joint3
-      - joint4
-      - joint5
-      - joint6
+  joints:
+    - J1
+    - J2
+    - J3
+    - J4
+    - J5
+    - J6
+
+###############################################
+############# Loading controllers  ############
+###############################################
+
+Gofa:
+  joint_state_controller:
+    type:         joint_state_controller/JointStateController
+    publish_rate: 100

@@ -13,9 +13,6 @@ namespace ros_control_gofa
     nh.getParam("/gofa_hw_control_loop/loop_hz"                   , this->loop_hz_                   );
     nh.getParam("/gofa_hw_control_loop/cycle_time_error_threshold", this->cycle_time_error_threshold_);
 
-    ROS_INFO("loop_hz: %lf", this->loop_hz_);
-    ROS_INFO("cycle_time_error_threshold: %f", this->cycle_time_error_threshold_);
-
     // Get current time for use with first update
     clock_gettime(CLOCK_MONOTONIC, &last_time_);
 
@@ -51,7 +48,9 @@ namespace ros_control_gofa
     }
 
     // Input
+    ROS_INFO("Starting Reading");
     this->hardware_interface->read(elapsed_time_);
+    ROS_INFO("Finished Reading");
 
     // Control
     this->controller_manager->update(now, elapsed_time_);

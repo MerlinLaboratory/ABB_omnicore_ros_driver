@@ -79,7 +79,6 @@ namespace ros_control_gofa
      */
     void registerJointLimits(const hardware_interface::JointHandle &joint_handle_position,
                              const hardware_interface::JointHandle &joint_handle_velocity,
-                             const hardware_interface::JointHandle &joint_handle_effort,
                              std::size_t joint_id);
 
     /** \breif Enforce limits for all values before writing */
@@ -105,15 +104,14 @@ namespace ros_control_gofa
     // --------------------------------------------------------------- //
 
     // Hardware interfaces
-    hardware_interface::JointStateInterface joint_state_interface;
+    hardware_interface::JointStateInterface    joint_state_interface;
     hardware_interface::PositionJointInterface position_joint_interface;
     hardware_interface::VelocityJointInterface velocity_joint_interface;
-    hardware_interface::EffortJointInterface effort_joint_interface;
+    hardware_interface::EffortJointInterface   effort_joint_interface;
 
     // Joint limits interfaces - Saturation
     joint_limits_interface::PositionJointSaturationInterface pos_jnt_sat_interface;
     joint_limits_interface::VelocityJointSaturationInterface vel_jnt_sat_interface;
-    joint_limits_interface::EffortJointSaturationInterface eff_jnt_sat_interface;
 
     // Robot configuration
     std::vector<std::string> joint_names;
@@ -128,7 +126,7 @@ namespace ros_control_gofa
     // Commands
     std::vector<double> joint_position_command;
     std::vector<double> joint_velocity_command;
-    std::vector<double> joint_effort_command;
+    // std::vector<double> joint_effort_command; -> Not supported by Gofa :(
 
     // Copy of limits, in case we need them later in our control stack
     std::vector<double> joint_position_lower_limits;

@@ -10,6 +10,10 @@
     </include>
 
     <node pkg="ros_control_gofa" name="gofa_hw_interface" type="gofa_control_node" output="screen" />
+
+    <!-- Load controller manager -->
+    <node name="ros_control_controller_manager" pkg="controller_manager" type="controller_manager" respawn="false"
+          output="screen" args="spawn joint_state_controller" />
   </group>
 
 </launch>

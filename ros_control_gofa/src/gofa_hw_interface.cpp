@@ -10,17 +10,16 @@ namespace ros_control_gofa
       // Load rosparams
 
       // Loading parameters from configuration.yaml
-      nh.getParam("ip_robot"           , this->ip_robot           );
-      nh.getParam("robot_port_rws"     , this->port_robot_rws     );
-      nh.getParam("robot_port_egm"     , this->port_robot_egm     );
-      nh.getParam("name_robot"         , this->name               );
-      nh.getParam("task_robot"         , this->task_robot         );
-      nh.getParam("pos_corr_gain"      , this->pos_corr_gain      );
-      nh.getParam("max_speed_deviation", this->max_speed_deviation);
-      nh.getParam("joints"             , this->joint_names        );
-	   ROS_INFO("Connecting to ip: %s and port for RWS: %s", this->ip_robot.c_str(), std::to_string(this->port_robot_rws).c_str());
-	   ROS_INFO("Port for EGM: %s", std::to_string(this->port_robot_egm).c_str());
-
+      nh.getParam("ip_robot"                       , this->ip_robot           );
+      nh.getParam("robot_port_rws"                 , this->port_robot_rws     );
+      nh.getParam("robot_port_egm"                 , this->port_robot_egm     );
+      nh.getParam("name_robot"                     , this->name               );
+      nh.getParam("task_robot"                     , this->task_robot         );
+      nh.getParam("pos_corr_gain"                  , this->pos_corr_gain      );
+      nh.getParam("max_speed_deviation"            , this->max_speed_deviation);
+      nh.getParam("/gofa_hardware_interface/joints", this->joint_names        );
+	   ROS_INFO("For RWS, connecting to ip: %s and port: %s", this->ip_robot.c_str(), std::to_string(this->port_robot_rws).c_str());
+	   ROS_INFO("For EGM, port: %s", std::to_string(this->port_robot_egm).c_str());
    }
 
    // ! TODO: check if the Gofa supports all these interfaces
@@ -36,7 +35,7 @@ namespace ros_control_gofa
       // Commands
       this->joint_position_command.resize(this->num_joints, 0.0);
       this->joint_velocity_command.resize(this->num_joints, 0.0);
-      this->joint_effort_command  .resize(this->num_joints, 0.0);
+      // this->joint_effort_command  .resize(this->num_joints, 0.0); -> not supported by Gofa :()
 
       // Limits
       this->joint_position_lower_limits.resize(num_joints, 0.0);
@@ -48,32 +47,32 @@ namespace ros_control_gofa
       for (std::size_t joint_id = 0; joint_id < num_joints; joint_id++)
       {
          std::string joint_name = this->joint_names[joint_id];
-         ROS_DEBUG_STREAM_NAMED(this->name, "Loading joint name: " << joint_name);
+         // ROS_INFO("Loading joint name: %s", joint_name.c_str());
 
          // Create joint state interface
          hardware_interface::JointStateHandle joint_handle(this->joint_names    [joint_id], 
                                                            &this->joint_position[joint_id], 
-                                                           &this->joint_velocity[joint_id], 
+                                                           &this->joint_velocity[joint_id],
                                                            &this->joint_effort  [joint_id]);
          this->joint_state_interface.registerHandle(joint_handle);
 
          // Add command interfaces to joints
          hardware_interface::JointHandle joint_handle_position = hardware_interface::JointHandle(joint_handle, &this->joint_position_command[joint_id]);
          hardware_interface::JointHandle joint_handle_velocity = hardware_interface::JointHandle(joint_handle, &this->joint_velocity_command[joint_id]);
-         hardware_interface::JointHandle joint_handle_effort   = hardware_interface::JointHandle(joint_handle, &this->joint_effort_command  [joint_id]);
-         
+         // hardware_interface::JointHandle joint_handle_effort   = hardware_interface::JointHandle(joint_handle, &this->joint_effort_command  [joint_id]); -> Not supported by Gofa :(
+
          this->position_joint_interface.registerHandle(joint_handle_position);
          this->velocity_joint_interface.registerHandle(joint_handle_velocity);
-         this->effort_joint_interface  .registerHandle(joint_handle_effort);
+         // this->effort_joint_interface  .registerHandle(joint_handle_effort); -> Not supported by Gofa :(
 
          // Load the joint limits
-         registerJointLimits(joint_handle_position, joint_handle_velocity, joint_handle_effort, joint_id);
+         registerJointLimits(joint_handle_position, joint_handle_velocity, joint_id);
       }
 
       registerInterface(&joint_state_interface);    // From RobotHW base class
       registerInterface(&position_joint_interface); // From RobotHW base class
       registerInterface(&velocity_joint_interface); // From RobotHW base class
-      registerInterface(&effort_joint_interface);   // From RobotHW base class
+      // registerInterface(&effort_joint_interface);   // From RobotHW base class -> Not supported by Gofa :(
       
       // ! 
       // ! TODO: Initialise connection with Gofa EGM interface
@@ -132,7 +131,25 @@ namespace ros_control_gofa
    void GofaHWInterface::read(ros::Duration &elapsed_time)
    {
       // TODO
-		ROS_INFO("Reading Joints");
+
+      if (this->p_egm_interface->waitForMessage(500))
+	   {
+         // Read the message received from the EGM client.
+         abb::egm::wrapper::Input input = abb::egm::wrapper::Input();
+         input.Clear();
+         this->p_egm_interface->read(&input);
+
+         for(int index = 0; index < this->num_joints; index++)
+         {
+            this->joint_position[index] = input.feedback().robot().joints().position().values(index) * 3.14159265358979323846 / 180.0; // [rad]
+            this->joint_velocity[index] = input.feedback().robot().joints().velocity().values(index) * 3.14159265358979323846 / 180.0; // [rad/s]
+         }
+      }
+      else
+      {
+         ROS_ERROR("Timeout for reading");
+         return;
+      }
 
       return;
    }
@@ -140,27 +157,24 @@ namespace ros_control_gofa
    void GofaHWInterface::write(ros::Duration &elapsed_time)
    {
       // TODO
-		ROS_INFO("Writing Joints");
+		// ROS_INFO("Writing Joints");
 
       return;
    }
 
    void GofaHWInterface::registerJointLimits(const hardware_interface::JointHandle &joint_handle_position,
                                              const hardware_interface::JointHandle &joint_handle_velocity,
-                                             const hardware_interface::JointHandle &joint_handle_effort,
                                              std::size_t joint_id)
    {
       // Default values
       this->joint_position_lower_limits[joint_id] = -std::numeric_limits<double>::max();
-      this->joint_position_upper_limits[joint_id] = std::numeric_limits<double>::max();
-      this->joint_velocity_limits      [joint_id] = std::numeric_limits<double>::max();
-      this->joint_effort_limits        [joint_id] = std::numeric_limits<double>::max();
+      this->joint_position_upper_limits[joint_id] =  std::numeric_limits<double>::max();
+      this->joint_velocity_limits      [joint_id] =  std::numeric_limits<double>::max();
+      this->joint_effort_limits        [joint_id] =  std::numeric_limits<double>::max();
 
       // Limits datastructures
       joint_limits_interface::JointLimits joint_limits;    // Position
-      joint_limits_interface::SoftJointLimits soft_limits; // Soft Position
       bool has_joint_limits = false;
-      bool has_soft_limits = false;
 
       // Get limits from URDF
       if (this->urdf_model == NULL)
@@ -171,14 +185,12 @@ namespace ros_control_gofa
 
       // Get limits from URDF
       std::string joint_name = this->joint_names[joint_id];
-
       urdf::JointConstSharedPtr urdf_joint = this->urdf_model->getJoint(joint_name);
-      if (urdf_joint == NULL || joint_limits_interface::getJointLimits(urdf_joint, joint_limits))
+
+      if (urdf_joint != NULL && joint_limits_interface::getJointLimits(urdf_joint, joint_limits))
       {
          has_joint_limits = true;
-         ROS_DEBUG_STREAM_NAMED(this->name, "Joint " << joint_name << " has URDF position limits ["
-                                                     << joint_limits.min_position << ", " 
-                                                     << joint_limits.max_position << "]");
+         // ROS_INFO("Joint %s has URDF position limits [ %lf, %lf]", joint_name.c_str(), joint_limits.min_position, joint_limits.max_position);
 
          // Setting the position limits
          // Slighly reduce the joint limits to prevent floating point errors
@@ -190,22 +202,13 @@ namespace ros_control_gofa
          // Setting the velocity limits
          if (joint_limits.has_velocity_limits)
          {
-            ROS_DEBUG_STREAM_NAMED(this->name, "Joint " << joint_name << " has URDF velocity limit ["
-                                                        << joint_limits.max_velocity << "]");
+            // ROS_INFO("Joint %s has max URDF velocity limit: %lf]", joint_name.c_str(), joint_limits.max_velocity);
             this->joint_velocity_limits[joint_id] = joint_limits.max_velocity;
-         }
-
-         // Setting effort limits if available
-         if (joint_limits.has_effort_limits)
-         {
-            ROS_DEBUG_STREAM_NAMED(this->name, "Joint " << joint_name << " has URDF effor limit ["
-                                             << joint_limits.max_effort << "]");
-            this->joint_effort_limits[joint_id] = joint_limits.max_effort;
          }
       }
       else
       {
-         ROS_WARN_STREAM_NAMED(this->name, "Joint " << joint_name << " does not have a URDF position limit");
+         ROS_WARN_STREAM_NAMED(this->name, "Joint " << joint_name << " does not have a URDF limits");
          return;
       }
 
@@ -214,19 +217,15 @@ namespace ros_control_gofa
 
       const joint_limits_interface::PositionJointSaturationHandle sat_handle_position(joint_handle_position, joint_limits);
       const joint_limits_interface::VelocityJointSaturationHandle sat_handle_velocity(joint_handle_velocity, joint_limits);
-      const joint_limits_interface::EffortJointSaturationHandle   sat_handle_effort  (joint_handle_effort  , joint_limits);
 
       pos_jnt_sat_interface.registerHandle(sat_handle_position);
       vel_jnt_sat_interface.registerHandle(sat_handle_velocity);
-      eff_jnt_sat_interface.registerHandle(sat_handle_effort);
-
    }
 
    void GofaHWInterface::reset()
    {
       // Reset joint limits state, in case of mode switch or e-stop
       this->pos_jnt_sat_interface.reset();
-      // this->pos_jnt_soft_limits.reset();
    }
 
    // ----------------------------------------------------------------- //
@@ -274,7 +273,6 @@ namespace ros_control_gofa
       ROS_INFO_STREAM_THROTTLE(1, std::endl << printStateHelper());
    }
 
-
    std::string GofaHWInterface::printStateHelper()
    {
       std::stringstream ss;
@@ -299,8 +297,7 @@ namespace ros_control_gofa
       {
          ss << "j" << i << ": ";
          ss << std::fixed << this->joint_position_command[i] << "\t ";
-         ss << std::fixed << this->joint_velocity_command[i] << "\t ";
-         ss << std::fixed << this->joint_effort_command  [i] << std::endl;
+         ss << std::fixed << this->joint_velocity_command[i] << std::endl;
       }
       return ss.str();
    }
@@ -333,7 +330,7 @@ namespace ros_control_gofa
       if (!this->urdf_model->initString(urdf_string))
          ROS_ERROR_STREAM_NAMED(this->name, "Unable to load URDF model");
       else
-         ROS_DEBUG_STREAM_NAMED(this->name, "Received URDF from param server");
+         ROS_INFO("Received URDF from param server");
    }
 
 } // namespace ros_control_gofa
