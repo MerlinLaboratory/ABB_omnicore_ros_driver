@@ -1,8 +1,8 @@
 # abb_wrapper
-These packages are intended to ease the interaction between ABB OmniCore controllers and ROS-based systems, by providing ready-to-run ROS nodes.
+These packages are intended to ease the interaction between Gofa robot and its OmniCore controller and ROS-based systems, by providing ready-to-run ROS nodes. In particular, we developed the hardware_interface to use the Gofa with ros_control. Furthermore, we integrated moveit! within the robot so that you can sends trajectories directly to ros_control and then to the real controller.
 
 ## Important Notes
-Tested on Ubuntu 18.04 with ROS Melodic.
+Tested on Ubuntu 20.04 with ROS Noetic. Support on other ROS distro is expected but not tested.
 
 ## Overview
 
@@ -16,30 +16,30 @@ The included (*principal*) packages are briefly described in the following table
 | [abb_libegm](abb_libegm) | (A modified version of https://github.com/ros-industrial/abb_libegm) Provides a ROS node that exposes hardware interface, for *direct motion control* of ABB robots (via the *Externally Guided Motion* (`EGM`) interface). |
 | [abb_driver](abb_driver) | Provides ROS nodes for the main interface with the controller. It combine the RWS and EGM node and use the parameters in the yaml file. |
 | [abb_controllers](abb_controllers) | Provides ROS nodes for kinematic calculation using the URDF model of the robot. |
-| [gofa_description](gofa_description) | Provides ROS nodes for kinematic calculation using the URDF model of the robot. |
-| [yumi_description](yumi_description) | Provides ROS nodes for kinematic calculation using the URDF model of the robot. |
-| [degub_rviz_tool](abb_description) | Tools used for tests and debug |
+| [robots_description](gofa_description) | Provides ROS nodes for kinematic calculation using the URDF model of the robot (For now only Gofa robot is available). |
+| [ros_control_gofa](ros_control) | Provides hardware interface for the Gofa robot. |
+| [gofa_launcher](ros_control) | Provides all the .launch files to correctly launch Gofa in real or simulation. |
 
 Please see each package for more details (*e.g. additional requirements, limitations and troubleshooting*).
 
 ## Build Instructions
 
-It is assumed that [ROS Melodic has been installed](http://wiki.ros.org/melodic/Installation/Ubuntu) on the system in question.
+It is assumed that [ROS Noetic has been installed](https://wiki.ros.org/noetic/Installation/Ubuntu) on the system in question.
 
 ### Set up ROS
 
 The following instructions assume that a [Catkin workspace](http://wiki.ros.org/catkin/Tutorials/create_a_workspace) has been created at `$HOME/catkin_ws` and that the *source space* is at `$HOME/catkin_ws/src`. Update paths appropriately if they are different on the build machine.
 
-The following instructions should build the main branches of all required repositories on a ROS Melodic system:
+The following instructions should build the main branches of all required repositories on a ROS Noetic system:
 
 ```bash
-echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
+echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
 
 mkdir -p ~/catkin_ws/src
 cd ~/catkin_ws/
 catkin_make
 
-echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
+echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc # BAD practice. I would advise to DON'T do it!
 ```
 
 If no errors were reported as part of the `catkin_make` command, the build has succeeded and the driver should now be usable.
@@ -126,25 +126,25 @@ If there are no errors you are ready to proceed to set up the robot.
 
 * RobotWare version `7.2` or higher (lower versions are incompatible due to changes in the EGM communication protocol).
 * A license for the RobotWare option *Externally Guided Motion* (`3124-1`).
-* StateMachine 2.0 RobotWare Add-In (soon on the RobotApps)
+* StateMachine 2.0 RobotWare Add-In (present on the RobotApps of RobotStudio)
 
-<img src="images/flexpendant1.png" alt="FlexPendant" width="50%" height="50%">
-<img src="images/flexpendant2.png" alt="FlexPendant" width="50%" height="50%">
+<img src="Doc/images/flexpendant1.png" alt="FlexPendant" width="50%" height="50%">
+<img src="Doc/images/flexpendant2.png" alt="FlexPendant" width="50%" height="50%">
 
-After the creation of the system just configure robot to accept external communication both for EGM and Web Services.
+After the creation of the system just configure robot to accept external communication both for EGM and Web Services (see next steps).
 ### RobotStudio
 
 Open RobotStudio
 
-<img src="images/robotstudio1.png" alt="RobotStudio">
+<img src="Doc/images/robotstudio1.png" alt="RobotStudio">
 
 On the Controller Tab, click Add Controller > One Click Connect..
 
-<img src="images/robotstudio2.png" alt="RobotStudio">
+<img src="Doc/images/robotstudio2.png" alt="RobotStudio">
 
 Click on "Log in as Default User" button
 
-<img src="images/robotstudio3.png" alt="RobotStudio">
+<img src="Doc/images/robotstudio3.png" alt="RobotStudio">
 
 
 ### Setup the IP address for the WAN port
@@ -153,12 +153,12 @@ With this configuration, we will set up the IP address of the WAN port where the
 * On the Controller tab, in the Configuration group, click Properties and then click `Network settings`.
   The Network settings dialog opens.
   
-  <img src="images/robotstudio4.png" alt="RobotStudio">
+  <img src="Doc/images/robotstudio4.png" alt="RobotStudio">
 
 * Select `Use the following IP address` and then enter the required IP address and Subnet mask boxes to manually set the IP address of the controller
 
 
-  <img src="images/robotstudio5.png" alt="RobotStudio">
+  <img src="Doc/images/robotstudio5.png" alt="RobotStudio">
 
 **POLIMI SETUP: 
 set WAN IP = 192.168.131.200**
@@ -174,24 +174,22 @@ Configure the IP address and the port to use for the UDP protocol. **This IP add
 
 Using RobotStudio, first **request the write access**.
 
-  <img src="images/robotstudio6.png" alt="RobotStudio">
+  <img src="Doc/images/robotstudio6.png" alt="RobotStudio">
 
 On the Controller tab, in the Configuration group, click Configuration and then click `Communication`.
 
-  <img src="images/robotstudio7.png" alt="RobotStudio">
+  <img src="Doc/images/robotstudio7.png" alt="RobotStudio">
 
 Double click on the `UDP Unicast Device` item.
 
-  <img src="images/robotstudio9.png" alt="RobotStudio">
+  <img src="Doc/images/robotstudio9.png" alt="RobotStudio">
 
 **POLIMI SETUP:**
 
 **set ROB 1 IP = 192.168.131.5**
 
 **set UCDEVICE IP = 192.168.131.5**
-
-
-
+The ip address `192.168.131.5` is the ip of the Linux machine running ROS. Set the ip address of the Linux machine as static and to the address `192.168.131.5`.
 
 ### Setup the Controller Firewall
 Using the WAN port the firewall on the public network must be configured.
@@ -204,7 +202,7 @@ Enable on the public network the following services:
 * RobotWebServices
 * UDPUC (available from RW 7.3.2)
 
-  <img src="Resources/images/robotstudio8.png" alt="RobotStudio">
+  <img src="Doc/images/robotstudio8.png" alt="RobotStudio">
 
 ### Configure the user privileges
 This package use the [Robot Web Services 2.0](https://developercenter.robotstudio.com/api/RWS) (RWS) to control the robot.
@@ -217,15 +215,15 @@ By default, the **Default User** does not have the grant *Remote Start and Stop 
 
 The steps to configure the user account are:
 1. Using RobotStudio log-in on the controller as Administrator (usually with the user **Admin** and password **robotics**).
-  <img src="Resources/images/robotstudio12.png" alt="RobotStudio">
-  <img src="Resources/images/robotstudio13.png" alt="RobotStudio" width="50%" height="50%">
+  <img src="Doc/images/robotstudio12.png" alt="RobotStudio">
+  <img src="Doc/images/robotstudio13.png" alt="RobotStudio" width="50%" height="50%">
 
 2. On the Controller tab, in the Access group, click Authenticate and then click `Edit User Account`.
-   <img src="Resourcesimages/robotstudio10.png" alt="RobotStudio">
+   <img src="Doc/images/robotstudio10.png" alt="RobotStudio">
 
 3. On the tab roles check if the grant *Remote Start and Stop in Auto* is checked for the role of the Default User.
 
-   <img src="Resources/images/robotstudio11.png" alt="RobotStudio">
+   <img src="Doc/images/robotstudio11.png" alt="RobotStudio">
 
 4. Apply.
 
@@ -233,16 +231,22 @@ Any other user can be used by passing the name and the password to **rws_interfa
 
  
 ### Set up Config File and launch your abb robot (e.g. Gofa) 
-Navigate to abb_driver/config/gofa_cfg.yaml
-Modify the parameters based on your robot configuration (e.g. ip_robot, name_robot,task_robot, etc.). Note that the IP robot in the yaml has to be the same of the WAN port (**POLIMI Setup = 192.168.131.200**)
+Navigate to ros_control_gofa/config/gofa_cfg.yaml
+Modify the parameters based on your robot configuration (e.g. ip_robot, name_robot,task_robot, etc.). Note that the IP robot in the yaml has to be the same of the WAN port of the robot controller (**POLIMI Setup = 192.168.131.200**)
 
 Finally 
 
-**Load in robotstudio in rapid codes from the controller folder "EGM"** 
-**Set robot in Automatic and Motors ON**
-**Connect to WAN port**
-**set PC IP address to 192.168.131.5 (see "Setup the UDP device" above)**
-```
+- Make sure that the application StateMachine 2.0 has loaded in robotstudio in rapid codes from the controller folder "EGM" 
+- Set robot in Automatic and Motors ON
+- Connect an ethernet cable from your Linux machine to the controller WAN port
+- Set the Linux machine IP address to 192.168.131.5 (it needs to be the same as the one in "Setup the UDP device")
+
+```bash
   source of setup.bash
-$ roslaunch abb_driver interface_gofa.launch
-``` 
+  roslaunch gofa_launcher real_robot.launch
+```
+
+### Final notes
+Before you try to use the robot purely in simulation with RobotStudio + ROS, let me save you valuable time: **it does not work**. Or at least, it works if you want to control the robot with RWS only and not with EGM (note that if you want to move the robot without a RAPID script, you will need EGM pkg).
+
+The fun thing is that it does not work not because of a software problem from ROS or this package but because ABB, at least when you want to virtualise the controller with RobotStudio, does not allow any communication with external computers except the one where RobotStudio is running. RobotStudio can only run on Windows, so it is possible (as far as I know) to have the two running on the same machine. If you solve this issue somehow, email me at niccolo.lucci@polimi.it or make a pull request.  
