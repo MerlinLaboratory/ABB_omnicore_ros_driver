@@ -230,7 +230,7 @@ The steps to configure the user account are:
 Any other user can be used by passing the name and the password to **rws_interface**.
 
  
-### Set up Config File and launch your abb robot (e.g. Gofa) 
+## Set up Config File and launch your abb robot (e.g. Gofa) 
 Navigate to ros_control_gofa/config/gofa_cfg.yaml
 Modify the parameters based on your robot configuration (e.g. ip_robot, name_robot,task_robot, etc.). Note that the IP robot in the yaml has to be the same of the WAN port of the robot controller (**POLIMI Setup = 192.168.131.200**)
 
@@ -246,7 +246,7 @@ Finally
   roslaunch gofa_launcher real_robot.launch
 ```
 
-### Final notes
+# Final notes
 Before you try to use the robot purely in simulation with RobotStudio + ROS, let me save you valuable time: **it does not work**. Or at least, it works if you want to control the robot with RWS only and not with EGM (note that if you want to move the robot without a RAPID script, you will need EGM pkg).
 
 The fun thing is that it does not work not because of a software problem from ROS or this package but because ABB, at least when you want to virtualise the controller with RobotStudio, does not allow any communication with external computers except the one where RobotStudio is running. RobotStudio can only run on Windows, so it is possible (as far as I know) to have the two running on the same machine. If you solve this issue somehow, email me at niccolo.lucci@polimi.it or make a pull request.  
