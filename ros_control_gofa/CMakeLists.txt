@@ -9,7 +9,6 @@ project(ros_control_gofa)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   urdf
-  rosparam_shortcuts
   control_msgs
   control_toolbox
   controller_manager

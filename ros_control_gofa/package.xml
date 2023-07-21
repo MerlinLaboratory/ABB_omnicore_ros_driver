@@ -59,8 +59,6 @@
   <build_depend>abb_libegm</build_depend>
   <build_depend>abb_librws</build_depend>
 
-
-
   <build_export_depend>control_msgs</build_export_depend>
   <build_export_depend>control_toolbox</build_export_depend>
   <build_export_depend>controller_manager</build_export_depend>
