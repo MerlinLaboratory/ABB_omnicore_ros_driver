@@ -1,0 +1,6 @@
+# The position has to be considered with respect to the TCP and in [mm]
+# i.e. 5 would be 5mm from centre of left and right finger 
+# Notice: min is 0.0 and max is 25.0 for the SmartGripper since the maximum stroke is 50mm
+float64 position
+---
+bool success
