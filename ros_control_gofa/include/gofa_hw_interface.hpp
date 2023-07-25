@@ -25,6 +25,8 @@
 #include <boost/scoped_ptr.hpp>
 #include <boost/thread/condition.hpp>
 
+#define __EXTERNAL_AXIS__ 2 // External robot axis. Used only if Yumi Single Arm is loaded
+
 namespace ros_control_gofa
 {
 
@@ -94,9 +96,11 @@ namespace ros_control_gofa
     /** \brief This functions set through RWS the EGM params specified in the configuration file .yaml */
     bool SetEGMParameters();
     bool EGMStartSignal();
+    void WaitForEgmConnection();
 
   private :
-    std::string name;
+    std::string robot_name;
+    std::string task_name;
     ros::NodeHandle nh;
 
     // --------------------------------------------------------------- //

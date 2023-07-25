@@ -1,16 +1,19 @@
 <launch>
-  <arg name="yamlFile" default="$(find ros_control_gofa)/config/gofa_cfg.yaml" />
+
+  <!-- Load the URDF pkg depending if launching Gofa or Yumi Single Arm-->
+  <arg name="robot"    default="yumi_single_arm" /> <!-- Possibilities: 'gofa' or 'yumi_single_arm'-->
+  <arg name="yamlFile" default="$(find ros_control_gofa)/config/$(arg robot)_cfg.yaml" />
   <rosparam command="load" file="$(arg yamlFile)" />
 
   <!-- Load the URDF pkg -->
   <include file="$(find robots_description)/launch/display.launch">
-    <arg name="robot" value="gofa" />
+    <arg name="robot" value="$(arg robot)" />
   </include>
 
   <node pkg="ros_control_gofa" name="gofa_hw_interface" type="gofa_control_node" output="screen" />
 
   <!-- Load controller manager -->
   <node name="ros_control_controller_manager" pkg="controller_manager" type="controller_manager" respawn="false"
-        output="screen" args="spawn joint_state_controller gofa_arm_controller" />
+        output="screen" args="spawn joint_state_controller robot_controller" />
 
 </launch>

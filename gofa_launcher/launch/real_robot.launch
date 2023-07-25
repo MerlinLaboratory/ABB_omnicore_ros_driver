@@ -2,7 +2,7 @@
 
     <!-- Launching ros-control pkg -->
     <include file="$(find ros_control_gofa)/launch/gofa_control.launch">
-        <arg name="yamlFile" value="$(find ros_control_gofa)/config/gofa_cfg.yaml"/> <!-- Path to configuration file for Gofa and ros_control -->
+        <arg name="robot" value="yumi_single_arm"/> <!-- Robot you want to launch -->
     </include>
 
     <!-- Launching moveit pkg -->

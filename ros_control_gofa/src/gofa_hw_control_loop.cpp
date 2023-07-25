@@ -10,8 +10,8 @@ namespace ros_control_gofa
     this->controller_manager.reset(new controller_manager::ControllerManager(gofa_hardware_interface.get(), nh_));
 
     // Load rosparams
-    nh.getParam("/gofa_hw_control_loop/loop_hz"                   , this->loop_hz_                   );
-    nh.getParam("/gofa_hw_control_loop/cycle_time_error_threshold", this->cycle_time_error_threshold_);
+    nh.getParam("/robot_hw_control_loop/loop_hz"                   , this->loop_hz_                   );
+    nh.getParam("/robot_hw_control_loop/cycle_time_error_threshold", this->cycle_time_error_threshold_);
 
     // Get current time for use with first update
     clock_gettime(CLOCK_MONOTONIC, &last_time_);

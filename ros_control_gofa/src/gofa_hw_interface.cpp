@@ -10,19 +10,22 @@ namespace ros_control_gofa
       // Load rosparams
 
       // Loading parameters from configuration.yaml
-      nh.getParam("/Gofa/ip_robot"                       , this->ip_robot           );
-      nh.getParam("/Gofa/robot_port_rws"                 , this->port_robot_rws     );
-      nh.getParam("/Gofa/robot_port_egm"                 , this->port_robot_egm     );
-      nh.getParam("/Gofa/name_robot"                     , this->name               );
-      nh.getParam("/Gofa/task_robot"                     , this->task_robot         );
-      nh.getParam("/Gofa/pos_corr_gain"                  , this->pos_corr_gain      );
-      nh.getParam("/Gofa/max_speed_deviation"            , this->max_speed_deviation);
-      nh.getParam("/gofa_hardware_interface/joints", this->joint_names        );
+      nh.getParam("/robot/name"                     , this->robot_name         );
+      nh.getParam("/robot/ip_robot"                 , this->ip_robot           );
+      nh.getParam("/robot/robot_port_rws"           , this->port_robot_rws     );
+      nh.getParam("/robot/robot_port_egm"           , this->port_robot_egm     );
+      nh.getParam("/robot/name_robot"               , this->task_name          );
+      nh.getParam("/robot/task_robot"               , this->task_robot         );
+      nh.getParam("/robot/pos_corr_gain"            , this->pos_corr_gain      );
+      nh.getParam("/robot/max_speed_deviation"      , this->max_speed_deviation);
+      nh.getParam("/robot_hardware_interface/joints", this->joint_names        );
+
+      // Debug
+	   ROS_INFO("Robot: %s has n_joints: %ld", this->robot_name.c_str(), this->joint_names.size());
 	   ROS_INFO("For RWS, connecting to ip: %s and port: %s", this->ip_robot.c_str(), std::to_string(this->port_robot_rws).c_str());
 	   ROS_INFO("For EGM, port: %s", std::to_string(this->port_robot_egm).c_str());
    }
 
-   // ! TODO: check if the Gofa supports all these interfaces
    void GofaHWInterface::init()
    {
       this->num_joints = this->joint_names.size();
@@ -93,35 +96,15 @@ namespace ros_control_gofa
 
       this->p_egm_interface = new abb::egm::EGMControllerInterface(io_service_, this->port_robot_egm);
 		this->thread_group_.create_thread(boost::bind(&boost::asio::io_service::run, &io_service_));
-
-      if( SetEGMParameters() == false )
-         ROS_WARN("Could not set EGM parameters");
       
-      // Setting the EGM signal to START to communicate RobotStudio to start the EGM communication
-      this->EGMStartSignal();
-
-		if (!this->p_egm_interface->isInitialized())
+      // Setting the EGM signal to Start communication, set parameters and wait for response
+      if(this->EGMStartSignal() == false)
+         ROS_ERROR("Could not send Start signal");
+      if( this->SetEGMParameters() == false )
+         ROS_ERROR("Could not set EGM parameters");
+		if (this->p_egm_interface->isInitialized() == false)
 			ROS_ERROR("EGM interface failed to initialize (e.g. due to port already bound)");
-      
-      // Loop to detect if EGM is connected and initialised
-      bool wait_for_egm_connection = true;
-      while(ros::ok() && wait_for_egm_connection)
-      {
-         if (this->p_egm_interface->isConnected())
-			{
-				if (this->p_egm_interface->getStatus().rapid_execution_state() == abb::egm::wrapper::Status_RAPIDExecutionState_RAPID_UNDEFINED)
-					ROS_WARN("RAPID execution state is UNDEFINED (might happen first time after controller start/restart). Try to restart the RAPID program.");
-				else
-					wait_for_egm_connection = this->p_egm_interface->getStatus().rapid_execution_state() != abb::egm::wrapper::Status_RAPIDExecutionState_RAPID_RUNNING;
-			}
-			else
-         {
-				ROS_INFO("EGM is NOT CONNECTED");
-            // this->EGMStartSignal();
-         }
-      }
-
-      ROS_INFO_STREAM_NAMED(this->name, "Gofa HW Interface Ready!");
+      this->WaitForEgmConnection();
 
       // TODO: It would be better to change this code but I have no idea how to do it
       // It is necessary to set the initial command to send to the robot the actual joint values read from 
@@ -130,21 +113,45 @@ namespace ros_control_gofa
       this->data_from_egm.Clear();
       this->p_egm_interface->read(&this->data_from_egm);
 
-
-      for(int index = 0; index < this->num_joints; index++)
+      int j = 0;
+      for(int i = j; i < this->num_joints; i++, j++)
       {
-         this->joint_position_command[index] = this->data_from_egm.feedback().robot().joints().position().values(index); // [Deg]
-         this->joint_velocity_command[index] = 0.0;                                                                      // [Deg/s]
+         if(this->robot_name == "yumi_single_arm" && i == __EXTERNAL_AXIS__)
+         {
+            this->joint_position_command[i] = this->data_from_egm.feedback().external().joints().position().values(0); // [Deg]
+            this->joint_velocity_command[i] = 0.0;                                                                     // [Deg/s]
+            i++;
+         }
+
+         this->joint_position_command[i] = this->data_from_egm.feedback().robot().joints().position().values(j); // [Deg]
+         this->joint_velocity_command[i] = 0.0;                                                                  // [Deg/s]
       } 
 
       // Setting the space for data to egm
+      if(this->robot_name == "yumi_single_arm")
+      {
+         this->data_to_egm.mutable_external()->mutable_joints()->mutable_position()->Clear();
+         this->data_to_egm.mutable_external()->mutable_joints()->mutable_velocity()->Clear();
+      }
+      
       this->data_to_egm.mutable_robot()->mutable_joints()->mutable_position()->Clear();
-		this->data_to_egm.mutable_robot()->mutable_joints()->Clear();
-		this->data_to_egm.mutable_robot()->Clear();
-		this->data_to_egm.Clear();
+      this->data_to_egm.mutable_robot()->mutable_joints()->mutable_velocity()->Clear();
+
+      // TODO: verify that they are useless 
+		// this->data_to_egm.mutable_robot()->mutable_joints()->Clear();
+		// this->data_to_egm.mutable_robot()->Clear();
+		// this->data_to_egm.Clear();
+
+      if(this->robot_name == "yumi_single_arm")
+      {
+         this->data_to_egm.mutable_external()->mutable_joints()->mutable_position()->CopyFrom(this->data_from_egm.feedback().external().joints().position());
+         this->data_to_egm.mutable_external()->mutable_joints()->mutable_velocity()->CopyFrom(this->data_from_egm.feedback().external().joints().velocity());
+      }
 
       this->data_to_egm.mutable_robot()->mutable_joints()->mutable_position()->CopyFrom(this->data_from_egm.feedback().robot().joints().position());
       this->data_to_egm.mutable_robot()->mutable_joints()->mutable_velocity()->CopyFrom(this->data_from_egm.feedback().robot().joints().velocity());
+
+      ROS_INFO_STREAM_NAMED(this->robot_name, "HW Interface Ready!");
    }
 
    void GofaHWInterface::read(ros::Duration &elapsed_time)
@@ -159,10 +166,18 @@ namespace ros_control_gofa
       this->data_from_egm.Clear();
       this->p_egm_interface->read(&data_from_egm);
 
-      for(int index = 0; index < this->num_joints; index++)
+      int j = 0;
+      for(int i = j; i < this->num_joints; i++, j++)
       {
-         this->joint_position[index] = this->data_from_egm.feedback().robot().joints().position().values(index) * 3.14159265358979323846 / 180.0; // [rad]
-         this->joint_velocity[index] = this->data_from_egm.feedback().robot().joints().velocity().values(index) * 3.14159265358979323846 / 180.0; // [rad/s]
+         if(this->robot_name == "yumi_single_arm" && i == __EXTERNAL_AXIS__)
+         {
+            this->joint_position[i] = this->data_from_egm.feedback().external().joints().position().values(0) * 3.14159265358979323846 / 180.0; // [rad]
+            this->joint_velocity[i] = this->data_from_egm.feedback().external().joints().velocity().values(0) * 3.14159265358979323846 / 180.0; // [rad/s]
+            i++;
+         }
+
+         this->joint_position[i] = this->data_from_egm.feedback().robot().joints().position().values(j) * 3.14159265358979323846 / 180.0; // [rad]
+         this->joint_velocity[i] = this->data_from_egm.feedback().robot().joints().velocity().values(j) * 3.14159265358979323846 / 180.0; // [rad/s]
       }
 
       return;
@@ -173,22 +188,31 @@ namespace ros_control_gofa
       // Enforcing limits
       this->pos_jnt_sat_interface.enforceLimits(elapsed_time);
       
-      for(int index = 0; index < this->num_joints; index++)
+      int j = 0;
+      for(int i = j; i < this->num_joints; i++, j++)
       {
-		   if (!std::isnan(this->joint_position_command[index]) && !std::isinf(std::isnan(this->joint_position_command[index])) &&
-             !std::isnan(this->joint_velocity_command[index]) && !std::isinf(std::isnan(this->joint_velocity_command[index])) )
+		   if (!std::isnan(this->joint_position_command[i]) && !std::isinf(std::isnan(this->joint_position_command[i])) &&
+             !std::isnan(this->joint_velocity_command[i]) && !std::isinf(std::isnan(this->joint_velocity_command[i])) )
          {
-            this->data_to_egm.mutable_robot()->mutable_joints()->mutable_position()->set_values(index, joint_position_command[index] / 3.14159265358979323846 * 180.0);
-            this->data_to_egm.mutable_robot()->mutable_joints()->mutable_velocity()->set_values(index, joint_velocity_command[index] / 3.14159265358979323846 * 180.0);
+            if(this->robot_name == "yumi_single_arm" && i == __EXTERNAL_AXIS__)
+            {
+               this->data_to_egm.mutable_external()->mutable_joints()->mutable_position()->set_values(0, joint_position_command[i] / 3.14159265358979323846 * 180.0);
+               this->data_to_egm.mutable_external()->mutable_joints()->mutable_velocity()->set_values(0, joint_velocity_command[i] / 3.14159265358979323846 * 180.0);
+               i++;
+            }
+
+            this->data_to_egm.mutable_robot()->mutable_joints()->mutable_position()->set_values(j, joint_position_command[i] / 3.14159265358979323846 * 180.0);
+            this->data_to_egm.mutable_robot()->mutable_joints()->mutable_velocity()->set_values(j, joint_velocity_command[i] / 3.14159265358979323846 * 180.0);
          }
       }
 
-      // ROS_INFO("Joints: [%lf, %lf, %lf, %lf, %lf, %lf]", joint_position_command[0] / 3.14159265358979323846 * 180.0,
-      //                                                    joint_position_command[1] / 3.14159265358979323846 * 180.0,
-      //                                                    joint_position_command[2] / 3.14159265358979323846 * 180.0,
-      //                                                    joint_position_command[3] / 3.14159265358979323846 * 180.0,
-      //                                                    joint_position_command[4] / 3.14159265358979323846 * 180.0,
-      //                                                    joint_position_command[5] / 3.14159265358979323846 * 180.0);
+      ROS_INFO("Joints: [%lf, %lf, %lf, %lf, %lf, %lf, %lf]", joint_position_command[0] / 3.14159265358979323846 * 180.0,
+                                                              joint_position_command[1] / 3.14159265358979323846 * 180.0,
+                                                              joint_position_command[2] / 3.14159265358979323846 * 180.0,
+                                                              joint_position_command[3] / 3.14159265358979323846 * 180.0,
+                                                              joint_position_command[4] / 3.14159265358979323846 * 180.0,
+                                                              joint_position_command[5] / 3.14159265358979323846 * 180.0,
+                                                              joint_position_command[6] / 3.14159265358979323846 * 180.0);
 
       // Uncomment to die
 		this->p_egm_interface->write(this->data_to_egm);
@@ -213,7 +237,7 @@ namespace ros_control_gofa
       // Get limits from URDF
       if (this->urdf_model == NULL)
       {
-         ROS_WARN_STREAM_NAMED(this->name, "No URDF model loaded, unable to get joint limits");
+         ROS_WARN_STREAM_NAMED(this->robot_name, "No URDF model loaded, unable to get joint limits");
          return;
       }
 
@@ -242,12 +266,12 @@ namespace ros_control_gofa
       }
       else
       {
-         ROS_WARN_STREAM_NAMED(this->name, "Joint " << joint_name << " does not have a URDF limits");
+         ROS_WARN_STREAM_NAMED(this->robot_name, "Joint " << joint_name << " does not have a URDF limits");
          return;
       }
 
       // For soft joint limit use saturation limits
-      ROS_DEBUG_STREAM_NAMED(this->name, "Using saturation limits (not soft limits)");
+      ROS_DEBUG_STREAM_NAMED(this->robot_name, "Using saturation limits (not soft limits)");
 
       const joint_limits_interface::PositionJointSaturationHandle sat_handle_position(joint_handle_position, joint_limits);
       const joint_limits_interface::VelocityJointSaturationHandle sat_handle_velocity(joint_handle_velocity, joint_limits);
@@ -289,11 +313,30 @@ namespace ros_control_gofa
 
    bool GofaHWInterface::EGMStartSignal()
    {
-		if(this->p_rws_interface->pulseIOSignal("EGM_START_JOINT", 500000))
-         return true;
+      return this->p_rws_interface->services().egm().signalEGMStartJoint();
 
-      ROS_ERROR("Cannot trigger Signal EGM_START_JOINT");
-      return false;
+		//if(this->p_rws_interface->pulseIOSignal("EGM_START_JOINT", 500000))
+      //   return true;
+      
+      //ROS_ERROR("Cannot trigger Signal EGM_START_JOINT");
+      //return false;
+   }
+
+   void GofaHWInterface::WaitForEgmConnection()
+   {
+      bool wait_for_egm_connection = true;
+      while(ros::ok() && wait_for_egm_connection)
+      {
+         if (this->p_egm_interface->isConnected())
+			{
+				if (this->p_egm_interface->getStatus().rapid_execution_state() == abb::egm::wrapper::Status_RAPIDExecutionState_RAPID_UNDEFINED)
+					ROS_WARN("RAPID execution state is UNDEFINED (might happen first time after controller start/restart). Try to restart the RAPID program.");
+				else
+					wait_for_egm_connection = this->p_egm_interface->getStatus().rapid_execution_state() != abb::egm::wrapper::Status_RAPIDExecutionState_RAPID_RUNNING;
+			}
+			else
+				ROS_INFO("EGM is NOT CONNECTED");
+      }
    }
 
    // ----------------------------------------------------------------- // 
@@ -347,13 +390,13 @@ namespace ros_control_gofa
          std::string search_param_name;
          if (nh.searchParam(param_name, search_param_name))
          {
-            ROS_INFO_STREAM_NAMED(this->name, "Waiting for model URDF on the ROS param server at location: " << nh.getNamespace()
+            ROS_INFO_STREAM_NAMED(this->robot_name, "Waiting for model URDF on the ROS param server at location: " << nh.getNamespace()
                                                                                                              << search_param_name);
             nh.getParam(search_param_name, urdf_string);
          }
          else
          {
-            ROS_INFO_STREAM_NAMED(this->name, "Waiting for model URDF on the ROS param server at location: " << nh.getNamespace()
+            ROS_INFO_STREAM_NAMED(this->robot_name, "Waiting for model URDF on the ROS param server at location: " << nh.getNamespace()
                                                                                                              << param_name);
             nh.getParam(param_name, urdf_string);
          }
@@ -362,7 +405,7 @@ namespace ros_control_gofa
       }
 
       if (!this->urdf_model->initString(urdf_string))
-         ROS_ERROR_STREAM_NAMED(this->name, "Unable to load URDF model");
+         ROS_ERROR_STREAM_NAMED(this->robot_name, "Unable to load URDF model");
       else
          ROS_INFO("Received URDF from param server");
    }
