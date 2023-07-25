@@ -673,6 +673,13 @@ bool RWSStateMachineInterface::Services::SG::signalRunSGRoutine() const
   return p_rws_interface_->toggleIOSignal(IOSignals::RUN_SG_ROUTINE);
 }
 
+bool RWSStateMachineInterface::Services::SG::MoveTo(const float position) const
+{
+  return setCommandInput(SystemConstants::RAPID::TASK_ROB_1, SG_COMMAND_MOVE_TO) &&
+         setTargetPositionInput(SystemConstants::RAPID::TASK_ROB_1, position) &&
+         signalRunSGRoutine();
+}
+
 bool RWSStateMachineInterface::Services::SG::GripIn() const
 {
   if(p_rws_interface_->getIOSignal(IOSignals::SG_STATUS_CALIBRATED) == SystemConstants::IOSignals::LOW)return false;

@@ -1387,6 +1387,8 @@ private:
        */
       bool signalRunSGRoutine() const;
 
+      bool MoveTo(const float position) const;
+
       bool GripIn() const;
 
       bool GripOut() const;
