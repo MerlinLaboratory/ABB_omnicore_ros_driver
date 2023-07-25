@@ -1,5 +1,5 @@
 controller_list:
-  - name: gofa_arm_controller
+  - name: robot_controller
     action_ns: follow_joint_trajectory
     type: FollowJointTrajectory
     default: True
