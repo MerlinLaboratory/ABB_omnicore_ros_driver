@@ -206,13 +206,13 @@ namespace ros_control_gofa
          }
       }
 
-      ROS_INFO("Joints: [%lf, %lf, %lf, %lf, %lf, %lf, %lf]", joint_position_command[0] / 3.14159265358979323846 * 180.0,
-                                                              joint_position_command[1] / 3.14159265358979323846 * 180.0,
-                                                              joint_position_command[2] / 3.14159265358979323846 * 180.0,
-                                                              joint_position_command[3] / 3.14159265358979323846 * 180.0,
-                                                              joint_position_command[4] / 3.14159265358979323846 * 180.0,
-                                                              joint_position_command[5] / 3.14159265358979323846 * 180.0,
-                                                              joint_position_command[6] / 3.14159265358979323846 * 180.0);
+      // ROS_INFO("Joints: [%lf, %lf, %lf, %lf, %lf, %lf, %lf]", joint_position_command[0] / 3.14159265358979323846 * 180.0,
+      //                                                         joint_position_command[1] / 3.14159265358979323846 * 180.0,
+      //                                                         joint_position_command[2] / 3.14159265358979323846 * 180.0,
+      //                                                         joint_position_command[3] / 3.14159265358979323846 * 180.0,
+      //                                                         joint_position_command[4] / 3.14159265358979323846 * 180.0,
+      //                                                         joint_position_command[5] / 3.14159265358979323846 * 180.0,
+      //                                                         joint_position_command[6] / 3.14159265358979323846 * 180.0);
 
       // Uncomment to die
 		this->p_egm_interface->write(this->data_to_egm);
