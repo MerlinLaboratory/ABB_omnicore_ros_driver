@@ -3,7 +3,7 @@
     <!-- Launching ros-control pkg -->
     <arg name="robot"    default="yumi_single_arm" /> <!-- Possibilities: 'gofa' or 'yumi_single_arm'-->
 
-    <include file="$(find ros_control_gofa)/launch/gofa_control.launch">
+    <include file="$(find ros_control_omnicore)/launch/omnicore_control.launch">
         <arg name="robot" value="$(arg robot)"/> <!-- Robot you want to launch -->
     </include>
 
@@ -30,6 +30,6 @@
 
     
     <!-- Run Rviz and load the default config to see the state of the move_group node -->
-    <node name="rviz_2" pkg="rviz" type="rviz" args="-d $(find gofa_launcher)/config/config.rviz"/>
+    <node name="rviz_2" pkg="rviz" type="rviz" args="-d $(find omnicore_launcher)/config/config.rviz"/>
 
 </launch>

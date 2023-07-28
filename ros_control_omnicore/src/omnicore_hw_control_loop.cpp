@@ -1,13 +1,13 @@
-#include <../include/gofa_hw_control_loop.hpp>
+#include "../include/omnicore_hw_control_loop.hpp"
 
-namespace ros_control_gofa
+namespace ros_control_omnicore
 {
 
-  GofaHWControlLoop::GofaHWControlLoop(ros::NodeHandle& nh, std::shared_ptr<ros_control_gofa::GofaHWInterface> gofa_hardware_interface)
-    : nh_(nh), hardware_interface(gofa_hardware_interface)
+  OmnicoreHWControlLoop::OmnicoreHWControlLoop(ros::NodeHandle& nh, std::shared_ptr<ros_control_omnicore::OmnicoreHWInterface> hardware_interface)
+    : nh_(nh), hardware_interface(hardware_interface)
   {
     // Create the controller manager
-    this->controller_manager.reset(new controller_manager::ControllerManager(gofa_hardware_interface.get(), nh_));
+    this->controller_manager.reset(new controller_manager::ControllerManager(hardware_interface.get(), nh_));
 
     // Load rosparams
     nh.getParam("/robot_hw_control_loop/loop_hz"                   , this->loop_hz_                   );
@@ -19,7 +19,7 @@ namespace ros_control_gofa
     this->desired_update_period_ = ros::Duration(1 / loop_hz_);
   }
 
-  void GofaHWControlLoop::run()
+  void OmnicoreHWControlLoop::run()
   {
     ros::Rate rate(loop_hz_);
     while (ros::ok())
@@ -29,7 +29,7 @@ namespace ros_control_gofa
     }
   }
 
-  void GofaHWControlLoop::update()
+  void OmnicoreHWControlLoop::update()
   {
     // Get change in time
     struct timespec current_time_;
@@ -57,4 +57,4 @@ namespace ros_control_gofa
     this->hardware_interface->write(elapsed_time_);
   }
 
-}  // namespace ros_control_boilerplate
+}  // namespace ros_control_omnicore

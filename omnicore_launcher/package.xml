@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>gofa_launcher</name>
+  <name>omnicore_launcher</name>
   <version>0.0.0</version>
-  <description>The gofa_launcher package</description>
+  <description>The omnicore_launcher package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->
@@ -19,7 +19,7 @@
   <!-- Url tags are optional, but multiple are allowed, one per tag -->
   <!-- Optional attribute type can be: website, bugtracker, or repository -->
   <!-- Example: -->
-  <!-- <url type="website">http://wiki.ros.org/gofa_launcher</url> -->
+  <!-- <url type="website">http://wiki.ros.org/omnicore_launcher</url> -->
 
 
   <!-- Author tags are optional, multiple are allowed, one per tag -->

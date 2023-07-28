@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(ros_control_gofa)
+project(ros_control_omnicore)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -115,7 +115,7 @@ link_directories("/usr/local/lib")
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES ros_control_gofa
+#  LIBRARIES ros_control_omnicore
 #  CATKIN_DEPENDS control_msgs ros_control ros_controllers roscpp rospy std_msgs
    DEPENDS Poco
 )
@@ -134,7 +134,7 @@ include_directories(
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/ros_control_gofa.cpp
+#   src/${PROJECT_NAME}/ros_control_omnicore.cpp
 # )
 
 ## Add cmake target dependencies of the library
@@ -145,7 +145,7 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-# add_executable(${PROJECT_NAME}_node src/ros_control_gofa_node.cpp)
+# add_executable(${PROJECT_NAME}_node src/ros_control_omnicore_node.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -204,7 +204,7 @@ include_directories(
 #   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 # )
 
-add_executable(gofa_control_node src/gofa_hw_main.cpp src/gofa_hw_interface.cpp src/gofa_hw_control_loop.cpp)
-set_target_properties(gofa_control_node PROPERTIES OUTPUT_NAME gofa_control_node PREFIX "")
-add_dependencies(gofa_control_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(gofa_control_node ${catkin_LIBRARIES} PocoNetSSL)
+add_executable(omnicore_control_node src/omnicore_hw_main.cpp src/omnicore_hw_interface.cpp src/omnicore_hw_control_loop.cpp)
+set_target_properties(omnicore_control_node PROPERTIES OUTPUT_NAME omnicore_control_node PREFIX "")
+add_dependencies(omnicore_control_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(omnicore_control_node ${catkin_LIBRARIES} PocoNetSSL)

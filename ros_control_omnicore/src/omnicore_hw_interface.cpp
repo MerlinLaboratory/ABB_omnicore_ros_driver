@@ -1,8 +1,8 @@
-#include <../include/gofa_hw_interface.hpp>
+#include "../include/omnicore_hw_interface.hpp"
 
-namespace ros_control_gofa
+namespace ros_control_omnicore
 {
-   GofaHWInterface::GofaHWInterface(const ros::NodeHandle &nh): nh(nh) 
+   OmnicoreHWInterface::OmnicoreHWInterface(const ros::NodeHandle &nh): nh(nh) 
    {
       // Load the URDF model needs to be loaded
       loadURDF(nh, "robot_description");
@@ -26,7 +26,7 @@ namespace ros_control_gofa
 	   ROS_INFO("For EGM, port: %s", std::to_string(this->port_robot_egm).c_str());
    }
 
-   void GofaHWInterface::init()
+   void OmnicoreHWInterface::init()
    {
       this->num_joints = this->joint_names.size();
 
@@ -38,7 +38,7 @@ namespace ros_control_gofa
       // Commands
       this->joint_position_command.resize(this->num_joints, 0.0);
       this->joint_velocity_command.resize(this->num_joints, 0.0);
-      // this->joint_effort_command  .resize(this->num_joints, 0.0); -> not supported by Gofa :()
+      // this->joint_effort_command  .resize(this->num_joints, 0.0); -> not supported by Omnicore :()
 
       // Limits
       this->joint_position_lower_limits.resize(num_joints, 0.0);
@@ -62,11 +62,11 @@ namespace ros_control_gofa
          // Add command interfaces to joints
          hardware_interface::JointHandle joint_handle_position = hardware_interface::JointHandle(joint_handle, &this->joint_position_command[joint_id]);
          hardware_interface::JointHandle joint_handle_velocity = hardware_interface::JointHandle(joint_handle, &this->joint_velocity_command[joint_id]);
-         // hardware_interface::JointHandle joint_handle_effort   = hardware_interface::JointHandle(joint_handle, &this->joint_effort_command  [joint_id]); -> Not supported by Gofa :(
+         // hardware_interface::JointHandle joint_handle_effort   = hardware_interface::JointHandle(joint_handle, &this->joint_effort_command  [joint_id]); -> Not supported by Omnicore :(
 
          this->position_joint_interface.registerHandle(joint_handle_position);
          this->velocity_joint_interface.registerHandle(joint_handle_velocity);
-         // this->effort_joint_interface  .registerHandle(joint_handle_effort); -> Not supported by Gofa :(
+         // this->effort_joint_interface  .registerHandle(joint_handle_effort); -> Not supported by Omnicore :(
 
          // Load the joint limits
          registerJointLimits(joint_handle_position, joint_handle_velocity, joint_id);
@@ -75,7 +75,7 @@ namespace ros_control_gofa
       registerInterface(&joint_state_interface);    // From RobotHW base class
       registerInterface(&position_joint_interface); // From RobotHW base class
       registerInterface(&velocity_joint_interface); // From RobotHW base class
-      // registerInterface(&effort_joint_interface);   // From RobotHW base class -> Not supported by Gofa :(
+      // registerInterface(&effort_joint_interface);   // From RobotHW base class -> Not supported by Omnicore :(
 
       // --------------------------------------------------------------- //
       // ----------  Ensablishing connection with RWS and EGM ---------- //
@@ -154,7 +154,7 @@ namespace ros_control_gofa
       ROS_INFO_STREAM_NAMED(this->robot_name, "HW Interface Ready!");
    }
 
-   void GofaHWInterface::read(ros::Duration &elapsed_time)
+   void OmnicoreHWInterface::read(ros::Duration &elapsed_time)
    {
       if (this->p_egm_interface->waitForMessage(500)  == false)
       {
@@ -183,7 +183,7 @@ namespace ros_control_gofa
       return;
    }
 
-   void GofaHWInterface::write(ros::Duration &elapsed_time)
+   void OmnicoreHWInterface::write(ros::Duration &elapsed_time)
    {
       // Enforcing limits
       this->pos_jnt_sat_interface.enforceLimits(elapsed_time);
@@ -220,7 +220,7 @@ namespace ros_control_gofa
       return;
    }
 
-   void GofaHWInterface::registerJointLimits(const hardware_interface::JointHandle &joint_handle_position,
+   void OmnicoreHWInterface::registerJointLimits(const hardware_interface::JointHandle &joint_handle_position,
                                              const hardware_interface::JointHandle &joint_handle_velocity,
                                              std::size_t joint_id)
    {
@@ -280,7 +280,7 @@ namespace ros_control_gofa
       vel_jnt_sat_interface.registerHandle(sat_handle_velocity);
    }
 
-   void GofaHWInterface::reset()
+   void OmnicoreHWInterface::reset()
    {
       // Reset joint limits state, in case of mode switch or e-stop
       this->pos_jnt_sat_interface.reset();
@@ -290,7 +290,7 @@ namespace ros_control_gofa
    // --------------- Functions for connecting to Robot --------------- //
    // ----------------------------------------------------------------- //
 
-   bool GofaHWInterface::SetEGMParameters()
+   bool OmnicoreHWInterface::SetEGMParameters()
    {
 	   abb::rws::RWSStateMachineInterface::EGMSettings egm_settings;
       if (this->p_rws_interface->services().egm().getSettings(this->task_robot, &egm_settings)) // safer way to apply settings
@@ -311,7 +311,7 @@ namespace ros_control_gofa
       return true;
    }
 
-   bool GofaHWInterface::EGMStartSignal()
+   bool OmnicoreHWInterface::EGMStartSignal()
    {
       return this->p_rws_interface->services().egm().signalEGMStartJoint();
 
@@ -322,7 +322,7 @@ namespace ros_control_gofa
       //return false;
    }
 
-   void GofaHWInterface::WaitForEgmConnection()
+   void OmnicoreHWInterface::WaitForEgmConnection()
    {
       bool wait_for_egm_connection = true;
       while(ros::ok() && wait_for_egm_connection)
@@ -343,14 +343,14 @@ namespace ros_control_gofa
    // ------------------------ Debug functions ------------------------ // 
    // ----------------------------------------------------------------- // 
 
-   void GofaHWInterface::printState()
+   void OmnicoreHWInterface::printState()
    {
       // WARNING: THIS IS NOT REALTIME SAFE
       // FOR DEBUGGING ONLY, USE AT YOUR OWN ROBOT's RISK!
       ROS_INFO_STREAM_THROTTLE(1, std::endl << printStateHelper());
    }
 
-   std::string GofaHWInterface::printStateHelper()
+   std::string OmnicoreHWInterface::printStateHelper()
    {
       std::stringstream ss;
       std::cout.precision(15);
@@ -365,7 +365,7 @@ namespace ros_control_gofa
       return ss.str();
    }
 
-   std::string GofaHWInterface::printCommandHelper()
+   std::string OmnicoreHWInterface::printCommandHelper()
    {
       std::stringstream ss;
       std::cout.precision(15);
@@ -379,7 +379,7 @@ namespace ros_control_gofa
       return ss.str();
    }
 
-   void GofaHWInterface::loadURDF(const ros::NodeHandle &nh, std::string param_name)
+   void OmnicoreHWInterface::loadURDF(const ros::NodeHandle &nh, std::string param_name)
    {
       std::string urdf_string;
       this->urdf_model = new urdf::Model();
@@ -410,4 +410,4 @@ namespace ros_control_gofa
          ROS_INFO("Received URDF from param server");
    }
 
-} // namespace ros_control_gofa
+} // namespace ros_control_omnicore

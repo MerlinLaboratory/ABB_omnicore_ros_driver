@@ -27,14 +27,14 @@
 
 #define __EXTERNAL_AXIS__ 2 // External robot axis. Used only if Yumi Single Arm is loaded
 
-namespace ros_control_gofa
+namespace ros_control_omnicore
 {
 
-  class GofaHWInterface : public hardware_interface::RobotHW
+  class OmnicoreHWInterface : public hardware_interface::RobotHW
   {
   public:
-    GofaHWInterface(const ros::NodeHandle &nh);
-    virtual ~GofaHWInterface() {}
+    OmnicoreHWInterface(const ros::NodeHandle &nh);
+    virtual ~OmnicoreHWInterface() {}
 
     /** \brief Initialize the hardware interface */
     void init();
@@ -130,7 +130,7 @@ namespace ros_control_gofa
     // Commands
     std::vector<double> joint_position_command;
     std::vector<double> joint_velocity_command;
-    // std::vector<double> joint_effort_command; -> Not supported by Gofa :(
+    // std::vector<double> joint_effort_command; -> Not supported by Omnicore :(
 
     // Copy of limits, in case we need them later in our control stack
     std::vector<double> joint_position_lower_limits;
