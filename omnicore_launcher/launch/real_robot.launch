@@ -1,8 +1,8 @@
 <launch>
 
-    <!-- Launching ros-control pkg -->
-    <arg name="robot"    default="yumi_single_arm" /> <!-- Possibilities: 'gofa' or 'yumi_single_arm'-->
+    <arg name="robot"    default="gofa" /> <!-- Possibilities: 'gofa' or 'yumi_single_arm'-->
 
+    <!-- Launching ros-control pkg -->
     <include file="$(find ros_control_omnicore)/launch/omnicore_control.launch">
         <arg name="robot" value="$(arg robot)"/> <!-- Robot you want to launch -->
     </include>
