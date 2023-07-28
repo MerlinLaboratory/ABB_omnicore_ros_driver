@@ -4,10 +4,10 @@
 
 robot:
   name: "gofa"
-  # ip_robot: "192.168.131.200"
-  # robot_port_rws: 443
-  ip_robot: "192.168.56.101" # for virtual robot (robotstudio)
-  robot_port_rws: 80 # for virtual robot (robotstudio)
+  ip_robot: "192.168.131.200"
+  robot_port_rws: 443
+  # ip_robot: "192.168.56.101" # for virtual robot (robotstudio)
+  # robot_port_rws: 80 # for virtual robot (robotstudio)
   name_robot: "ROB_1"
   task_robot: "T_ROB1"
   pos_corr_gain: 1

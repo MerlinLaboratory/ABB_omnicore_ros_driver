@@ -1,17 +1,19 @@
 <launch>
 
-  <!-- Load the URDF pkg depending if launching Gofa or Yumi Single Arm-->
   <arg name="robot"    default="gofa" /> <!-- Possibilities: 'gofa' or 'yumi_single_arm'-->
   <arg name="yamlFile" default="$(find ros_control_omnicore)/config/$(arg robot)_cfg.yaml" />
+
+  <!-- Load the config launching Gofa or Yumi Single Arm-->
   <rosparam command="load" file="$(arg yamlFile)" />
 
   <!-- Load the URDF pkg -->
   <include file="$(find robots_description)/launch/display.launch">
-    <arg name="robot" value="$(arg robot)" />
+    <arg name="robot"       value="$(arg robot)" />
+    <arg name="launch_rviz" value="false" />
   </include>
 
   <!-- Load the Hardware Interface -->
-  <node pkg="ros_control_gofa" name="omnicore_hw_interface" type="omnicore_control_node" output="screen" />
+  <node pkg="ros_control_omnicore" name="omnicore_hw_interface" type="omnicore_control_node" output="screen" />
 
   <!-- Load controller manager -->
   <node name="ros_control_controller_manager" pkg="controller_manager" type="controller_manager" respawn="false"
