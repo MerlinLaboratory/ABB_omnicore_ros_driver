@@ -1,5 +1,6 @@
 # abb_wrapper
-These packages are intended to ease the interaction between Gofa robot and its OmniCore controller and ROS-based systems, by providing ready-to-run ROS nodes. In particular, we developed the hardware_interface to use the Gofa with ros_control. Furthermore, we integrated moveit! within the robot so that you can sends trajectories directly to ros_control and then to the real controller.
+These packages are intended to ease the interaction between ABB robots supporting the new Omnicore controller and ROS-based systems, by providing ready-to-run ROS nodes. In particular, we developed the robots' control with ros_control. Furthermore, we integrated moveit! for the supported robots so that you can sends trajectories directly to ros_control and then to the real controller.
+The supported robots are: Gofa and Yumi Single Arm (together with the SmartGripper).
 
 ## Important Notes
 Tested on Ubuntu 20.04 with ROS Noetic. Support on other ROS distro is expected but not tested.
@@ -8,17 +9,17 @@ Tested on Ubuntu 20.04 with ROS Noetic. Support on other ROS distro is expected 
 
 These packages are intended to ease the interaction between ABB OmniCore controllers and ROS-based systems, by providing ready-to-run ROS nodes.
 
-The included (*principal*) packages are briefly described in the following table:
+The principal packages are briefly described in the following table:
 
 | Package | Description |
 | --- | --- |
-| [abb_librws](abb_librws) | (A modified version of https://github.com/ros-industrial/abb_librws) Provides a ROS node that communicate with the controller using Robot Web Services 2.0  |
 | [abb_libegm](abb_libegm) | (A modified version of https://github.com/ros-industrial/abb_libegm) Provides a ROS node that exposes hardware interface, for *direct motion control* of ABB robots (via the *Externally Guided Motion* (`EGM`) interface). |
-| [abb_driver](abb_driver) | Provides ROS nodes for the main interface with the controller. It combine the RWS and EGM node and use the parameters in the yaml file. |
-| [abb_controllers](abb_controllers) | Provides ROS nodes for kinematic calculation using the URDF model of the robot. |
+| [abb_librws](abb_librws) | (A modified version of https://github.com/ros-industrial/abb_librws) Provides a ROS node that communicate with the controller using Robot Web Services 2.0  |
+| [moveit_config](moveit) | Provides the Moveit configurations for the supported robots. |
+| [omnicore_launcher](ros_control) | Provides all the .launch files to correctly launch the robots in real or simulation. |
 | [robots_description](gofa_description) | Provides ROS nodes for kinematic calculation using the URDF model of the robot (For now only Gofa robot is available). |
-| [ros_control_gofa](ros_control) | Provides hardware interface for the Gofa robot. |
-| [gofa_launcher](ros_control) | Provides all the .launch files to correctly launch Gofa in real or simulation. |
+| [ros_control_ominicore](ros_control) | Provides hardware interface for the robots supporting ABB Omnicore controller. |
+| [rws_service](rws) | Provides some services for the yumi_single_arm SmartGripper. |
 
 Please see each package for more details (*e.g. additional requirements, limitations and troubleshooting*).
 
@@ -39,14 +40,18 @@ mkdir -p ~/catkin_ws/src
 cd ~/catkin_ws/
 catkin_make
 
-echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc # BAD practice. I would advise to DON'T do it!
 ```
 
 If no errors were reported as part of the `catkin_make` command, the build has succeeded and the driver should now be usable.
 
-### Install POCO
+### Install Moveit! and ros_control
 
-Start a terminal session (launch terminal) by <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>T</kbd>
+```bash
+sudo apt install ros-noetic-ros-control ros-noetic-ros-controllers
+sudo apt install ros-noetic-moveit
+```
+
+### Install POCO
 
 Install essential dependencies and git, execute the following commands one by one:
 
@@ -55,7 +60,6 @@ sudo apt update
 sudo apt upgrade
 sudo apt install build-essential gdb cmake git
 sudo apt-get install openssl libssl-dev
-# sudo apt-get install libiodbc2 libiodbc2-dev <- This uninstall stuffs from Moveit!
 sudo apt-get install libmysqlclient-dev
 ```
 
@@ -241,9 +245,10 @@ Finally
 - Connect an ethernet cable from your Linux machine to the controller WAN port
 - Set the Linux machine IP address to 192.168.131.5 (it needs to be the same as the one in "Setup the UDP device")
 
+By default, the repo launches the **Gofa** robot with a **position_controllers/JointTrajectoryController**:
 ```bash
-  source of setup.bash
-  roslaunch gofa_launcher real_robot.launch
+  source devel/setup.bash
+  roslaunch omnicore_launcher real_robot.launch
 ```
 
 # Final notes
