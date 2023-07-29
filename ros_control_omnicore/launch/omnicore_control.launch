@@ -8,8 +8,9 @@
 
   <!-- Load the URDF pkg -->
   <include file="$(find robots_description)/launch/display.launch">
-    <arg name="robot"       value="$(arg robot)" />
-    <arg name="launch_rviz" value="false" />
+    <arg name="robot"          value="$(arg robot)" />
+    <arg name="launch_rviz"    value="false" />
+    <arg name="fake_execution" value="false" />
   </include>
 
   <!-- Load the Hardware Interface -->
