@@ -1,0 +1,130 @@
+<?xml version="1.0" ?>
+<robot name="camera_stand" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+
+
+    <xacro:macro name="camera_stand" params="parent *origin">
+
+        <xacro:property name="base_height" value="0.6" />
+        <xacro:property name="holder_length" value="0.4" />
+
+
+        <joint name="joint_camera_stand_robot" type="fixed">
+            <xacro:insert_block name="origin"/>
+            <parent link="${parent}" />
+            <child link="base_link_camera_stand" />
+        </joint>
+
+        <link name="base_link_camera_stand">
+            <inertial>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <mass value="1.0"/>
+                <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+            </inertial>
+            <visual>
+                <origin xyz="0 0 ${base_height/2}" rpy="0 0 0"/>
+                <geometry>
+                    <box size="0.1 0.1 ${base_height}" />
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0 0 ${base_height/2}" rpy="0 0 0"/>
+                <geometry>
+                    <box size="0.1 0.1 ${base_height}" />
+                </geometry>
+            </collision>
+        </link>
+
+        <link name="camera_holder">
+            <inertial>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <mass value="1.0"/>
+                <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+            </inertial>
+            <visual>
+                <origin xyz="0 0 ${holder_length/2}" rpy="0 0 0"/>
+                <geometry>
+                    <box size="0.1 0.1 ${holder_length}" />
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0 0 ${holder_length/2}" rpy="0 0 0"/>
+                <geometry>
+                    <box size="0.1 0.1 ${holder_length}" />
+                </geometry>
+            </collision>
+        </link>
+
+        <joint name="joint_camera_holder" type="fixed">
+            <origin xyz="0.0 0.0 ${base_height}" rpy="0.0 -${pi/2} 0" />
+            <parent link="base_link_camera_stand" />
+            <child link="camera_holder" />
+        </joint>
+
+
+
+        <link name="ext_camera_link">
+
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <box size="0.01 0.01 0.01"/>
+                </geometry>
+                <material name="red"/>
+            </visual>
+
+            <inertial>
+                <mass value="1e-5" />
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+            </inertial>
+        </link>
+
+        <joint name="joint_camera_link" type="fixed">
+            <origin xyz="0.0 0.0 ${holder_length + 0.1}" rpy="-${pi/2} 0 -2.5 " />
+            <parent link="camera_holder" />
+            <child link="ext_camera_link" />
+        </joint>
+
+        <gazebo reference="ext_camera_link">
+            <sensor type="camera" name="camera1">
+            <update_rate>5.0</update_rate>
+            <camera name="head">
+                <horizontal_fov>1.3962634</horizontal_fov>
+                <image>
+                    <width>1280</width>
+                    <height>720</height>
+                    <format>R8G8B8</format>
+                </image>
+                <clip>
+                    <near>0.02</near>
+                    <far>300</far>
+                </clip>
+                <noise>
+                    <type>gaussian</type>
+                    <!-- Noise is sampled independently per pixel on each frame.
+                        That pixel's noise value is added to each of its color
+                        channels, which at that point lie in the range [0,1]. -->
+                    <mean>0.0</mean>
+                    <stddev>0.007</stddev>
+                </noise>
+            </camera>
+            <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+                <alwaysOn>true</alwaysOn>
+                <updateRate>5.0</updateRate>
+                <cameraName>camera</cameraName>
+                <imageTopicName>image_raw</imageTopicName>
+                <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+                <frameName>camerext_camera_linka_link</frameName>
+                <!-- <hackBaseline>0.07</hackBaseline> -->
+                <distortionK1>0.000001</distortionK1>
+                <distortionK2>0.000001</distortionK2>
+                <distortionK3>0.000001</distortionK3>
+                <distortionT1>0.000001</distortionT1>
+                <distortionT2>0.000001</distortionT2>
+            </plugin>
+            </sensor>
+        </gazebo>
+
+    </xacro:macro>
+</robot>

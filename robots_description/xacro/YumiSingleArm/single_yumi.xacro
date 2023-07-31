@@ -1,8 +1,6 @@
 <?xml version="1.0"?>
 <robot name="single_yumi" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <!-- Import all Gazebo-customization elements, including Gazebo colors -->
-  <xacro:include filename="$(find robots_description)/xacro/YumiSingleArm/single_yumi.gazebo.xacro" />
   <!-- Import Transmissions -->
   <xacro:include filename="$(find robots_description)/xacro/YumiSingleArm/single_yumi.transmission.xacro" />
 
@@ -20,6 +18,11 @@
     </joint>
 
     <link name="single_yumi_base_link">
+      <inertial>
+        <origin xyz="0 -0.03 0.12" rpy="0 0 0" />
+        <mass value="2" />
+        <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1" />
+      </inertial>
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
@@ -27,6 +30,13 @@
         </geometry>
         <material name="Grey" />
       </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://robots_description/meshes/Yumi/coarse/single_arm_base.stl" />
+        </geometry>
+        <material name="Grey" />
+      </collision>
     </link>
 
     <!-- joint between body and link_1 -->
@@ -275,7 +285,6 @@
     </link>
 
     <!--Extensions -->
-    <xacro:single_yumi_gazebo name="single_arm" />
     <xacro:single_yumi_transmission name="single_arm" hardware_interface="${hardware_interface}"/>
 
   </xacro:macro>

@@ -1,0 +1,86 @@
+<?xml version="1.0" ?>
+<robot name="table" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+
+
+    <xacro:macro name="table" params="parent *origin">
+
+        <!-- <material name="yellow">
+            <color rgba="255.0 255.0 0.0 1"/>
+        </material> -->
+
+        <joint name="joint_table_robot" type="fixed">
+            <xacro:insert_block name="origin"/>
+            <parent link="${parent}" />
+            <child link="base_link_table" />
+        </joint>
+
+        <gazebo reference="base_link_table">
+            <material>Gazebo/Yellow</material>
+        </gazebo>
+
+        <link name="base_link_table">
+            <contact>
+                <lateral_friction value="1.0"/>
+            </contact>
+            <inertial>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <mass value=".0"/>
+                <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0.6"/>
+                <geometry>
+                    <mesh filename="package://irim_ss_pkg/meshes/Extra/table.obj" scale="1.5 1 0.05"/>
+                </geometry>
+                <!-- <material name="Gazebo/Yellow"/> -->
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 0 0.6"/>
+                <geometry>
+                    <mesh filename="package://irim_ss_pkg/meshes/Extra/table.obj" scale="1.5 1 0.05"/>
+                </geometry>
+                <!-- <material name="Gazebo/Yellow"/> -->
+            </collision>
+            <!-- <collision>
+                <origin rpy="0 0 0" xyz="0 0 0.6"/>
+                <geometry>
+                    <box size="1.5 1 0.05"/>
+                </geometry>
+            </collision> -->
+            <visual>
+                <origin rpy="0 0 0" xyz="-0.65 -0.4 0.29"/>
+                <geometry>
+                    <mesh filename="package://irim_ss_pkg/meshes/Extra/table.obj" scale="0.1 0.1 0.58"/>
+                </geometry>
+                <!-- <material name="white">
+                    <color rgba="1 1 1 1"/>
+                </material>	  -->
+            </visual>
+            <visual>
+                <origin rpy="0 0 0" xyz="-0.65 0.4 0.29"/>
+                <geometry>
+                    <mesh filename="package://irim_ss_pkg/meshes/Extra/table.obj" scale="0.1 0.1 0.58"/>
+                </geometry>
+                <!-- <material name="white">
+                    <color rgba="1 1 1 1"/>
+                </material>	  -->
+            </visual>
+            <visual>
+                <origin rpy="0 0 0" xyz="0.65 -0.4 0.29"/>
+                <geometry>
+                    <mesh filename="package://irim_ss_pkg/meshes/Extra/table.obj" scale="0.1 0.1 0.58"/>
+                </geometry>
+                <!-- <material name="white">
+                    <color rgba="1 1 1 1"/>
+                </material>	  -->
+            </visual>
+                <visual>
+                <origin rpy="0 0 0" xyz="0.65 0.4 0.29"/>
+                <geometry>
+                    <mesh filename="package://irim_ss_pkg/meshes/Extra/table.obj" scale="0.1 0.1 0.58"/>
+                </geometry>
+            </visual>
+        </link>
+    </xacro:macro>
+</robot>
