@@ -11,6 +11,10 @@ find_package(catkin REQUIRED COMPONENTS
   cv_bridge
   moveit_commander
   rospy
+  moveit-ros-control-interface
+  joint-trajectory-controller
+  gripper-action-controller
+  effort-controllers
 )
 
 catkin_package(
