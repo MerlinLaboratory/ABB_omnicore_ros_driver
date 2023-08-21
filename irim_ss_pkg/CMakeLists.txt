@@ -7,14 +7,15 @@ project(irim_ss_pkg)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
+
 find_package(catkin REQUIRED COMPONENTS
   cv_bridge
-  moveit_commander
+  #moveit-ros-control-interface
+  #joint-trajectory-controller
+  #gripper-action-controller
+  #effort-controllers
   rospy
-  moveit-ros-control-interface
-  joint-trajectory-controller
-  gripper-action-controller
-  effort-controllers
+  moveit_commander
 )
 
 catkin_package(

@@ -50,7 +50,6 @@
   <!--   <doc_depend>doxygen</doc_depend> -->
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>cv_bridge</build_depend>
-  <build_depend>moveit-ros-control-interface</build_depend>
   <build_depend>moveit_commander</build_depend>
   <build_depend>rospy</build_depend>
   <build_depend>joint-trajectory-controller</build_depend>
@@ -66,6 +65,7 @@
   <exec_depend>joint-trajectory-controller</exec_depend>
   <exec_depend>gripper-action-controller</exec_depend>
   <exec_depend>effort-controllers</exec_depend>
+  <!-- <exec_depend>moveit-ros-control-interface</exec_depend> -->
 
 
   <!-- The export tag contains other, unspecified, tags -->
