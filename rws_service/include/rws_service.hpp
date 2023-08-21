@@ -8,9 +8,7 @@
 #include <abb_librws/rws_rapid.h>
 
 // Including services
-#include <rws_service/GripIn.h>
-#include <rws_service/GripOut.h>
-#include <rws_service/MoveTo.h>
+#include "std_srvs/Trigger.h"
 
 #include <iostream>
 
@@ -27,9 +25,9 @@ public:
     // ---------------- Methods ---------------- //
 
     // Services Callbacks
-    bool GripInSrv (rws_service::GripIn:: Request &req, rws_service::GripIn ::Response &res);
-    bool GripOutSrv(rws_service::GripOut::Request &req, rws_service::GripOut::Response &res);
-    bool MoveToSrv (rws_service::MoveTo:: Request &req, rws_service::MoveTo ::Response &res);
+    bool GripInSrv (std_srvs::Trigger:: Request &req, std_srvs::Trigger::Response &res);
+    bool GripOutSrv(std_srvs::Trigger::Request &req,  std_srvs::Trigger::Response &res);
+    // bool MoveToSrv (std_srvs::Trigger:: Request &req, std_srvs::Trigger::Response &res);
 
     void Spinner();
 

@@ -12,6 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  std_srvs
   message_generation
 )
 
@@ -24,20 +25,6 @@ link_directories("/usr/local/lib")
 ################################################
 
 
-## Generate services in the 'srv' folder
-add_service_files(
-  FILES
-
-  # SmartGripper services
-  GripIn.srv
-  GripOut.srv
-  MoveTo.srv
-)
-
-generate_messages(
-  DEPENDENCIES
-  std_msgs
-)
 
 catkin_package(
 #  INCLUDE_DIRS include

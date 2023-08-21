@@ -1,0 +1,4 @@
+communication:
+  IP: 172.25.114.19 # your IP on LabView network
+  port: 61557       # LabView port
+

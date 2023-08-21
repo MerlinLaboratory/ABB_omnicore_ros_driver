@@ -13,36 +13,36 @@ RwsService::RwsService()
     // Create the required server services
     server_grip_in  = this->nh.advertiseService("grip_in",  &RwsService::GripInSrv , this);
     server_grip_out = this->nh.advertiseService("grip_out", &RwsService::GripOutSrv, this);
-    server_move_to  = this->nh.advertiseService("move_to",  &RwsService::MoveToSrv , this);
+    // server_move_to  = this->nh.advertiseService("move_to",  &RwsService::MoveToSrv , this);
 }
 
-bool RwsService::GripInSrv(rws_service::GripIn::Request  &req, 
-                           rws_service::GripIn::Response &res)
+bool RwsService::GripInSrv(std_srvs::Trigger::Request  &req, 
+                           std_srvs::Trigger::Response &res)
 {
     res.success = this->p_rws_interface->services().sg().GripIn();
 
     return true;
 }
 
-bool RwsService::GripOutSrv(rws_service::GripOut::Request  &req, 
-                            rws_service::GripOut::Response &res)
+bool RwsService::GripOutSrv(std_srvs::Trigger::Request  &req, 
+                            std_srvs::Trigger::Response &res)
 {
     res.success = this->p_rws_interface->services().sg().GripOut();
     return true;
 }
 
-bool RwsService::MoveToSrv(rws_service::MoveTo::Request  &req, 
-                           rws_service::MoveTo::Response &res)
-{
-    p_rws_interface->requestMasterShip();
-    usleep(250000);
-    abb::rws::RAPIDNum temp_command(abb::rws::RWSStateMachineInterface::SGCommands::SG_COMMAND_MOVE_TO);
-    res.success = this->p_rws_interface->services().sg().MoveTo(req.position);
-    p_rws_interface->releaseMasterShip();
-    usleep(250000);
+// bool RwsService::MoveToSrv(std_srvs::Trigger::Request  &req, 
+//                            std_srvs::Trigger::Response &res)
+// {
+//     p_rws_interface->requestMasterShip();
+//     usleep(250000);
+//     abb::rws::RAPIDNum temp_command(abb::rws::RWSStateMachineInterface::SGCommands::SG_COMMAND_MOVE_TO);
+//     res.success = this->p_rws_interface->services().sg().MoveTo(req.position);
+//     p_rws_interface->releaseMasterShip();
+//     usleep(250000);
 
-    return true;
-}
+//     return true;
+// }
 
 void RwsService::Spinner()
 {
