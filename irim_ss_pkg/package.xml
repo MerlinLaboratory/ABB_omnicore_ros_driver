@@ -65,7 +65,7 @@
   <exec_depend>joint-trajectory-controller</exec_depend>
   <exec_depend>gripper-action-controller</exec_depend>
   <exec_depend>effort-controllers</exec_depend>
-  <!-- <exec_depend>moveit-ros-control-interface</exec_depend> -->
+  <exec_depend>moveit-ros-control-interface</exec_depend>
 
 
   <!-- The export tag contains other, unspecified, tags -->
