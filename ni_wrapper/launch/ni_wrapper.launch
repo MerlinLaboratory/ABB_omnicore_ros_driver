@@ -1,0 +1,5 @@
+<launch>
+    <node pkg="ni_wrapper" type="ni_wrapper_node.py" name="ni_wrapper" output="screen">
+        <rosparam command="load" file="$(find ni_wrapper)/config/comm_param.yaml"/>
+    </node>
+</launch>
