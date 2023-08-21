@@ -3,7 +3,7 @@
 
 
     <!-- Parameters -->
-    <arg name="name"                    default="gofa" />
+    <arg name="name"                     default="gofa" />
     <xacro:arg name="robot"              default="$(arg name)" />
     <xacro:arg name="hardware_interface" default="PositionJointInterface" />
     <xacro:arg name="gripper_interface"  default="EffortJointInterface" />
@@ -34,11 +34,9 @@
         <xacro:include filename="$(find robots_description)/Util/materials.xacro" />
         <!-- Import utilities -->
         <xacro:include filename="$(find robots_description)/Util/utilities.xacro" />
-        <!--Import
-        the single yumi macro -->
+        <!--Import the single yumi macro -->
         <xacro:include filename="$(find robots_description)/xacro/YumiSingleArm/single_yumi.xacro" />
-        <!--Import
-        the yumi servo gripper macro -->
+        <!--Import the yumi servo gripper macro -->
         <xacro:include filename="$(find robots_description)/Grippers/YumiServoGripper/yumi_servo_gripper.xacro" />
 
         <xacro:single_yumi parent="world" hardware_interface="${hardware_interface}">

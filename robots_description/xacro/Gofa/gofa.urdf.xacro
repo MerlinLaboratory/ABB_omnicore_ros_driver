@@ -36,6 +36,7 @@
 
 	<!-- GoFa URDF model -->
 	<xacro:macro name="gofa" params="parent child *origin">
+		<!-- Base -->
 		<joint name="${parent}_to_$(arg base_link_name)" type="fixed">
 			<xacro:insert_block name="origin"/>
 			<parent link="${parent}"/>
@@ -50,6 +51,8 @@
 			</inertial>
 			<xacro:visual_plus_collision v_p_c_name="$(arg base_link_name)"/>
 		</link>
+
+		<!-- Link 1 -->
 		<link name="$(arg 1st_link_name)">
 			<inertial>
 				<origin xyz="2.08682453325091E-06 0.0103608399967513 0.0705307203199506" rpy="0 0 0"/>
@@ -66,6 +69,8 @@
 			<axis xyz="0 0 1"/>
 			<limit effort="0" lower="${radians(-180)}" upper="${radians(180)}" velocity="${radians(125)}"/>
 		</joint>
+
+		<!-- Link2 -->
 		<link name="$(arg 2nd_link_name)">
 			<inertial>
 				<origin xyz="1.34018352211628E-06 -0.0500118376116071 0.222001399322246" rpy="0 0 0"/>
@@ -82,6 +87,8 @@
 			<axis xyz="0 1 0"/>
 			<limit effort="0" lower="${radians(-180)}" upper="${radians(180)}" velocity="${radians(125)}"/>
 		</joint>
+
+		<!-- Link3 -->
 		<link name="$(arg 3rd_link_name)">
 			<inertial>
 				<origin xyz="0.0128129281453599 0.0944171780907046 0.0247427540642403" rpy="0 0 0"/>
@@ -98,6 +105,8 @@
 			<axis xyz="0 1 0"/>
 			<limit effort="0" lower="${radians(-225)}" upper="${radians(85)}" velocity="${radians(140)}"/>
 		</joint>
+
+		<!-- Link4 -->
 		<link name="$(arg 4th_link_name)">
 			<inertial>
 				<origin xyz="0.160558561602322 0.041976811408979 -2.36623354021859E-07" rpy="0 0 0"/>
@@ -114,6 +123,8 @@
 			<axis xyz="1 0 0"/>
 			<limit effort="0" lower="${radians(-180)}" upper="${radians(180)}" velocity="${radians(200)}"/>
 		</joint>
+
+		<!-- Link5 -->
 		<link name="$(arg 5th_link_name)">
 			<inertial>
 				<origin xyz="-0.0147152361879962 -0.0785646469392633 0.0427558021601431" rpy="0 0 0"/>
@@ -130,6 +141,8 @@
 			<axis xyz="0 1 0"/>
 			<limit effort="0" lower="${radians(-180)}" upper="${radians(180)}" velocity="${radians(200)}"/>
 		</joint>
+
+		<!-- Link6 -->
 		<link name="$(arg 6th_link_name)">
 			<inertial>
 				<origin xyz="0.0137506852604966 0.000239804131398652 -0.000341962798940165" rpy="0 0 0"/>
@@ -146,6 +159,8 @@
 			<axis xyz="1 0 0"/>
 			<limit effort="0" lower="${radians(-180)}" upper="${radians(180)}" velocity="${radians(200)}"/>
 		</joint>
+
+		<!-- Flange -->
 		<link name="${child}">
 		</link>
 		<joint name="$(arg 6th_link_name)_to_${child}" type="fixed">
