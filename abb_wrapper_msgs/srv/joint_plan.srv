@@ -1,0 +1,6 @@
+float64[] joint_goal
+bool is_true
+trajectory_msgs/JointTrajectory past_trajectory
+---
+bool answer
+trajectory_msgs/JointTrajectory computed_trajectory

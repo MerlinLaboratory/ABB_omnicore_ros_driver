@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<launch>
+
+	<!-- Launch arguments -->
+	<arg name="task_sequences_params" default="$(find abb_wrapper_control)/configs/task_sequences_params.yaml"/>
+	
+	<!-- Loading config file to param server -->
+	<rosparam command="load" file="$(arg task_sequences_params)"/>
+
+	<!-- Load main node -->
+  	<node name="task_server_node" pkg="abb_wrapper_control" type="task_server" output="screen"/>	
+
+</launch>

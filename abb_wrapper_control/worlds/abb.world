@@ -1,0 +1,148 @@
+<?xml version="1.0" ?>
+<sdf version="1.7">
+  <!-- One can change this world to his needs or use another one. -->
+  
+  <world name="default">
+	<!-- box (like a table)
+    <model name="table">
+			<pose> 0.6 0 0 0 0 0</pose>
+			<static>true</static>
+			<link name='linkTable'>
+				<pose>0.0 0.0 0.0 0.0 0.0 0.0</pose>
+				
+				<collision name="my_collisionTable">
+		 			<pose>0.0 0.0 0.0 0.0 0.0 0.0</pose>
+					<geometry>
+		        <box>
+		          <size>1 0.7 0.05</size>
+		        </box>
+		      </geometry>
+	      </collision>
+				
+				<visual name="my_visualTable">
+					<geometry>
+		        <box>
+					<size>1 0.7 0.05</size>
+		        </box>
+		      </geometry>
+	      </visual>
+				
+				<self_collide>0</self_collide>		
+				<gravity>1</gravity>
+			</link>
+    </model> -->
+
+    <model name="Table">
+			      <pose> 0.0 0.0 -0.01 0.0 0.0 0.0</pose>
+			  <static>true</static>
+	    <link name='linkTable'>
+				<pose>0.0 0.0 0.0 0.0 0.0 0.0</pose>		
+		    <collision name="my_link_table">
+		 			<pose>0.0 0.0 0.0 0.0 0.0 0.0</pose>
+				<geometry>
+		        <box>
+		            <size>1.7 1.7 0.02</size>
+		        </box>
+		        </geometry>
+	        </collision>			
+		    <visual name="my_link_table">
+				<geometry>
+		        <box>
+					<size>1.7 1.7 0.02</size>
+		        </box>
+		        </geometry>
+	        </visual>	
+				<self_collide>0</self_collide>		
+				<gravity>1</gravity>
+	    </link>
+    </model>
+
+
+    <model name="TableBehind">
+			<pose> -0.4 0.0 0.5 0.0 0.0 0.0</pose>
+			<static>true</static>
+			<link name='linkTableBehind'>
+				<pose>0 0 0 0 0 0</pose>
+				
+				<collision name="my_collisionlinkTableBehind">
+		 			<pose>0 0 0 0 0 0</pose>
+					<geometry>
+		        <box>
+		          <size>0.02 1.7 1.0</size>
+		        </box>
+		      </geometry>
+	      </collision>
+				
+				<visual name="my_visuallinkTableBehind">
+					<geometry>
+		        <box>
+					<size>0.02 1.7 1.0</size>
+		        </box>
+		      </geometry>
+	      </visual>
+				
+				<self_collide>0</self_collide>		
+				<gravity>1</gravity>
+			</link>
+    </model>
+
+		<model name="TableRoof">
+			<pose> 0.1 0.0 1.0 0.0 0.0 0.0</pose>
+			<static>true</static>
+			<link name='linkTableRoof'>
+				<pose>0 0 0 0 0 0</pose>
+				
+				<collision name="my_collisionTableRoof">
+		 			<pose>0 0 0 0 0 0</pose>
+					<geometry>
+		        <box>
+		          <size>1.0 1.7 0.02</size>
+		        </box>
+		      </geometry>
+	      </collision>
+				
+				<visual name="my_visualTableRoof">
+					<geometry>
+		        <box>
+					<size>1.0 1.7 0.02</size>
+		        </box>
+		      </geometry>
+	      </visual>
+				
+				<self_collide>0</self_collide>		
+				<gravity>1</gravity>
+		   </link>
+    </model>
+
+	<model name="TableRight">
+	        
+			<pose>0.1 -0.60 0.5 0 0 0 </pose>
+			<static>true</static>
+			<link name='linkTableRight'>
+				<pose>0 0 0 0 0 0</pose>
+
+				<collision name="my_collisionTableRight">
+		 			<pose>0 0 0 0 0 0</pose>
+					<geometry>
+		        <box>
+		          <size>1 0.02 1</size>
+		        </box>
+		            </geometry>
+	            </collision>
+
+				<visual name="my_visualTableRight">
+					<geometry>
+		        <box>
+					<size>1 0.02 1</size>
+		        </box>
+		           </geometry>
+	      </visual>
+
+				<self_collide>0</self_collide>
+				<gravity>1</gravity>
+			</link>
+    </model>
+
+	
+</world>
+</sdf>
