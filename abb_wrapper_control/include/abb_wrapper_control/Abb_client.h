@@ -58,6 +58,9 @@ class AbbClient {
         // Service call function for closing the gripper
         bool call_closing_gripper(std_msgs::Bool& close);
 
+        // Service call function for opening the gripper
+        bool call_opening_gripper(std_msgs::Bool& open);
+
     /// private variables -------------------------------------------------------------------------
 	private:
 		ros::NodeHandle nh;

@@ -53,8 +53,14 @@ bool AbbClient::initialize(ros::NodeHandle& nh_){
         ROS_ERROR("Failed to load the joint_service_name!");
     };
     
+    // Parse gripper clients
+
     if(!nh_.getParam("/abb/closing_gripper_service_name", this->gripper_service_grip_in)){
         ROS_ERROR("Failed to load the closing_gripper_service_name!");
+    };
+
+    if(!nh_.getParam("/abb/opening_gripper_service_name", this->gripper_service_grip_out)){
+        ROS_ERROR("Failed to load the opening_gripper_service_name!");
     };
 
     // Initializing service clients after waiting
@@ -76,6 +82,9 @@ bool AbbClient::initialize(ros::NodeHandle& nh_){
     
     if(!ros::service::waitForService(this->gripper_service_grip_in, ros::Duration(1.0))) return false;
     this->grip_in_client = this->nh.serviceClient<std_srvs::Trigger>(this->gripper_service_grip_in);
+    
+    if(!ros::service::waitForService(this->gripper_service_grip_out, ros::Duration(1.0))) return false;
+    this->grip_out_client = this->nh.serviceClient<std_srvs::Trigger>(this->gripper_service_grip_out);
 
     // At this point initializing completed
     return true;
@@ -189,4 +198,18 @@ bool AbbClient::call_closing_gripper(std_msgs::Bool& close){
 
     return trigger_srv.response.success;
 }
+
+bool AbbClient::call_opening_gripper(std_msgs::Bool& open){
+   
+   std_srvs::Trigger trigger_srv;
+   
+    // Calling the service
+    if(open.data && !this->grip_out_client.call(trigger_srv)){
+        ROS_ERROR("Failed to contact the grip_out server. Returning...");
+        return false;
+    }
+
+    return trigger_srv.response.success;
+}
+
 

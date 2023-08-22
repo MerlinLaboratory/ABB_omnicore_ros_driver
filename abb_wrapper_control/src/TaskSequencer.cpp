@@ -119,6 +119,36 @@ bool TaskSequencer::call_simple_grasp_task(std_srvs::SetBool::Request &req, std_
         res.message = "The service call_simple_grasp_task done correctly with false request!";
         return true;
     }
+
+    // Open the gripper
+
+    if(!this->abb_client.call_opening_gripper(this->gripper_close_open)){ 
+        ROS_ERROR("Unable to open the gripper!");
+        res.success = false;
+        res.message = "The service call_opening_gripper was NOT performed correctly!";
+        return false;
+    }
+
+    /*PLAN 0: Planning to HOME Joints*/
+
+    if(!this->abb_client.call_joint_service(this->home_joints, true, this->tmp_traj_arm, this->tmp_traj_arm)){
+        ROS_ERROR("Could not plan to the specified home joint config.");
+        res.success = false;
+        res.message = "The service call_simple_home_task was NOT performed correctly!";
+        return false;
+    }
+
+    /*EXEC 0: Going to HOME JOINTS*/
+
+    if(!this->abb_client.call_arm_control_service(this->tmp_traj_arm)){
+        ROS_ERROR("Could not go to HOME joints.");
+        res.success = false;
+        res.message = "The service call_arm_control_service was NOT performed correctly! Error in arm control.";
+        return false;
+    } 
+    
+    geometry_msgs::Pose present_pose =  performFK(this->home_joints);
+    std::cout << "The present pose is: " << present_pose << std::endl;
     
     // Computing the grasp and pregrasp pose and converting to geometry_msgs Pose
 
@@ -133,9 +163,9 @@ bool TaskSequencer::call_simple_grasp_task(std_srvs::SetBool::Request &req, std_
     // ROS_INFO("PRE GRASP POSE is: %f, %f, %f, %f, %f, %f, %f",pre_grasp_pose.position.x, pre_grasp_pose.position.y, pre_grasp_pose.position.z, pre_grasp_pose.orientation.x, pre_grasp_pose.orientation.y, pre_grasp_pose.orientation.z, pre_grasp_pose.orientation.w);
     
     // Setting zero pose as starting from present
-    geometry_msgs::Pose present_pose = geometry_msgs::Pose();
-    present_pose.position.x = 0.0; present_pose.position.y = 0.0; present_pose.position.z = 0.0;
-    present_pose.orientation.x = 0.0; present_pose.orientation.y = 0.0; present_pose.orientation.z = 0.0; present_pose.orientation.w = 1.0;
+    // geometry_msgs::Pose present_pose = geometry_msgs::Pose();
+    // present_pose.position.x = 0.0; present_pose.position.y = 0.0; present_pose.position.z = 0.0;
+    // present_pose.orientation.x = 0.0; present_pose.orientation.y = 0.0; present_pose.orientation.z = 0.0; present_pose.orientation.w = 1.0;
 
     /* PLAN 1: Plan to PRE GRASP POSE */
 
@@ -143,6 +173,15 @@ bool TaskSequencer::call_simple_grasp_task(std_srvs::SetBool::Request &req, std_
         ROS_ERROR("Could not plan to the specified pre grasp pose.");
         res.success = false;
         res.message = "The service call_simple_grasp_task was NOT performed correctly!";
+        return false;
+    }  
+
+    /* WAIT 0: Wait to finish the previous task*/
+
+    if(!this->abb_client.call_arm_wait_service(this->waiting_time)){ // WAITING FOR END EXEC
+        ROS_ERROR("TIMEOUT!!! EXEC TOOK TOO MUCH TIME for going to Home Joints");
+        res.success = false;
+        res.message = "The service call_arm_wait_service was NOT performed correctly! Error wait in arm control.";
         return false;
     }
 
@@ -252,7 +291,7 @@ bool TaskSequencer::call_simple_grasp_task(std_srvs::SetBool::Request &req, std_
         res.message = "The service call_closing_gripper was NOT performed correctly!";
         return false;
     }
-    
+
     // Now, everything finished well
     res.success = true;
     res.message = "The service call_simple_grasp_task was correctly performed!";

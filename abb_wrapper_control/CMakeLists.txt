@@ -138,7 +138,6 @@ catkin_package(
 )
 
 set(OBJECTS_SOURCE_FILES
-src/ArmControl_trial.cpp
   src/ArmControl.cpp
   src/SlerpPlan.cpp
   src/PosePlan.cpp
