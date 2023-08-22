@@ -1,8 +1,8 @@
 abb:
  ## Move group name defined in the config file of the MoveIt! package
- group_name: gofa_arm 
+ group_name: arm 
  ## End-effector name defined in the config file of the MoveIt! package
- end_effector_name: flange
+ end_effector_name: grasp_link
 
 ## Arm control service name
  arm_control_service_name: arm_control_service

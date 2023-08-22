@@ -24,7 +24,7 @@ TaskSequencer::TaskSequencer(ros::NodeHandle& nh_){
 
     // Moveit names
 
-	if(!nh_.getParam("/GoFa/group_name", group_name)){
+	if(!nh_.getParam("/abb/group_name", group_name)){
         ROS_ERROR("Failed to load the move group name!");
     };
 
@@ -32,7 +32,7 @@ TaskSequencer::TaskSequencer(ros::NodeHandle& nh_){
  
     //End-effector name use for planning
     
-	if(!nh_.getParam("/GoFa/end_effector_name", end_effector_name)){
+	if(!nh_.getParam("/abb/end_effector_name", end_effector_name)){
         ROS_ERROR("Failed to load the end_effector_name!");
     };
 
@@ -95,13 +95,13 @@ bool TaskSequencer::parse_task_params(){
     //
     if(!ros::param::get("/task_sequencer/home_joints", this->home_joints)){
 		ROS_WARN("The param 'home_joints' not found in param server! Using default.");
-		this->home_joints = {-0.02964952169282699, -0.6700027941530696, 0.8789126682305997, 0.031163780524483826, 1.9386409249882384, -0.4670643597402561};
+		this->home_joints = {0.0,-0.0364, 0.0, 0.5051, 0.0, 1.1522, 0.0};
 		success = false;
 	}
 
     if(!ros::param::get("/task_sequencer/joint_position_A", this->joint_pos_A)){
 		ROS_WARN("The param 'home_joints' not found in param server! Using default.");
-		this->joint_pos_A = {-0.02964952169282699, -0.6700027941530696, 0.8789126682305997, 0.031163780524483826, 1.9386409249882384, -0.4670643597402561};
+		this->joint_pos_A = {0.0,-0.0364, 0.0, 0.5051, 0.0, 1.1522, 0.0};
 		success = false;
 	}
     return success;

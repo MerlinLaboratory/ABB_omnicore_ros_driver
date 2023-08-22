@@ -161,18 +161,18 @@ bool SlerpPlan::performMotionPlan(){
     std::cout << "FOUND COMPLETE PLAN FOR WAYPOINTS!!!" << std::endl;
 
     /* If VISUAL is enabled */
-    #ifdef VISUAL
+    // #ifdef VISUAL
 
-    ROS_INFO("Visualizing the computed plan as trajectory line.");
-    visual_tools.publishAxisLabeled(cart_waypoints.back(), "goal pose");
-    visual_tools.publishTrajectoryLine(trajectory, joint_model_group);
-    visual_tools.trigger();
+    // ROS_INFO("Visualizing the computed plan as trajectory line.");
+    // visual_tools.publishAxisLabeled(cart_waypoints.back(), "goal pose");
+    // visual_tools.publishTrajectoryLine(trajectory, joint_model_group);
+    // visual_tools.trigger();
     
     #ifdef PROMPT
     visual_tools.prompt("Press 'next' in the RvizVisualToolsGui window to execute the motion on the robot.");
     #endif
 
-    #endif
+    // #endif
 
     return true;
 }

@@ -4,13 +4,13 @@
 task_sequencer:
 
   ################## PREGRASP AND GRASP TRANSFORM ##############################
-  # Transform from world to grasp pose frame (xyzrpy) [get it from: rosrun tf tf_echo world flange] (DEFAULT)
-  grasp_transform: [0.873, 0.007, 0.206, 3.089, -0.061, -2.658]
+  # Transform from world to grasp pose frame (xyzrpy) [got it from: rosrun tf tf_echo world grasp_link] (DEFAULT)
+  grasp_transform: [0.155, 0.002, 0.678, 3.092, 0.003, -1.504]
 
   # Transform from grasp pose frame to pre-grasp pose frame (xyzrpy)
-  pre_grasp_transform: [0.0, 0.0, -0.1, 0.0, 0.0, 0.0]
+  pre_grasp_transform: [0.0, 0.0, -0.08, 0.0, 0.0, 0.0]
 
   ################## HOME JOINTS ##############################################
 
-  home_joints: [-0.02964952169282699, -0.6700027941530696, 0.8789126682305997, 0.031163780524483826, 1.9386409249882384, -0.4670643597402561]
-  joint_position_A : [0.4347949033907933, 0.9423239319449587, -0.9475959256388795, -0.045906996626675856, 1.2924645675807531, -0.4660588832706968]
+  home_joints: [0.0,-0.0364, 0.0, 0.5051, 0.0, 1.1522, 0.0]
+  joint_position_A : [0.0,-0.0364, 0.0, 0.5051, 0.0, 1.1522, 0.0]
