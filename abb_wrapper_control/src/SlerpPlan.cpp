@@ -1,6 +1,6 @@
 /* SLERP CONTROL - Uses SLERP interpolation between ee pose and goal pose to create homogeneous motion
-Authors: George Jose Pollayil - Mathew Jose Pollayil
-Email: gpollayil@gmail.com, mathewjosepollayil@gmail.com  */
+Authors: George Jose Pollayil - Mathew Jose Pollayil - Stefano Angeli
+Email: gpollayil@gmail.com, mathewjosepollayil@gmail.com, stefano.angeli@ing.unipi.it */
 
 #include "ros/ros.h"
 #include <cstdlib>

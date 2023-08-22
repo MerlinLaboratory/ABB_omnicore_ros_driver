@@ -7,6 +7,7 @@
   <arg name="debug" default="false" />
   <arg name="verbose" default="true" />
   <arg name="load_gripper" default="true" />
+  <arg name="collision_scene" default="true" />
 
   <arg name="controller_config_file" default="$(find irim_ss_pkg)/config/yumi_controllers.yaml" />
   <arg name="controllers" default="joint_state_controller joint_traj_controller gripper_controller"/>
@@ -64,5 +65,10 @@
   <node name="spawn_dice_py" pkg="irim_ss_pkg" type="dice.py" />
   
   <node name="gripper_simulation" pkg="irim_ss_pkg" type="gripper_simulation.py" />
+  
+
+  <!-- Load Collision Scene for planning -->
+  <include file="$(find abb_wrapper_control)/launch/launchCollisionObject.launch" if="$(arg collision_scene)">
+  </include>
 
 </launch>

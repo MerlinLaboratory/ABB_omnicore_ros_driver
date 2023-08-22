@@ -10,7 +10,6 @@ Email: gpollayil@gmail.com, mathewjosepollayil@gmail.com, stefano.angeli@ing.uni
 
 TaskSequencer::TaskSequencer(ros::NodeHandle& nh_){
     
-    actionClient_ = new ArmControlTrial();
     // Initializing Node Handle
     this->nh = nh_;
 
@@ -59,6 +58,10 @@ TaskSequencer::TaskSequencer(ros::NodeHandle& nh_){
     this->waiting_time = ros::Duration(20.0);
     this->null_joints.resize(this->number_of_active_joints.size());
     std::fill(this->null_joints.begin(), this->null_joints.end(), 0.0);
+
+    //
+    this->gripper_close_open.data = true;
+    
     // Spinning once
     ros::spinOnce();
 }
@@ -241,10 +244,9 @@ bool TaskSequencer::call_simple_grasp_task(std_srvs::SetBool::Request &req, std_
         res.message = "The service call_arm_wait_service was NOT performed correctly! Error wait in arm control.";
         return false;
     }
-    std_msgs::Bool close;
-    close.data = true;
+    // Close the gripper
 
-    if(!this->abb_client.call_closing_gripper(close)){ 
+    if(!this->abb_client.call_closing_gripper(this->gripper_close_open)){ 
         ROS_ERROR("Unable to close the gripper!");
         res.success = false;
         res.message = "The service call_closing_gripper was NOT performed correctly!";

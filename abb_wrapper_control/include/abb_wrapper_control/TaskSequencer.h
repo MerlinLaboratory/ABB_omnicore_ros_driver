@@ -25,8 +25,6 @@ Email: gpollayil@gmail.com, mathewjosepollayil@gmail.com, stefano.angeli@ing.uni
 // Custom Includes
 #include "Abb_client.h"
 
-//
-#include <abb_wrapper_control/ArmControl_trial.h>
 // Other Includes
 
 // Defines
@@ -59,7 +57,8 @@ class TaskSequencer {
     /// private variables -------------------------------------------------------------------------
 	private:
         
-        ArmControlTrial* actionClient_;
+        std_msgs::Bool gripper_close_open;
+        //
 		ros::NodeHandle nh;
 
         // The Abb Client
