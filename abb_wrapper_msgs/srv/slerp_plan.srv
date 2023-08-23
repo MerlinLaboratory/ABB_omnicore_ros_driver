@@ -1,0 +1,7 @@
+geometry_msgs/Pose goal_pose
+geometry_msgs/Pose start_pose
+bool is_goal_relative
+trajectory_msgs/JointTrajectory past_trajectory
+---
+bool answer
+trajectory_msgs/JointTrajectory computed_trajectory

@@ -1,0 +1,16 @@
+# Parameters for task sequencer
+# Remember that there might be other important constants that can only be changed from the src code.
+
+task_sequencer:
+
+  ################## PREGRASP AND GRASP TRANSFORM ##############################
+  # Transform from world to grasp pose frame (xyzrpy) [got it from: rosrun tf tf_echo world grasp_link] (DEFAULT)
+  grasp_transform: [0.155, 0.002, 0.678, 3.092, 0.003, -1.504]
+
+  # Transform from grasp pose frame to pre-grasp pose frame (xyzrpy)
+  pre_grasp_transform: [0.0, 0.0, -0.08, 0.0, 0.0, 0.0]
+
+  ################## HOME JOINTS ##############################################
+
+  home_joints: [1.4174823818713378e-05, 0.08584409621871192, 1.285614237467314e-05, 0.6962262742117122, -5.4936201096644766e-05, 0.6386747064646956, 7.453641430377189e-05]
+  joint_position_A : [1.4174823818713378e-05, 0.08584409621871192, 1.285614237467314e-05, 0.6962262742117122, -5.4936201096644766e-05, 0.6386747064646956, 7.453641430377189e-05]

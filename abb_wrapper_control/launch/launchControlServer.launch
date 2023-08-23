@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+      <arg name="environment_name" default="abb"/>
+
+	<!-- Launch arguments -->
+	<arg name="control_server_params" default="$(find abb_wrapper_control)/configs/control_server_params.yaml"/>
+	
+	<!-- Loading config file to param server -->
+	<rosparam command="load" file="$(arg control_server_params)"/>
+   
+	<!-- Load main node -->
+  <node name="control_server_node" pkg="abb_wrapper_control" type="control_server" output="screen"/>
+  
+</launch>

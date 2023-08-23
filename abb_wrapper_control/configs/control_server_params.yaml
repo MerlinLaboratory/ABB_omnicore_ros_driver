@@ -1,0 +1,26 @@
+abb:
+ ## Move group name defined in the config file of the MoveIt! package
+ group_name: arm 
+ ## End-effector name defined in the config file of the MoveIt! package
+ end_effector_name: grasp_link
+
+## Arm control service name
+ arm_control_service_name: arm_control_service
+ arm_wait_service_name: arm_wait_service
+
+## Pose plan service name
+ pose_plan_service_name: pose_plan_service
+
+## Slerp plan service name
+ slerp_plan_service_name: slerp_plan_service
+
+## Joint plan service name
+ joint_plan_service_name: joint_plan_service
+
+## Closing gripper service name
+ closing_gripper_service_name: grip_in
+
+## Opening gripper service name
+ opening_gripper_service_name: grip_out
+
+

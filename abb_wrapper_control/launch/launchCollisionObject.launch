@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+
+	<arg name="environment_name" default="abb"/>
+
+    <!-- Load collision objects into the planning scene -->
+  	<node name="world_to_planning_scene" pkg="abb_wrapper_control" type="world_to_planning_scene_node" args="$(find abb_wrapper_control)/worlds/$(arg environment_name).world --skipIfco" output="screen"/>
+</launch>
+
