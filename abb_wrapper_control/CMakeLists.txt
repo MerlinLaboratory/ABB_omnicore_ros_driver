@@ -97,7 +97,7 @@ find_package(catkin REQUIRED COMPONENTS
 #   trajectory_msgs
 # )
 
-find_package(sdformat10 REQUIRED)
+find_package(sdformat11 REQUIRED)
 find_package(abb_wrapper_msgs REQUIRED)
 
 ################################################
@@ -159,7 +159,7 @@ include_directories(
   ${SDFormat_INCLUDE_DIRS}
 )
 
-link_directories(${sdformat10_LIBRARY_DIRS})
+link_directories(${sdformat11_LIBRARY_DIRS})
 
 ## Declare a C++ library
 set(LIB_SOURCE_FILES

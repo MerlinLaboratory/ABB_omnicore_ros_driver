@@ -52,20 +52,20 @@
   <build_depend>cv_bridge</build_depend>
   <build_depend>moveit_commander</build_depend>
   <build_depend>rospy</build_depend>
-  <build_depend>joint-trajectory-controller</build_depend>
-  <build_depend>gripper-action-controller</build_depend>
-  <build_depend>effort-controllers</build_depend>
+  <build_depend>joint_trajectory_controller</build_depend>
+  <build_depend>gripper_action_controller</build_depend>
+  <build_depend>effort_controllers</build_depend>
   <build_export_depend>cv_bridge</build_export_depend>
   <build_export_depend>moveit_commander</build_export_depend>
   <build_export_depend>rospy</build_export_depend>
   <exec_depend>cv_bridge</exec_depend>
   <exec_depend>moveit_commander</exec_depend>
   <exec_depend>rospy</exec_depend>
-  <exec_depend>moveit-ros-control-interface</exec_depend>
-  <exec_depend>joint-trajectory-controller</exec_depend>
-  <exec_depend>gripper-action-controller</exec_depend>
-  <exec_depend>effort-controllers</exec_depend>
-  <exec_depend>moveit-ros-control-interface</exec_depend>
+  <exec_depend>moveit_ros_control_interface</exec_depend>
+  <exec_depend>joint_trajectory_controller</exec_depend>
+  <exec_depend>gripper_action_controller</exec_depend>
+  <exec_depend>effort_controllers</exec_depend>
+  <depend>sdformat11</depend>
 
 
   <!-- The export tag contains other, unspecified, tags -->
