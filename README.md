@@ -21,6 +21,7 @@ The principal packages are briefly described in the following table:
 | [ros_control_ominicore](ros_control) | Provides hardware interface for the robots supporting ABB Omnicore controller. |
 | [rws_service](rws) | Provides some services for the yumi_single_arm SmartGripper. |
 | [abb_wrapper_msgs](abb_wrapper_msgs) | Provides srvs definition for ros services used in abb_wrapper_control. |
+| [abb_wrapper_control](abb_wrapper_control) | Provides ros services for planning (PosePlan, SlerpPlan and JointPlan) and ros actions for controlling the robot(ArmService and ArmWait). |
 
 Please see each package for more details (*e.g. additional requirements, limitations and troubleshooting*).
 
