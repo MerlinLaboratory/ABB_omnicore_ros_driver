@@ -123,13 +123,17 @@ Compile the workspace
 ```bash
 catkin_make
 ```
-## Gazebo Simulation
+### Gazebo Simulation
 If there are no errors you are ready to proceed to launch the Gazebo simulation of the robot:
 ```bash
   source devel/setup.bash
   roslaunch irim_ss_pkg yumi_gazebo real_robot.launch
 ```
-# Trajectory Planning 
+## Trajectory Planning 
+Launch the ROS Services (PosePlan, SlerpPlan and JointPlan services server):
+```bash
+  roslaunch abb_wrapper_control launchControlServer.launch
+```
 
 If there are no errors you are ready to proceed to set up the robot.
 
