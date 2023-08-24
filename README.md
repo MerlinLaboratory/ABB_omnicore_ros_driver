@@ -129,11 +129,12 @@ If there are no errors you are ready to proceed to launch the Gazebo simulation 
   source devel/setup.bash
   roslaunch irim_ss_pkg yumi_gazebo real_robot.launch
 ```
-### Trajectory Planning 
+### Motion Planning
 Launch the PosePlan, SlerpPlan and JointPlan ROS Services server:
 ```bash
   roslaunch abb_wrapper_control launchControlServer.launch
 ```
+### Motion Control
 Launch the ROS Services Client to control the robot:
 ```bash
   roslaunch abb_wrapper_control launchTaskServerTemplate.launch
