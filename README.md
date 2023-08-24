@@ -127,9 +127,9 @@ catkin_make
 If there are no errors you are ready to proceed to launch the Gazebo simulation of the robot:
 ```bash
   source devel/setup.bash
-  roslaunch irim_ss_pkg yumi_gazebo.launch real_robot.launch
+  roslaunch irim_ss_pkg yumi_gazebo real_robot.launch
 ```
-
+# Trajectory Planning 
 
 If there are no errors you are ready to proceed to set up the robot.
 
