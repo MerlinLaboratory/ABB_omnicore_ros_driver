@@ -62,8 +62,8 @@ bool SlerpPlan::initialize(geometry_msgs::Pose goal_pose, geometry_msgs::Pose st
 
     // Getting the current ee transform
     try {
-		this->tf_listener.waitForTransform("/world", this->end_effector_name, ros::Time(0), ros::Duration(10.0) );
-		this->tf_listener.lookupTransform("/world", this->end_effector_name, ros::Time(0), this->stamp_ee_transform);
+		this->tf_listener.waitForTransform("/single_yumi_base_link", this->end_effector_name, ros::Time(0), ros::Duration(10.0) );
+		this->tf_listener.lookupTransform("/single_yumi_base_link", this->end_effector_name, ros::Time(0), this->stamp_ee_transform);
     } catch (tf::TransformException ex){
       	ROS_ERROR("%s", ex.what());
       	ros::Duration(1.0).sleep();
@@ -121,7 +121,7 @@ bool SlerpPlan::performMotionPlan(){
     const robot_state::JointModelGroup* joint_model_group = group.getCurrentState()->getJointModelGroup(this->group_name);
 
     // Visual tools
-    moveit_visual_tools::MoveItVisualTools visual_tools("world");
+    moveit_visual_tools::MoveItVisualTools visual_tools("single_yumi_base_link");
     visual_tools.deleteAllMarkers();
 
     // Loading the remote control for visual tools and promting a message
@@ -130,10 +130,16 @@ bool SlerpPlan::performMotionPlan(){
 
     #endif
 
+    // Set the desired planning frame
+
+    std::string new_planning_frame = "single_yumi_base_link";
+    group.setPoseReferenceFrame(new_planning_frame);
+
 	// Printing the planning group frame and the group ee frame
+    if(DEBUG) ROS_INFO("Pose Reference Frame: %s", group.getPoseReferenceFrame().c_str());
 	if(DEBUG) ROS_INFO("MoveIt Group Reference frame: %s", group.getPlanningFrame().c_str());
 	if(DEBUG) ROS_INFO("MoveIt Group End-effector frame: %s", group.getEndEffectorLink().c_str());
-
+   
 	// Calling the waypoint creator with start and goal poses
 	std::vector<geometry_msgs::Pose> cart_waypoints;
 	this->computeWaypointsFromPoses(this->startAff, this->goalAff, cart_waypoints);
@@ -147,6 +153,12 @@ bool SlerpPlan::performMotionPlan(){
         start_state.setJointGroupPositions(joint_model_group, last_joints);
         group.setStartState(start_state);
     }
+
+    // Scale the velocity and acceleration of the computed trajectory
+    double velocity_scaling_factor = 0.1; // Set your desired velocity scaling factor
+    double acceleration_scaling_factor = 0.1; // Set your desired acceleration scaling factor
+    group.setMaxVelocityScalingFactor(velocity_scaling_factor);
+    group.setMaxAccelerationScalingFactor(acceleration_scaling_factor);
 
 	// Planning for the waypoints path
 	moveit_msgs::RobotTrajectory trajectory;
