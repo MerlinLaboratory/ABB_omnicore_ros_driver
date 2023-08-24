@@ -20,6 +20,7 @@ The principal packages are briefly described in the following table:
 | [robots_description](gofa_description) | Provides ROS nodes for kinematic calculation using the URDF model of the robot (For now only Gofa robot is available). |
 | [ros_control_ominicore](ros_control) | Provides hardware interface for the robots supporting ABB Omnicore controller. |
 | [rws_service](rws) | Provides some services for the yumi_single_arm SmartGripper. |
+| [abb_wrapper_msgs](abb_wrapper_msgs) | Provides srvs definition for ros services used in abb_wrapper_control. |
 
 Please see each package for more details (*e.g. additional requirements, limitations and troubleshooting*).
 
