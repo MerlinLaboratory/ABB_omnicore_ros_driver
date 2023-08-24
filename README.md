@@ -123,6 +123,9 @@ Compile the workspace
 ```bash
 catkin_make
 ```
+## Gazebo Simulation
+
+
 
 If there are no errors you are ready to proceed to set up the robot.
 
