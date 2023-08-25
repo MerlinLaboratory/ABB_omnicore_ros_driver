@@ -25,7 +25,7 @@ int main(int argc, char **argv)
     ROS_INFO("The main task sequence client is running. Running as fast as possible!");
 
     // ROS Async spinner (necessary for processing callbacks inside the service callbacks)
-    ros::AsyncSpinner spinner(1);
+    ros::AsyncSpinner spinner(2);
     spinner.start();
 
     while(ros::ok()){

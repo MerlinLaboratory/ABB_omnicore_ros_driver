@@ -1,4 +1,4 @@
-/* SLERP CONTROL - Uses SLERP interpolation between presnt ee pose and goal pose to create homogeneous motion
+/* SLERP CONTROL - Uses SLERP interpolation between present ee pose and goal pose to create homogeneous motion
 Authors: George Jose Pollayil - Mathew Jose Pollayil - Stefano Angeli
 Email: gpollayil@gmail.com, mathewjosepollayil@gmail.com, stefano.angeli@ing.unipi.it  */
 
@@ -23,7 +23,7 @@ Email: gpollayil@gmail.com, mathewjosepollayil@gmail.com, stefano.angeli@ing.uni
 // Defines
 #define     DEBUG   1       // Prints out additional stuff
 #define     VISUAL          // Publishes visual info on RViz
-// #define     PROMPT  1        // Waits for confermation in RViz before execution
+#define     PROMPT  1        // Waits for confermation in RViz before execution
 
 class SlerpPlan {
 
