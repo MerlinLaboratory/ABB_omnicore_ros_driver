@@ -20,6 +20,8 @@ The principal packages are briefly described in the following table:
 | [robots_description](gofa_description) | Provides ROS nodes for kinematic calculation using the URDF model of the robot (For now only Gofa robot is available). |
 | [ros_control_ominicore](ros_control) | Provides hardware interface for the robots supporting ABB Omnicore controller. |
 | [rws_service](rws) | Provides some services for the yumi_single_arm SmartGripper. |
+| [abb_wrapper_msgs](abb_wrapper_msgs) | Provides srvs definition for ros services used in abb_wrapper_control. |
+| [abb_wrapper_control](abb_wrapper_control) | Provides ros services for planning (PosePlan, SlerpPlan and JointPlan) and ros actions for controlling the robot(ArmService and ArmWait). |
 
 Please see each package for more details (*e.g. additional requirements, limitations and troubleshooting*).
 
@@ -121,7 +123,22 @@ Compile the workspace
 ```bash
 catkin_make
 ```
-
+## Gazebo Simulation
+If there are no errors you are ready to proceed to launch the Gazebo simulation of the robot:
+```bash
+  source devel/setup.bash
+  roslaunch irim_ss_pkg yumi_gazebo real_robot.launch
+```
+### Motion Planning
+Launch the PosePlan, SlerpPlan and JointPlan ROS Services server:
+```bash
+  roslaunch abb_wrapper_control launchControlServer.launch
+```
+### Motion Control
+Launch the ROS Services Client to control the robot:
+```bash
+  roslaunch abb_wrapper_control launchTaskServerTemplate.launch
+```
 If there are no errors you are ready to proceed to set up the robot.
 
 ## Robot Set up

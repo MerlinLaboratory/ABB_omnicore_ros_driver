@@ -1,4 +1,4 @@
-/* CONTROL SERVER - Creates all necessary service servers to command Panda and SoftHand
+/* CONTROL SERVER - Creates all necessary service servers to command Abb robot
 Authors: George Jose Pollayil - Mathew Jose Pollayil - Stefano Angeli
 Email: gpollayil@gmail.com, mathewjosepollayil@gmail.com, stefano.angeli@ing.unipi.it */
 

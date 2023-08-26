@@ -1,4 +1,4 @@
-/* TASK SERVER THROWING to call throwing task service (DARKO-Stefano)*/
+/* TASK SERVER THROWING to call throwing task service */
 #include "ros/ros.h"
 #include <iostream>
 #include "ros/service_client.h"
@@ -23,12 +23,11 @@ int main(int argc, char **argv)
     ROS_INFO("The main task sequence client is running. Running as fast as possible!");
 
     // ROS Async spinner (necessary for processing callbacks inside the service callbacks)
-    ros::AsyncSpinner spinner(1);
+    ros::AsyncSpinner spinner(2);
     spinner.start();
    
    /* 1) Going to Grasp position */
    //Create the request and response object
-   while(ros::ok()){
       
    std_srvs::SetBool::Request req;
    req.data = true;
@@ -46,7 +45,6 @@ int main(int argc, char **argv)
       ROS_INFO_STREAM("Failed to completed the service");
    }
 
-   }
    spinner.stop();
 
    return 0;

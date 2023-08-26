@@ -1,6 +1,6 @@
 /* ARM CONTROL - Uses actionlib control the arm
-Authors: George Jose Pollayil - Mathew Jose Pollayil
-Email: gpollayil@gmail.com, mathewjosepollayil@gmail.com  */
+Authors: George Jose Pollayil - Mathew Jose Pollayil - Stefano Angeli
+Email: gpollayil@gmail.com, mathewjosepollayil@gmail.com, stefano.angeli@ing.unipi.it */
 
 #include "ros/ros.h"
 #include <cstdlib>
@@ -89,5 +89,4 @@ bool ArmControl::call_arm_wait(abb_wrapper_msgs::arm_wait::Request &req, abb_wra
 
     res.answer = true;
     return true;
-
 }

@@ -1,4 +1,4 @@
-/* SLERP CONTROL - Uses SLERP interpolation between presnt ee pose and goal pose to create homogeneous motion
+/* SLERP CONTROL - Uses SLERP interpolation between present ee pose and goal pose to create homogeneous motion
 Authors: George Jose Pollayil - Mathew Jose Pollayil - Stefano Angeli
 Email: gpollayil@gmail.com, mathewjosepollayil@gmail.com, stefano.angeli@ing.unipi.it  */
 
