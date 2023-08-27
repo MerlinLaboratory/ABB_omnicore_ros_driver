@@ -63,6 +63,10 @@ bool AbbClient::initialize(ros::NodeHandle& nh_){
         ROS_ERROR("Failed to load the opening_gripper_service_name!");
     };
 
+    if(!nh_.getParam("/abb/camera_pose_service_name", this->camera_pose_service_name)){
+        ROS_ERROR("Failed to load the camera_pose_service_name!");
+    };
+
     // Initializing service clients after waiting
 
     if(!ros::service::waitForService(this->arm_control_service_name, ros::Duration(1.0))) return false;
@@ -85,7 +89,10 @@ bool AbbClient::initialize(ros::NodeHandle& nh_){
     
     if(!ros::service::waitForService(this->gripper_service_grip_out, ros::Duration(1.0))) return false;
     this->grip_out_client = this->nh.serviceClient<std_srvs::Trigger>(this->gripper_service_grip_out);
-
+    
+    if(!ros::service::waitForService(this->camera_pose_service_name, ros::Duration(1.0))) return false;
+    this->camera_pose_client = this->nh.serviceClient<abb_wrapper_msgs::pose_camera>(this->camera_pose_service_name);
+ 
     // At this point initializing completed
     return true;
 }
@@ -202,7 +209,7 @@ bool AbbClient::call_closing_gripper(std_msgs::Bool& close){
 bool AbbClient::call_opening_gripper(std_msgs::Bool& open){
    
    std_srvs::Trigger trigger_srv;
-   
+
     // Calling the service
     if(open.data && !this->grip_out_client.call(trigger_srv)){
         ROS_ERROR("Failed to contact the grip_out server. Returning...");
@@ -210,6 +217,21 @@ bool AbbClient::call_opening_gripper(std_msgs::Bool& open){
     }
 
     return trigger_srv.response.success;
+}
+bool AbbClient::call_camera_pose(std_msgs::Bool& is_request_arrived, geometry_msgs::Pose& object_pose){
+
+    abb_wrapper_msgs::pose_camera pose_camera_srv;
+    pose_camera_srv.request.is_request_arrived = is_request_arrived.data;
+
+    // Calling the service
+    if(!this->camera_pose_client.call(pose_camera_srv)){
+        ROS_ERROR("Failed to contact the camera_pose server. Returning...");
+        return false;
+    }
+    
+    
+    object_pose = pose_camera_srv.response.object_grasp_pose;
+    return pose_camera_srv.response.answer;
 }
 
 

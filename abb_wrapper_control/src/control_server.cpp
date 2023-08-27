@@ -10,6 +10,7 @@ Email: gpollayil@gmail.com, mathewjosepollayil@gmail.com, stefano.angeli@ing.uni
 #include "abb_wrapper_control/PosePlan.h"
 #include "abb_wrapper_control/SlerpPlan.h"
 #include "abb_wrapper_control/JointPlan.h"
+#include "abb_wrapper_control/PoseCamera.h"
 
 /**********************************************
 ROS NODE MAIN SERVICE SERVERS 
@@ -20,7 +21,7 @@ int main(int argc, char **argv)
     ros::init(argc, argv, "abb_control_server");
 
     ros::NodeHandle nh_;
-
+ 
     // Get the params from the loaded YAML file
 
     std::string group_name;
@@ -30,6 +31,7 @@ int main(int argc, char **argv)
     std::string arm_control_service_name;
     std::string arm_wait_service_name;
     std::string joint_plan_service_name;
+    std::string camera_pose_service_name;
     
     //Move group name
 
@@ -73,6 +75,13 @@ int main(int argc, char **argv)
         ROS_ERROR("Failed to load the joint_plan_service_name!");
     };
 
+    // Pose Plan service name
+    
+    if(!nh_.getParam("/abb/camera_pose_service_name", camera_pose_service_name)){
+        ROS_ERROR("Failed to load the joint_plan_service_name!");
+    };
+
+
 	/*------------------ Arm Control --------------------*/
 
     ROS_INFO("Creating the arm client pointer");
@@ -108,6 +117,12 @@ int main(int argc, char **argv)
 
     /*-------------------------------------------------------*/
 
+
+    /*-------------------- Camera Pose  ------------------------*/
+    
+    ROS_INFO("Creating the camera pose object");
+    PoseCamera pose_camera_obj(nh_);
+    
     ROS_INFO("Advertising the services");
 
     //
@@ -116,6 +131,7 @@ int main(int argc, char **argv)
     ros::ServiceServer arm_service = nh_.advertiseService(arm_control_service_name, &ArmControl::call_arm_control, &arm_control_obj);
     ros::ServiceServer arm_wait_service = nh_.advertiseService(arm_wait_service_name, &ArmControl::call_arm_wait, &arm_control_obj);
     ros::ServiceServer joint_service = nh_.advertiseService(joint_plan_service_name, &JointPlan::call_joint_plan, &joint_plan_obj);
+    ros::ServiceServer pose_camera_service = nh_.advertiseService(camera_pose_service_name, &PoseCamera::call_pose_camera, &pose_camera_obj);
 
     ROS_INFO("The main service server is running. Running as fast as possible!");
 

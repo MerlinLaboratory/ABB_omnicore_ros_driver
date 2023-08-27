@@ -120,6 +120,17 @@ bool TaskSequencer::call_simple_grasp_task(std_srvs::SetBool::Request &req, std_
         return true;
     }
 
+    // Get the dice grasp pose
+    std_msgs::Bool get_pose;
+    get_pose.data = true;
+
+    if(!this->abb_client.call_camera_pose(get_pose, this->dice_grasp_pose)){ 
+        ROS_ERROR("Unable to get the camera pose!");
+        res.success = false;
+        res.message = "The service call_camera_pose was NOT performed correctly!";
+        return false;
+    }
+
     // Open the gripper
 
     if(!this->abb_client.call_opening_gripper(this->gripper_close_open)){ 
@@ -325,13 +336,6 @@ bool TaskSequencer::call_simple_home_task(std_srvs::SetBool::Request &req, std_s
         res.message = "The service call_simple_home_task was NOT performed correctly! Error in arm control.";
         return false;
     }
-    // /*WAIT 1: Waiting...*/
-    // if(!this->abb_client.call_arm_wait_service(this->waiting_time)){ // WAITING FOR END EXEC
-    //     ROS_ERROR("TIMEOUT!!! EXEC TOOK TOO MUCH TIME for going to home joints");
-    //     res.success = false;
-    //     res.message = "The service call_arm_wait_service was NOT performed correctly! Error wait in arm control.";
-    //     return false;
-    // }
 
     /*PLAN 2: Planning to JOINT_POS_A*/
 

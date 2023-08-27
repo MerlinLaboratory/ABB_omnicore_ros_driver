@@ -16,6 +16,7 @@ Email: gpollayil@gmail.com, mathewjosepollayil@gmail.com, stefano.angeli@ing.uni
 #include "abb_wrapper_msgs/slerp_plan.h"
 #include "abb_wrapper_msgs/arm_wait.h"
 #include "abb_wrapper_msgs/arm_control.h"
+#include "abb_wrapper_msgs/pose_camera.h"
 
 // srv include for opening and closing the gripper
 #include "std_msgs/Bool.h"
@@ -61,6 +62,9 @@ class AbbClient {
         // Service call function for opening the gripper
         bool call_opening_gripper(std_msgs::Bool& open);
 
+        // Service call function for getting the object pose
+        bool call_camera_pose(std_msgs::Bool& is_requested_arrived, geometry_msgs::Pose& object_pose);
+
     /// private variables -------------------------------------------------------------------------
 	private:
 		ros::NodeHandle nh;
@@ -73,6 +77,7 @@ class AbbClient {
         std::string joint_service_name;
         std::string gripper_service_grip_in;
         std::string gripper_service_grip_out;
+        std::string camera_pose_service_name;
 
         // Service clients 
         ros::ServiceClient arm_control_client;             // Client for arm control service
@@ -82,4 +87,5 @@ class AbbClient {
         ros::ServiceClient joint_client;                    // Client for joint control service
         ros::ServiceClient grip_in_client;
         ros::ServiceClient grip_out_client;
+        ros::ServiceClient camera_pose_client;
 };
