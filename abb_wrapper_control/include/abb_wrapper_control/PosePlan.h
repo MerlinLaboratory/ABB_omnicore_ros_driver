@@ -21,7 +21,7 @@
 #define     DEBUG   1       // Prints out additional stuff
 #define     VISUAL          // Publishes visual info on RViz
 #define     PROMPT   1      // Waits for confermation in RViz before execution
-#define     CONSTRAINTS 1   // Add Joint Constraints (See Path Planning Constraints)
+// #define     CONSTRAINTS 1   // Add Joint Constraints (See Path Planning Constraints)
 
 class PosePlan {
 

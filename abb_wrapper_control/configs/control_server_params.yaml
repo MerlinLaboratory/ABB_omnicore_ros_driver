@@ -17,9 +17,6 @@ abb:
 ## Joint plan service name
  joint_plan_service_name: joint_plan_service
 
-## Joint plan service name
- camera_pose_service_name: camera_pose_service
-
 ## Closing gripper service name
  closing_gripper_service_name: grip_in
 

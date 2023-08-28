@@ -1,4 +1,0 @@
-bool is_request_arrived
----
-bool answer
-geometry_msgs/Pose object_grasp_pose

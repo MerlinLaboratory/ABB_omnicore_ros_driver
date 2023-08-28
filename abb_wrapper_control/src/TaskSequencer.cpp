@@ -73,6 +73,7 @@ TaskSequencer::~TaskSequencer(){
 
 // Parameters parsing
 bool TaskSequencer::parse_task_params(){
+
     bool success = true;
 
     if(!ros::param::get("/task_sequencer/grasp_transform", this->grasp_transform)){
@@ -118,17 +119,6 @@ bool TaskSequencer::call_simple_grasp_task(std_srvs::SetBool::Request &req, std_
         res.success = true;
         res.message = "The service call_simple_grasp_task done correctly with false request!";
         return true;
-    }
-
-    // Get the dice grasp pose
-    std_msgs::Bool get_pose;
-    get_pose.data = true;
-
-    if(!this->abb_client.call_camera_pose(get_pose, this->dice_grasp_pose)){ 
-        ROS_ERROR("Unable to get the camera pose!");
-        res.success = false;
-        res.message = "The service call_camera_pose was NOT performed correctly!";
-        return false;
     }
 
     // Open the gripper
@@ -428,15 +418,4 @@ bool TaskSequencer::performIK(geometry_msgs::Pose pose_in, double timeout, std::
     }
 
     return true;
-}
-
-
-std::vector<double> TaskSequencer::getLastJointPosValues(trajectory_msgs::JointTrajectory& traj){
-    
-    trajectory_msgs::JointTrajectoryPoint last_point = traj.points.back();
-    
-    for(int i=0; i < this->now_joints.size(); i++){
-        this->now_joints.at(i) = last_point.positions[i];
-    }
-    return this->now_joints;
 }

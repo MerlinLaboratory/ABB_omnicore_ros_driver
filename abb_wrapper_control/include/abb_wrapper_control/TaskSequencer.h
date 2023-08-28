@@ -39,10 +39,6 @@ class TaskSequencer {
 
         ~TaskSequencer();
 
-        // get last joint position values
-
-        std::vector<double> getLastJointPosValues(trajectory_msgs::JointTrajectory& traj);
-
         // Parameters parsing
         bool parse_task_params();
 

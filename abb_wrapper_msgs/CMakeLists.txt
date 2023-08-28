@@ -79,7 +79,6 @@ add_service_files(
   arm_wait.srv
   arm_control.srv
   slerp_plan.srv
-  pose_camera.srv
 )
 
 ## Generate actions in the 'action' folder
