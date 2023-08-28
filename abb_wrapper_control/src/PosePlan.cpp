@@ -149,9 +149,7 @@ bool PosePlan::performMotionPlan(){
     }
     
     #ifdef CONSTRAINTS
-
-    // Retrieve the joint model group associated with your robot arm
-
+    
     // Get the joint values (positions) from the RobotState
     std::vector<double> joint_values;
     start_state.copyJointGroupPositions(joint_model_group, joint_values);

@@ -1,4 +1,4 @@
-/* ARM CONTROL - Uses actionlib control the arm
+/* ARM CONTROL - Uses actionlib to control the arm
 Authors: George Jose Pollayil - Mathew Jose Pollayil - Stefano Angeli
 Email: gpollayil@gmail.com, mathewjosepollayil@gmail.com, stefano.angeli@ing.unipi.it */
 
@@ -60,7 +60,6 @@ bool ArmControl::sendJointTrajectory(trajectory_msgs::JointTrajectory trajectory
     // Setting the most recent time to the trajectory header
     std_msgs::Header empty_header;
     trajectory.header.stamp = ros::Time::now() + ros::Duration(0.1);
-    // trajectory.header = empty_header;  + ros::Duration(2.0);
     ROS_INFO_STREAM("In ArmControl::sendJointTrajectory, the traj header stamp is " << trajectory.header.stamp
         << " and the time_from_start of first point is " << trajectory.points[1].time_from_start << ".");
 
@@ -78,7 +77,7 @@ bool ArmControl::sendJointTrajectory(trajectory_msgs::JointTrajectory trajectory
 
 // This is the callback function of the arm wait service
 bool ArmControl::call_arm_wait(abb_wrapper_msgs::arm_wait::Request &req, abb_wrapper_msgs::arm_wait::Response &res){
-    
+     
      if(!this->arm_client_ptr->waitForResult(req.wait_duration.data)){
         ROS_ERROR("The arm client is taking too to complete goal execution. Returning...");
         res.answer = false;

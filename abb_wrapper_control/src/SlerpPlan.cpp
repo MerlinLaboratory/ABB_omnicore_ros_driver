@@ -155,14 +155,23 @@ bool SlerpPlan::performMotionPlan(){
     }
 
     // Scale the velocity and acceleration of the computed trajectory
-    double velocity_scaling_factor = 0.1; // Set your desired velocity scaling factor
-    double acceleration_scaling_factor = 0.1; // Set your desired acceleration scaling factor
-    group.setMaxVelocityScalingFactor(velocity_scaling_factor);
-    group.setMaxAccelerationScalingFactor(acceleration_scaling_factor);
+    const double velocity_scaling_factor = 0.1; // Set your desired velocity scaling factor
+    const double acceleration_scaling_factor = 0.1; // Set your desired acceleration scaling factor
 
 	// Planning for the waypoints path
 	moveit_msgs::RobotTrajectory trajectory;
 	double fraction = group.computeCartesianPath(cart_waypoints, 0.01, 0.0, trajectory);
+    
+    //
+    robot_trajectory::RobotTrajectory rt(start_state.getRobotModel(), this->group_name);
+    
+    rt.setRobotTrajectoryMsg(start_state, trajectory);
+    trajectory_processing::TimeOptimalTrajectoryGeneration totg;
+    
+    bool success = totg.computeTimeStamps(rt, velocity_scaling_factor, acceleration_scaling_factor);
+    ROS_INFO("Computed time stamp %s",success?"SUCCEDED":"FAILED");
+    rt.getRobotTrajectoryMsg(trajectory);
+    //
     this->computed_trajectory = trajectory.joint_trajectory;
 
 	ROS_INFO("Plan (cartesian path) (%.2f%% acheived)", fraction * 100.0);

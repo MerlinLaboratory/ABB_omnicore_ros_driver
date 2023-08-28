@@ -61,6 +61,9 @@ class AbbClient {
         // Service call function for opening the gripper
         bool call_opening_gripper(std_msgs::Bool& open);
 
+        // Service call function for getting the object pose
+        bool call_camera_pose(std_msgs::Bool& is_requested_arrived, geometry_msgs::Pose& object_pose);
+
     /// private variables -------------------------------------------------------------------------
 	private:
 		ros::NodeHandle nh;

@@ -39,10 +39,6 @@ class TaskSequencer {
 
         ~TaskSequencer();
 
-        // get last joint position values
-
-        std::vector<double> getLastJointPosValues(trajectory_msgs::JointTrajectory& traj);
-
         // Parameters parsing
         bool parse_task_params();
 
@@ -79,6 +75,7 @@ class TaskSequencer {
         geometry_msgs::Pose grasp_T;
         std::vector<double> pre_grasp_transform;
         geometry_msgs::Pose pre_grasp_T;
+        geometry_msgs::Pose dice_grasp_pose;
  
         // MoveIt stuff and functions for FK and IK
         std::string group_name;

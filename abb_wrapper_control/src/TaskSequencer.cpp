@@ -73,6 +73,7 @@ TaskSequencer::~TaskSequencer(){
 
 // Parameters parsing
 bool TaskSequencer::parse_task_params(){
+
     bool success = true;
 
     if(!ros::param::get("/task_sequencer/grasp_transform", this->grasp_transform)){
@@ -325,13 +326,6 @@ bool TaskSequencer::call_simple_home_task(std_srvs::SetBool::Request &req, std_s
         res.message = "The service call_simple_home_task was NOT performed correctly! Error in arm control.";
         return false;
     }
-    // /*WAIT 1: Waiting...*/
-    // if(!this->abb_client.call_arm_wait_service(this->waiting_time)){ // WAITING FOR END EXEC
-    //     ROS_ERROR("TIMEOUT!!! EXEC TOOK TOO MUCH TIME for going to home joints");
-    //     res.success = false;
-    //     res.message = "The service call_arm_wait_service was NOT performed correctly! Error wait in arm control.";
-    //     return false;
-    // }
 
     /*PLAN 2: Planning to JOINT_POS_A*/
 
@@ -424,15 +418,4 @@ bool TaskSequencer::performIK(geometry_msgs::Pose pose_in, double timeout, std::
     }
 
     return true;
-}
-
-
-std::vector<double> TaskSequencer::getLastJointPosValues(trajectory_msgs::JointTrajectory& traj){
-    
-    trajectory_msgs::JointTrajectoryPoint last_point = traj.points.back();
-    
-    for(int i=0; i < this->now_joints.size(); i++){
-        this->now_joints.at(i) = last_point.positions[i];
-    }
-    return this->now_joints;
 }
