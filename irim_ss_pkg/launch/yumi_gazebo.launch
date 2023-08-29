@@ -24,6 +24,7 @@
 
   <param name="robot_description" command="$(find xacro)/xacro --inorder $(find irim_ss_pkg)/xacro/irim_yumi.urdf.xacro" />
 
+
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" />
   
     <!-- Load controller settings -->

@@ -47,11 +47,9 @@
     <!--Import the yumi servo gripper macro -->
     <xacro:include filename="$(find robots_description)/Grippers/YumiServoGripper/yumi_servo_gripper.xacro" />
     <!-- Gripper -->
-    <xacro:yumi_servo_gripper name="gripper" parent="link_7" hardware_interface="${gripper_interface}">
+    <xacro:yumi_servo_gripper name="gripper" parent="link_7" hardware_interface="${gripper_interface}" fake_execution="'true'">
         <origin xyz="0 0 0.007" rpy="0 0 ${PI}" />
     </xacro:yumi_servo_gripper>
-
-
 
     <gazebo>
       <plugin name="ros_control" filename="libgazebo_ros_control.so">
