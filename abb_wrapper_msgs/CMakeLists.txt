@@ -74,6 +74,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## Generate services in the 'srv' folder
 add_service_files(
   FILES
+  move_gripper_to.srv
   joint_plan.srv
   pose_plan.srv
   arm_wait.srv

@@ -9,7 +9,7 @@
 
 // Including services
 #include "std_srvs/Trigger.h"
-
+#include "abb_wrapper_msgs/move_gripper_to.h"
 #include <iostream>
 
 
@@ -25,9 +25,9 @@ public:
     // ---------------- Methods ---------------- //
 
     // Services Callbacks
-    bool GripInSrv (std_srvs::Trigger:: Request &req, std_srvs::Trigger::Response &res);
-    bool GripOutSrv(std_srvs::Trigger::Request &req,  std_srvs::Trigger::Response &res);
-    // bool MoveToSrv (std_srvs::Trigger:: Request &req, std_srvs::Trigger::Response &res);
+    bool GripInSrv (std_srvs::Trigger::Request &req, std_srvs::Trigger::Response &res);
+    bool GripOutSrv(std_srvs::Trigger::Request &req, std_srvs::Trigger::Response &res);
+    bool MoveToSrv (abb_wrapper_msgs::move_gripper_to::Request &req, abb_wrapper_msgs::move_gripper_to::Response &res);
 
     void Spinner();
 

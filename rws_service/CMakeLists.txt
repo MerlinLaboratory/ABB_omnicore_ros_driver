@@ -9,6 +9,7 @@ project(rws_service)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   abb_librws
+  abb_wrapper_msgs
   roscpp
   rospy
   std_msgs
