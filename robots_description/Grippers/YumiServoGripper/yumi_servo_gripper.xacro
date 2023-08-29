@@ -10,10 +10,7 @@
    <xacro:property name="max_gripper_effort" value="20" />
    <xacro:property name="max_gripper_velocity" value="2" />
 
-   <xacro:macro name="yumi_servo_gripper" params="parent name hardware_interface fake_execution *origin">
-
-      <xacro:arg name="fake_execution"     default="$(arg fake_execution)" />
-      <xacro:property name="fake_execution"     value="$(arg fake_execution)" />
+   <xacro:macro name="yumi_servo_gripper" params="parent name hardware_interface fake_execution:=true *origin">
 
       <!--joint
       between {parent} and base-->
