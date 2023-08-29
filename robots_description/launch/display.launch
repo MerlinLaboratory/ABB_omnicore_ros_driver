@@ -3,7 +3,7 @@
   <arg   name="robot"             default="gofa"/> <!-- 'gofa', 'yumi_single_arm' -->
   <arg   name="fake_execution"    default="true"/> <!-- 'true' or 'false' -->
   <arg   name="launch_rviz"       default="true"/> <!-- 'true' or 'false' -->
-  <param name="robot_description" command="$(find xacro)/xacro '$(find robots_description)/xacro/robot.urdf.xacro' name:=$(arg robot) "/>
+  <param name="robot_description" command="$(find xacro)/xacro '$(find robots_description)/xacro/robot.urdf.xacro' name:=$(arg robot) fake_execution:=$(arg fake_execution)"/>
 
   <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" if="$(eval arg('fake_execution'))"/> 
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />

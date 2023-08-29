@@ -4,12 +4,15 @@
 
     <!-- Parameters -->
     <arg name="name"                     default="gofa" />
+    <arg name="fake_execution"           default="false" />
     <xacro:arg name="robot"              default="$(arg name)" />
+    <xacro:arg name="fake_execution"     default="$(arg fake_execution)" />
     <xacro:arg name="hardware_interface" default="PositionJointInterface" />
     <xacro:arg name="gripper_interface"  default="EffortJointInterface" />
     <xacro:arg name="yumi_setup"         default="default" />
 
     <xacro:property name="robot"              value="$(arg robot)" />
+    <xacro:property name="fake_execution"     value="$(arg fake_execution)" />
     <xacro:property name="hardware_interface" value="$(arg hardware_interface)" />
     <xacro:property name="gripper_interface"  value="$(arg gripper_interface)" />
 
@@ -44,9 +47,10 @@
         </xacro:single_yumi>
 
         <!-- Gripper -->
-        <xacro:yumi_servo_gripper name="gripper" parent="link_7" hardware_interface="${gripper_interface}">
+        <xacro:yumi_servo_gripper name="gripper" parent="link_7" hardware_interface="${gripper_interface}" fake_execution="${fake_execution}">
             <origin xyz="0 0 0.007" rpy="0 0 ${PI}" />
         </xacro:yumi_servo_gripper>
+
     </xacro:if>
 
 </robot>

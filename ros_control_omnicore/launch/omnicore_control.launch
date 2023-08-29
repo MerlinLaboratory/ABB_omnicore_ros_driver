@@ -1,6 +1,6 @@
 <launch>
 
-  <arg name="robot"    default="gofa" /> <!-- Possibilities: 'gofa' or 'yumi_single_arm'-->
+  <arg name="robot"    default="yumi_single_arm" /> <!-- Possibilities: 'gofa' or 'yumi_single_arm'-->
   <arg name="yamlFile" default="$(find ros_control_omnicore)/config/$(arg robot)_cfg.yaml" />
 
   <!-- Load the config launching Gofa or Yumi Single Arm-->
