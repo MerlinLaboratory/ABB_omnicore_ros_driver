@@ -2,7 +2,7 @@ joint_state_controller:
   type: joint_state_controller/JointStateController
   publish_rate: 125
 
-joint_traj_controller:
+robot_controller:
   type: position_controllers/JointTrajectoryController
 
   joints: 

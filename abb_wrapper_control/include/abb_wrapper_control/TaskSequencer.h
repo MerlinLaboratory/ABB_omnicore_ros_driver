@@ -45,11 +45,12 @@ class TaskSequencer {
         // Convert xyzrpy vector to geometry_msgs Pose
         geometry_msgs::Pose convert_vector_to_pose(std::vector<double> input_vec);
 
-        // Callback for simple grasp task service
-        bool call_simple_grasp_task(std_srvs::SetBool::Request &req, std_srvs::SetBool::Response &res);
+        // Callback for example  task service
+        bool call_example_task(std_srvs::SetBool::Request &req, std_srvs::SetBool::Response &res);
         
-        // Callback for simple home task service
-        bool call_simple_home_task(std_srvs::SetBool::Request &req, std_srvs::SetBool::Response &res);
+        // Callback for template task service
+        bool call_template_task(std_srvs::SetBool::Request &req, std_srvs::SetBool::Response &res);
+    
     /// private variables -------------------------------------------------------------------------
 	private:
         
@@ -61,12 +62,12 @@ class TaskSequencer {
         AbbClient abb_client;
 
         // Service names
-        std::string grasp_task_service_name;
-        std::string home_task_service_name;
+        std::string example_task_service_name;
+        std::string template_task_service_name;
 
         // Service Servers
-        ros::ServiceServer grasp_task_server;
-        ros::ServiceServer home_task_server;
+        ros::ServiceServer example_task_server;
+        ros::ServiceServer template_task_server;
 
         // Parsed task sequence variables
         std::vector<double> home_joints;

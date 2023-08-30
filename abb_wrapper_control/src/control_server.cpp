@@ -77,7 +77,7 @@ int main(int argc, char **argv)
 	/*------------------ Arm Control --------------------*/
 
     ROS_INFO("Creating the arm client pointer");
-    std::string arm_jt_topic = "/joint_traj_controller/follow_joint_trajectory/";
+    std::string arm_jt_topic = "/robot_controller/follow_joint_trajectory/";
     boost::shared_ptr<actionlib::SimpleActionClient<control_msgs::FollowJointTrajectoryAction>> arm_client_ptr_(new actionlib::SimpleActionClient<control_msgs::FollowJointTrajectoryAction>(arm_jt_topic, true));
     
     ROS_INFO("Creating the arm control object");

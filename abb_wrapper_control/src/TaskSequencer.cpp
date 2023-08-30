@@ -47,12 +47,12 @@ TaskSequencer::TaskSequencer(ros::NodeHandle& nh_){
     this->number_of_active_joints = this->kinematic_model->getActiveJointModels();
 
     // Setting the task service names
-    this->grasp_task_service_name = "grasp_task_service";
-    this->home_task_service_name = "home_task_service";
+    this->example_task_service_name = "example_task_service";
+    this->template_task_service_name = "template_task_service";
 
     // Advertising the services
-    this->grasp_task_server = this->nh.advertiseService(this->grasp_task_service_name, &TaskSequencer::call_simple_grasp_task, this);
-    this->home_task_server = this->nh.advertiseService(this->home_task_service_name, &TaskSequencer::call_simple_home_task, this);
+    this->example_task_server = this->nh.advertiseService(this->example_task_service_name, &TaskSequencer::call_example_task, this);
+    this->template_task_server = this->nh.advertiseService(this->template_task_service_name, &TaskSequencer::call_template_task, this);
 
     // Initializing other control values 
     this->waiting_time = ros::Duration(20.0);
@@ -111,7 +111,7 @@ bool TaskSequencer::parse_task_params(){
     return success;
 }
 
-bool TaskSequencer::call_simple_grasp_task(std_srvs::SetBool::Request &req, std_srvs::SetBool::Response &res){
+bool TaskSequencer::call_example_task(std_srvs::SetBool::Request &req, std_srvs::SetBool::Response &res){
     
     // Checking the request for correctness
     if(!req.data){
@@ -147,9 +147,10 @@ bool TaskSequencer::call_simple_grasp_task(std_srvs::SetBool::Request &req, std_
         res.message = "The service call_arm_control_service was NOT performed correctly! Error in arm control.";
         return false;
     } 
-    
+
+    // Computing the Cartesian pose for the next motion planning
+
     geometry_msgs::Pose present_pose =  performFK(this->home_joints);
-    std::cout << "The present pose is: " << present_pose << std::endl;
     
     // Computing the grasp and pregrasp pose and converting to geometry_msgs Pose
 
@@ -164,6 +165,7 @@ bool TaskSequencer::call_simple_grasp_task(std_srvs::SetBool::Request &req, std_
     // ROS_INFO("PRE GRASP POSE is: %f, %f, %f, %f, %f, %f, %f",pre_grasp_pose.position.x, pre_grasp_pose.position.y, pre_grasp_pose.position.z, pre_grasp_pose.orientation.x, pre_grasp_pose.orientation.y, pre_grasp_pose.orientation.z, pre_grasp_pose.orientation.w);
     
     // Setting zero pose as starting from present
+
     // geometry_msgs::Pose present_pose = geometry_msgs::Pose();
     // present_pose.position.x = 0.0; present_pose.position.y = 0.0; present_pose.position.z = 0.0;
     // present_pose.orientation.x = 0.0; present_pose.orientation.y = 0.0; present_pose.orientation.z = 0.0; present_pose.orientation.w = 1.0;
@@ -177,7 +179,7 @@ bool TaskSequencer::call_simple_grasp_task(std_srvs::SetBool::Request &req, std_
         return false;
     }  
 
-    /* WAIT 0: Wait to finish the previous task*/
+    /* WAIT 0: Wait to finish the previous task (EXEC 0)*/
 
     if(!this->abb_client.call_arm_wait_service(this->waiting_time)){ // WAITING FOR END EXEC
         ROS_ERROR("TIMEOUT!!! EXEC TOOK TOO MUCH TIME for going to Home Joints");
@@ -204,7 +206,7 @@ bool TaskSequencer::call_simple_grasp_task(std_srvs::SetBool::Request &req, std_
         return false;
     }
      
-    /* WAIT 1: Wait to finish the previous task*/
+    /* WAIT 1: Wait to finish the previous task(EXEC 1)*/
 
     if(!this->abb_client.call_arm_wait_service(this->waiting_time)){ // WAITING FOR END EXEC
         ROS_ERROR("TIMEOUT!!! EXEC TOOK TOO MUCH TIME for going to Pre Grasp Pose");
@@ -231,12 +233,21 @@ bool TaskSequencer::call_simple_grasp_task(std_srvs::SetBool::Request &req, std_
         return false;
     }
 
-    /* WAIT 2: Wait to finish the previous task*/
+    /* WAIT 2: Wait to finish the previous task (EXEC 2) */
 
     if(!this->abb_client.call_arm_wait_service(this->waiting_time)){ // WAITING FOR END EXEC
         ROS_ERROR("TIMEOUT!!! EXEC TOOK TOO MUCH TIME for going to Grasp Pose");
         res.success = false;
         res.message = "The service call_arm_wait_service was NOT performed correctly! Error wait in arm control.";
+        return false;
+    }
+
+    // Close the gripper (Now the gripper can be closed because the robot reached the Grasp Pose)
+
+    if(!this->abb_client.call_closing_gripper(this->gripper_close_open)){ 
+        ROS_ERROR("Unable to close the gripper!");
+        res.success = false;
+        res.message = "The service call_closing_gripper was NOT performed correctly!";
         return false;
     }
 
@@ -249,16 +260,16 @@ bool TaskSequencer::call_simple_grasp_task(std_srvs::SetBool::Request &req, std_
         return false;
     } 
 
-    /*PLAN 4: Planning to HOME JOINT POSITIONS */
+    /*PLAN 4: Planning to JOINT POS A */
      
-    if(!this->abb_client.call_joint_service(this->home_joints, false, this->tmp_traj_arm, this->tmp_traj_arm)){
+    if(!this->abb_client.call_joint_service(this->joint_pos_A, false, this->tmp_traj_arm, this->tmp_traj_arm)){
         ROS_ERROR("Could not plan to the specified home joint config.");
         res.success = false;
         res.message = "The service call_simple_home_task was NOT performed correctly!";
         return false;
     }
 
-    /* WAIT 3: Wait to finish the previous task*/
+    /* WAIT 3: Wait to finish the previous task (EXEC 3)*/
 
     if(!this->abb_client.call_arm_wait_service(this->waiting_time)){ // WAITING FOR END EXEC
         ROS_ERROR("TIMEOUT!!! EXEC TOOK TOO MUCH TIME for going to Pre Grasp Pose");
@@ -267,29 +278,21 @@ bool TaskSequencer::call_simple_grasp_task(std_srvs::SetBool::Request &req, std_
         return false;
     }
 
-    /* EXEC 4: Going to HOME JOINT POSITIONS*/
+    /* EXEC 4: Going to JOINT POS A*/
 
     if(!this->abb_client.call_arm_control_service(this->tmp_traj_arm)){
-        ROS_ERROR("Could not go to PreGraspPose.");
+        ROS_ERROR("Could not go to Joint Pos A.");
         res.success = false;
         res.message = "The service call_arm_control_service was NOT performed correctly! Error in arm control.";
         return false;
     } 
 
-    /* WAIT 4: Wait to finish the previous task*/
+    /* WAIT 4: Wait to finish the previous task (EXEC 4)*/
 
     if(!this->abb_client.call_arm_wait_service(this->waiting_time)){ // WAITING FOR END EXEC
-        ROS_ERROR("TIMEOUT!!! EXEC TOOK TOO MUCH TIME for going to HomeJointPositions");
+        ROS_ERROR("TIMEOUT!!! EXEC TOOK TOO MUCH TIME for going to Joint Pos A");
         res.success = false;
         res.message = "The service call_arm_wait_service was NOT performed correctly! Error wait in arm control.";
-        return false;
-    }
-    // Close the gripper
-
-    if(!this->abb_client.call_closing_gripper(this->gripper_close_open)){ 
-        ROS_ERROR("Unable to close the gripper!");
-        res.success = false;
-        res.message = "The service call_closing_gripper was NOT performed correctly!";
         return false;
     }
 
@@ -300,64 +303,51 @@ bool TaskSequencer::call_simple_grasp_task(std_srvs::SetBool::Request &req, std_
 }
 
 // Callback for simple home task service
-bool TaskSequencer::call_simple_home_task(std_srvs::SetBool::Request &req, std_srvs::SetBool::Response &res){
+bool TaskSequencer::call_template_task(std_srvs::SetBool::Request &req, std_srvs::SetBool::Response &res){
     
     // Checking the request for correctness
+
     if(!req.data){
         ROS_WARN("Did you really want to call the simple home task service with data = false?");
         res.success = true;
         res.message = "The service call_simple_home_task done correctly with false request!";
         return true;
     }
-    
-    /*PLAN 1: Planning to HOME JOINTS*/
-     
+
+    /*PLAN 0: Planning to HOME Joints*/
+
     if(!this->abb_client.call_joint_service(this->home_joints, true, this->tmp_traj_arm, this->tmp_traj_arm)){
         ROS_ERROR("Could not plan to the specified home joint config.");
         res.success = false;
         res.message = "The service call_simple_home_task was NOT performed correctly!";
         return false;
     }
-    
-    /*EXEC 1: Going to HOME JOINTS*/
+
+    /*EXEC 0: Going to HOME JOINTS*/
+
     if(!this->abb_client.call_arm_control_service(this->tmp_traj_arm)){
-        ROS_ERROR("Could not go to home joint config.");
+        ROS_ERROR("Could not go to HOME joints.");
         res.success = false;
-        res.message = "The service call_simple_home_task was NOT performed correctly! Error in arm control.";
+        res.message = "The service call_arm_control_service was NOT performed correctly! Error in arm control.";
         return false;
-    }
-
-    /*PLAN 2: Planning to JOINT_POS_A*/
-
-    if(!this->abb_client.call_joint_service(this->joint_pos_A, false, this->tmp_traj_arm, this->tmp_traj_arm)){
-        ROS_ERROR("Could not plan to the specified home joint config.");
-        res.success = false;
-        res.message = "The service call_simple_home_task was NOT performed correctly!";
-        return false;
-    }
-    /*WAIT 1: Waiting...*/
-    if(!this->abb_client.call_arm_wait_service(this->waiting_time)){ // WAITING FOR END EXEC
-        ROS_ERROR("TIMEOUT!!! EXEC TOOK TOO MUCH TIME for going to home joints");
-        res.success = false;
-        res.message = "The service call_arm_wait_service was NOT performed correctly! Error wait in arm control.";
-        return false;
-    }
+    } 
     
-    /*EXEC 2: Going to JOINT_POS_A*/
-    if(!this->abb_client.call_arm_control_service(this->tmp_traj_arm)){
-        ROS_ERROR("Could not go to JOINT_POS_A config.");
-        res.success = false;
-        res.message = "The service call_simple_home_task was NOT performed correctly! Error in arm control.";
-        return false;
-    }
+    /**/
 
-    /*WAIT 2*/
-    if(!this->abb_client.call_arm_wait_service(this->waiting_time)){ // WAITING FOR END EXEC
-        ROS_ERROR("TIMEOUT!!! EXEC TOOK TOO MUCH TIME for going to JOINT_POS_A joints");
-        res.success = false;
-        res.message = "The service call_arm_wait_service was NOT performed correctly! Error wait in arm control.";
-        return false;
-    }
+
+    
+
+
+
+    /*Compose the high level task by using the joint_plan, slerp_plan, pose_plan, arm_control and arm_wait services*/
+
+    
+
+
+
+
+
+    /**/
     
     // Now, everything finished well
     res.success = true;

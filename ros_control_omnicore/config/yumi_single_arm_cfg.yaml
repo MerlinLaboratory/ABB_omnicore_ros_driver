@@ -65,25 +65,25 @@ robot_controller:
     goal_time: 5.0
     #stopped_position_tolerance: 0.4 # Defaults to 0.01
     joint_1:
-      trajectory: 0.05
+      trajectory: 0.2
       goal:       0.01
     joint_2:
-      trajectory: 0.05
+      trajectory: 0.2
       goal:       0.01
     joint_3:
-      trajectory: 0.05
+      trajectory: 0.2
       goal:       0.01
     joint_4:
-      trajectory: 0.05
+      trajectory: 0.2
       goal:       0.01
     joint_5:
-      trajectory: 0.05
+      trajectory: 0.2
       goal:       0.01
     joint_6:
-      trajectory: 0.05
+      trajectory: 0.2
       goal:       0.01
     joint_7:
-      trajectory: 0.05
+      trajectory: 0.2
       goal:       0.01
    # gains:
    #     joint1: {p: 2.0,  i: 0.0, d: 0.01, i_clamp: 1}

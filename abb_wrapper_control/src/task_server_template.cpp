@@ -26,16 +26,16 @@ int main(int argc, char **argv)
     ros::AsyncSpinner spinner(2);
     spinner.start();
    
-   /* 1) Going to Grasp position */
+   /* 1) HIGH LEVEL TASK*/
    //Create the request and response object
       
    std_srvs::SetBool::Request req;
    req.data = true;
    std_srvs::SetBool::Response resp;
 
-   ROS_INFO("Going to Grasp position");
+   ROS_INFO("Call Example Task");
    
-   bool success_home_position = task_sequencer_obj.call_simple_grasp_task(req,resp);
+   bool success_home_position = task_sequencer_obj.call_example_task(req,resp);
     
    // Check the success and use of the response
 
