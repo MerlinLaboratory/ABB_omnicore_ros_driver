@@ -134,10 +134,19 @@ Launch the PosePlan, SlerpPlan and JointPlan ROS Services server:
 ```bash
   roslaunch abb_wrapper_control launchControlServer.launch
 ```
-Launch the ROS Services Client to control the robot:
+To test the if everything works you can launch the example script with:
 ```bash
   roslaunch abb_wrapper_control launchTaskServerExample.launch
 ```
+This launcher runs the script "task_server_example.cpp"
+ATTENTION: remember to press 'next' in the RvizVisualToolsGui window to execute the motion on the robot.
+
+There is a third launcher:
+```bash
+  roslaunch abb_wrapper_control launchTaskServerTemplate.launch
+```
+that runs the blank template "task_server_template.cpp" that you can use to write your own code for the hands on.
+
 If there are no errors you are ready to proceed to set up the robot.
 
 ## Robot Set up
