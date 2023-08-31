@@ -152,7 +152,8 @@ bool AbbClient::call_pose_service(const geometry_msgs::Pose& goal_pose, const ge
     * boolean flag, past and computed trajectory. It populates the computed trajectory based on the service response.
     *
     * @param goal_pose [in] The Cartesian target goal you want to plan toward.
-    * @param start_pose [in] The Cartesian initial pose you want to plan from.
+    * @param start_pose [in] The Cartesian initial pose you want to plan from
+    *                        (Setting zero pose as starting from present current state of the robot).
     * @param is_goal_relative [in] If the goal is relative is set to true, otherwise use the default values set to false.
     * @param past_trajectory [in] The past trajectory.
     * @param computed_trajectory [out] The computed trajectory received from the service server.
@@ -226,6 +227,7 @@ bool AbbClient::call_slerp_service(geometry_msgs::Pose goal_pose, geometry_msgs:
     *
     * @param goal_pose [in] The cartesian target goal you want to plan toward.
     * @param start_pose [in] The cartesian initial pose you want to plan from.
+    *                   (Setting zero pose as starting from present current state of the robot).
     * @param is_goal_relative [in] If the goal is relative is set to true, otherwise use the default values set to false.
     * @param past_trajectory [in] The past trajectory.
     * @param computed_trajectory [out] The computed trajectory received from the service server.

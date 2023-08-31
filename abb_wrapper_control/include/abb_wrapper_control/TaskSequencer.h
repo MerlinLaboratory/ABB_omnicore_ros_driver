@@ -50,7 +50,11 @@ class TaskSequencer {
         
         // Callback for template task service
         bool call_template_task(std_srvs::SetBool::Request &req, std_srvs::SetBool::Response &res);
-    
+        
+        // Function Plan and Execute Pose
+
+        bool PlanAndExecutePose(geometry_msgs::Pose& pose, bool is_relative);
+
     /// private variables -------------------------------------------------------------------------
 	private:
         
@@ -76,7 +80,6 @@ class TaskSequencer {
         geometry_msgs::Pose grasp_T;
         std::vector<double> pre_grasp_transform;
         geometry_msgs::Pose pre_grasp_T;
-        geometry_msgs::Pose dice_grasp_pose;
  
         // MoveIt stuff and functions for FK and IK
         std::string group_name;

@@ -30,7 +30,6 @@ int main(int argc, char **argv)
     std::string arm_control_service_name;
     std::string arm_wait_service_name;
     std::string joint_plan_service_name;
-    std::string camera_pose_service_name;
     
     //Move group name
 

@@ -111,6 +111,10 @@ bool PosePlan::performMotionPlan(){
     moveit::planning_interface::MoveGroupInterface group(this->group_name);
     group.setPoseReferenceFrame("single_yumi_base_link");
 
+    //
+    // group.setPlanningPipelineId("pilz_industrial_motion_planner");
+    // group.setPlannerId("PTP");
+
     // Getting the robot joint model
     ros::spinOnce();                    // May not be necessary
     const robot_state::JointModelGroup* joint_model_group = group.getCurrentState()->getJointModelGroup(this->group_name);

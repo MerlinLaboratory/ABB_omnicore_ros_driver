@@ -210,6 +210,12 @@ add_executable(task_server src/task_server.cpp ${OBJECTS_SOURCE_FILES})
 add_dependencies(task_server ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS} abb_wrapper_msgs_generate_messages_cpp)
 target_link_libraries(task_server ${catkin_LIBRARIES} ${ROS_LIBRARIES})
 
+# NODE: cpp file related to Task server example
+
+add_executable(task_server_example src/task_server_example.cpp ${OBJECTS_SOURCE_FILES})
+add_dependencies(task_server_example ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS} abb_wrapper_msgs_generate_messages_cpp)
+target_link_libraries(task_server_example ${catkin_LIBRARIES} ${ROS_LIBRARIES})
+
 # NODE: cpp file related to Task server template
 
 add_executable(task_server_template src/task_server_template.cpp ${OBJECTS_SOURCE_FILES})
