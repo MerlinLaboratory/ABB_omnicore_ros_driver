@@ -8,6 +8,7 @@
   <arg name="verbose" default="true" />
   <arg name="load_gripper" default="true" />
   <arg name="collision_scene" default="true" />
+  <arg name="pub_clock_frequency" default="500"/>
 
   <arg name="controller_config_file" default="$(find irim_ss_pkg)/config/yumi_controllers.yaml" />
   <arg name="controllers" default="joint_state_controller joint_traj_controller gripper_controller"/>
@@ -20,6 +21,7 @@
       <arg name="paused" value="$(arg paused)" />
       <arg name="use_sim_time" value="$(arg use_sim_time)" />
       <arg name="headless" value="$(arg headless)" />
+      <arg name="pub_clock_frequency" value="$(arg pub_clock_frequency)"/>
   </include>
 
   <param name="robot_description" command="$(find xacro)/xacro --inorder $(find irim_ss_pkg)/xacro/irim_yumi.urdf.xacro" />
@@ -63,7 +65,7 @@
   <!-- <node name="spawn_dice" pkg="gazebo_ros" type="spawn_model" args="-urdf -file $(find robots_description)/xacro/Extra/dice.urdf -model dice -z 0.9 -R 1.0 -P 1.0 -Y 1.0 "
   launch-prefix="bash -c 'sleep 20; $0 $@' " /> -->
 
-  <node name="spawn_dice_py" pkg="irim_ss_pkg" type="dice.py" />
+  <node name="spawn_dice_py" pkg="irim_ss_pkg" type="dice.py" output="screen"/>
   
   <node name="gripper_simulation" pkg="irim_ss_pkg" type="gripper_simulation.py" />
   
