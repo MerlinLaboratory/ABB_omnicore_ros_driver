@@ -138,7 +138,8 @@ To test the if everything works you can launch the example script with:
 ```bash
   roslaunch abb_wrapper_control launchTaskServerExample.launch
 ```
-This launcher runs the script "task_server_example.cpp"
+This launcher runs the script "task_server_example.cpp".
+
 ATTENTION: remember to press 'next' in the RvizVisualToolsGui window to execute the motion on the robot.
 
 There is a third launcher:
