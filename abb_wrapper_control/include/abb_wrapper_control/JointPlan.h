@@ -50,7 +50,7 @@ class JointPlan {
 
         // The present joint config and the goal joint config
 		std::vector<double> joint_now;							// The current joint config
-	  	bool is_true;							// The goal joint config given by service call
+	  	bool flag_state;							// The goal joint config given by service call
         std::vector<double> joint_goal;
         // Joint trajectory computed to be sent to robot
         trajectory_msgs::JointTrajectory computed_trajectory;  

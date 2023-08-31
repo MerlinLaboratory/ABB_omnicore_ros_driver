@@ -1,5 +1,5 @@
 float64[] joint_goal
-bool is_true
+bool flag_state
 trajectory_msgs/JointTrajectory past_trajectory
 ---
 bool answer

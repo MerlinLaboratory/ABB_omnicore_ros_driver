@@ -35,7 +35,7 @@ int main(int argc, char **argv)
 
    ROS_INFO("Call Template Task");
    
-   bool success = task_sequencer_obj.call_template_task(req,resp);
+   bool success = task_sequencer_obj.call_template_task(req,resp);//This blank function is defined in "TaskSequencer.cpp"
     
    // Check the success and use of the response
 

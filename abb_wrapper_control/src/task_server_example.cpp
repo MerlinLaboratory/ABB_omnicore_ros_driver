@@ -34,7 +34,7 @@ int main(int argc, char **argv)
 
    ROS_INFO("Call Example Task");
    
-   bool success = task_sequencer_obj.call_example_task(req,resp);
+   bool success = task_sequencer_obj.call_example_task(req,resp); //This function is defined in "TaskSequencer.cpp"
     
    // Check the success and use of the response
 

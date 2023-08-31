@@ -59,9 +59,9 @@ bool JointPlan::initialize(abb_wrapper_msgs::joint_plan::Request &req){
     // Converting the float array of request to std vector
     this->joint_goal = req.joint_goal;
     this->past_trajectory = req.past_trajectory;
-    this->is_true = req.is_true;
+    this->flag_state = req.flag_state;
     
-    if(!this->is_true && this->past_trajectory.points.empty()){
+    if(!this->flag_state && this->past_trajectory.points.empty()){
         ROS_ERROR("The past trajectory is empty! You CAN'T plan from the last point of the previous computed trajectory!");
         return false;
     }
@@ -113,15 +113,16 @@ bool JointPlan::performMotionPlan(){
     moveit::planning_interface::MoveGroupInterface::Plan my_plan; 
 
     //if false planning from the last point of the computed trajectory
-    if(!this->is_true){
+    if(!this->flag_state){
         int last_waypoint_index = this->past_trajectory.points.size() - 1;
         std::vector<double> last_waypoint_joint_values = this->past_trajectory.points[last_waypoint_index].positions;
         current_state->setJointGroupPositions(group.getName(), last_waypoint_joint_values);
         group.setStartState(*current_state);
         my_plan.start_state_.joint_state.position = last_waypoint_joint_values;
-        this->is_true = false;
+        this->flag_state = false;
         ROS_WARN("NOT Planning from the current state");
     }else {
+
         ROS_WARN("Planning from the current state");
     }
     

@@ -72,6 +72,7 @@ TaskSequencer::~TaskSequencer(){
 }
 
 // Parameters parsing
+
 bool TaskSequencer::parse_task_params(){
 
     bool success = true;
@@ -121,95 +122,26 @@ bool TaskSequencer::call_example_task(std_srvs::SetBool::Request &req, std_srvs:
         return true;
     }
 
-    // Eigen::Affine3d grasp_transform_aff; tf::poseMsgToEigen(this->grasp_T, grasp_transform_aff);
-    // Eigen::Affine3d pre_grasp_transform_aff; tf::poseMsgToEigen(this->pre_grasp_T, pre_grasp_transform_aff);
-
-    // geometry_msgs::Pose pre_grasp_pose; geometry_msgs::Pose grasp_pose;
-    // tf::poseEigenToMsg(grasp_transform_aff * pre_grasp_transform_aff, pre_grasp_pose);
-    // tf::poseEigenToMsg(grasp_transform_aff, grasp_pose);
-
-    // // ROS_INFO("GRASP POSE is: %f, %f, %f, %f, %f, %f, %f",grasp_pose.position.x, grasp_pose.position.y, grasp_pose.position.z, grasp_pose.orientation.x, grasp_pose.orientation.y, grasp_pose.orientation.z, grasp_pose.orientation.w);
-    // // ROS_INFO("PRE GRASP POSE is: %f, %f, %f, %f, %f, %f, %f",pre_grasp_pose.position.x, pre_grasp_pose.position.y, pre_grasp_pose.position.z, pre_grasp_pose.orientation.x, pre_grasp_pose.orientation.y, pre_grasp_pose.orientation.z, pre_grasp_pose.orientation.w);
-    
-    // // Setting zero pose as starting from present
-
-    // geometry_msgs::Pose present_pose = geometry_msgs::Pose();
-    // present_pose.position.x = 0.0; present_pose.position.y = 0.0; present_pose.position.z = 0.0;
-    // present_pose.orientation.x = 0.0; present_pose.orientation.y = 0.0; present_pose.orientation.z = 0.0; present_pose.orientation.w = 1.0;
-
-    // /* PLAN 1: Plan to PRE GRASP POSE */
-
-    // if(!this->abb_client.call_pose_service(pre_grasp_pose, present_pose, false, this->tmp_traj_arm, this->tmp_traj_arm)){
-    //     ROS_ERROR("Could not plan to the specified pre grasp pose.");
-    //     res.success = false;
-    //     res.message = "The service call_simple_grasp_task was NOT performed correctly!";
-    //     return false;
-    // }  
-
-    // /* EXEC 1: Going to PRE GRASP POSE*/
-
-    // if(!this->abb_client.call_arm_control_service(this->tmp_traj_arm)){
-    //     ROS_ERROR("Could not go to PreGraspPose.");
-    //     res.success = false;
-    //     res.message = "The service call_arm_control_service was NOT performed correctly! Error in arm control.";
-    //     return false;
-    // }
-
-    // /* WAIT 1: Wait to finish the previous task(EXEC 1)*/
-
-    // if(!this->abb_client.call_arm_wait_service(this->waiting_time)){ // WAITING FOR END EXEC
-    //     ROS_ERROR("TIMEOUT!!! EXEC TOOK TOO MUCH TIME for going to Pre Grasp Pose");
-    //     res.success = false;
-    //     res.message = "The service call_arm_wait_service was NOT performed correctly! Error wait in arm control.";
-    //     return false;
-    // }
-
-    // /* PLAN 2: Planning to GRASP POSE*/
-
-    // if(!this->abb_client.call_slerp_service(grasp_pose, present_pose, false, this->tmp_traj_arm, this->tmp_traj_arm)){
-    //     ROS_ERROR("Could not plan to the specified grasp pose.");
-    //     res.success = false;
-    //     res.message = "The service call_simple_grasp_task was NOT performed correctly!";
-    //     return false;
-    // }
-
-    // /* EXEC 2: Going to GRASP POSE*/
-
-    // if(!this->abb_client.call_arm_control_service(this->tmp_traj_arm)){
-    //     ROS_ERROR("Could not go to PreGraspPose.");
-    //     res.success = false;
-    //     res.message = "The service call_arm_control_service was NOT performed correctly! Error in arm control.";
-    //     return false;
-    // }
-
-    // /* WAIT 2: Wait to finish the Task*/
-
-    // if(!this->abb_client.call_arm_wait_service(this->waiting_time)){ // WAITING FOR END EXEC
-    //     ROS_ERROR("TIMEOUT!!! EXEC TOOK TOO MUCH TIME for going to Pre Grasp Pose");
-    //     res.success = false;
-    //     res.message = "The service call_arm_wait_service was NOT performed correctly! Error wait in arm control.";
-    //     return false;
-    // }
-
     Eigen::Affine3d grasp_transform_aff; tf::poseMsgToEigen(this->grasp_T, grasp_transform_aff);
     Eigen::Affine3d pre_grasp_transform_aff; tf::poseMsgToEigen(this->pre_grasp_T, pre_grasp_transform_aff);
 
     geometry_msgs::Pose pre_grasp_pose; geometry_msgs::Pose grasp_pose;
     tf::poseEigenToMsg(grasp_transform_aff * pre_grasp_transform_aff, pre_grasp_pose);
     tf::poseEigenToMsg(grasp_transform_aff, grasp_pose);
+    
+    // Plan and go to Pre Grasp Pose 
+    this->PlanAndExecutePose(pre_grasp_pose, false);
 
-    bool success = this->PlanAndExecutePose(grasp_pose, false);
+    // Plan and go to Grasp Pose
+    this->PlanAndExecuteSlerp(grasp_pose, false);
 
-    // Close the gripper
-    std_msgs::Bool pippo;
-    pippo.data = true;
+    // Plan and go to Pre Grasp Pose
 
-    if(!this->abb_client.call_closing_gripper(pippo)){ 
-        ROS_ERROR("Unable to close the gripper!");
-        res.success = false;
-        res.message = "The service call_closing_gripper was NOT performed correctly!";
-        return false;
-    }
+    this->PlanAndExecuteSlerp(pre_grasp_pose, false);
+
+    // Plan and go to Joint Position A
+
+    this->PlanAndExecuteJoint(joint_pos_A, true);
 
     // Now, everything finished well
     res.success = true;
@@ -217,63 +149,44 @@ bool TaskSequencer::call_example_task(std_srvs::SetBool::Request &req, std_srvs:
     return true;   
 }
 
-// Callback for simple home task service
+// Callback for template task service
 bool TaskSequencer::call_template_task(std_srvs::SetBool::Request &req, std_srvs::SetBool::Response &res){
     
     // Checking the request for correctness
 
     if(!req.data){
-        ROS_WARN("Did you really want to call the simple home task service with data = false?");
+        ROS_WARN("Did you really want to call the template task service with data = false?");
         res.success = true;
-        res.message = "The service call_simple_home_task done correctly with false request!";
+        res.message = "The service call_template_task done correctly with false request!";
         return true;
     }
-
-    /*PLAN 0: Planning to HOME Joints*/
-
-    if(!this->abb_client.call_joint_service(this->home_joints, true, this->tmp_traj_arm, this->tmp_traj_arm)){
-        ROS_ERROR("Could not plan to the specified home joint config.");
-        res.success = false;
-        res.message = "The service call_simple_home_task was NOT performed correctly!";
-        return false;
-    }
-
-    /*EXEC 0: Going to HOME JOINTS*/
-
-    if(!this->abb_client.call_arm_control_service(this->tmp_traj_arm)){
-        ROS_ERROR("Could not go to HOME joints.");
-        res.success = false;
-        res.message = "The service call_arm_control_service was NOT performed correctly! Error in arm control.";
-        return false;
-    } 
     
     /**/
 
-    
-    
+    /*Compose the high level task by using the PlanAndExecutePose, PlanAndExecuteJoint
+    and PlanAndExecuteSlerp functions*/
 
-
-
-    /*Compose the high level task by using the joint_plan, slerp_plan, pose_plan, arm_control and arm_wait services*/
-
-    
 
 
 
 
 
     /**/
+
+    /*REMEMBER: if you want to create additional task functions like that, you have to declare 
+    those in "TaskSequencer.h" (see the declaration of "call_template_task" at line 52 if you do 
+    not know how to do it)*/
     
     // Now, everything finished well
     res.success = true;
-    res.message = "The service call_simple_home_task was correctly performed!";
+    res.message = "The service call_template_task was correctly performed!";
     return true;
 }
 
 bool TaskSequencer::PlanAndExecutePose(geometry_msgs::Pose& pose, bool is_relative){
-
-    std_srvs::SetBool set_bool_srv;
     
+    std_srvs::SetBool set_bool_srv;
+
     // Setting zero pose as starting from present
 
     geometry_msgs::Pose present_pose = geometry_msgs::Pose();
@@ -307,6 +220,79 @@ bool TaskSequencer::PlanAndExecutePose(geometry_msgs::Pose& pose, bool is_relati
         return false;
     }
     return set_bool_srv.response.success = true;
+}
+
+bool TaskSequencer::PlanAndExecuteJoint(std::vector<double>& joint_goal, bool flag_state){
+    
+    std_srvs::SetBool set_bool_srv;
+
+    /* PLAN 1: Plan to JOINT Position */
+
+    if(!this->abb_client.call_joint_service(this->joint_pos_A, flag_state, this->tmp_traj_arm, this->tmp_traj_arm)){
+        ROS_ERROR("Could not plan to the specified JOINT position.");
+        set_bool_srv.response.success = false;
+        set_bool_srv.response.message = "The service call_joint_service was NOT performed correctly!";
+        return false;
+    }  
+
+    /* EXEC 1: Going to Joint*/
+
+    if(!this->abb_client.call_arm_control_service(this->tmp_traj_arm)){
+        ROS_ERROR("Could not go to JOINT position.");
+        set_bool_srv.response.success = false;
+        set_bool_srv.response.message = "The service call_arm_control_service was NOT performed correctly! Error in arm control.";
+        return false;
+    }
+
+    /* WAIT 1: Wait to finish the task*/
+
+    if(!this->abb_client.call_arm_wait_service(this->waiting_time)){ // WAITING FOR END EXEC
+        ROS_ERROR("TIMEOUT!!! EXEC TOOK TOO MUCH TIME for going to Pre Grasp Pose");
+        set_bool_srv.response.success = false;
+        set_bool_srv.response.message = "The service call_arm_wait_service was NOT performed correctly! Error wait in arm control.";
+        return false;
+    }
+    return set_bool_srv.response.success = true;
+}
+
+bool TaskSequencer::PlanAndExecuteSlerp(geometry_msgs::Pose& pose, bool is_relative){
+
+    std_srvs::SetBool set_bool_srv;
+
+    // Setting zero pose as starting from present
+
+    geometry_msgs::Pose present_pose = geometry_msgs::Pose();
+    present_pose.position.x = 0.0; present_pose.position.y = 0.0; present_pose.position.z = 0.0;
+    present_pose.orientation.x = 0.0; present_pose.orientation.y = 0.0; present_pose.orientation.z = 0.0; present_pose.orientation.w = 1.0;
+
+    /* PLAN 1: Plan to POSE */
+
+    if(!this->abb_client.call_slerp_service(pose, present_pose, is_relative, this->tmp_traj_arm, this->tmp_traj_arm)){
+        ROS_ERROR("Could not plan to the specified pose.");
+        set_bool_srv.response.success = false;
+        set_bool_srv.response.message = "The service call_slerp_service was NOT performed correctly!";
+        return false;
+    }  
+
+    /* EXEC 1: Going to POSE*/
+
+    if(!this->abb_client.call_arm_control_service(this->tmp_traj_arm)){
+        ROS_ERROR("Could not go to pose.");
+        set_bool_srv.response.success = false;
+        set_bool_srv.response.message = "The service call_arm_control_service was NOT performed correctly! Error in arm control.";
+        return false;
+    }
+
+    /* WAIT 1: Wait to finish the task*/
+
+    if(!this->abb_client.call_arm_wait_service(this->waiting_time)){ // WAITING FOR END EXEC
+        ROS_ERROR("TIMEOUT!!! EXEC TOOK TOO MUCH TIME for going to Pre Grasp Pose");
+        set_bool_srv.response.success = false;
+        set_bool_srv.response.message = "The service call_arm_wait_service was NOT performed correctly! Error wait in arm control.";
+        return false;
+    }
+    return set_bool_srv.response.success = true;
+
 }
 
 // Convert xyzrpy vector to geometry_msgs Pose

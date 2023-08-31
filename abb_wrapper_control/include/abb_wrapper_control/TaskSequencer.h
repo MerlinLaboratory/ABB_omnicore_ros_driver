@@ -55,6 +55,14 @@ class TaskSequencer {
 
         bool PlanAndExecutePose(geometry_msgs::Pose& pose, bool is_relative);
 
+        // Function Plan and Execute Joint
+
+        bool PlanAndExecuteJoint(std::vector<double>& joint_goal, bool flag_state);
+
+        // Function Plan and Execute Slerp
+
+        bool PlanAndExecuteSlerp(geometry_msgs::Pose& pose, bool is_relative);
+
     /// private variables -------------------------------------------------------------------------
 	private:
         

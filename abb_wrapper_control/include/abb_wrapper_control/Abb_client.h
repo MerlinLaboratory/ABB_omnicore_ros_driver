@@ -53,7 +53,7 @@ class AbbClient {
                                 trajectory_msgs::JointTrajectory& computed_trajectory, trajectory_msgs::JointTrajectory past_trajectory);
         
         // Service call function for joint plan
-        bool call_joint_service(std::vector<double> joint_goal, bool is_true, trajectory_msgs::JointTrajectory& past_trajectory, trajectory_msgs::JointTrajectory& computed_trajectory);
+        bool call_joint_service(std::vector<double> joint_goal, bool flag_state, trajectory_msgs::JointTrajectory& past_trajectory, trajectory_msgs::JointTrajectory& computed_trajectory);
 	    
         // Service call function for closing the gripper
         bool call_closing_gripper(std_msgs::Bool& close);
