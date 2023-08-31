@@ -129,11 +129,20 @@ bool TaskSequencer::call_example_task(std_srvs::SetBool::Request &req, std_srvs:
     tf::poseEigenToMsg(grasp_transform_aff * pre_grasp_transform_aff, pre_grasp_pose);
     tf::poseEigenToMsg(grasp_transform_aff, grasp_pose);
     
+    // Open the gripper
+    
+    this->OpenGripper(true);
+
     // Plan and go to Pre Grasp Pose 
     this->PlanAndExecutePose(pre_grasp_pose, false);
 
     // Plan and go to Grasp Pose
     this->PlanAndExecuteSlerp(grasp_pose, false);
+
+    // Close the gripper
+
+    this->CloseGripper(true);
+    sleep(0.2);
 
     // Plan and go to Pre Grasp Pose
 
@@ -292,7 +301,32 @@ bool TaskSequencer::PlanAndExecuteSlerp(geometry_msgs::Pose& pose, bool is_relat
         return false;
     }
     return set_bool_srv.response.success = true;
+}
 
+bool TaskSequencer::CloseGripper(bool close){
+    
+    std_srvs::SetBool set_bool_srv;
+
+    if(!this->abb_client.call_closing_gripper(close)){
+        ROS_ERROR("Could not close the gripper.");
+        set_bool_srv.response.success = false;
+        set_bool_srv.response.message = "The service call_closing_gripper was NOT performed correctly!";
+        return false;
+    }  
+    return set_bool_srv.response.success = true;
+}
+
+bool TaskSequencer::OpenGripper(bool open){
+
+    std_srvs::SetBool set_bool_srv;
+
+    if(!this->abb_client.call_opening_gripper(open)){
+        ROS_ERROR("Could not open the gripper.");
+        set_bool_srv.response.success = false;
+        set_bool_srv.response.message = "The service call_opening_gripper was NOT performed correctly!";
+        return false;
+    }  
+    return set_bool_srv.response.success = true;
 }
 
 // Convert xyzrpy vector to geometry_msgs Pose

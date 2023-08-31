@@ -63,6 +63,14 @@ class TaskSequencer {
 
         bool PlanAndExecuteSlerp(geometry_msgs::Pose& pose, bool is_relative);
 
+        // Function to Close the gripper
+
+        bool CloseGripper(bool close);
+
+        // Function to Open the gripper
+
+        bool OpenGripper(bool open);
+
     /// private variables -------------------------------------------------------------------------
 	private:
         

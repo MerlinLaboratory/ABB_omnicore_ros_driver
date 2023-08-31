@@ -56,10 +56,10 @@ class AbbClient {
         bool call_joint_service(std::vector<double> joint_goal, bool flag_state, trajectory_msgs::JointTrajectory& past_trajectory, trajectory_msgs::JointTrajectory& computed_trajectory);
 	    
         // Service call function for closing the gripper
-        bool call_closing_gripper(std_msgs::Bool& close);
+        bool call_closing_gripper(bool close);
 
         // Service call function for opening the gripper
-        bool call_opening_gripper(std_msgs::Bool& open);
+        bool call_opening_gripper(bool open);
 
         // Service call function for getting the object pose
         bool call_camera_pose(std_msgs::Bool& is_requested_arrived, geometry_msgs::Pose& object_pose);

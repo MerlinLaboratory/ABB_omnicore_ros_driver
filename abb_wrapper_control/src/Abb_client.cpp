@@ -254,12 +254,12 @@ bool AbbClient::call_slerp_service(geometry_msgs::Pose goal_pose, geometry_msgs:
     return slerp_plan_srv.response.answer;
 }
 
-bool AbbClient::call_closing_gripper(std_msgs::Bool& close){
+bool AbbClient::call_closing_gripper(bool close){
    
    std_srvs::Trigger trigger_srv;
    
     // Calling the service
-    if(close.data && !this->grip_in_client.call(trigger_srv)){
+    if(close && !this->grip_in_client.call(trigger_srv)){
         ROS_ERROR("Failed to contact the grip_in server. Returning...");
         return false;
     }
@@ -267,12 +267,12 @@ bool AbbClient::call_closing_gripper(std_msgs::Bool& close){
     return trigger_srv.response.success;
 }
 
-bool AbbClient::call_opening_gripper(std_msgs::Bool& open){
+bool AbbClient::call_opening_gripper(bool open){
    
    std_srvs::Trigger trigger_srv;
 
     // Calling the service
-    if(open.data && !this->grip_out_client.call(trigger_srv)){
+    if(open && !this->grip_out_client.call(trigger_srv)){
         ROS_ERROR("Failed to contact the grip_out server. Returning...");
         return false;
     }
