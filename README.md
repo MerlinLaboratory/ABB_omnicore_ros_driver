@@ -127,7 +127,7 @@ catkin_make
 If there are no errors you are ready to proceed to launch the Gazebo simulation of the robot:
 ```bash
   source devel/setup.bash
-  roslaunch irim_ss_pkg yumi_gazebo real_robot.launch
+  roslaunch irim_ss_pkg yumi_gazebo.launch
 ```
 ### Motion Planning
 Launch the PosePlan, SlerpPlan and JointPlan ROS Services server:
