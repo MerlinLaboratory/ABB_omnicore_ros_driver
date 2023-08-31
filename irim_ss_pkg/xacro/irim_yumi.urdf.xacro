@@ -5,6 +5,8 @@
     <!-- Parameters -->
     <xacro:arg name="hardware_interface" default="hardware_interface/PositionJointInterface" />
     <xacro:arg name="gripper_interface"  default="hardware_interface/EffortJointInterface" />
+    
+    <!-- <xacro:arg name="gripper_interface" default="hardware_interface/PositionJointInterface" /> -->
 
     <xacro:property name="robot"              value="yumi" />
     <xacro:property name="hardware_interface" value="$(arg hardware_interface)" />
@@ -34,14 +36,21 @@
     <xacro:include filename="$(find irim_ss_pkg)/xacro/Extra/camera_stand.xacro" />
 
     <xacro:camera_stand parent="base_link_table" >
-        <origin xyz="0.6 0.5 0.65" rpy="0 0 0" />
+        <origin xyz="0.0 0.4 0.65" rpy="0 0 0" />
     </xacro:camera_stand>
+
+    <!-- Import the surface -->
+    <xacro:include filename="$(find irim_ss_pkg)/xacro/Extra/surface.xacro" />
+
+    <xacro:surface parent="single_yumi_base_link" >
+        <origin xyz="-0.03 0.33 0.08" rpy="0 0 0" />
+    </xacro:surface>
 
     <!--Import the single yumi macro -->
     <xacro:include filename="$(find robots_description)/xacro/YumiSingleArm/single_yumi.xacro" />
 
     <xacro:single_yumi parent="base_link_table" hardware_interface="${hardware_interface}">
-        <origin xyz="-0.3 0 0.6" rpy="0 0 0" />
+        <origin xyz="-0.3 0 0.6" rpy="0 0 -1.57" />
     </xacro:single_yumi>
 
     <!--Import the yumi servo gripper macro -->

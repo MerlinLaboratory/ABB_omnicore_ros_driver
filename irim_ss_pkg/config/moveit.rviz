@@ -6,7 +6,6 @@ Panels:
       Expanded:
         - /TF1/Frames1
         - /MotionPlanning1
-        - /MotionPlanning1/Planned Path1
       Splitter Ratio: 0.5
     Tree Height: 724
   - Class: rviz/Help
@@ -58,6 +57,8 @@ Visualization Manager:
           Value: false
         camera_holder:
           Value: false
+        dice:
+          Value: true
         ext_camera_link:
           Value: false
         grasp_link:
@@ -114,10 +115,12 @@ Visualization Manager:
                                 {}
                               gripper_finger_r:
                                 {}
+          dice:
+            {}
       Update Interval: 0
       Value: true
     - Class: moveit_rviz_plugin/PlanningScene
-      Enabled: true
+      Enabled: false
       Move Group Namespace: ""
       Name: PlanningScene
       Planning Scene Topic: move_group/monitored_planning_scene
@@ -223,7 +226,7 @@ Visualization Manager:
         Robot Alpha: 1
         Show Robot Collision: false
         Show Robot Visual: true
-      Value: true
+      Value: false
     - Acceleration_Scaling_Factor: 0.1
       Class: moveit_rviz_plugin/MotionPlanning
       Enabled: true
@@ -373,7 +376,7 @@ Visualization Manager:
         Scene Alpha: 0.8999999761581421
         Scene Color: 50; 230; 50
         Scene Display Time: 0.009999999776482582
-        Show Scene Geometry: true
+        Show Scene Geometry: false
         Voxel Coloring: Z-Axis
         Voxel Rendering: Occupied Voxels
       Scene Robot:
@@ -504,9 +507,9 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.10499976575374603
+      Pitch: 0.44999954104423523
       Target Frame: world
-      Yaw: 5.948112487792969
+      Yaw: 5.603105545043945
     Saved: ~
 Window Geometry:
   Displays:

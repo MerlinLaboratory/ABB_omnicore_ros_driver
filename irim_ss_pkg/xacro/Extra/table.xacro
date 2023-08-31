@@ -16,7 +16,7 @@
         </joint>
 
         <gazebo reference="base_link_table">
-            <material>Gazebo/Yellow</material>
+            <material>Gazebo/Grey</material>
         </gazebo>
 
         <link name="base_link_table">
@@ -83,4 +83,10 @@
             </visual>
         </link>
     </xacro:macro>
+
+    <gazebo reference="base_link_table">
+        <mu1>0.2</mu1>
+        <mu2>0.1</mu2>
+    </gazebo>
+
 </robot>
