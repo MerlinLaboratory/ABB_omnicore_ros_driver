@@ -134,10 +134,9 @@ Launch the PosePlan, SlerpPlan and JointPlan ROS Services server:
 ```bash
   roslaunch abb_wrapper_control launchControlServer.launch
 ```
-### Motion Control
 Launch the ROS Services Client to control the robot:
 ```bash
-  roslaunch abb_wrapper_control launchTaskServerTemplate.launch
+  roslaunch abb_wrapper_control launchTaskServerExample.launch
 ```
 If there are no errors you are ready to proceed to set up the robot.
 
