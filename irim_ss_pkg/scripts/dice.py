@@ -16,7 +16,7 @@ from std_msgs.msg import Float64MultiArray, Int16
 import threading
 import random
 import numpy as np
-from tf.transformations import quaternion_matrix,euler_from_quaternion
+from tf.transformations import quaternion_matrix,euler_from_quaternion,quaternion_from_euler, euler_from_matrix
 
 np.set_printoptions(suppress=True)
 
@@ -30,12 +30,12 @@ urdf_file = path + '/xacro/Extra/dice.urdf'
 
 # print(urdf_file)
 
-rx = random.uniform( 0.0, 0.15)
-ry = random.uniform(-0.2, 0.2)
+rx = random.uniform( 0.0, 0.1)
+ry = random.uniform(-0.15, 0.15)
 
-RA = random.uniform(-2.0, 2.2)
-RB = random.uniform(-2.0, 2.2)
-RC = random.uniform(-2.0, 2.2)
+RA = random.uniform(-2.8, 2.8)
+RB = random.uniform(-2.8, 2.8)
+RC = random.uniform(-2.8, 2.8)
 
 
 cmd = "rosrun gazebo_ros spawn_model -urdf -file " + urdf_file + " -model dice -z 0.9 -x " + str(rx) + " -y " + str(ry) + " -R " + str(RA)  + " -P " + str(RB)  + " -Y " + str(RC) 
@@ -63,6 +63,7 @@ class dice_ros:
         self.mutex = threading.Lock()
         self.msg_dice = Int16()
         self.msg_pose = geometry_msgs.msg.PoseStamped()
+        self.dice_R = np.eye(4)
 
 
     def callback_dice(self,data):
@@ -81,8 +82,8 @@ class dice_ros:
                 self._transform.transform.rotation.y    = data.pose[i].orientation.y
                 self._transform.transform.rotation.z    = data.pose[i].orientation.z
 
-                R = quaternion_matrix([data.pose[i].orientation.x,data.pose[i].orientation.y,data.pose[i].orientation.z,data.pose[i].orientation.w])
-                R_row3 = R[2,:].round()
+                self.dice_R = quaternion_matrix([data.pose[i].orientation.x,data.pose[i].orientation.y,data.pose[i].orientation.z,data.pose[i].orientation.w])
+                R_row3 = self.dice_R[2,:].round()
                 # print(R_row3)
                 if R_row3[0] == 1:
                     self.msg_dice.data = 2
@@ -96,7 +97,7 @@ class dice_ros:
                     self.msg_dice.data = 4
                 elif R_row3[2] == -1:
                     self.msg_dice.data = 3
-                
+
                 self.mutex.release()
                 
 
@@ -104,6 +105,7 @@ class dice_ros:
 
     def fake_grasp(self):
         while not rospy.is_shutdown():
+            rot_z = 0
             if self._transform != None:
                 self.mutex.acquire()
                 self.broadcaster.sendTransform((self._transform.transform.translation.x,
@@ -117,6 +119,40 @@ class dice_ros:
                                                 self._transform.child_frame_id,
                                                 "world")
                 self.pub_number.publish(self.msg_dice)
+
+                # if type(self.dice_R) != NoneType:
+                [rx,ry,rz] = euler_from_matrix(self.dice_R, axes='sxyz')
+                # else:
+                #     rx = 0
+                #     ry = 0
+                #     rz = 0
+                
+                qt  = []
+
+                if self.msg_dice.data == 1:
+                    rot_z = rz #+ np.pi  # y alto 
+                elif self.msg_dice.data == 2:
+                    rot_z = np.sign(np.arcsin(self.dice_R[1,1])) * np.arccos(self.dice_R[0,1]) #+ np.pi # x alto 
+                elif self.msg_dice.data == 3:
+                    rot_z = rz #+ np.pi # z bassa
+                elif self.msg_dice.data == 4:
+                    rot_z = rz # z alta
+                elif self.msg_dice.data == 5:
+                    rot_z = np.sign(np.arcsin(self.dice_R[1,1])) * np.arccos(self.dice_R[0,1]) #+ np.pi # x alto 
+                elif self.msg_dice.data == 6:
+                    rot_z = rz # y alto
+                
+
+                while rot_z < 0:
+                    rot_z = rot_z + 2*np.pi
+
+                while rot_z > np.pi/4:
+                    rot_z = rot_z - np.pi/2
+
+                rot_z = rot_z - np.pi/2
+
+                qt  = quaternion_from_euler(0,3.14,rot_z,axes="sxyz")
+                
                 self.mutex.release()
                  
             try:
@@ -135,15 +171,19 @@ class dice_ros:
             except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
                 continue
 
-            self.msg_pose.header.frame_id  = "dice"
+            #Force dice z axis to look 
+            # eul = euler_from_quaternion([rot_dice[0],rot_dice[1],rot_dice[2],rot_dice[3]],axes="sxyz")
+            
+
+            self.msg_pose.header.frame_id  = "single_yumi_base_link"
             self.msg_pose.header.stamp     = rospy.Time.now()
             self.msg_pose.pose.position.x    = trans_dice[0]
             self.msg_pose.pose.position.y    = trans_dice[1]
             self.msg_pose.pose.position.z    = trans_dice[2]
-            self.msg_pose.pose.orientation.x = rot_dice[0]
-            self.msg_pose.pose.orientation.y = rot_dice[1]
-            self.msg_pose.pose.orientation.z = rot_dice[2]
-            self.msg_pose.pose.orientation.w = rot_dice[3]
+            self.msg_pose.pose.orientation.x = qt[0]
+            self.msg_pose.pose.orientation.y = qt[1]
+            self.msg_pose.pose.orientation.z = qt[2]
+            self.msg_pose.pose.orientation.w = qt[3]
             self.pub_pose.publish(self.msg_pose)
 
             dist_grasp = math.sqrt((trans_grasp[0]**2) + (trans_grasp[1]**2) + (trans_grasp[2]**2))
@@ -160,8 +200,6 @@ class dice_ros:
 
 
             self.pub_fake.publish(self.last_message)
-
-            
 
             self.rate.sleep()
 
