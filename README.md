@@ -111,7 +111,7 @@ sudo apt-get install libboost-all-dev
 Copy **abb_wrapper** folder to **src** folder on catkin workspace (`~/catkin_ws/src`).
 ```bash
 cd catkin_ws/src
-git clone https://github.com/MerlinLaboratory/abb_wrapper.git
+git clone -b DRIM-Volterra https://github.com/MerlinLaboratory/abb_wrapper.git
 ```
 
 Move back to the workspace folder (catkin_ws/)
@@ -127,18 +127,30 @@ catkin_make
 If there are no errors you are ready to proceed to launch the Gazebo simulation of the robot:
 ```bash
   source devel/setup.bash
-  roslaunch irim_ss_pkg yumi_gazebo real_robot.launch
+  roslaunch irim_ss_pkg yumi_gazebo.launch
 ```
 ### Motion Planning
 Launch the PosePlan, SlerpPlan and JointPlan ROS Services server:
 ```bash
+  source devel/setup.bash
   roslaunch abb_wrapper_control launchControlServer.launch
 ```
-### Motion Control
-Launch the ROS Services Client to control the robot:
+To test the if everything works you can launch the example script with:
 ```bash
+  source devel/setup.bash
+  roslaunch abb_wrapper_control launchTaskServerExample.launch
+```
+This launcher runs the script "task_server_example.cpp".
+
+ATTENTION: remember to press 'next' in the RvizVisualToolsGui window to execute the motion on the robot.
+
+There is a third launcher:
+```bash
+  source devel/setup.bash
   roslaunch abb_wrapper_control launchTaskServerTemplate.launch
 ```
+that runs the blank template "task_server_template.cpp" that you can use to write your own code for the hands on.
+
 If there are no errors you are ready to proceed to set up the robot.
 
 ## Robot Set up

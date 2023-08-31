@@ -153,6 +153,7 @@ bool AbbClient::call_pose_service(const geometry_msgs::Pose& goal_pose, const ge
     *
     * @param goal_pose [in] The Cartesian target goal you want to plan toward.
     * @param start_pose [in] The Cartesian initial pose you want to plan from.
+    *                        (Setting zero pose as starting from present current state of the robot).
     * @param is_goal_relative [in] If the goal is relative is set to true, otherwise use the default values set to false.
     * @param past_trajectory [in] The past trajectory.
     * @param computed_trajectory [out] The computed trajectory received from the service server.
@@ -180,7 +181,7 @@ bool AbbClient::call_pose_service(const geometry_msgs::Pose& goal_pose, const ge
 }
 
 // Service call function for joint plan
-bool AbbClient::call_joint_service(std::vector<double> joint_goal, bool is_true, trajectory_msgs::JointTrajectory& past_trajectory, trajectory_msgs::JointTrajectory& computed_trajectory){
+bool AbbClient::call_joint_service(std::vector<double> joint_goal, bool flag_state, trajectory_msgs::JointTrajectory& past_trajectory, trajectory_msgs::JointTrajectory& computed_trajectory){
 /**
     * @brief This functions implements a trajectory planning from the current state of the robot or from the last point of the previous past trajectory toward a joint position goal.
     *
@@ -188,7 +189,7 @@ bool AbbClient::call_joint_service(std::vector<double> joint_goal, bool is_true,
     * boolean flag, past and computed trajectory. It populates the computed trajectory based on the service response.
     *
     * @param joint_goal [in] The joint position goal you want to plan toward.
-    * @param is_true [in] A boolean indicating if you want to plan from the current state or from the last point of the past trajectory: false, it doesn't plan from the current state; true, it plans from the current state.
+    * @param flag_state [in] A boolean indicating if you want to plan from the current state or from the last point of the past trajectory: false, it doesn't plan from the current state; true, it plans from the current state.
     * @param past_trajectory [in] The past trajectory.
     * @param computed_trajectory [out] The computed joint trajectory received from the service server.
     * @return Returns the answer from the joint plan service server.
@@ -201,7 +202,7 @@ bool AbbClient::call_joint_service(std::vector<double> joint_goal, bool is_true,
     // Creating and filling up the request
     abb_wrapper_msgs::joint_plan joint_plan_srv;
     joint_plan_srv.request.joint_goal = joint_goal;
-    joint_plan_srv.request.is_true = is_true;
+    joint_plan_srv.request.flag_state = flag_state;
     joint_plan_srv.request.past_trajectory = past_trajectory;
 
     // Calling the service
@@ -226,6 +227,7 @@ bool AbbClient::call_slerp_service(geometry_msgs::Pose goal_pose, geometry_msgs:
     *
     * @param goal_pose [in] The cartesian target goal you want to plan toward.
     * @param start_pose [in] The cartesian initial pose you want to plan from.
+    *                   (Setting zero pose as starting from present current state of the robot).
     * @param is_goal_relative [in] If the goal is relative is set to true, otherwise use the default values set to false.
     * @param past_trajectory [in] The past trajectory.
     * @param computed_trajectory [out] The computed trajectory received from the service server.
@@ -252,12 +254,12 @@ bool AbbClient::call_slerp_service(geometry_msgs::Pose goal_pose, geometry_msgs:
     return slerp_plan_srv.response.answer;
 }
 
-bool AbbClient::call_closing_gripper(std_msgs::Bool& close){
+bool AbbClient::call_closing_gripper(bool close){
    
    std_srvs::Trigger trigger_srv;
    
     // Calling the service
-    if(close.data && !this->grip_in_client.call(trigger_srv)){
+    if(close && !this->grip_in_client.call(trigger_srv)){
         ROS_ERROR("Failed to contact the grip_in server. Returning...");
         return false;
     }
@@ -265,12 +267,12 @@ bool AbbClient::call_closing_gripper(std_msgs::Bool& close){
     return trigger_srv.response.success;
 }
 
-bool AbbClient::call_opening_gripper(std_msgs::Bool& open){
+bool AbbClient::call_opening_gripper(bool open){
    
    std_srvs::Trigger trigger_srv;
 
     // Calling the service
-    if(open.data && !this->grip_out_client.call(trigger_srv)){
+    if(open && !this->grip_out_client.call(trigger_srv)){
         ROS_ERROR("Failed to contact the grip_out server. Returning...");
         return false;
     }

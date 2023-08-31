@@ -5,9 +5,9 @@ task_sequencer:
 
   ################## PREGRASP AND GRASP TRANSFORM ##############################
   # Transform from world to grasp pose frame (xyzrpy) [got it from: rosrun tf tf_echo single_yumi_base_link grasp_link] (DEFAULT)
-  grasp_transform: [0.318, -0.000, 0.048, -3.141, 0.000, -1.098]
+  grasp_transform: [0.509, 0.000, 0.327, -3.107, -1.570, -0.034]
 
-  # Transform from grasp pose frame to pre-grasp pose frame (xyzrpy)
+  #  Relative Transform from grasp pose frame to pre-grasp pose frame (xyzrpy)
   pre_grasp_transform: [0.0, 0.0, -0.04, 0.0, 0.0, 0.0]
 
   ################## HOME JOINTS ##############################################

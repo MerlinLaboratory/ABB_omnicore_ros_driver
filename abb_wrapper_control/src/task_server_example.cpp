@@ -1,4 +1,4 @@
-/* TASK SERVER TEMPLATE to call template task service */
+/* TASK SERVER EXAMPLE to call task server example service */
 #include "ros/ros.h"
 #include <iostream>
 #include "ros/service_client.h"
@@ -11,8 +11,7 @@ ROS NODE MAIN TASK SEQUENCE SERVER
 **********************************************/
 int main(int argc, char **argv)
 {    
-    
-    ros::init(argc, argv, "task_server_template");
+    ros::init(argc, argv, "task_server_example");
 
     ros::NodeHandle nh_;
 
@@ -33,14 +32,14 @@ int main(int argc, char **argv)
    req.data = true;
    std_srvs::SetBool::Response resp;
 
-   ROS_INFO("Call Template Task");
+   ROS_INFO("Call Example Task");
    
-   bool success = task_sequencer_obj.call_template_task(req,resp);//This blank function is defined in "TaskSequencer.cpp"
+   bool success = task_sequencer_obj.call_example_task(req,resp); //This function is defined in "TaskSequencer.cpp"
     
    // Check the success and use of the response
 
    if(success){
-      ROS_INFO_STREAM("Call Template Task completed correctly: " << resp.success);
+      ROS_INFO_STREAM("Call Example Task completed correctly: " << resp.success);
    } else {
       ROS_INFO_STREAM("Failed to completed the service");
    }
