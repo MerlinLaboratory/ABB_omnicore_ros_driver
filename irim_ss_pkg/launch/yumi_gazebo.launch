@@ -70,8 +70,4 @@
   <node name="gripper_simulation" pkg="irim_ss_pkg" type="gripper_simulation.py" />
   
 
-  <!-- Load Collision Scene for planning -->
-  <include file="$(find abb_wrapper_control)/launch/launchCollisionObject.launch" if="$(arg collision_scene)">
-  </include>
-
 </launch>
