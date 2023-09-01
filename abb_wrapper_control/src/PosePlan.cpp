@@ -112,8 +112,11 @@ bool PosePlan::performMotionPlan(){
     group.setPoseReferenceFrame("single_yumi_base_link");
 
     //
-    // group.setPlanningPipelineId("pilz_industrial_motion_planner");
-    // group.setPlannerId("PTP");
+  
+    if(group.getDefaultPlanningPipelineId() == "pilz_industrial_motion_planner"){
+       group.setPlanningPipelineId("pilz_industrial_motion_planner");
+       group.setPlannerId("PTP");
+    }
 
     // Getting the robot joint model
     ros::spinOnce();                    // May not be necessary

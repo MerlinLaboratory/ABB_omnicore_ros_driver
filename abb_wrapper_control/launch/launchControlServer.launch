@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <launch>
-      <arg name="environment_name" default="abb"/>
+    <arg name="environment_name" default="abb"/>
+    <arg name="planner" default="false"/>
 
 	<!-- Launch arguments -->
 	<arg name="control_server_params" default="$(find abb_wrapper_control)/configs/control_server_params.yaml"/>
@@ -9,6 +10,6 @@
 	<rosparam command="load" file="$(arg control_server_params)"/>
    
 	<!-- Load main node -->
-  <node name="control_server_node" pkg="abb_wrapper_control" type="control_server" output="screen"/>
+  <node name="control_server_node" pkg="abb_wrapper_control" type="control_server" args="$(arg planner)" output="screen"/>
   
 </launch>

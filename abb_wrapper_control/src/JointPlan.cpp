@@ -81,8 +81,12 @@ bool JointPlan::performMotionPlan(){
     moveit::planning_interface::MoveGroupInterface group(this->group_name);
 
     //
-    // group.setPlanningPipelineId("pilz_industrial_motion_planner");
-    // group.setPlannerId("PTP");
+    
+    if(group.getDefaultPlanningPipelineId() == "pilz_industrial_motion_planner"){
+       group.setPlanningPipelineId("pilz_industrial_motion_planner");
+       group.setPlannerId("PTP");
+    }
+
 
     // Getting current joint state
     ros::spinOnce();                                    // May not be necessary

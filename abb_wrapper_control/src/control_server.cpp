@@ -30,6 +30,7 @@ int main(int argc, char **argv)
     std::string arm_control_service_name;
     std::string arm_wait_service_name;
     std::string joint_plan_service_name;
+    bool choice_planner;
     
     //Move group name
 
@@ -72,6 +73,12 @@ int main(int argc, char **argv)
     if(!nh_.getParam("/abb/joint_plan_service_name", joint_plan_service_name)){
         ROS_ERROR("Failed to load the joint_plan_service_name!");
     };
+
+    // Get the parameter value from the parameter server
+    if (!nh_.getParam("planner", choice_planner))
+    {
+      std::cout << choice_planner << std::endl;
+    }
 
 	/*------------------ Arm Control --------------------*/
 

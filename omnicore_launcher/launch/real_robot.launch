@@ -31,5 +31,8 @@
     
     <!-- Run Rviz and load the default config to see the state of the move_group node -->
     <node name="rviz_2" pkg="rviz" type="rviz" args="-d $(find omnicore_launcher)/config/config.rviz"/>
+    
+    <!-- Launch Gripper Server -->
+    <node name="gripper_server" pkg="rws_service" type="rws_service_node"/>
 
 </launch>
