@@ -254,7 +254,7 @@ By default, the repo launches the **Gofa** robot with a **position_controllers/J
 If the previous command's output is **"EGM IS NOT CONNECTED"**, Linux's firewall blocks UDP communications with the robot controller. Therefore, you will need to allow the communication in INPUT and OUTPUT to your Linux machine with these two commands:
 
 ```bash
-  sudo iptables -I OUTPUT -p udp --dport 6511 -j ACCEPT
+  sudo iptables -I INPUT -p udp --dport 6511 -j ACCEPT
   sudo iptables -A OUTPUT -p udp -m udp --sport 6511 -j ACCEPT
 ```
 
