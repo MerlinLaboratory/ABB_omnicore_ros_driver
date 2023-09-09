@@ -4,6 +4,7 @@
 // ROS
 #include <ros/ros.h>
 #include <urdf/model.h>
+#include <std_srvs/Trigger.h>
 
 // ROS Controls
 #include <hardware_interface/robot_hw.h>
@@ -30,146 +31,175 @@
 namespace ros_control_omnicore
 {
 
-  class OmnicoreHWInterface : public hardware_interface::RobotHW
-  {
-  public:
-    OmnicoreHWInterface(const ros::NodeHandle &nh);
-    virtual ~OmnicoreHWInterface() {}
+	class OmnicoreHWInterface : public hardware_interface::RobotHW
+	{
+	public:
+		OmnicoreHWInterface(const ros::NodeHandle &nh);
+		virtual ~OmnicoreHWInterface() {}
 
-    /** \brief Initialize the hardware interface */
-    void init();
+		/** \brief Initialize the hardware interface */
+		void init();
 
-    /** \brief Read the state from the robot hardware. */
-    void read(ros::Duration &elapsed_time);
+		/** \brief Read the state from the robot hardware. */
+		void read(ros::Duration &elapsed_time);
 
-    /** \brief Write the command to the robot hardware. */
-    void write(ros::Duration &elapsed_time);
+		/** \brief Write the command to the robot hardware. */
+		void write(ros::Duration &elapsed_time);
 
-    /** \brief Set all members to default values */
-    virtual void reset();
+		/** \brief Set all members to default values */
+		virtual void reset();
 
-    /**
-     * \brief Check (in non-realtime) if given controllers could be started and stopped from the
-     * current state of the RobotHW
-     * with regard to necessary hardware interface switches. Start and stop list are disjoint.
-     * This is just a check, the actual switch is done in doSwitch()
-     */
-    bool canSwitch(const std::list<hardware_interface::ControllerInfo> &start_list,
-                   const std::list<hardware_interface::ControllerInfo> &stop_list) const
-    {
-      // TODO
-      return true;
-    }
+		/**
+		 * \brief Check (in non-realtime) if given controllers could be started and stopped from the
+		 * current state of the RobotHW
+		 * with regard to necessary hardware interface switches. Start and stop list are disjoint.
+		 * This is just a check, the actual switch is done in doSwitch()
+		 */
+		bool canSwitch(const std::list<hardware_interface::ControllerInfo> &start_list,
+							const std::list<hardware_interface::ControllerInfo> &stop_list) const
+		{
+			// TODO
+			return true;
+		}
 
-    /**
-     * \brief Perform (in non-realtime) all necessary hardware interface switches in order to start
-     * and stop the given controllers.
-     * Start and stop list are disjoint. The feasability was checked in canSwitch() beforehand.
-     */
-    void doSwitch(const std::list<hardware_interface::ControllerInfo> &start_list,
-                  const std::list<hardware_interface::ControllerInfo> &stop_list)
-    {
-      // TODO
-      return;
-    }
+		/**
+		 * \brief Perform (in non-realtime) all necessary hardware interface switches in order to start
+		 * and stop the given controllers.
+		 * Start and stop list are disjoint. The feasability was checked in canSwitch() beforehand.
+		 */
+		void doSwitch(const std::list<hardware_interface::ControllerInfo> &start_list,
+						  const std::list<hardware_interface::ControllerInfo> &stop_list)
+		{
+			// TODO
+			return;
+		}
 
-    /**
-     * \brief Register the limits of the joint specified by joint_id and joint_handle. The limits
-     * are retrieved from the urdf_model.
-     *
-     * \return the joint's type, lower position limit, upper position limit, and effort limit.
-     */
-    void registerJointLimits(const hardware_interface::JointHandle &joint_handle_position,
-                             const hardware_interface::JointHandle &joint_handle_velocity,
-                             std::size_t joint_id);
+		/**
+		 * \brief Register the limits of the joint specified by joint_id and joint_handle. The limits
+		 * are retrieved from the urdf_model.
+		 *
+		 * \return the joint's type, lower position limit, upper position limit, and effort limit.
+		 */
+		void registerJointLimits(const hardware_interface::JointHandle &joint_handle_position,
+										 const hardware_interface::JointHandle &joint_handle_velocity,
+										 std::size_t joint_id);
 
-    /** \breif Enforce limits for all values before writing */
-    void enforceLimits(ros::Duration &period);
+		/** \breif Enforce limits for all values before writing */
+		void enforceLimits(ros::Duration &period);
 
-    /** \brief Helper for debugging a joint's state */
-    void printState();
-    std::string printStateHelper();
+		/** \brief Helper for debugging a joint's state */
+		void printState();
+		std::string printStateHelper();
 
-    /** \brief Helper for debugging a joint's command */
-    std::string printCommandHelper();
+		/** \brief Helper for debugging a joint's command */
+		std::string printCommandHelper();
 
-    /** \brief This functions set through RWS the EGM params specified in the configuration file .yaml */
-    bool SetEGMParameters();
-    bool EGMStartSignal();
-    void WaitForEgmConnection();
+		/** \brief This functions set through RWS the EGM params specified in the configuration file .yaml */
 
-  private :
-    std::string robot_name;
-    std::string task_name;
-    ros::NodeHandle nh;
+		// EGM functions
+		bool SetEGMParameters();
+		bool EGMStartSignal();
+		bool EGMStopSignal();
+		void WaitForEgmConnection();
 
-    // --------------------------------------------------------------- //
-    // ------------------ Variables for ros_control ------------------ //
-    // --------------------------------------------------------------- //
+		// FreeDrive functions
+		bool FreeDriveStartSignal();
+		bool FreeDriveStopSignal();
 
-    // Hardware interfaces
-    hardware_interface::JointStateInterface    joint_state_interface;
-    hardware_interface::PositionJointInterface position_joint_interface;
-    hardware_interface::VelocityJointInterface velocity_joint_interface;
-    hardware_interface::EffortJointInterface   effort_joint_interface;
+		// Funcitons to move from one command to the other
+		bool SetEgmState(std_srvs::TriggerRequest& req, std_srvs::TriggerResponse& res);
+		bool SetFreeDriveState(std_srvs::TriggerRequest& req, std_srvs::TriggerResponse& res);
 
-    // Joint limits interfaces - Saturation
-    joint_limits_interface::PositionJointSaturationInterface pos_jnt_sat_interface;
-    joint_limits_interface::VelocityJointSaturationInterface vel_jnt_sat_interface;
+	private:
+		std::string robot_name;
+		std::string task_name;
+		ros::NodeHandle nh;
 
-    // Robot configuration
-    std::vector<std::string> joint_names;
-    std::size_t num_joints;
-    urdf::Model *urdf_model;
+		// --------------------------------------------------------------- //
+		// ------------------ Variables for ros_control ------------------ //
+		// --------------------------------------------------------------- //
 
-    // States
-    std::vector<double> joint_position;
-    std::vector<double> joint_velocity;
-    std::vector<double> joint_effort;
+		// Hardware interfaces
+		hardware_interface::JointStateInterface joint_state_interface;
+		hardware_interface::PositionJointInterface position_joint_interface;
+		hardware_interface::VelocityJointInterface velocity_joint_interface;
 
-    // Commands
-    std::vector<double> joint_position_command;
-    std::vector<double> joint_velocity_command;
-    // std::vector<double> joint_effort_command; -> Not supported by Omnicore :(
+		// Joint limits interfaces - Saturation
+		joint_limits_interface::PositionJointSaturationInterface pos_jnt_sat_interface;
+		joint_limits_interface::VelocityJointSaturationInterface vel_jnt_sat_interface;
 
-    // Copy of limits, in case we need them later in our control stack
-    std::vector<double> joint_position_lower_limits;
-    std::vector<double> joint_position_upper_limits;
-    std::vector<double> joint_velocity_limits;
-    std::vector<double> joint_effort_limits;
+		// Robot configuration
+		std::vector<std::string> joint_names;
+		std::size_t num_joints;
+		urdf::Model *urdf_model;
 
-    /** \brief Get the URDF XML from the parameter server */
-    virtual void loadURDF(const ros::NodeHandle &nh, std::string param_name);
+		// States
+		std::vector<double> joint_position;
+		std::vector<double> joint_velocity;
+		std::vector<double> joint_effort;
 
-    // --------------------------------------------------------------- //
-    // -------------- Variables for connecting to Robot -------------- //
-    // --------------------------------------------------------------- //
+		// Commands
+		std::vector<double> joint_position_command;
+		std::vector<double> joint_velocity_command;
+		// std::vector<double> joint_effort_command; -> Not supported by Omnicore :(
 
-    // Generic data
-    std::string ip_robot;
-    int port_robot_rws;
-    int port_robot_egm;
-    std::string task_robot;
+		// Copy of limits, in case we need them later in our control stack
+		std::vector<double> joint_position_lower_limits;
+		std::vector<double> joint_position_upper_limits;
+		std::vector<double> joint_velocity_limits;
+		std::vector<double> joint_effort_limits;
 
-    // Boost components for managing asynchronous UDP socket(s).
-	  boost::thread_group thread_group_;
-	  boost::asio::io_service io_service_;
+		/** \brief Get the URDF XML from the parameter server */
+		virtual void loadURDF(const ros::NodeHandle &nh, std::string param_name);
 
-    // EGM parameters
-    int pos_corr_gain;
-    int max_speed_deviation;
+		// --------------------------------------------------------------- //
+		// -------------- Variables for connecting to Robot -------------- //
+		// --------------------------------------------------------------- //
 
-    // Interfaces
-    abb::rws::RWSStateMachineInterface* p_rws_interface;
-	  abb::egm::EGMControllerInterface*   p_egm_interface;
+		// Generic data
+		std::string ip_robot;
+		int port_robot_rws;
+		int port_robot_egm;
+		std::string task_robot;
 
-    // Data from and to the robot
-    abb::egm::wrapper::Input data_from_egm;
-    abb::egm::wrapper::Output data_to_egm;
-    
+		// StateMachine state
+		abb::rws::RWSStateMachineInterface::States state_machine_state = abb::rws::RWSStateMachineInterface::STATE_IDLE;
+		abb::rws::RWSStateMachineInterface::EGMActions egm_action = abb::rws::RWSStateMachineInterface::EGM_ACTION_UNKNOWN;
 
-  }; // class
+		// Boost components for managing asynchronous UDP socket(s).
+		boost::thread_group thread_group_;
+		boost::asio::io_service io_service_;
 
-} // namespace ros_control_boilerplate
+		// EGM parameters
+		int pos_corr_gain;
+		int max_speed_deviation;
+
+		// Interfaces
+		abb::rws::RWSStateMachineInterface *p_rws_interface;
+		abb::egm::EGMControllerInterface *p_egm_interface;
+
+		// Data from and to the robot
+		abb::egm::wrapper::Input data_from_egm;
+		abb::egm::wrapper::Output data_to_egm;
+	};
+
+	class OmnicoreServiceServer
+	{
+	public:
+		OmnicoreServiceServer(const ros::NodeHandle &nh, std::shared_ptr<ros_control_omnicore::OmnicoreHWInterface> p_omnicore_hw_interface);
+
+	private:
+		// Node handler
+		ros::NodeHandle nh;
+
+		// Ros services servers
+		ros::ServiceServer server_set_egm_state;
+		ros::ServiceServer server_set_free_drive_state;
+
+		std::shared_ptr<ros_control_omnicore::OmnicoreHWInterface> p_omnicore_hw_interface;
+
+	};
+
+}
 
 #endif // GENERIC_ROS_CONTROL_GENERIC_HW_INTERFACE_H

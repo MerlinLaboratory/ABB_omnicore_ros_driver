@@ -110,6 +110,8 @@ const std::string Procedures::RUN_MODULE_UNLOAD                = "runModuleUnloa
 const std::string Procedures::RUN_MOVE_ABS_J                   = "runMoveAbsJ";
 const std::string Procedures::RUN_MOVE_J                       = "runMoveJ";
 const std::string Procedures::RUN_MOVE_TO_CALIBRATION_POSITION = "runMoveToCalibrationPosition";
+const std::string Procedures::SET_LEADTHROUGH_ON               = "setLeadthroughOn";
+const std::string Procedures::SET_LEADTHROUGH_OFF              = "setLeadthroughOff";
 
 const RAPIDSymbolResource Symbols::EGM_CURRENT_ACTION(Modules::T_ROB_EGM, "current_action");
 const RAPIDSymbolResource Symbols::EGM_SETTINGS(Modules::T_ROB_EGM, "settings");
@@ -323,6 +325,16 @@ bool RWSStateMachineInterface::Services::RAPID::runMoveJ(const std::string task,
 {
   return p_rws_interface_->setRAPIDSymbolData(task, Symbols::RAPID_MOVE_ROB_TARGET_INPUT, rob_target) &&
          setRoutineName(task, Procedures::RUN_MOVE_J) && signalRunRAPIDRoutine();
+}
+
+bool RWSStateMachineInterface::Services::RAPID::setLeadthroughOn(const std::string task) const
+{
+  return setRoutineName(task, Procedures::SET_LEADTHROUGH_ON) && signalRunRAPIDRoutine();
+}
+
+bool RWSStateMachineInterface::Services::RAPID::setLeadthroughOff(const std::string task) const
+{
+  return setRoutineName(task, Procedures::SET_LEADTHROUGH_OFF) && signalRunRAPIDRoutine();
 }
 
 bool RWSStateMachineInterface::Services::RAPID::runMoveToCalibrationPosition(const std::string task) const

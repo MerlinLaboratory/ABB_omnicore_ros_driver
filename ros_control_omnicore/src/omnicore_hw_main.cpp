@@ -11,11 +11,14 @@ int main(int argc, char** argv)
   spinner.start();
 
   // Create the hardware interface specific to your robot
-  std::shared_ptr<ros_control_omnicore::OmnicoreHWInterface> hw_interface = std::make_shared<ros_control_omnicore::OmnicoreHWInterface>(nh);
-  hw_interface->init();
+  std::shared_ptr<ros_control_omnicore::OmnicoreHWInterface> p_hw_interface = std::make_shared<ros_control_omnicore::OmnicoreHWInterface>(nh);
+  p_hw_interface->init();
+
+  // Creating the Service Server
+  ros_control_omnicore::OmnicoreServiceServer omnicore_service_server = ros_control_omnicore::OmnicoreServiceServer(nh, p_hw_interface);
 
   // Start the control loop
-  ros_control_omnicore::OmnicoreHWControlLoop control_loop(nh, hw_interface);
+  ros_control_omnicore::OmnicoreHWControlLoop control_loop(nh, p_hw_interface);
   control_loop.run();  // Blocks until shutdown signal recieved
 
   return 0;

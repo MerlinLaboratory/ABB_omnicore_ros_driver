@@ -277,6 +277,16 @@ public:
         static const std::string RUN_MOVE_J;
 
         /**
+         * \brief Predefined RAPID procedure "setLeadthroughOn".
+         */
+        static const std::string SET_LEADTHROUGH_ON;
+
+        /**
+         * \brief Predefined RAPID procedure "setLeadthroughOff".
+         */
+        static const std::string SET_LEADTHROUGH_OFF;
+
+        /**
          * \brief Predefined RAPID procedure "runMoveToCalibrationPosition".
          */
         static const std::string RUN_MOVE_TO_CALIBRATION_POSITION;
@@ -985,6 +995,24 @@ private:
        * \return bool indicating if the communication was successful or not.
        */
       bool runMoveJ(const std::string task, RobTarget rob_target) const;
+
+      /**
+       * \brief Request the execution of the predefined RAPID procedure "setleadthroughOn".
+       *
+       * \param task specifying the RAPID task.
+       *
+       * \return bool indicating if the communication was successful or not.
+       */
+      bool setLeadthroughOn(const std::string task) const;
+
+      /**
+       * \brief Request the execution of the predefined RAPID procedure "setleadthroughOff".
+       *
+       * \param task specifying the RAPID task.
+       *
+       * \return bool indicating if the communication was successful or not.
+       */
+      bool setLeadthroughOff(const std::string task) const;
 
       /**
        * \brief Request the execution of the predefined RAPID procedure "runMoveToCalibrationPosition".
