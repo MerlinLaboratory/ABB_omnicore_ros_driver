@@ -329,7 +329,15 @@ bool RWSStateMachineInterface::Services::RAPID::runMoveJ(const std::string task,
 
 bool RWSStateMachineInterface::Services::RAPID::setLeadthroughOn(const std::string task) const
 {
-  return setRoutineName(task, Procedures::SET_LEADTHROUGH_ON) && signalRunRAPIDRoutine();
+  bool success = setRoutineName(task, Procedures::SET_LEADTHROUGH_ON);
+  if(!success)
+    std::cout << "Cannot set routine name to setLeadthroughOn" << std::endl;
+
+  success = success && signalRunRAPIDRoutine();
+  if(!success)
+    std::cout << "Cannot Run Rapid Routine" << std::endl;
+
+  return success;
 }
 
 bool RWSStateMachineInterface::Services::RAPID::setLeadthroughOff(const std::string task) const

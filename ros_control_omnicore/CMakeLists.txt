@@ -204,7 +204,7 @@ include_directories(
 #   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 # )
 
-add_executable(omnicore_control_node src/omnicore_hw_main.cpp src/omnicore_hw_interface.cpp src/omnicore_hw_control_loop.cpp)
+add_executable(omnicore_control_node src/omnicore_main.cpp src/omnicore_hw_interface.cpp src/omnicore_control_loop.cpp)
 set_target_properties(omnicore_control_node PROPERTIES OUTPUT_NAME omnicore_control_node PREFIX "")
 add_dependencies(omnicore_control_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(omnicore_control_node ${catkin_LIBRARIES} PocoNetSSL)

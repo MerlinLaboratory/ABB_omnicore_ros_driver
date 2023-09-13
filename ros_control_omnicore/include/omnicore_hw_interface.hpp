@@ -46,8 +46,13 @@ namespace ros_control_omnicore
 		/** \brief Write the command to the robot hardware. */
 		void write(ros::Duration &elapsed_time);
 
+		/** \brief Shutdown gently the robot hardware. */
+		void shutdown();
+
 		/** \brief Set all members to default values */
 		virtual void reset();
+
+		// static void ShutDownHandler(int signal);
 
 		/**
 		 * \brief Check (in non-realtime) if given controllers could be started and stopped from the
@@ -97,6 +102,7 @@ namespace ros_control_omnicore
 		/** \brief This functions set through RWS the EGM params specified in the configuration file .yaml */
 
 		// EGM functions
+		// bool ResetDataSendToEGM();
 		bool SetEGMParameters();
 		bool EGMStartSignal();
 		bool EGMStopSignal();
@@ -114,6 +120,7 @@ namespace ros_control_omnicore
 		std::string robot_name;
 		std::string task_name;
 		ros::NodeHandle nh;
+		// static OmnicoreHWInterface* hardware_interface_instance;
 
 		// --------------------------------------------------------------- //
 		// ------------------ Variables for ros_control ------------------ //
@@ -148,6 +155,7 @@ namespace ros_control_omnicore
 		std::vector<double> joint_position_upper_limits;
 		std::vector<double> joint_velocity_limits;
 		std::vector<double> joint_effort_limits;
+
 
 		/** \brief Get the URDF XML from the parameter server */
 		virtual void loadURDF(const ros::NodeHandle &nh, std::string param_name);

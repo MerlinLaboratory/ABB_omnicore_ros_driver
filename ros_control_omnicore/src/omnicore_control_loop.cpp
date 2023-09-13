@@ -1,9 +1,8 @@
-#include "../include/omnicore_hw_control_loop.hpp"
+#include "../include/omnicore_control_loop.hpp"
 
 namespace ros_control_omnicore
 {
-
-	OmnicoreHWControlLoop::OmnicoreHWControlLoop(ros::NodeHandle &nh, std::shared_ptr<ros_control_omnicore::OmnicoreHWInterface> hardware_interface)
+	OmnicoreControlLoop::OmnicoreControlLoop(ros::NodeHandle &nh, std::shared_ptr<ros_control_omnicore::OmnicoreHWInterface> hardware_interface)
 		 : nh_(nh), hardware_interface(hardware_interface)
 	{
 		// Create the controller manager
@@ -19,7 +18,7 @@ namespace ros_control_omnicore
 		this->desired_update_period_ = ros::Duration(1 / loop_hz_);
 	}
 
-	void OmnicoreHWControlLoop::run()
+	void OmnicoreControlLoop::run()
 	{
 		ros::Rate rate(loop_hz_);
 		while (ros::ok())
@@ -27,9 +26,11 @@ namespace ros_control_omnicore
 			update();
 			rate.sleep();
 		}
+		
+		this->hardware_interface->shutdown();
 	}
 
-	void OmnicoreHWControlLoop::update()
+	void OmnicoreControlLoop::update()
 	{
 		// Get change in time
 		struct timespec current_time_;
