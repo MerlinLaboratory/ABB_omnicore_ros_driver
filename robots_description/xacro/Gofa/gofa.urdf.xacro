@@ -157,7 +157,7 @@
 			<parent link="$(arg 5th_link_name)"/>
 			<child link="$(arg 6th_link_name)"/>
 			<axis xyz="1 0 0"/>
-			<limit effort="0" lower="${radians(-180)}" upper="${radians(180)}" velocity="${radians(200)}"/>
+			<limit effort="0" lower="${radians(-270)}" upper="${radians(270)}" velocity="${radians(200)}"/>
 		</joint>
 
 		<!-- Flange -->

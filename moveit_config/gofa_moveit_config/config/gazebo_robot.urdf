@@ -198,7 +198,7 @@
         <parent link="L5" />
         <child link="L6" />
         <axis xyz="1 0 0" />
-        <limit effort="0" lower="-3.141592653589793" upper="3.141592653589793" velocity="3.490658503988659" />
+        <limit effort="0" lower="-4,71239" upper="4,71239" velocity="3.490658503988659" />
     </joint>
     <link name="flange" />
     <joint name="L6_to_flange" type="fixed">
@@ -273,4 +273,3 @@
         </plugin>
     </gazebo>
 </robot>
-
