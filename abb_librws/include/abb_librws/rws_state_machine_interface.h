@@ -95,6 +95,7 @@ public:
     EGM_ACTION_STOP,      ///< \brief Stop action.
     EGM_ACTION_RUN_JOINT, ///< \brief Joint action.
     EGM_ACTION_RUN_POSE,  ///< \brief Pose action.
+    EGM_ACTION_STREAMING, ///< \brief streaming action.
     EGM_ACTION_UNKNOWN    ///< \brief Unknown action.
   };
 
@@ -151,6 +152,20 @@ public:
        * Note: Requires that the EGM option exists in the controller system.
        */
       static const std::string EGM_STOP;
+
+      /**
+       * \brief IO signal for requesting start of EGM streaming.
+       *
+       * Note: Requires that the EGM option exists in the controller system.
+       */
+      static const std::string EGM_START_STREAMING;
+
+       /**
+       * \brief IO signal for requesting stop of EGM streaming.
+       *
+       * Note: Requires that the EGM option exists in the controller system.
+       */
+      static const std::string EGM_STOP_STREAMING;
 
       /**
        * \brief Prefix for IO signals, used for checking if a mechanical unit is stationary or not.
@@ -875,6 +890,20 @@ private:
        * \return bool indicating if the signaling was successful or not.
        */
       bool signalEGMStop() const;
+
+      /**
+       * \brief Signal the StateMachine AddIn to start any current EGM streams.
+       *
+       * \return bool indicating if the signaling was successful or not.
+       */
+      bool signalEGMStartStreaming() const;
+      
+      /**
+       * \brief Signal the StateMachine AddIn to stop any current EGM streams.
+       *
+       * \return bool indicating if the signaling was successful or not.
+       */
+      bool signalEGMStopStreaming() const;
 
     private:
       /**

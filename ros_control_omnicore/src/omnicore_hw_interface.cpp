@@ -52,7 +52,6 @@ namespace ros_control_omnicore
       for (std::size_t joint_id = 0; joint_id < num_joints; joint_id++)
       {
          std::string joint_name = this->joint_names[joint_id];
-         // ROS_INFO("Loading joint name: %s", joint_name.c_str());
 
          // Create joint state interface
          hardware_interface::JointStateHandle joint_handle(this->joint_names[joint_id],
@@ -97,7 +96,7 @@ namespace ros_control_omnicore
       this->thread_group_.create_thread(boost::bind(&boost::asio::io_service::run, &this->io_service_));
 
       // Setting the EGM signal to Start communication, set parameters and wait for response
-      if (this->EGMStartSignal() == false)
+      if (this->EGMStartJointSignal() == false)
          ROS_ERROR("Could not send Start signal");
       if (this->SetEGMParameters() == false)
          ROS_ERROR("Could not set EGM parameters");
@@ -113,14 +112,11 @@ namespace ros_control_omnicore
 
    void OmnicoreHWInterface::read(ros::Duration &elapsed_time)
    {
+      if(this->egm_action == abb::rws::RWSStateMachineInterface::EGM_ACTION_STOP)
+         return;
 
-      // Checking if RAPID StateMachine is running in EGM mode and with JOINT as input
-      // if (this->state_machine_state != abb::rws::RWSStateMachineInterface::STATE_RUN_EGM_ROUTINE ||
-      //     this->egm_action != abb::rws::RWSStateMachineInterface::EGM_ACTION_RUN_JOINT)
-      //    return;
-
-      if (this->state_machine_state == abb::rws::RWSStateMachineInterface::STATE_RUN_EGM_ROUTINE && this->p_egm_interface->waitForMessage(500) == false)
-      // if (this->p_egm_interface->waitForMessage(500) == false)
+      // Checking if RAPID StateMachine is running in EGM mode
+      if (this->p_egm_interface->waitForMessage(500) == false)
       {
          ROS_ERROR("Timeout for reading data from EGM");
          return;
@@ -149,11 +145,12 @@ namespace ros_control_omnicore
 
    void OmnicoreHWInterface::write(ros::Duration &elapsed_time)
    {
-
-      // Checking if RAPID StateMachine is running in EGM mode and with JOINT as input
-      if (this->state_machine_state != abb::rws::RWSStateMachineInterface::STATE_RUN_EGM_ROUTINE ||
-          this->egm_action != abb::rws::RWSStateMachineInterface::EGM_ACTION_RUN_JOINT)
-         return;
+      // Checking if RAPID StateMachine is running in IDLE mode. If the current configuration is stream to the robot
+      if (this->state_machine_state == abb::rws::RWSStateMachineInterface::STATE_IDLE)
+      {
+         this->joint_position_command = this->joint_position;
+         this->joint_velocity_command = this->joint_velocity;
+      }
 
       // Enforcing limits
       this->pos_jnt_sat_interface.enforceLimits(elapsed_time);
@@ -161,8 +158,8 @@ namespace ros_control_omnicore
       int j = 0;
       for (int i = j; i < this->num_joints; i++, j++)
       {
-         if (!std::isnan(this->joint_position_command[i]) && !std::isinf(std::isnan(this->joint_position_command[i])) &&
-             !std::isnan(this->joint_velocity_command[i]) && !std::isinf(std::isnan(this->joint_velocity_command[i])))
+         if (!std::isnan(this->joint_position_command[i]) && !std::isinf(this->joint_position_command[i]) &&
+             !std::isnan(this->joint_velocity_command[i]) && !std::isinf(this->joint_velocity_command[i]))
          {
             if (this->robot_name == "yumi_single_arm" && i == __EXTERNAL_AXIS__)
             {
@@ -176,13 +173,12 @@ namespace ros_control_omnicore
          }
       }
 
-      // ROS_INFO("Joints: [%lf, %lf, %lf, %lf, %lf, %lf, %lf]", joint_position_command[0] / 3.14159265358979323846 * 180.0,
+      // ROS_INFO("Joints sent: [%lf, %lf, %lf, %lf, %lf, %lf]", joint_position_command[0] / 3.14159265358979323846 * 180.0,
       //                                                         joint_position_command[1] / 3.14159265358979323846 * 180.0,
       //                                                         joint_position_command[2] / 3.14159265358979323846 * 180.0,
       //                                                         joint_position_command[3] / 3.14159265358979323846 * 180.0,
       //                                                         joint_position_command[4] / 3.14159265358979323846 * 180.0,
-      //                                                         joint_position_command[5] / 3.14159265358979323846 * 180.0,
-      //                                                         joint_position_command[6] / 3.14159265358979323846 * 180.0);
+      //                                                         joint_position_command[5] / 3.14159265358979323846 * 180.0);
 
       // Uncomment to die
       this->p_egm_interface->write(this->data_to_egm);
@@ -204,7 +200,7 @@ namespace ros_control_omnicore
          case abb::rws::RWSStateMachineInterface::STATE_RUN_EGM_ROUTINE:
          {
             /* Exit from EGM state */
-            this->EGMStopSignal();
+            this->EGMStopJointSignal();
             break;
          }
          case abb::rws::RWSStateMachineInterface::STATE_RUN_RAPID_ROUTINE:
@@ -220,11 +216,6 @@ namespace ros_control_omnicore
 
       return;
    }
-
-   // void OmnicoreHWInterface::ShutDownHandler(int signal)
-   // {
-   //    hardware_interface_instance->shutdown();
-   // }
 
    void OmnicoreHWInterface::registerJointLimits(const hardware_interface::JointHandle &joint_handle_position,
                                                  const hardware_interface::JointHandle &joint_handle_velocity,
@@ -336,6 +327,62 @@ namespace ros_control_omnicore
       return;
    }
 
+   bool OmnicoreHWInterface::canSwitch(const std::list<hardware_interface::ControllerInfo> &start_list,
+                                       const std::list<hardware_interface::ControllerInfo> &stop_list)
+   {
+      // TODO 
+      // Check that the start_list controller constains resources that the Gofa has
+      // for(auto eachController : start_list)
+      // {
+      // 	for(auto eachResource : eachController.claimed_resources.re)
+      // 	{
+      // 		std::string a = eachResource.resources[0];
+      // 	}
+      // }
+      // Unclaim the resources of the stop_list controllers
+
+      // Check that the claimed resources of start_list controllers exist
+
+      // Deactivate EGM
+      ROS_INFO("Calling canSwitch");
+
+      //switch (this->egm_action)
+      //{
+      //   case abb::rws::RWSStateMachineInterface::EGM_ACTION_RUN_JOINT:
+      //      this->EGMStopJointSignal();
+      //      break;
+      //   
+      //   // case abb::rws::RWSStateMachineInterface::EGM_ACTION_RUN_POSE: -> TO BE IMPLEMENTED
+      //   //    this->EGMStopPoseSignal();
+      //   //    break;
+
+      //   case abb::rws::RWSStateMachineInterface::EGM_ACTION_STREAMING:
+      //      this->EGMStopStreamingSignal();
+      //      break;
+      //   
+      //   default:
+      //      ROS_ERROR("Underfined state. Cannot switch controller");
+      //      return false;
+      //}
+      
+      return true;
+   }
+
+   void OmnicoreHWInterface::doSwitch(const std::list<hardware_interface::ControllerInfo> &start_list,
+                                      const std::list<hardware_interface::ControllerInfo> &stop_list)
+   {
+      // TODO 
+      // Unclaim the resource of stop_list controllers
+
+      // Claim the resources for start_list controllers
+
+      // Reactivate EGM
+      ROS_INFO("Calling doSwitch");
+      // this->EGMStartJointSignal();
+      
+      return;
+   }
+
    // ----------------------------------------------------------------- //
    // --------------- Functions for connecting to Robot --------------- //
    // ----------------------------------------------------------------- //
@@ -381,28 +428,67 @@ namespace ros_control_omnicore
    // --------- Functions for setting the Robot command state --------- //
    // ----------------------------------------------------------------- //
 
-   bool OmnicoreHWInterface::EGMStartSignal()
+   bool OmnicoreHWInterface::EGMStartJointSignal()
    {
-      this->state_machine_state = abb::rws::RWSStateMachineInterface::STATE_RUN_EGM_ROUTINE;
-      this->egm_action = abb::rws::RWSStateMachineInterface::EGM_ACTION_RUN_JOINT;
-
       bool success = this->p_rws_interface->services().egm().signalEGMStartJoint();
 
       if(!success)
-         ROS_ERROR("Cannot start EGM");
+      {
+         ROS_ERROR("Cannot start EGM in joint mode");
+         return success;
+      }
+
+      this->state_machine_state = abb::rws::RWSStateMachineInterface::STATE_RUN_EGM_ROUTINE;
+      this->egm_action = abb::rws::RWSStateMachineInterface::EGM_ACTION_RUN_JOINT;
 
       return success;
    }
 
-   bool OmnicoreHWInterface::EGMStopSignal()
+   bool OmnicoreHWInterface::EGMStopJointSignal()
    {
-      this->state_machine_state = abb::rws::RWSStateMachineInterface::STATE_IDLE;
-      this->egm_action = abb::rws::RWSStateMachineInterface::EGM_ACTION_STOP;
-
       bool success = this->p_rws_interface->services().egm().signalEGMStop();
 
       if(!success)
-         ROS_ERROR("Cannot stop EGM");
+      {
+         ROS_ERROR("Cannot stop EGM in joint mode");
+         return success; 
+      }
+
+      this->state_machine_state = abb::rws::RWSStateMachineInterface::STATE_IDLE;
+      this->egm_action = abb::rws::RWSStateMachineInterface::EGM_ACTION_STOP;
+
+      return success;
+   }
+
+   bool OmnicoreHWInterface::EGMStartStreamingSignal()
+   {
+      bool success = this->p_rws_interface->services().egm().signalEGMStartStreaming();
+
+      if(!success)
+      {
+         ROS_ERROR("Cannot start EGM in streaming mode");
+         return success;
+      }
+
+      this->state_machine_state = abb::rws::RWSStateMachineInterface::STATE_IDLE;
+      this->egm_action = abb::rws::RWSStateMachineInterface::EGM_ACTION_STREAMING;
+
+      return success;
+   }
+
+   bool OmnicoreHWInterface::EGMStopStreamingSignal()
+   {
+
+      bool success = this->p_rws_interface->services().egm().signalEGMStopStreaming();
+
+      if(!success)
+      {
+         ROS_ERROR("Cannot stop EGM in streaming mode");
+         return success; 
+      }
+
+      this->state_machine_state = abb::rws::RWSStateMachineInterface::STATE_IDLE;
+      this->egm_action = abb::rws::RWSStateMachineInterface::EGM_ACTION_STOP;
 
       return success;
    }
@@ -439,39 +525,39 @@ namespace ros_control_omnicore
    // -------------------------- ROS Services ------------------------- //
    // ----------------------------------------------------------------- //
 
-   bool OmnicoreHWInterface::SetEgmState(std_srvs::TriggerRequest& req, std_srvs::TriggerResponse& res)
+   bool OmnicoreHWInterface::SetControlToEgm(std_srvs::TriggerRequest& req, std_srvs::TriggerResponse& res)
    {
-      res.success = this->FreeDriveStopSignal();
-      ros::Duration(2).sleep();
-      res.success = res.success && this->EGMStartSignal();
-
-      // ! WARNING: this step is very important or the 
-      // ! WARNING: robot risks to make a sudden movement which 
-      // ! WARNING: could severely hurt the operator
-
-      if (this->SetEGMParameters() == false){
-         ROS_ERROR("Could not set EGM parameters");
-         res.success = false;
-         return true;
-      }
-      if (this->p_egm_interface->isInitialized() == false){
-         ROS_ERROR("EGM interface failed to initialize (e.g. due to port already bound)");
-         res.success = false;
-         return true;
-      }
-      this->WaitForEgmConnection();
-
       // Resetting the joint command to the current one
-      this->reset();
+		ros::Publisher topic_commands = this->nh.advertise<trajectory_msgs::JointTrajectory>("robot_controller/command", 1);
+      while (topic_commands.getNumSubscribers() < 1)
+      {
+         ROS_INFO("Waiting for /command topic...");
+         ros::Duration(0.1).sleep();
+      }
+
+      trajectory_msgs::JointTrajectory trajectory_msg = trajectory_msgs::JointTrajectory();
+      trajectory_msg.joint_names = this->joint_names;
+      topic_commands.publish(trajectory_msg);
+
+      // Switching controller from Free Drive to EGM
+      res.success = this->EGMStopStreamingSignal();
+      ros::Duration(2).sleep();
+      res.success = res.success && this->FreeDriveStopSignal();
+      ros::Duration(2).sleep();
+      res.success = res.success && this->EGMStartJointSignal();
+
+      this->WaitForEgmConnection();
 
       return true;
    }
 
-   bool OmnicoreHWInterface::SetFreeDriveState(std_srvs::TriggerRequest& req, std_srvs::TriggerResponse& res)
+   bool OmnicoreHWInterface::SetControlToFreeDrive(std_srvs::TriggerRequest& req, std_srvs::TriggerResponse& res)
    {
-      res.success = this->EGMStopSignal();
-      // ros::Duration(2).sleep();
-      // res.success = res.success && this->FreeDriveStartSignal();
+      res.success = this->EGMStopJointSignal();
+      ros::Duration(2).sleep();
+      res.success = res.success && this->FreeDriveStartSignal();
+      ros::Duration(2).sleep();
+      res.success = res.success && this->EGMStartStreamingSignal();
 
       return true;
    }
@@ -496,9 +582,8 @@ namespace ros_control_omnicore
       for (std::size_t i = 0; i < num_joints; ++i)
       {
          ss << "j" << i << ": ";
-         ss << std::fixed << this->joint_position[i] << "\t ";
-         ss << std::fixed << this->joint_velocity[i] << "\t ";
-         ss << std::fixed << this->joint_effort[i] << std::endl;
+         ss << std::fixed << this->joint_position[i] * 180 / M_PI << "\t ";
+         ss << std::fixed << this->joint_velocity[i] * 180 / M_PI << std::endl;
       }
       return ss.str();
    }
@@ -557,8 +642,8 @@ namespace ros_control_omnicore
    p_omnicore_hw_interface(p_omnicore_hw_interface)
    {
       // Service server instantiation
-      this->server_set_egm_state        = this->nh.advertiseService("set_egm_state",        &OmnicoreHWInterface::SetEgmState,       p_omnicore_hw_interface.get());
-      this->server_set_free_drive_state = this->nh.advertiseService("set_free_drive_state", &OmnicoreHWInterface::SetFreeDriveState, p_omnicore_hw_interface.get());
+      this->server_set_egm_state        = this->nh.advertiseService("set_control_to_egm",        &OmnicoreHWInterface::SetControlToEgm,       p_omnicore_hw_interface.get());
+      this->server_set_free_drive_state = this->nh.advertiseService("set_control_to_free_drive", &OmnicoreHWInterface::SetControlToFreeDrive, p_omnicore_hw_interface.get());
    }
 } 
 

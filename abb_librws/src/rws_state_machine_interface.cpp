@@ -62,14 +62,16 @@ typedef RWSStateMachineInterface::ResourceIdentifiers::RAPID::Modules    Modules
 typedef RWSStateMachineInterface::ResourceIdentifiers::RAPID::Procedures Procedures;
 typedef RWSStateMachineInterface::ResourceIdentifiers::RAPID::Symbols    Symbols;
 
-const std::string IOSignals::EGM_START_JOINT    = "EGM_START_JOINT";
-const std::string IOSignals::EGM_START_POSE     = "EGM_START_POSE";
-const std::string IOSignals::EGM_STOP           = "EGM_STOP";
-const std::string IOSignals::OUTPUT_STATIONARY  = "OUTPUT_STATIONARY";
-const std::string IOSignals::RUN_RAPID_ROUTINE  = "RUN_RAPID_ROUTINE";
-const std::string IOSignals::RUN_SG_ROUTINE     = "RUN_SG_ROUTINE";
-const std::string IOSignals::WD_EXTERNAL_STATUS = "WD_EXTERNAL_STATUS";
-const std::string IOSignals::WD_STOP_REQUEST    = "WD_STOP_REQUEST";
+const std::string IOSignals::EGM_START_JOINT     = "EGM_START_JOINT";
+const std::string IOSignals::EGM_START_POSE      = "EGM_START_POSE";
+const std::string IOSignals::EGM_STOP            = "EGM_STOP";
+const std::string IOSignals::EGM_START_STREAMING = "EGM_START_STREAM";
+const std::string IOSignals::EGM_STOP_STREAMING  = "EGM_STOP_STREAM";
+const std::string IOSignals::OUTPUT_STATIONARY   = "OUTPUT_STATIONARY";
+const std::string IOSignals::RUN_RAPID_ROUTINE   = "RUN_RAPID_ROUTINE";
+const std::string IOSignals::RUN_SG_ROUTINE      = "RUN_SG_ROUTINE";
+const std::string IOSignals::WD_EXTERNAL_STATUS  = "WD_EXTERNAL_STATUS";
+const std::string IOSignals::WD_STOP_REQUEST     = "WD_STOP_REQUEST";
 
 const std::string IOSignals::SG_CMD_GRIPPER    = "EtherNetIP/Hand/hand_CmdGripper";
 const std::string IOSignals::SG_SYS_STATE    = "EtherNetIP/Hand/hand_SysState";
@@ -201,8 +203,15 @@ bool RWSStateMachineInterface::Services::EGM::signalEGMStop() const
   return p_rws_interface_->toggleIOSignal(IOSignals::EGM_STOP);
 }
 
+bool RWSStateMachineInterface::Services::EGM::signalEGMStartStreaming() const
+{
+  return p_rws_interface_->toggleIOSignal(IOSignals::EGM_START_STREAMING);
+}
 
-
+bool RWSStateMachineInterface::Services::EGM::signalEGMStopStreaming() const
+{
+  return p_rws_interface_->toggleIOSignal(IOSignals::EGM_STOP_STREAMING);
+}
 
 /***********************************************************************************************************************
  * Class definitions: RWSStateMachineInterface::Services::Main

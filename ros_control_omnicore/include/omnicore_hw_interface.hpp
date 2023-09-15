@@ -16,6 +16,7 @@
 #include <joint_limits_interface/joint_limits_rosparam.h>
 #include <joint_limits_interface/joint_limits_urdf.h>
 #include <limits>
+#include <trajectory_msgs/JointTrajectory.h>
 
 // ABB libraries
 #include <abb_librws/rws_state_machine_interface.h>
@@ -61,11 +62,7 @@ namespace ros_control_omnicore
 		 * This is just a check, the actual switch is done in doSwitch()
 		 */
 		bool canSwitch(const std::list<hardware_interface::ControllerInfo> &start_list,
-							const std::list<hardware_interface::ControllerInfo> &stop_list) const
-		{
-			// TODO
-			return true;
-		}
+							const std::list<hardware_interface::ControllerInfo> &stop_list);
 
 		/**
 		 * \brief Perform (in non-realtime) all necessary hardware interface switches in order to start
@@ -73,11 +70,7 @@ namespace ros_control_omnicore
 		 * Start and stop list are disjoint. The feasability was checked in canSwitch() beforehand.
 		 */
 		void doSwitch(const std::list<hardware_interface::ControllerInfo> &start_list,
-						  const std::list<hardware_interface::ControllerInfo> &stop_list)
-		{
-			// TODO
-			return;
-		}
+						  const std::list<hardware_interface::ControllerInfo> &stop_list);
 
 		/**
 		 * \brief Register the limits of the joint specified by joint_id and joint_handle. The limits
@@ -102,10 +95,11 @@ namespace ros_control_omnicore
 		/** \brief This functions set through RWS the EGM params specified in the configuration file .yaml */
 
 		// EGM functions
-		// bool ResetDataSendToEGM();
 		bool SetEGMParameters();
-		bool EGMStartSignal();
-		bool EGMStopSignal();
+		bool EGMStartJointSignal();
+		bool EGMStopJointSignal();
+		bool EGMStartStreamingSignal();
+		bool EGMStopStreamingSignal();
 		void WaitForEgmConnection();
 
 		// FreeDrive functions
@@ -113,8 +107,8 @@ namespace ros_control_omnicore
 		bool FreeDriveStopSignal();
 
 		// Funcitons to move from one command to the other
-		bool SetEgmState(std_srvs::TriggerRequest& req, std_srvs::TriggerResponse& res);
-		bool SetFreeDriveState(std_srvs::TriggerRequest& req, std_srvs::TriggerResponse& res);
+		bool SetControlToEgm(std_srvs::TriggerRequest& req, std_srvs::TriggerResponse& res);
+		bool SetControlToFreeDrive(std_srvs::TriggerRequest& req, std_srvs::TriggerResponse& res);
 
 	private:
 		std::string robot_name;
@@ -126,7 +120,7 @@ namespace ros_control_omnicore
 		// ------------------ Variables for ros_control ------------------ //
 		// --------------------------------------------------------------- //
 
-		// Hardware interfaces
+		// Hardware interfaces - Resources
 		hardware_interface::JointStateInterface joint_state_interface;
 		hardware_interface::PositionJointInterface position_joint_interface;
 		hardware_interface::VelocityJointInterface velocity_joint_interface;
