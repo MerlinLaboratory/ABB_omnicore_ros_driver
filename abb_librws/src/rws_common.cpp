@@ -198,7 +198,42 @@ const std::string SystemConstants::IOSignals::HAND_STATUS_CALIBRATED_R = "hand_S
 const std::string SystemConstants::IOSignals::HIGH                     = "1";
 const std::string SystemConstants::IOSignals::LOW                      = "0";
 
+const std::string SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DI1   = "ABB_Scalable_IO_0_DI1";
+const std::string SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DI2   = "ABB_Scalable_IO_0_DI2";
+const std::string SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DI3   = "ABB_Scalable_IO_0_DI3";
+const std::string SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DI4   = "ABB_Scalable_IO_0_DI4";
+const std::string SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DI5   = "ABB_Scalable_IO_0_DI5";
+const std::string SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DI6   = "ABB_Scalable_IO_0_DI6";
+const std::string SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DI7   = "ABB_Scalable_IO_0_DI7";
+const std::string SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DI8   = "ABB_Scalable_IO_0_DI8";
+const std::string SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DI9   = "ABB_Scalable_IO_0_DI9";
+const std::string SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DI10  = "ABB_Scalable_IO_0_DI10";
+const std::string SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DI11  = "ABB_Scalable_IO_0_DI11";
+const std::string SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DI12  = "ABB_Scalable_IO_0_DI12";
+const std::string SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DI13  = "ABB_Scalable_IO_0_DI13";
+const std::string SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DI14  = "ABB_Scalable_IO_0_DI14";
+const std::string SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DI15  = "ABB_Scalable_IO_0_DI15";
+const std::string SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DI16  = "ABB_Scalable_IO_0_DI16";
 
+const std::vector<std::string> SystemConstants::IOSignals::OmnicoreDigitalInputs = 
+                                                  { 
+                                                    SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DI1, 
+                                                    SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DI2,
+                                                    SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DI3,
+                                                    SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DI4,
+                                                    SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DI5,
+                                                    SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DI6,
+                                                    SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DI7,
+                                                    SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DI8,
+                                                    // SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DI9,
+                                                    // SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DI10,
+                                                    // SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DI11,
+                                                    // SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DI12,
+                                                    // SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DI13,
+                                                    // SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DI14,
+                                                    // SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DI15,
+                                                    // SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DI16
+                                                  };
 
 const std::string SystemConstants::RAPID::RAPID_FALSE = "FALSE";
 const std::string SystemConstants::RAPID::RAPID_TRUE  = "TRUE";

@@ -5,6 +5,7 @@
 #include <ros/ros.h>
 #include <urdf/model.h>
 #include <std_srvs/Trigger.h>
+#include <std_msgs/Byte.h>
 
 // ROS Controls
 #include <hardware_interface/robot_hw.h>
@@ -110,6 +111,9 @@ namespace ros_control_omnicore
 		bool SetControlToEgm(std_srvs::TriggerRequest& req, std_srvs::TriggerResponse& res);
 		bool SetControlToFreeDrive(std_srvs::TriggerRequest& req, std_srvs::TriggerResponse& res);
 
+		// Generic funtions
+		void ReadDigitalInputs();
+
 	private:
 		std::string robot_name;
 		std::string task_name;
@@ -155,6 +159,18 @@ namespace ros_control_omnicore
 		virtual void loadURDF(const ros::NodeHandle &nh, std::string param_name);
 
 		// --------------------------------------------------------------- //
+		// ---------------------- Variables for ROS ---------------------- //
+		// --------------------------------------------------------------- //
+		
+		// Publishers
+		ros::Timer timerReadDigitalInputs;
+		ros::Publisher dio_publisher;
+
+		// Ros services servers
+		ros::ServiceServer server_set_egm_state;
+		ros::ServiceServer server_set_free_drive_state;
+
+		// --------------------------------------------------------------- //
 		// -------------- Variables for connecting to Robot -------------- //
 		// --------------------------------------------------------------- //
 
@@ -183,23 +199,6 @@ namespace ros_control_omnicore
 		// Data from and to the robot
 		abb::egm::wrapper::Input data_from_egm;
 		abb::egm::wrapper::Output data_to_egm;
-	};
-
-	class OmnicoreServiceServer
-	{
-	public:
-		OmnicoreServiceServer(const ros::NodeHandle &nh, std::shared_ptr<ros_control_omnicore::OmnicoreHWInterface> p_omnicore_hw_interface);
-
-	private:
-		// Node handler
-		ros::NodeHandle nh;
-
-		// Ros services servers
-		ros::ServiceServer server_set_egm_state;
-		ros::ServiceServer server_set_free_drive_state;
-
-		std::shared_ptr<ros_control_omnicore::OmnicoreHWInterface> p_omnicore_hw_interface;
-
 	};
 
 }

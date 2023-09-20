@@ -14,9 +14,6 @@ int main(int argc, char **argv)
 	std::shared_ptr<ros_control_omnicore::OmnicoreHWInterface> p_hw_interface = std::make_shared<ros_control_omnicore::OmnicoreHWInterface>(nh);
 	p_hw_interface->init();
 
-	// Creating the Service Server
-	ros_control_omnicore::OmnicoreServiceServer omnicore_service_server = ros_control_omnicore::OmnicoreServiceServer(nh, p_hw_interface);
-
 	// Start the control loop
 	ros_control_omnicore::OmnicoreControlLoop control_loop(nh, p_hw_interface);
 	control_loop.run(); // Blocks until shutdown signal recieved

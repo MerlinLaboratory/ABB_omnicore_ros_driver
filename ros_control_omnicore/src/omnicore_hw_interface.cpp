@@ -18,15 +18,21 @@ namespace ros_control_omnicore
       nh.getParam("/robot/max_speed_deviation", this->max_speed_deviation);
       nh.getParam("/robot_hardware_interface/joints", this->joint_names);
 
+      // Subscribing to topics
+      this->dio_publisher = this->nh.advertise<std_msgs::Byte>("digital_input_status", 1);
+
+      // Publishers to topics with timer
+      this->timerReadDigitalInputs = this->nh.createTimer(ros::Duration(0.5), std::bind(&OmnicoreHWInterface::ReadDigitalInputs, this));
+
+      // Service server instantiation
+      this->server_set_egm_state        = this->nh.advertiseService("set_control_to_egm",        &OmnicoreHWInterface::SetControlToEgm,       this);
+      this->server_set_free_drive_state = this->nh.advertiseService("set_control_to_free_drive", &OmnicoreHWInterface::SetControlToFreeDrive, this);
+
       // Debug
       ROS_INFO("Robot: %s has n_joints: %ld", this->robot_name.c_str(), this->joint_names.size());
       ROS_INFO("For RWS, connecting to ip: %s and port: %s", this->ip_robot.c_str(), std::to_string(this->port_robot_rws).c_str());
       ROS_INFO("For EGM, port: %s", std::to_string(this->port_robot_egm).c_str());
 
-      // Override the default ros sigint handler.
-      // This must be set after the first NodeHandle is created
-      // this->hardware_interface_instance = this;
-      // signal(SIGINT, ros_control_omnicore::OmnicoreHWInterface::ShutDownHandler);
    }
 
    void OmnicoreHWInterface::init()
@@ -563,6 +569,36 @@ namespace ros_control_omnicore
    }
 
    // ----------------------------------------------------------------- //
+   // -------------------- Generic Robot functions -------------------- //
+   // ----------------------------------------------------------------- //
+
+   void OmnicoreHWInterface::ReadDigitalInputs()
+   {     
+
+      std_msgs::Byte digital_input_status = std_msgs::Byte();
+
+      p_rws_interface->requestMasterShip();
+
+      uint number_controller_digital_inputs_ports = abb::rws::SystemConstants::IOSignals::OmnicoreDigitalInputs.size();
+      for(int port = 0; port < number_controller_digital_inputs_ports; port++)
+      {
+         std::string port_name = abb::rws::SystemConstants::IOSignals::OmnicoreDigitalInputs[port];
+         std::string port_status_string = this->p_rws_interface->getIOSignal(port_name);
+
+         // 0x00 = 00000000
+         // 0x01 = 00000001 
+         char port_status_int = port_status_string == abb::rws::SystemConstants::IOSignals::HIGH ? 0x01 : 0x00;
+
+         digital_input_status.data = digital_input_status.data | ( port_status_int << port );
+      }
+      p_rws_interface->releaseMasterShip();
+
+      this->dio_publisher.publish(digital_input_status);
+
+      return;
+   }
+
+   // ----------------------------------------------------------------- //
    // ------------------------ Debug functions ------------------------ //
    // ----------------------------------------------------------------- //
 
@@ -633,17 +669,5 @@ namespace ros_control_omnicore
          ROS_INFO("Received URDF from param server");
    }
 
-   // ----------------------------------------------------------------- //
-   // -------------------- Omnicore service server -------------------- //
-   // ----------------------------------------------------------------- //
-
-   OmnicoreServiceServer::OmnicoreServiceServer(const ros::NodeHandle &nh, std::shared_ptr<ros_control_omnicore::OmnicoreHWInterface> p_omnicore_hw_interface) : 
-   nh(nh),
-   p_omnicore_hw_interface(p_omnicore_hw_interface)
-   {
-      // Service server instantiation
-      this->server_set_egm_state        = this->nh.advertiseService("set_control_to_egm",        &OmnicoreHWInterface::SetControlToEgm,       p_omnicore_hw_interface.get());
-      this->server_set_free_drive_state = this->nh.advertiseService("set_control_to_free_drive", &OmnicoreHWInterface::SetControlToFreeDrive, p_omnicore_hw_interface.get());
-   }
 } 
 

@@ -284,6 +284,91 @@ struct SystemConstants
      * \brief Low digital IO signal.
      */
     static const std::string LOW;
+
+    /**
+     * \brief Name of defined IO signal for digital input 1
+     */
+    static const std::string ABB_SCALABLE_IO_0_DI1;
+
+    /**
+     * \brief Name of defined IO signal for digital input 2
+     */
+    static const std::string ABB_SCALABLE_IO_0_DI2;
+
+    /**
+     * \brief Name of defined IO signal for digital input 3
+     */
+    static const std::string ABB_SCALABLE_IO_0_DI3;
+
+    /**
+     * \brief Name of defined IO signal for digital input 4
+     */
+    static const std::string ABB_SCALABLE_IO_0_DI4; 
+
+    /**
+     * \brief Name of defined IO signal for digital input 5
+     */
+    static const std::string ABB_SCALABLE_IO_0_DI5;
+
+    /**
+     * \brief Name of defined IO signal for digital input 6
+     */
+    static const std::string ABB_SCALABLE_IO_0_DI6;
+
+    /**
+     * \brief Name of defined IO signal for digital input 7
+     */
+    static const std::string ABB_SCALABLE_IO_0_DI7;
+
+    /**
+     * \brief Name of defined IO signal for digital input 8
+     */
+    static const std::string ABB_SCALABLE_IO_0_DI8;
+
+    /**
+     * \brief Name of defined IO signal for digital input 9
+     */
+    static const std::string ABB_SCALABLE_IO_0_DI9;
+
+    /**
+     * \brief Name of defined IO signal for digital input 10
+     */
+    static const std::string ABB_SCALABLE_IO_0_DI10;
+
+    /**
+     * \brief Name of defined IO signal for digital input 11
+     */
+    static const std::string ABB_SCALABLE_IO_0_DI11;
+
+    /**
+     * \brief Name of defined IO signal for digital input 12
+     */
+    static const std::string ABB_SCALABLE_IO_0_DI12;
+
+    /**
+     * \brief Name of defined IO signal for digital input 13
+     */
+    static const std::string ABB_SCALABLE_IO_0_DI13; 
+
+    /**
+     * \brief Name of defined IO signal for digital input 14
+     */
+    static const std::string ABB_SCALABLE_IO_0_DI14;
+
+    /**
+     * \brief Name of defined IO signal for digital input 15
+     */
+    static const std::string ABB_SCALABLE_IO_0_DI15;
+
+    /**
+     * \brief Name of defined IO signal for digital input 16
+     */
+    static const std::string ABB_SCALABLE_IO_0_DI16;
+
+    /**
+     * \brief Vector containing all the possible digital inputs of omnicore controller
+     */
+    static const std::vector<std::string> OmnicoreDigitalInputs;
   };
     
   /**
