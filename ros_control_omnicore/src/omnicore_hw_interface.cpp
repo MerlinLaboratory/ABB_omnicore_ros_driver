@@ -533,6 +533,13 @@ namespace ros_control_omnicore
 
    bool OmnicoreHWInterface::SetControlToEgm(std_srvs::TriggerRequest& req, std_srvs::TriggerResponse& res)
    {
+      if(this->egm_action == abb::rws::RWSStateMachineInterface::EGM_ACTION_RUN_JOINT)
+      {
+         ROS_WARN("Robot is already in Egm");
+         res.success = true;
+         return true;
+      }
+
       // Resetting the joint command to the current one
 		ros::Publisher topic_commands = this->nh.advertise<trajectory_msgs::JointTrajectory>("robot_controller/command", 1);
       while (topic_commands.getNumSubscribers() < 1)
@@ -559,6 +566,13 @@ namespace ros_control_omnicore
 
    bool OmnicoreHWInterface::SetControlToFreeDrive(std_srvs::TriggerRequest& req, std_srvs::TriggerResponse& res)
    {
+      if(this->egm_action == abb::rws::RWSStateMachineInterface::EGM_ACTION_STREAMING)
+      {
+         ROS_WARN("Robot is already in Free Drive");
+         res.success = true;
+         return true;
+      }
+
       res.success = this->EGMStopJointSignal();
       ros::Duration(2).sleep();
       res.success = res.success && this->FreeDriveStartSignal();
