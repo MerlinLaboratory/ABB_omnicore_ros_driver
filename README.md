@@ -1,11 +1,15 @@
-# abb_wrapper
+# Wrapper ros_control for ABB Omnicore Controller
 These packages are intended to ease the interaction between ABB robots supporting the new Omnicore controller and ROS-based systems, by providing ready-to-run ROS nodes. In particular, we developed the robots' control with ros_control. Furthermore, we integrated moveit! for the supported robots so that you can sends trajectories directly to ros_control and then to the real controller.
-The supported robots are: Gofa and Yumi Single Arm (together with the SmartGripper).
+**The supported robots are: Gofa and Yumi Single Arm (together with the SmartGripper).**
 
-## Important Notes
+## Hardware Dependencies
+
+**OS**: Ubuntu 20.04 
+**ROS**: Noetic
+
 Tested on Ubuntu 20.04 with ROS Noetic. Support on other ROS distro is expected but not tested.
 
-## Overview
+## Overview and Features
 
 These packages are intended to ease the interaction between ABB OmniCore controllers and ROS-based systems, by providing ready-to-run ROS nodes.
 
@@ -15,43 +19,56 @@ The principal packages are briefly described in the following table:
 | --- | --- |
 | [abb_libegm](abb_libegm) | (A modified version of https://github.com/ros-industrial/abb_libegm) Provides a ROS node that exposes hardware interface, for *direct motion control* of ABB robots (via the *Externally Guided Motion* (`EGM`) interface). |
 | [abb_librws](abb_librws) | (A modified version of https://github.com/ros-industrial/abb_librws) Provides a ROS node that communicate with the controller using Robot Web Services 2.0  |
+| [Doc](Doc) | Provides some documentation about how the RAPID StateMachine running inside the Omnicore Controller  |
 | [moveit_config](moveit) | Provides the Moveit configurations for the supported robots. |
 | [omnicore_launcher](ros_control) | Provides all the .launch files to correctly launch the robots in real or simulation. |
 | [robots_description](gofa_description) | Provides ROS nodes for kinematic calculation using the URDF model of the robot (For now only Gofa robot is available). |
 | [ros_control_ominicore](ros_control) | Provides hardware interface for the robots supporting ABB Omnicore controller. |
-| [rws_service](rws) | Provides some services for the yumi_single_arm SmartGripper. |
+| [rws_service](rws) | Provides some services for the yumi_single_arm SmartGripper. **Will be removed in future releases** |
 
 Please see each package for more details (*e.g. additional requirements, limitations and troubleshooting*).
+Further features of the system are:
+
+- Read robot's joints values (Dha...)
+- Read the first 8 Digital Input state of the controller
+- Possible to switch through a service FreeDrive control when ROS is running: 
+    ```bash
+    service call /set_control_to_free_drive
+    ```
+- Possible to switch to position control (EGM) when ROS is running:
+    ```bash
+    service call /set_control_to_egm
+    ```
+- Move the robot in position control with MoveIt!
+- Actuate the Smart Grippers (only available on Yumi Single Arm)
+
+
 
 ## Build Instructions
 
 It is assumed that [ROS Noetic has been installed](https://wiki.ros.org/noetic/Installation/Ubuntu) on the system in question.
 
-### Set up ROS
+#### Set up ROS
 
 The following instructions assume that a [Catkin workspace](http://wiki.ros.org/catkin/Tutorials/create_a_workspace) has been created at `$HOME/catkin_ws` and that the *source space* is at `$HOME/catkin_ws/src`. Update paths appropriately if they are different on the build machine.
 
-The following instructions should build the main branches of all required repositories on a ROS Noetic system:
+The following instructions should setup a ROS workspace where you will clone the current repository.
 
 ```bash
-echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
 
 mkdir -p ~/catkin_ws/src
 cd ~/catkin_ws/
-catkin_make
-
+catkin build
 ```
 
-If no errors were reported as part of the `catkin_make` command, the build has succeeded and the driver should now be usable.
-
-### Install Moveit! and ros_control
+#### Install Moveit! and ros_control
 
 ```bash
 sudo apt install ros-noetic-ros-control ros-noetic-ros-controllers
 sudo apt install ros-noetic-moveit
 ```
 
-### Install POCO
+#### Install POCO
 
 Install essential dependencies and git, execute the following commands one by one:
 
@@ -94,37 +111,28 @@ Install the libraries to include in C++ code:
 sudo cmake --build . --target install
 ```
 
-Copy all the poco file from /usr/local/lib/ to /usr/lib
+Copy all the poco file from /usr/local/lib/ to /usr/lib using the root privileges. Afterward you may remove the created /tmp directory.
 
-### Install Boost C++
+#### Install Boost C++
 
 [Boost C++](https://www.boost.org)
 ```bash
 sudo apt-get install libboost-all-dev
-
 ```
 
-### Set up the interface
+#### Clone the repo
 
-Copy **abb_wrapper** folder to **src** folder on catkin workspace (`~/catkin_ws/src`).
+Clone the current repository in the newly created ROS workspace 'catkin_ws' and build it:
 ```bash
 cd catkin_ws/src
 git clone https://github.com/MerlinLaboratory/abb_wrapper.git
-```
-
-Move back to the workspace folder (catkin_ws/)
-```bash
 cd ..
+catkin build
 ```
 
-Compile the workspace
-```bash
-catkin_make
-```
+If there are no errors you are ready to proceed to set up the robot in [RobotStudio](https://new.abb.com/products/robotics/robotstudio/downloads).
 
-If there are no errors you are ready to proceed to set up the robot.
-
-## Robot Set up
+## RobotStudio Setup
 
 ### Requirements
 
