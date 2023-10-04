@@ -19,10 +19,10 @@ namespace ros_control_omnicore
       nh.getParam("/robot_hardware_interface/joints", this->joint_names);
 
       // Subscribing to topics
-      this->dio_publisher = this->nh.advertise<std_msgs::Byte>("digital_input_status", 1);
+      this->omnicore_state_publisher = this->nh.advertise<omnicore_interface::OmnicoreState>("omnicore_state", 1);
 
       // Publishers to topics with timer
-      this->timerReadDigitalInputs = this->nh.createTimer(ros::Duration(0.5), std::bind(&OmnicoreHWInterface::ReadDigitalInputs, this));
+      this->timerOmnicoreState = this->nh.createTimer(ros::Duration(0.5), std::bind(&OmnicoreHWInterface::PublishOmnicoreState, this));
 
       // Service server instantiation
       this->server_set_egm_state        = this->nh.advertiseService("set_control_to_egm",        &OmnicoreHWInterface::SetControlToEgm,       this);
@@ -32,7 +32,6 @@ namespace ros_control_omnicore
       ROS_INFO("Robot: %s has n_joints: %ld", this->robot_name.c_str(), this->joint_names.size());
       ROS_INFO("For RWS, connecting to ip: %s and port: %s", this->ip_robot.c_str(), std::to_string(this->port_robot_rws).c_str());
       ROS_INFO("For EGM, port: %s", std::to_string(this->port_robot_egm).c_str());
-
    }
 
    void OmnicoreHWInterface::init()
@@ -586,9 +585,8 @@ namespace ros_control_omnicore
    // -------------------- Generic Robot functions -------------------- //
    // ----------------------------------------------------------------- //
 
-   void OmnicoreHWInterface::ReadDigitalInputs()
+   std_msgs::Byte OmnicoreHWInterface::ReadDigitalInputs()
    {     
-
       std_msgs::Byte digital_input_status = std_msgs::Byte();
 
       p_rws_interface->requestMasterShip();
@@ -607,7 +605,30 @@ namespace ros_control_omnicore
       }
       p_rws_interface->releaseMasterShip();
 
-      this->dio_publisher.publish(digital_input_status);
+      return digital_input_status;
+   }
+
+   void OmnicoreHWInterface::PublishOmnicoreState()
+   {
+      omnicore_interface::OmnicoreState omnicoreStateMsg = omnicore_interface::OmnicoreState();
+
+      switch (this->egm_action)
+      {
+         case abb::rws::RWSStateMachineInterface::EGM_ACTION_RUN_JOINT: 
+            omnicoreStateMsg.controller_state = omnicore_interface::OmnicoreState::EGM_MODE;
+            break;
+         
+         case abb::rws::RWSStateMachineInterface::EGM_ACTION_STREAMING: 
+            omnicoreStateMsg.controller_state = omnicore_interface::OmnicoreState::FREE_DRIVE_MODE;
+            break;
+
+         default:
+            break;
+      }
+
+      omnicoreStateMsg.digital_inputs_state = ReadDigitalInputs().data;
+      
+      this->omnicore_state_publisher.publish(omnicoreStateMsg);
 
       return;
    }

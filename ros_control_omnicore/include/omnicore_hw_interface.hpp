@@ -24,6 +24,9 @@
 #include <abb_librws/rws_interface.h>
 #include <abb_libegm/egm_controller_interface.h>
 
+// Custom ROS messages
+#include <omnicore_interface/OmnicoreState.h>
+
 // Boost
 #include <boost/scoped_ptr.hpp>
 #include <boost/thread/condition.hpp>
@@ -112,7 +115,8 @@ namespace ros_control_omnicore
 		bool SetControlToFreeDrive(std_srvs::TriggerRequest& req, std_srvs::TriggerResponse& res);
 
 		// Generic funtions
-		void ReadDigitalInputs();
+		std_msgs::Byte ReadDigitalInputs();
+		void 		   PublishOmnicoreState();
 
 	private:
 		std::string robot_name;
@@ -163,8 +167,8 @@ namespace ros_control_omnicore
 		// --------------------------------------------------------------- //
 		
 		// Publishers
-		ros::Timer timerReadDigitalInputs;
-		ros::Publisher dio_publisher;
+		ros::Timer timerOmnicoreState;
+		ros::Publisher omnicore_state_publisher;
 
 		// Ros services servers
 		ros::ServiceServer server_set_egm_state;
