@@ -111,6 +111,7 @@ const std::string Procedures::RUN_MODULE_LOAD                  = "runModuleLoad"
 const std::string Procedures::RUN_MODULE_UNLOAD                = "runModuleUnload";
 const std::string Procedures::RUN_MOVE_ABS_J                   = "runMoveAbsJ";
 const std::string Procedures::RUN_MOVE_J                       = "runMoveJ";
+const std::string Procedures::RUN_MOVE_L                       = "runMoveL";
 const std::string Procedures::RUN_MOVE_TO_CALIBRATION_POSITION = "runMoveToCalibrationPosition";
 const std::string Procedures::SET_LEADTHROUGH_ON               = "setLeadthroughOn";
 const std::string Procedures::SET_LEADTHROUGH_OFF              = "setLeadthroughOff";
@@ -130,6 +131,7 @@ const RAPIDSymbolResource Symbols::SG_SETTINGS(Modules::T_ROB_SG, "settings");
 const RAPIDSymbolResource Symbols::SG_TARGET_POSTION_INPUT(Modules::T_ROB_SG, "target_position_input");
 const RAPIDSymbolResource Symbols::UTILITY_BASE_FRAME(Modules::T_ROB_UTILITY, "base_frame");
 const RAPIDSymbolResource Symbols::UTILITY_CALIBRATION_TARGET(Modules::T_ROB_UTILITY, "calibration_target");
+const RAPIDSymbolResource Symbols::UTILITY_CURRENT_TOOL(Modules::T_ROB_UTILITY, "current_tool");
 const RAPIDSymbolResource Symbols::WATCHDOG_ACTIVE(Modules::T_ROB_WATCHDOG, "active");
 const RAPIDSymbolResource Symbols::WATCHDOG_CHECK_EXTERNAL_STATUS(Modules::T_ROB_WATCHDOG, "check_external_status");
 
@@ -324,6 +326,11 @@ bool RWSStateMachineInterface::Services::RAPID::runModuleUnload(const std::strin
          setRoutineName(task, Procedures::RUN_MODULE_UNLOAD) && signalRunRAPIDRoutine();
 }
 
+bool RWSStateMachineInterface::Services::RAPID::setCurrentToolData(const std::string task, ToolData tool_data) const
+{
+  return p_rws_interface_->setRAPIDSymbolData(task, Symbols::UTILITY_CURRENT_TOOL, tool_data);
+}
+
 bool RWSStateMachineInterface::Services::RAPID::runMoveAbsJ(const std::string task, JointTarget joint_target) const
 {
   return p_rws_interface_->setRAPIDSymbolData(task, Symbols::RAPID_MOVE_JOINT_TARGET_INPUT, joint_target) &&
@@ -334,6 +341,12 @@ bool RWSStateMachineInterface::Services::RAPID::runMoveJ(const std::string task,
 {
   return p_rws_interface_->setRAPIDSymbolData(task, Symbols::RAPID_MOVE_ROB_TARGET_INPUT, rob_target) &&
          setRoutineName(task, Procedures::RUN_MOVE_J) && signalRunRAPIDRoutine();
+}
+
+bool RWSStateMachineInterface::Services::RAPID::runMoveL(const std::string task, RobTarget rob_target) const
+{
+  return p_rws_interface_->setRAPIDSymbolData(task, Symbols::RAPID_MOVE_ROB_TARGET_INPUT, rob_target) &&
+         setRoutineName(task, Procedures::RUN_MOVE_L) && signalRunRAPIDRoutine();
 }
 
 bool RWSStateMachineInterface::Services::RAPID::setLeadthroughOn(const std::string task) const

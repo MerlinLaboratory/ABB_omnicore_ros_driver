@@ -27,6 +27,10 @@
 // Custom ROS messages
 #include <omnicore_interface/OmnicoreState.h>
 
+// Custom ROS services
+#include <omnicore_interface/moveJ_rapid.h>
+#include <omnicore_interface/moveL_rapid.h>
+
 // Boost
 #include <boost/scoped_ptr.hpp>
 #include <boost/thread/condition.hpp>
@@ -113,8 +117,11 @@ namespace ros_control_omnicore
 		// Funcitons to move from one command to the other
 		bool SetControlToEgm(std_srvs::TriggerRequest& req, std_srvs::TriggerResponse& res);
 		bool SetControlToFreeDrive(std_srvs::TriggerRequest& req, std_srvs::TriggerResponse& res);
+		bool MoveJRapid(omnicore_interface::moveJ_rapidRequest& req, omnicore_interface::moveJ_rapidResponse& res);
+		bool MoveLRapid(omnicore_interface::moveL_rapidRequest& req, omnicore_interface::moveL_rapidResponse& res);
 
 		// Generic funtions
+		void 		   LoadToolData();
 		std_msgs::Byte ReadDigitalInputs();
 		void 		   PublishOmnicoreState();
 
@@ -173,6 +180,8 @@ namespace ros_control_omnicore
 		// Ros services servers
 		ros::ServiceServer server_set_egm_state;
 		ros::ServiceServer server_set_free_drive_state;
+		ros::ServiceServer server_moveJ_rapid;
+		ros::ServiceServer server_moveL_rapid;
 
 		// --------------------------------------------------------------- //
 		// -------------- Variables for connecting to Robot -------------- //

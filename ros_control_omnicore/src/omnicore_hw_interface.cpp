@@ -1,5 +1,53 @@
 #include "../include/omnicore_hw_interface.hpp"
 
+void FromGeometryPoseMsgToRobTarget(geometry_msgs::Pose pose, abb::rws::RobTarget& robot_target)
+{
+   robot_target.pos.x = pose.position.x;
+   robot_target.pos.y = pose.position.y;
+   robot_target.pos.z = pose.position.z;
+   robot_target.orient.q1 = pose.orientation.w;
+   robot_target.orient.q2 = pose.orientation.x;
+   robot_target.orient.q3 = pose.orientation.y;
+   robot_target.orient.q4 = pose.orientation.z;
+
+   return;
+}
+
+void FromVelocityMsgToSpeedData(uint8_t velocity, abb::rws::SpeedData& speed_data)
+{
+   speed_data.v_ori  = 500 ;
+   speed_data.v_leax = 5000;
+   speed_data.v_reax = 1000;
+
+   switch (velocity)
+   {
+      case omnicore_interface::moveJ_rapid::Request::V50 :
+         speed_data.v_tcp = 50;
+         break;
+
+      case omnicore_interface::moveJ_rapid::Request::V100:
+         speed_data.v_tcp = 100;
+         break;
+
+      case omnicore_interface::moveJ_rapid::Request::V300:
+         speed_data.v_tcp = 300;
+         break;
+
+      case omnicore_interface::moveJ_rapid::Request::V500:
+         speed_data.v_tcp = 500;
+         break;
+      case omnicore_interface::moveJ_rapid::Request::V1000:
+         speed_data.v_tcp = 1000;
+         break;      
+   
+      default:
+         break;
+   }
+
+   return;
+}
+
+
 namespace ros_control_omnicore
 {
    OmnicoreHWInterface::OmnicoreHWInterface(const ros::NodeHandle &nh) : nh(nh)
@@ -27,6 +75,8 @@ namespace ros_control_omnicore
       // Service server instantiation
       this->server_set_egm_state        = this->nh.advertiseService("set_control_to_egm",        &OmnicoreHWInterface::SetControlToEgm,       this);
       this->server_set_free_drive_state = this->nh.advertiseService("set_control_to_free_drive", &OmnicoreHWInterface::SetControlToFreeDrive, this);
+      this->server_moveJ_rapid = this->nh.advertiseService("moveJ_rapid", &OmnicoreHWInterface::MoveJRapid, this);
+      this->server_moveL_rapid = this->nh.advertiseService("moveL_rapid", &OmnicoreHWInterface::MoveLRapid, this);
 
       // Debug
       ROS_INFO("Robot: %s has n_joints: %ld", this->robot_name.c_str(), this->joint_names.size());
@@ -97,17 +147,27 @@ namespace ros_control_omnicore
       this->p_rws_interface->startRAPIDExecution();
       usleep(250000);
 
-      this->p_egm_interface = new abb::egm::EGMControllerInterface(this->io_service_, this->port_robot_egm);
+      abb::egm::BaseConfiguration configurations;
+      if(this->pos_corr_gain == 0) // 0: velocity control, 1: position control
+         configurations.use_velocity_outputs = true;
+
+      this->p_egm_interface = new abb::egm::EGMControllerInterface(this->io_service_, this->port_robot_egm, configurations);
       this->thread_group_.create_thread(boost::bind(&boost::asio::io_service::run, &this->io_service_));
 
       // Setting the EGM signal to Start communication, set parameters and wait for response
-      if (this->EGMStartJointSignal() == false)
-         ROS_ERROR("Could not send Start signal");
       if (this->SetEGMParameters() == false)
+         ROS_ERROR("Could not send Start signal");
+      if (this->EGMStartJointSignal() == false)
          ROS_ERROR("Could not set EGM parameters");
       if (this->p_egm_interface->isInitialized() == false)
          ROS_ERROR("EGM interface failed to initialize (e.g. due to port already bound)");
       this->WaitForEgmConnection();
+
+
+      // --------------------------------------------------------------- //
+      // -----------------  Setting ToolData variables ----------------- //
+      // --------------------------------------------------------------- //
+      this->LoadToolData();
 
       // Resetting data to send to EGM
       this->reset();
@@ -178,12 +238,18 @@ namespace ros_control_omnicore
          }
       }
 
-      // ROS_INFO("Joints sent: [%lf, %lf, %lf, %lf, %lf, %lf]", joint_position_command[0] / 3.14159265358979323846 * 180.0,
-      //                                                         joint_position_command[1] / 3.14159265358979323846 * 180.0,
-      //                                                         joint_position_command[2] / 3.14159265358979323846 * 180.0,
-      //                                                         joint_position_command[3] / 3.14159265358979323846 * 180.0,
-      //                                                         joint_position_command[4] / 3.14159265358979323846 * 180.0,
-      //                                                         joint_position_command[5] / 3.14159265358979323846 * 180.0);
+      // ROS_INFO("Position sent: [%lf, %lf, %lf, %lf, %lf, %lf]", joint_position_command[0] / 3.14159265358979323846 * 180.0,
+      //                                                           joint_position_command[1] / 3.14159265358979323846 * 180.0,
+      //                                                           joint_position_command[2] / 3.14159265358979323846 * 180.0,
+      //                                                           joint_position_command[3] / 3.14159265358979323846 * 180.0,
+      //                                                           joint_position_command[4] / 3.14159265358979323846 * 180.0,
+      //                                                           joint_position_command[5] / 3.14159265358979323846 * 180.0);
+      ROS_INFO("Velocity sent: [%lf, %lf, %lf, %lf, %lf, %lf]", this->data_to_egm.mutable_robot()->mutable_joints()->mutable_velocity()->values()[0],
+                                                                this->data_to_egm.mutable_robot()->mutable_joints()->mutable_velocity()->values()[1],
+                                                                this->data_to_egm.mutable_robot()->mutable_joints()->mutable_velocity()->values()[2],
+                                                                this->data_to_egm.mutable_robot()->mutable_joints()->mutable_velocity()->values()[3],
+                                                                this->data_to_egm.mutable_robot()->mutable_joints()->mutable_velocity()->values()[4],
+                                                                this->data_to_egm.mutable_robot()->mutable_joints()->mutable_velocity()->values()[5]);
 
       // Uncomment to die
       this->p_egm_interface->write(this->data_to_egm);
@@ -581,9 +647,114 @@ namespace ros_control_omnicore
       return true;
    }
 
+   bool OmnicoreHWInterface::MoveJRapid(omnicore_interface::moveJ_rapidRequest& req, omnicore_interface::moveJ_rapidResponse& res)
+   {
+      abb::rws::SpeedData speed_data;
+      FromVelocityMsgToSpeedData(req.velocity, speed_data);
+      res.success = this->p_rws_interface->services().rapid().setMoveSpeed(this->task_robot, speed_data);
+
+      abb::rws::RobTarget robot_target;
+      FromGeometryPoseMsgToRobTarget(req.pose, robot_target);
+
+      robot_target.robconf.cf1 = req.configuration[0];
+      robot_target.robconf.cf4 = req.configuration[1];
+      robot_target.robconf.cf6 = req.configuration[2];
+      robot_target.robconf.cfx = req.configuration[3]; // Ignored by 6 axis robots
+
+      res.success = res.success && this->p_rws_interface->services().rapid().runMoveJ(this->task_robot, robot_target);
+
+      if(!res.success)
+         ROS_ERROR("Impossible to use MoveJ");
+
+      return true;
+   }
+
+   bool OmnicoreHWInterface::MoveLRapid(omnicore_interface::moveL_rapidRequest& req, omnicore_interface::moveL_rapidResponse& res)
+   {
+      // Checking first that the robot is not controlled in EGM
+      if(this->egm_action == abb::rws::RWSStateMachineInterface::EGM_ACTION_RUN_JOINT || 
+         this->egm_action == abb::rws::RWSStateMachineInterface::EGM_ACTION_RUN_POSE)
+      {
+         res.success = this->EGMStopJointSignal();
+         ros::Duration(2).sleep();
+         res.success = res.success && this->EGMStartStreamingSignal();
+         ros::Duration(2).sleep();
+      }
+
+      abb::rws::SpeedData speed_data;
+      FromVelocityMsgToSpeedData(req.velocity, speed_data);
+      res.success = this->p_rws_interface->services().rapid().setMoveSpeed(this->task_robot, speed_data);
+
+      abb::rws::RobTarget robot_target;
+      FromGeometryPoseMsgToRobTarget(req.pose, robot_target);
+
+      robot_target.robconf.cf1 = req.configuration[0];
+      robot_target.robconf.cf4 = req.configuration[1];
+      robot_target.robconf.cf6 = req.configuration[2];
+      robot_target.robconf.cfx = req.configuration[3]; // Ignored by 6 axis robots
+
+      res.success = res.success && this->p_rws_interface->services().rapid().runMoveL(this->task_robot, robot_target);
+
+      if(!res.success)
+         ROS_ERROR("Impossible to use MoveL");
+
+      return true;
+   }
+
    // ----------------------------------------------------------------- //
    // -------------------- Generic Robot functions -------------------- //
    // ----------------------------------------------------------------- //
+
+   void OmnicoreHWInterface::LoadToolData()
+   {
+      std::vector<float> tcp_pose;
+      float mass;
+      std::vector<float> cog;
+      std::vector<float> inertia_tensor;
+      std::vector<float> aom;
+
+      nh.getParam("/robot/tool_data/tcp_pose"      , tcp_pose      );
+      nh.getParam("/robot/tool_data/mass"          , mass          );
+      nh.getParam("/robot/tool_data/cog"           , cog           );
+      nh.getParam("/robot/tool_data/inertia_tensor", inertia_tensor);
+      nh.getParam("/robot/tool_data/aom"           , aom           );
+
+      p_rws_interface->requestMasterShip();
+      abb::rws::ToolData tool_data;
+      tool_data.robhold.value = true;
+
+      // Geometry data
+      tool_data.tframe.pos.x  = tcp_pose[0]; 
+      tool_data.tframe.pos.y  = tcp_pose[1]; 
+      tool_data.tframe.pos.z  = tcp_pose[2]; 
+      tool_data.tframe.rot.q1 = tcp_pose[3];
+      tool_data.tframe.rot.q2 = tcp_pose[4];
+      tool_data.tframe.rot.q3 = tcp_pose[5];
+      tool_data.tframe.rot.q4 = tcp_pose[6];
+
+      // Load data
+      tool_data.tload.mass   = mass;
+      tool_data.tload.cog.x  = cog[0]; 
+      tool_data.tload.cog.y  = cog[1]; 
+      tool_data.tload.cog.z  = cog[2]; 
+      tool_data.tload.ix     = inertia_tensor[0];
+      tool_data.tload.iy     = inertia_tensor[1];
+      tool_data.tload.iz     = inertia_tensor[2];
+      tool_data.tload.aom.q1 = aom[0];
+      tool_data.tload.aom.q2 = aom[1];
+      tool_data.tload.aom.q3 = aom[2];
+      tool_data.tload.aom.q4 = aom[3];
+
+      bool success = this->p_rws_interface->services().rapid().setCurrentToolData(this->task_robot, tool_data);
+
+      if(!success)
+      {
+         ROS_ERROR("Impossible to set tool_data! Killing application");
+         ros::shutdown();
+      }
+
+      p_rws_interface->releaseMasterShip();
+   }
 
    std_msgs::Byte OmnicoreHWInterface::ReadDigitalInputs()
    {     
@@ -612,6 +783,7 @@ namespace ros_control_omnicore
    {
       omnicore_interface::OmnicoreState omnicoreStateMsg = omnicore_interface::OmnicoreState();
 
+      // Controller state
       switch (this->egm_action)
       {
          case abb::rws::RWSStateMachineInterface::EGM_ACTION_RUN_JOINT: 
@@ -626,7 +798,13 @@ namespace ros_control_omnicore
             break;
       }
 
+      // Digital inputs
       omnicoreStateMsg.digital_inputs_state = ReadDigitalInputs().data;
+
+      // Robot configuration
+      omnicoreStateMsg.robot_configuration[0] = std::floor(this->joint_position[0] / (M_PI / 2) );
+      omnicoreStateMsg.robot_configuration[1] = std::floor(this->joint_position[3] / (M_PI / 2) );
+      omnicoreStateMsg.robot_configuration[2] = std::floor(this->joint_position[5] / (M_PI / 2) );
       
       this->omnicore_state_publisher.publish(omnicoreStateMsg);
 
@@ -705,4 +883,3 @@ namespace ros_control_omnicore
    }
 
 } 
-

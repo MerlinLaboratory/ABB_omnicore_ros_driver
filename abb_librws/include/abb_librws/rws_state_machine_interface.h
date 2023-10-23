@@ -292,6 +292,11 @@ public:
         static const std::string RUN_MOVE_J;
 
         /**
+         * \brief Predefined RAPID procedure "runMoveL".
+         */
+        static const std::string RUN_MOVE_L;
+
+        /**
          * \brief Predefined RAPID procedure "setLeadthroughOn".
          */
         static const std::string SET_LEADTHROUGH_ON;
@@ -397,6 +402,12 @@ public:
          * \brief RAPID symbol containing calibration target extracted during initialization, for a RAPID motion task.
          */
         static const RWSClient::RAPIDSymbolResource UTILITY_CALIBRATION_TARGET;
+
+
+        /**
+         * \brief RAPID symbol containing current_tool extracted during initialization, for a RAPID motion task.
+         */
+        static const RWSClient::RAPIDSymbolResource UTILITY_CURRENT_TOOL;
 
         /**
          * \brief RAPID symbol indicating if a watchdog is active or not.
@@ -1006,6 +1017,17 @@ private:
       bool runModuleUnload(const std::string task, const std::string file_path) const;
 
       /**
+       * \brief Request the execution of the predefined RAPID procedure "setCurrentToolData".
+       *
+       * \param task specifying the RAPID task.
+       * \param tool_data specifying tooldata.
+       *
+       * \return bool indicating if the communication was successful or not.
+       */
+
+      bool setCurrentToolData(const std::string task, ToolData tool_data) const;
+
+      /**
        * \brief Request the execution of the predefined RAPID procedure "runMoveAbsJ".
        *
        * \param task specifying the RAPID task.
@@ -1024,6 +1046,16 @@ private:
        * \return bool indicating if the communication was successful or not.
        */
       bool runMoveJ(const std::string task, RobTarget rob_target) const;
+
+      /**
+       * \brief Request the execution of the predefined RAPID procedure "runMoveL".
+       *
+       * \param task specifying the RAPID task.
+       * \param rob_target specifying the robtarget goal.
+       *
+       * \return bool indicating if the communication was successful or not.
+       */
+      bool runMoveL(const std::string task, RobTarget rob_target) const;
 
       /**
        * \brief Request the execution of the predefined RAPID procedure "setleadthroughOn".

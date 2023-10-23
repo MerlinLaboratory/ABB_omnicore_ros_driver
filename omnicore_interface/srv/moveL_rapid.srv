@@ -1,0 +1,14 @@
+# This service is use to invoke a RAPID routine that executes a MoveL motion (motion in linear space)
+# The velocity accepts predefined RAPID velocity as the following
+uint8 V50   = 0 # v50     50 mm/s 500°/s
+uint8 V100  = 1 # v100   100 mm/s 500°/s
+uint8 V300  = 2 # v300   300 mm/s 500°/s
+uint8 V500  = 3 # v500   500 mm/s 500°/s
+uint8 V1000 = 4 # v1000 1000 mm/s 500°/s
+
+geometry_msgs/Pose pose # Final pose the TCP should reach
+uint8   velocity        # TCP velocity linear [mm/s] 
+int8[4] configuration   # Configuration that the robot needs to have -> See configuration_data from RAPID for more info
+float32 rounding        # Rounding that the motion should perform. -> Not used for now
+---
+bool success
