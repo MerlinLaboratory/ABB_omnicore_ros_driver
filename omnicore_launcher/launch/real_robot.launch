@@ -1,7 +1,7 @@
 <launch>
 
     <arg name="robot"      default="gofa" /> <!-- Possibilities: 'gofa' or 'yumi_single_arm'-->
-    <arg name="controller" default="VelocityControllers_JointGroupVelocityController" /> <!-- Possibilities: 'PositionControllers_JointTrajectoryController'    or
+    <arg name="controller" default="VelocityControllers_JointTrajectoryController" /> <!-- Possibilities: 'PositionControllers_JointTrajectoryController'    or
                                                                                                              'VelocityControllers_JointGroupVelocityController' or
                                                                                                              'VelocityControllers_JointTrajectoryController'    -->
 
