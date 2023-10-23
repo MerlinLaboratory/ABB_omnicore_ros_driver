@@ -10,25 +10,24 @@
     <!-- Launching moveit pkg -->
     <group if="$(eval arg('robot') == 'yumi_single_arm')">     
         <include file="$(find yumi_single_arm_moveit_config)/launch/demo.launch">
-            <arg name="pipeline" default="pilz_industrial_motion_planner" /> <!-- specify the planning pipeline -->
-            <arg name="debug" default="false" />                             <!-- By default, we are not in debug mode -->
-            <arg name="load_robot_description" default="false"/>             <!-- By default, we will load or override the robot_description -->        
-            <arg name="moveit_controller_manager" default="simple" />        <!-- Choose controller manager: fake, simple, or ros_control -->
-            <arg name="use_rviz" default="false" />                          <!-- By default, hide joint_state_publisher's GUI in 'fake' controller_manager mode -->
+            <arg name="pipeline" default="pilz_industrial_motion_planner" /> 
+            <arg name="debug" default="false" />                             
+            <arg name="load_robot_description" default="false"/>             
+            <arg name="moveit_controller_manager" default="simple" />        
+            <arg name="use_rviz" default="false" />                          
         </include>
 	</group>
 
     <group if="$(eval arg('robot') == 'gofa')">         	
         <include file="$(find gofa_moveit_config)/launch/demo.launch">
-            <arg name="pipeline" default="pilz_industrial_motion_planner" /> <!-- specify the planning pipeline -->
-            <arg name="debug" default="false" />                             <!-- By default, we are not in debug mode -->
-            <arg name="load_robot_description" default="false"/>             <!-- By default, we will load or override the robot_description -->        
-            <arg name="moveit_controller_manager" default="simple" />        <!-- Choose controller manager: fake, simple, or ros_control -->
-            <arg name="use_rviz" default="false" />                          <!-- By default, hide joint_state_publisher's GUI in 'fake' controller_manager mode -->
+            <arg name="pipeline" default="pilz_industrial_motion_planner" /> 
+            <arg name="debug" default="false" />                             
+            <arg name="load_robot_description" default="false"/>             
+            <arg name="moveit_controller_manager" default="simple" />        
+            <arg name="use_rviz" default="false" />                          
         </include>
-	</group>
+	</group> 
 
-    
     <!-- Run Rviz and load the default config to see the state of the move_group node -->
     <node name="rviz_2" pkg="rviz" type="rviz" args="-d $(find omnicore_launcher)/config/config.rviz"/>
 

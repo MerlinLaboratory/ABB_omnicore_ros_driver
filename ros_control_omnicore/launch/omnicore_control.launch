@@ -1,10 +1,16 @@
 <launch>
 
-  <arg name="robot"    default="gofa" /> <!-- Possibilities: 'gofa' or 'yumi_single_arm'-->
-  <arg name="yamlFile" default="$(find ros_control_omnicore)/config/$(arg robot)_cfg.yaml" />
+  <arg name="robot"              default="gofa" /> <!-- Possibilities: 'gofa' or 'yumi_single_arm'-->
+  <arg name="controller"         default="VelocityControllers_JointTrajectoryController" /> <!-- Possibilities: 'PositionControllers_JointTrajectoryController'              or
+                                                                                                                             'VelocityControllers_JointGroupVelocityController' or
+                                                                                                                             'VelocityControllers_JointTrajectoryController'              -->
+
+  <arg name="yamlFileRobot"      default="$(find ros_control_omnicore)/config/$(arg robot)_cfg.yaml" />
+  <arg name="yamlFileController" default="$(find ros_control_omnicore)/config/Controllers/$(arg controller).yaml" />
 
   <!-- Load the config launching Gofa or Yumi Single Arm-->
-  <rosparam command="load" file="$(arg yamlFile)" />
+  <rosparam command="load" file="$(arg yamlFileRobot)" />
+  <rosparam command="load" file="$(arg yamlFileController)" />
 
   <!-- Load the URDF pkg -->
   <include file="$(find robots_description)/launch/display.launch">

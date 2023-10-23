@@ -1,0 +1,42 @@
+###############################################
+######### Joint Trajectory Controller  ########
+##############################################
+# For detailed explanations of parameter see http://wiki.ros.org/joint_trajectory_controller
+robot_controller:
+  type: position_controllers/JointTrajectoryController
+  # These joints can likely just be copied from the hardware_interface list above
+  joints:
+    - J1
+    - J2
+    - J3
+    - J4
+    - J5
+    - J6
+  constraints:
+    goal_time: 5.0
+    #stopped_position_tolerance: 0.4 # Defaults to 0.01
+    J1:
+      trajectory: 0.05
+      goal:       0.01
+    J2:
+      trajectory: 0.05
+      goal:       0.01
+    J3:
+      trajectory: 0.05
+      goal:       0.01
+    J4:
+      trajectory: 0.05
+      goal:       0.01
+    J5:
+      trajectory: 0.05
+      goal:       0.01
+    J6:
+      trajectory: 0.05
+      goal:       0.01
+
+  state_publish_rate:  100     # Defaults to 50
+  #action_monitor_rate: 20     # Defaults to 20
+  #hold_trajectory_duration: 0 # Defaults to 0.5
+
+robot:
+  pos_corr_gain: 1 # parameter in RAPID that needs to be set to one to accept position commands alone
