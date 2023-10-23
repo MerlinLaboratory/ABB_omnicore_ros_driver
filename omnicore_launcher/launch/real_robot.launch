@@ -1,34 +1,41 @@
 <launch>
 
-    <arg name="robot"    default="gofa" /> <!-- Possibilities: 'gofa' or 'yumi_single_arm'-->
+    <arg name="robot"      default="gofa" /> <!-- Possibilities: 'gofa' or 'yumi_single_arm'-->
+    <arg name="controller" default="VelocityControllers_JointGroupVelocityController" /> <!-- Possibilities: 'PositionControllers_JointTrajectoryController'    or
+                                                                                                             'VelocityControllers_JointGroupVelocityController' or
+                                                                                                             'VelocityControllers_JointTrajectoryController'    -->
 
     <!-- Launching ros-control pkg -->
     <include file="$(find ros_control_omnicore)/launch/omnicore_control.launch">
-        <arg name="robot" value="$(arg robot)"/> <!-- Robot you want to launch -->
+        <arg name="robot"      value="$(arg robot)"/> <!-- Robot you want to launch -->
+        <arg name="controller" value="$(arg controller)"/> <!-- Controller you want to launch -->
     </include>
 
     <!-- Launching moveit pkg -->
-    <group if="$(eval arg('robot') == 'yumi_single_arm')">     
-        <include file="$(find yumi_single_arm_moveit_config)/launch/demo.launch">
-            <arg name="pipeline" default="pilz_industrial_motion_planner" /> 
-            <arg name="debug" default="false" />                             
-            <arg name="load_robot_description" default="false"/>             
-            <arg name="moveit_controller_manager" default="simple" />        
-            <arg name="use_rviz" default="false" />                          
-        </include>
-	</group>
+    <group unless="$(eval arg('controller') == 'VelocityControllers_JointGroupVelocityController')">     
+        <group if="$(eval arg('robot') == 'yumi_single_arm')">     
+            <include file="$(find yumi_single_arm_moveit_config)/launch/demo.launch">
+                <arg name="pipeline" default="pilz_industrial_motion_planner" /> 
+                <arg name="debug" default="false" />                             
+                <arg name="load_robot_description" default="false"/>             
+                <arg name="moveit_controller_manager" default="simple" />        
+                <arg name="use_rviz" default="false" />    
+            </include>
+        </group>
 
-    <group if="$(eval arg('robot') == 'gofa')">         	
-        <include file="$(find gofa_moveit_config)/launch/demo.launch">
-            <arg name="pipeline" default="pilz_industrial_motion_planner" /> 
-            <arg name="debug" default="false" />                             
-            <arg name="load_robot_description" default="false"/>             
-            <arg name="moveit_controller_manager" default="simple" />        
-            <arg name="use_rviz" default="false" />                          
-        </include>
-	</group> 
+        <group if="$(eval arg('robot') == 'gofa')">         
+            <include file="$(find gofa_moveit_config)/launch/demo.launch">
+                <arg name="pipeline" default="pilz_industrial_motion_planner" /> 
+                <arg name="debug" default="false" />                             
+                <arg name="load_robot_description" default="false"/>             
+                <arg name="moveit_controller_manager" default="simple" />        
+                <arg name="use_rviz" default="false" />                          
+            </include>
+        </group> 
+    </group> 
 
     <!-- Run Rviz and load the default config to see the state of the move_group node -->
-    <node name="rviz_2" pkg="rviz" type="rviz" args="-d $(find omnicore_launcher)/config/config.rviz"/>
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find omnicore_launcher)/config/config_no_moveit.rviz"     if="$(eval arg('controller') == 'VelocityControllers_JointGroupVelocityController')"/>
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find omnicore_launcher)/config/config.rviz"           unless="$(eval arg('controller') == 'VelocityControllers_JointGroupVelocityController')" />
 
 </launch>

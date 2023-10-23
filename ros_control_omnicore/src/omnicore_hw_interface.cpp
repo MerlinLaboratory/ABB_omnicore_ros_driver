@@ -244,12 +244,12 @@ namespace ros_control_omnicore
       //                                                           joint_position_command[3] / 3.14159265358979323846 * 180.0,
       //                                                           joint_position_command[4] / 3.14159265358979323846 * 180.0,
       //                                                           joint_position_command[5] / 3.14159265358979323846 * 180.0);
-      ROS_INFO("Velocity sent: [%lf, %lf, %lf, %lf, %lf, %lf]", this->data_to_egm.mutable_robot()->mutable_joints()->mutable_velocity()->values()[0],
-                                                                this->data_to_egm.mutable_robot()->mutable_joints()->mutable_velocity()->values()[1],
-                                                                this->data_to_egm.mutable_robot()->mutable_joints()->mutable_velocity()->values()[2],
-                                                                this->data_to_egm.mutable_robot()->mutable_joints()->mutable_velocity()->values()[3],
-                                                                this->data_to_egm.mutable_robot()->mutable_joints()->mutable_velocity()->values()[4],
-                                                                this->data_to_egm.mutable_robot()->mutable_joints()->mutable_velocity()->values()[5]);
+      // ROS_INFO("Velocity sent: [%lf, %lf, %lf, %lf, %lf, %lf]", this->data_to_egm.mutable_robot()->mutable_joints()->mutable_velocity()->values()[0],
+      //                                                           this->data_to_egm.mutable_robot()->mutable_joints()->mutable_velocity()->values()[1],
+      //                                                           this->data_to_egm.mutable_robot()->mutable_joints()->mutable_velocity()->values()[2],
+      //                                                           this->data_to_egm.mutable_robot()->mutable_joints()->mutable_velocity()->values()[3],
+      //                                                           this->data_to_egm.mutable_robot()->mutable_joints()->mutable_velocity()->values()[4],
+      //                                                           this->data_to_egm.mutable_robot()->mutable_joints()->mutable_velocity()->values()[5]);
 
       // Uncomment to die
       this->p_egm_interface->write(this->data_to_egm);
