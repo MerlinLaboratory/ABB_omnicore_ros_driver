@@ -541,7 +541,7 @@ namespace ros_control_omnicore
          return success;
       }
 
-      this->state_machine_state = abb::rws::RWSStateMachineInterface::STATE_IDLE;
+      // this->state_machine_state = abb::rws::RWSStateMachineInterface::STATE_IDLE;
       this->egm_action = abb::rws::RWSStateMachineInterface::EGM_ACTION_STREAMING;
 
       return success;
@@ -549,7 +549,6 @@ namespace ros_control_omnicore
 
    bool OmnicoreHWInterface::EGMStopStreamingSignal()
    {
-
       bool success = this->p_rws_interface->services().egm().signalEGMStopStreaming();
 
       if(!success)
@@ -558,7 +557,7 @@ namespace ros_control_omnicore
          return success; 
       }
 
-      this->state_machine_state = abb::rws::RWSStateMachineInterface::STATE_IDLE;
+      // this->state_machine_state = abb::rws::RWSStateMachineInterface::STATE_IDLE;
       this->egm_action = abb::rws::RWSStateMachineInterface::EGM_ACTION_STOP;
 
       return success;
@@ -566,7 +565,7 @@ namespace ros_control_omnicore
 
    bool OmnicoreHWInterface::FreeDriveStartSignal()
    {
-      this->state_machine_state = abb::rws::RWSStateMachineInterface::STATE_RUN_RAPID_ROUTINE;
+      this->state_machine_state = abb::rws::RWSStateMachineInterface::STATE_FREE_DRIVE_ROUTINE;
 
       p_rws_interface->requestMasterShip();
       bool success = this->p_rws_interface->services().rapid().setLeadthroughOn(this->task_robot);
@@ -631,7 +630,7 @@ namespace ros_control_omnicore
 
    bool OmnicoreHWInterface::SetControlToFreeDrive(std_srvs::TriggerRequest& req, std_srvs::TriggerResponse& res)
    {
-      if(this->egm_action == abb::rws::RWSStateMachineInterface::EGM_ACTION_STREAMING)
+      if(this->state_machine_state == abb::rws::RWSStateMachineInterface::STATE_FREE_DRIVE_ROUTINE)
       {
          ROS_WARN("Robot is already in Free Drive");
          res.success = true;
@@ -649,8 +648,28 @@ namespace ros_control_omnicore
 
    bool OmnicoreHWInterface::MoveJRapid(omnicore_interface::moveJ_rapidRequest& req, omnicore_interface::moveJ_rapidResponse& res)
    {
+      res.success = true; 
+
+      // Checking first that the robot is in free drive
+      if(this->state_machine_state == abb::rws::RWSStateMachineInterface::STATE_FREE_DRIVE_ROUTINE)
+      {
+         res.success = res.success && this->FreeDriveStopSignal();
+         ros::Duration(2).sleep();
+      }
+
+      // Checking first that the robot is not controlled in EGM
+      if(this->egm_action == abb::rws::RWSStateMachineInterface::EGM_ACTION_RUN_JOINT || 
+         this->egm_action == abb::rws::RWSStateMachineInterface::EGM_ACTION_RUN_POSE)
+      {
+         res.success = res.success && this->EGMStopJointSignal();
+         ros::Duration(2).sleep();
+         res.success = res.success && this->EGMStartStreamingSignal();
+         ros::Duration(2).sleep();
+      }
+
       abb::rws::SpeedData speed_data;
       FromVelocityMsgToSpeedData(req.velocity, speed_data);
+      p_rws_interface->requestMasterShip();
       res.success = this->p_rws_interface->services().rapid().setMoveSpeed(this->task_robot, speed_data);
 
       abb::rws::RobTarget robot_target;
@@ -662,6 +681,7 @@ namespace ros_control_omnicore
       robot_target.robconf.cfx = req.configuration[3]; // Ignored by 6 axis robots
 
       res.success = res.success && this->p_rws_interface->services().rapid().runMoveJ(this->task_robot, robot_target);
+      p_rws_interface->releaseMasterShip();
 
       if(!res.success)
          ROS_ERROR("Impossible to use MoveJ");
@@ -671,6 +691,15 @@ namespace ros_control_omnicore
 
    bool OmnicoreHWInterface::MoveLRapid(omnicore_interface::moveL_rapidRequest& req, omnicore_interface::moveL_rapidResponse& res)
    {
+      res.success = true; 
+
+      // Checking first that the robot is in free drive
+      if(this->state_machine_state == abb::rws::RWSStateMachineInterface::STATE_FREE_DRIVE_ROUTINE)
+      {
+         res.success = res.success && this->FreeDriveStopSignal();
+         ros::Duration(2).sleep();
+      }
+
       // Checking first that the robot is not controlled in EGM
       if(this->egm_action == abb::rws::RWSStateMachineInterface::EGM_ACTION_RUN_JOINT || 
          this->egm_action == abb::rws::RWSStateMachineInterface::EGM_ACTION_RUN_POSE)
@@ -683,6 +712,8 @@ namespace ros_control_omnicore
 
       abb::rws::SpeedData speed_data;
       FromVelocityMsgToSpeedData(req.velocity, speed_data);
+
+      p_rws_interface->requestMasterShip();
       res.success = this->p_rws_interface->services().rapid().setMoveSpeed(this->task_robot, speed_data);
 
       abb::rws::RobTarget robot_target;
@@ -694,9 +725,11 @@ namespace ros_control_omnicore
       robot_target.robconf.cfx = req.configuration[3]; // Ignored by 6 axis robots
 
       res.success = res.success && this->p_rws_interface->services().rapid().runMoveL(this->task_robot, robot_target);
+      p_rws_interface->releaseMasterShip();
 
       if(!res.success)
          ROS_ERROR("Impossible to use MoveL");
+
 
       return true;
    }

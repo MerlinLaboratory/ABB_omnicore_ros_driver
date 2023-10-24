@@ -82,6 +82,7 @@ public:
     STATE_INITIALIZE,        ///< \brief Initialization state.
     STATE_RUN_RAPID_ROUTINE, ///< \brief Running RAPID routine state.
     STATE_RUN_EGM_ROUTINE,   ///< \brief Running EGM routine state.
+    STATE_FREE_DRIVE_ROUTINE,   ///< \brief Running EGM routine state.
     STATE_UNKNOWN            ///< \brief Unknown state.
   };
 
