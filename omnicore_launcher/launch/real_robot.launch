@@ -20,6 +20,7 @@
                 <arg name="load_robot_description" default="false"/>             
                 <arg name="moveit_controller_manager" default="simple" />        
                 <arg name="use_rviz" default="false" />    
+                <arg name="controller" value="$(arg controller)" />    
             </include>
         </group>
 

@@ -8,9 +8,14 @@
   <arg name="yamlFileRobot"      default="$(find ros_control_omnicore)/config/$(arg robot)_cfg.yaml" />
   <arg name="yamlFileController" default="$(find ros_control_omnicore)/config/Controllers/$(arg controller).yaml" />
 
-  <!-- Load the config launching Gofa or Yumi Single Arm-->
+  <!-- Load the config launching Gofa or Yumi Single Arm -->
+  <param name="ros_controller_spawned" value="$(arg controller)"/>
   <rosparam command="load" file="$(arg yamlFileRobot)" />
   <rosparam command="load" file="$(arg yamlFileController)" />
+
+  <!-- Load controller manager -->
+  <!--node name="controller_manager" pkg="controller_manager" type="controller_manager" respawn="false"
+    output="screen" args="load joint_state_controller $(arg controller)" /-->
 
   <!-- Load the URDF pkg -->
   <include file="$(find robots_description)/launch/display.launch">
@@ -20,9 +25,5 @@
 
   <!-- Load the Hardware Interface -->
   <node pkg="ros_control_omnicore" name="omnicore_hw_interface" type="omnicore_control_node" output="screen" />
-
-  <!-- Load controller manager -->
-  <node name="ros_control_controller_manager" pkg="controller_manager" type="controller_manager" respawn="false"
-        output="screen" args="spawn joint_state_controller robot_controller" />
 
 </launch>
