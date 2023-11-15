@@ -1,7 +1,7 @@
 ###############################################
 ######### Joint Trajectory Controller  ########
 ###############################################
-robot_controller:
+VelocityControllers_JointTrajectoryController:
   type: "velocity_controllers/JointTrajectoryController"
   joints:
     - J1

@@ -2,7 +2,7 @@
 ######### Joint Trajectory Controller  ########
 ##############################################
 # For detailed explanations of parameter see http://wiki.ros.org/joint_trajectory_controller
-robot_controller:
+PositionControllers_JointTrajectoryController:
   type: position_controllers/JointTrajectoryController
   # These joints can likely just be copied from the hardware_interface list above
   joints:

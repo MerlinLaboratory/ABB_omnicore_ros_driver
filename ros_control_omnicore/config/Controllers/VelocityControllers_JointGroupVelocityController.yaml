@@ -1,7 +1,7 @@
 ##################################################
 ######### Joint Group Velocity Controller ########
 ##################################################
-robot_controller:
+VelocityControllers_JointGroupVelocityController:
   type: velocity_controllers/JointGroupVelocityController
   joints: 
     - J1
