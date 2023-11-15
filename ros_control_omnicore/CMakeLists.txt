@@ -209,3 +209,8 @@ add_executable(omnicore_control_node src/omnicore_main.cpp src/omnicore_hw_inter
 set_target_properties(omnicore_control_node PROPERTIES OUTPUT_NAME omnicore_control_node PREFIX "")
 add_dependencies(omnicore_control_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(omnicore_control_node ${catkin_LIBRARIES} PocoNetSSL)
+
+add_executable(omnicore_rws_node src/rws_main.cpp src/rws.cpp)
+set_target_properties(omnicore_rws_node PROPERTIES OUTPUT_NAME omnicore_rws_node PREFIX "")
+add_dependencies(omnicore_rws_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(omnicore_rws_node ${catkin_LIBRARIES} PocoNetSSL)

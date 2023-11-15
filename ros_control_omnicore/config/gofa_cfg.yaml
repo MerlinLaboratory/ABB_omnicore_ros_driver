@@ -14,6 +14,7 @@ robot:
   robot_port_egm: 6511
   root_name: "base"
   tip_name: "L6"
+  is_free_drive_on: false
 
   tool_data:
     # tcp_pose       : [0.0, 0.0, 125.2, 1.0, 0.0, 0.0, 0.0] # x, y, z, w, x, y, z. Positions in [mm]
@@ -51,3 +52,7 @@ robot_hardware_interface:
 joint_state_controller:
   type:         joint_state_controller/JointStateController
   publish_rate: 100
+
+ros_controllers:
+  controllers_to_load: ["VelocityControllers_JointTrajectoryController", "VelocityControllers_JointGroupVelocityController"]
+  controllers_to_start: ["VelocityControllers_JointTrajectoryController"]

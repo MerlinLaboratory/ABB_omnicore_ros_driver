@@ -24,13 +24,6 @@
 #include <abb_librws/rws_interface.h>
 #include <abb_libegm/egm_controller_interface.h>
 
-// Custom ROS messages
-#include <omnicore_interface/OmnicoreState.h>
-
-// Custom ROS services
-#include <omnicore_interface/moveJ_rapid.h>
-#include <omnicore_interface/moveL_rapid.h>
-
 // Boost
 #include <boost/scoped_ptr.hpp>
 #include <boost/thread/condition.hpp>
@@ -55,13 +48,8 @@ namespace ros_control_omnicore
 		/** \brief Write the command to the robot hardware. */
 		void write(ros::Duration &elapsed_time);
 
-		/** \brief Shutdown gently the robot hardware. */
-		void shutdown();
-
 		/** \brief Set all members to default values */
 		virtual void reset();
-
-		// static void ShutDownHandler(int signal);
 
 		/**
 		 * \brief Check (in non-realtime) if given controllers could be started and stopped from the
@@ -69,7 +57,7 @@ namespace ros_control_omnicore
 		 * with regard to necessary hardware interface switches. Start and stop list are disjoint.
 		 * This is just a check, the actual switch is done in doSwitch()
 		 */
-		bool canSwitch(const std::list<hardware_interface::ControllerInfo> &start_list,
+		bool prepareSwitch(const std::list<hardware_interface::ControllerInfo> &start_list,
 							const std::list<hardware_interface::ControllerInfo> &stop_list);
 
 		/**
@@ -103,27 +91,7 @@ namespace ros_control_omnicore
 		/** \brief This functions set through RWS the EGM params specified in the configuration file .yaml */
 
 		// EGM functions
-		bool SetEGMParameters();
-		bool EGMStartJointSignal();
-		bool EGMStopJointSignal();
-		bool EGMStartStreamingSignal();
-		bool EGMStopStreamingSignal();
 		void WaitForEgmConnection();
-
-		// FreeDrive functions
-		bool FreeDriveStartSignal();
-		bool FreeDriveStopSignal();
-
-		// Funcitons to move from one command to the other
-		bool SetControlToEgm(std_srvs::TriggerRequest& req, std_srvs::TriggerResponse& res);
-		bool SetControlToFreeDrive(std_srvs::TriggerRequest& req, std_srvs::TriggerResponse& res);
-		bool MoveJRapid(omnicore_interface::moveJ_rapidRequest& req, omnicore_interface::moveJ_rapidResponse& res);
-		bool MoveLRapid(omnicore_interface::moveL_rapidRequest& req, omnicore_interface::moveL_rapidResponse& res);
-
-		// Generic funtions
-		void 		   LoadToolData();
-		std_msgs::Byte ReadDigitalInputs();
-		void 		   PublishOmnicoreState();
 
 	private:
 		std::string robot_name;
@@ -157,7 +125,6 @@ namespace ros_control_omnicore
 		// Commands
 		std::vector<double> joint_position_command;
 		std::vector<double> joint_velocity_command;
-		// std::vector<double> joint_effort_command; -> Not supported by Omnicore :(
 
 		// Copy of limits, in case we need them later in our control stack
 		std::vector<double> joint_position_lower_limits;
@@ -165,31 +132,14 @@ namespace ros_control_omnicore
 		std::vector<double> joint_velocity_limits;
 		std::vector<double> joint_effort_limits;
 
-
 		/** \brief Get the URDF XML from the parameter server */
 		virtual void loadURDF(const ros::NodeHandle &nh, std::string param_name);
-
-		// --------------------------------------------------------------- //
-		// ---------------------- Variables for ROS ---------------------- //
-		// --------------------------------------------------------------- //
-		
-		// Publishers
-		ros::Timer timerOmnicoreState;
-		ros::Publisher omnicore_state_publisher;
-
-		// Ros services servers
-		ros::ServiceServer server_set_egm_state;
-		ros::ServiceServer server_set_free_drive_state;
-		ros::ServiceServer server_moveJ_rapid;
-		ros::ServiceServer server_moveL_rapid;
 
 		// --------------------------------------------------------------- //
 		// -------------- Variables for connecting to Robot -------------- //
 		// --------------------------------------------------------------- //
 
 		// Generic data
-		std::string ip_robot;
-		int port_robot_rws;
 		int port_robot_egm;
 		std::string task_robot;
 
@@ -201,13 +151,11 @@ namespace ros_control_omnicore
 		boost::thread_group thread_group_;
 		boost::asio::io_service io_service_;
 
+		// Interfaces
+		abb::egm::EGMControllerInterface *p_egm_interface;
+
 		// EGM parameters
 		int pos_corr_gain;
-		int max_speed_deviation;
-
-		// Interfaces
-		abb::rws::RWSStateMachineInterface *p_rws_interface;
-		abb::egm::EGMControllerInterface *p_egm_interface;
 
 		// Data from and to the robot
 		abb::egm::wrapper::Input data_from_egm;

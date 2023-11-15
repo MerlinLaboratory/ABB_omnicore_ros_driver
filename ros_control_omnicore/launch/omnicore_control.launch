@@ -1,21 +1,29 @@
 <launch>
 
-  <arg name="robot"              default="gofa" /> <!-- Possibilities: 'gofa' or 'yumi_single_arm'-->
-  <arg name="controller"         default="VelocityControllers_JointTrajectoryController" /> <!-- Possibilities: 'PositionControllers_JointTrajectoryController'              or
-                                                                                                                             'VelocityControllers_JointGroupVelocityController' or
-                                                                                                                             'VelocityControllers_JointTrajectoryController'              -->
-
-  <arg name="yamlFileRobot"      default="$(find ros_control_omnicore)/config/$(arg robot)_cfg.yaml" />
-  <arg name="yamlFileController" default="$(find ros_control_omnicore)/config/Controllers/$(arg controller).yaml" />
+  <arg name="robot"                                      default="gofa" /> <!-- Possibilities: 'gofa' or 'yumi_single_arm'-->
+  <arg name="load_Position_JointTrajectoryController"    default="no"/>
+  <arg name="load_Velocity_JointGroupVelocityController" default="yes"/>
+  <arg name="load_Velocity_JointTrajectoryController"    default="yes"/>
 
   <!-- Load the config launching Gofa or Yumi Single Arm -->
-  <param name="ros_controller_spawned" value="$(arg controller)"/>
+  <arg name="yamlFileRobot"      default="$(find ros_control_omnicore)/config/$(arg robot)_cfg.yaml" />
   <rosparam command="load" file="$(arg yamlFileRobot)" />
-  <rosparam command="load" file="$(arg yamlFileController)" />
 
-  <!-- Load controller manager -->
-  <!--node name="controller_manager" pkg="controller_manager" type="controller_manager" respawn="false"
-    output="screen" args="load joint_state_controller $(arg controller)" /-->
+  <!-- Load the config launching for ros_controllers Arm -->
+  <group if="$(eval arg('load_Position_JointTrajectoryController') == 'yes')">     
+    <arg name="yaml_Position_JointTrajContr" default="$(find ros_control_omnicore)/config/Controllers/PositionControllers_JointTrajectoryController.yaml" />
+    <rosparam command="load" file="$(arg yaml_Position_JointTrajContr)" />
+  </group>
+
+  <group if="$(eval arg('load_Velocity_JointGroupVelocityController') == 'yes')">     
+    <arg name="yaml_Velocity_GroupVelContr" default="$(find ros_control_omnicore)/config/Controllers/VelocityControllers_JointGroupVelocityController.yaml" />
+    <rosparam command="load" file="$(arg yaml_Velocity_GroupVelContr)" />
+  </group>
+
+  <group if="$(eval arg('load_Velocity_JointTrajectoryController') == 'yes')">     
+    <arg name="yaml_Velocity_TrajVelContr" default="$(find ros_control_omnicore)/config/Controllers/VelocityControllers_JointTrajectoryController.yaml" />
+    <rosparam command="load" file="$(arg yaml_Velocity_TrajVelContr)" />
+  </group> 
 
   <!-- Load the URDF pkg -->
   <include file="$(find robots_description)/launch/display.launch">
@@ -25,5 +33,8 @@
 
   <!-- Load the Hardware Interface -->
   <node pkg="ros_control_omnicore" name="omnicore_hw_interface" type="omnicore_control_node" output="screen" />
+
+  <!-- Load the Rws Interface -->
+  <node pkg="ros_control_omnicore" name="omnicore_rws_interface" type="omnicore_rws_node" output="screen" />
 
 </launch>

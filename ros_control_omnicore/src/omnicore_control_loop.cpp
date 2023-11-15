@@ -25,9 +25,7 @@ namespace ros_control_omnicore
 		{
 			update();
 			rate.sleep();
-		}
-		
-		this->hardware_interface->shutdown();
+		}		
 	}
 
 	void OmnicoreControlLoop::update()

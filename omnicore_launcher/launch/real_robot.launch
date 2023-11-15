@@ -1,18 +1,20 @@
 <launch>
 
     <arg name="robot"      default="gofa" /> <!-- Possibilities: 'gofa' or 'yumi_single_arm'-->
-    <arg name="controller" default="VelocityControllers_JointTrajectoryController" /> <!-- Possibilities: 'PositionControllers_JointTrajectoryController'    or
-                                                                                                             'VelocityControllers_JointGroupVelocityController' or
-                                                                                                             'VelocityControllers_JointTrajectoryController'    -->
-
+    <arg name="load_Position_JointTrajectoryController"    default="no"/>
+    <arg name="load_Velocity_JointGroupVelocityController" default="no"/>
+    <arg name="load_Velocity_JointTrajectoryController"    default="yes"/>
+  
     <!-- Launching ros-control pkg -->
     <include file="$(find ros_control_omnicore)/launch/omnicore_control.launch">
-        <arg name="robot"      value="$(arg robot)"/> <!-- Robot you want to launch -->
-        <arg name="controller" value="$(arg controller)"/> <!-- Controller you want to launch -->
+        <arg name="robot"                                      value="$(arg robot)"/> <!-- Robot you want to launch -->
+        <arg name="load_Position_JointTrajectoryController"    value="$(arg load_Position_JointTrajectoryController)"/> <!-- Whether you want to load PositionController_JointTrajectoryController -->
+        <arg name="load_Velocity_JointGroupVelocityController" value="$(arg load_Velocity_JointGroupVelocityController)"/> <!-- Whether you want to load load_Velocity_JointGroupVelocityController -->
+        <arg name="load_Velocity_JointTrajectoryController"    value="$(arg load_Velocity_JointTrajectoryController)"/> <!-- Whether you want to load load_Velocity_JointTrajectoryController -->
     </include>
 
     <!-- Launching moveit pkg -->
-    <group unless="$(eval arg('controller') == 'VelocityControllers_JointGroupVelocityController')">     
+    <group if="$(eval arg('load_Velocity_JointGroupVelocityController') == 'no')">     
         <group if="$(eval arg('robot') == 'yumi_single_arm')">     
             <include file="$(find yumi_single_arm_moveit_config)/launch/demo.launch">
                 <arg name="pipeline" default="pilz_industrial_motion_planner" /> 
@@ -20,7 +22,8 @@
                 <arg name="load_robot_description" default="false"/>             
                 <arg name="moveit_controller_manager" default="simple" />        
                 <arg name="use_rviz" default="false" />    
-                <arg name="controller" value="$(arg controller)" />    
+                <arg name="load_Position_JointTrajectoryController"    value="$(arg load_Position_JointTrajectoryController)"/> <!-- Whether you want to load PositionController_JointTrajectoryController -->
+                <arg name="load_Velocity_JointTrajectoryController"    value="$(arg load_Velocity_JointTrajectoryController)"/> <!-- Whether you want to load load_Velocity_JointTrajectoryController -->
             </include>
         </group>
 
@@ -30,13 +33,14 @@
                 <arg name="debug" default="false" />                             
                 <arg name="load_robot_description" default="false"/>             
                 <arg name="moveit_controller_manager" default="simple" />        
-                <arg name="use_rviz" default="false" />                          
+                <arg name="load_Position_JointTrajectoryController"    value="$(arg load_Position_JointTrajectoryController)"/> <!-- Whether you want to load PositionController_JointTrajectoryController -->
+                <arg name="load_Velocity_JointTrajectoryController"    value="$(arg load_Velocity_JointTrajectoryController)"/> <!-- Whether you want to load load_Velocity_JointTrajectoryController -->                 
             </include>
         </group> 
     </group> 
 
     <!-- Run Rviz and load the default config to see the state of the move_group node -->
-    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find omnicore_launcher)/config/config_no_moveit.rviz"     if="$(eval arg('controller') == 'VelocityControllers_JointGroupVelocityController')"/>
-    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find omnicore_launcher)/config/config.rviz"           unless="$(eval arg('controller') == 'VelocityControllers_JointGroupVelocityController')" />
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find omnicore_launcher)/config/config_no_moveit.rviz" if="$(eval arg('load_Velocity_JointGroupVelocityController') == 'yes')"/>
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find omnicore_launcher)/config/config.rviz"           if="$(eval arg('load_Velocity_JointGroupVelocityController') == 'no')" />
 
 </launch>
