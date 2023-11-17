@@ -1,0 +1,4 @@
+uint8 index     # digital output port(1 ~ 8)
+uint8 value     # 0 : OFF, 1 : ON
+---
+bool success

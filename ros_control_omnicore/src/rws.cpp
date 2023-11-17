@@ -70,6 +70,7 @@ Rws::Rws(const ros::NodeHandle &nh) : nh(nh)
 	this->server_egm_shutdown		  = this->nh.advertiseService("egm_shutdown"	         , &Rws::ShutdownSrv, 		       this);
 	this->server_moveJ_rapid 		  = this->nh.advertiseService("moveJ_rapid"				 , &Rws::MoveJRapidSrv, 		   this);
 	this->server_moveL_rapid 		  = this->nh.advertiseService("moveL_rapid"				 , &Rws::MoveLRapidSrv, 		   this);
+	this->server_set_digital_output	  = this->nh.advertiseService("set_digital_output"	     , &Rws::SetDigitalOutputSrv, 	   this);
 
 	// Debug
 	ROS_INFO("For RWS, connecting to ip: %s and port: %s", this->ip_robot.c_str(), std::to_string(this->port_robot_rws).c_str());
@@ -457,6 +458,12 @@ bool Rws::ShutdownSrv(std_srvs::TriggerRequest& req, std_srvs::TriggerResponse& 
 	return true;
 }
 
+bool Rws::SetDigitalOutputSrv(omnicore_interface::set_digital_outputRequest& req, omnicore_interface::set_digital_outputResponse& res)
+{
+	res.success = this->SetDigitalOutput(req.index, req.value);
+	return true;
+}
+
 // ----------------------------------------------------------------- //
 // -------------------- Generic Robot functions -------------------- //
 // ----------------------------------------------------------------- //
@@ -535,6 +542,47 @@ std_msgs::Byte Rws::ReadDigitalInputs()
 	p_rws_interface->releaseMasterShip();
 
 	return digital_input_status;
+}
+
+
+bool Rws::SetDigitalOutput(uint8_t index, uint8_t value)
+{
+	const unsigned int number_controller_digital_output_ports = abb::rws::SystemConstants::IOSignals::OmnicoreDigitalOutputs.size();
+	if(index < 1 || index > number_controller_digital_output_ports)
+	{
+		ROS_ERROR("Digital Output index is out of bounds. Expected 1-8");
+		return false;
+	}
+
+	if(!this->p_rws_interface->requestMasterShip())
+	{
+		ROS_ERROR("Failed to request mastership");
+		return false;
+	}
+
+	if(this->p_rws_interface->setIOSignal(abb::rws::SystemConstants::IOSignals::OmnicoreDigitalOutputs[index - 1], (value > 0.5) ? abb::rws::SystemConstants::IOSignals::HIGH : abb::rws::SystemConstants::IOSignals::LOW))
+	{
+		std::cout << "success" << std::endl;
+		this->p_rws_interface->releaseMasterShip();
+		return true;
+	}
+	else
+	{
+		std::cout << "fail" << std::endl;
+		std::cout << std::to_string(index) << std::endl;
+		std::cout << std::to_string(value) << std::endl;
+		std::cout << abb::rws::SystemConstants::IOSignals::OmnicoreDigitalOutputs[index-1] << std::endl;
+
+		std::string bellazi = (value > 0.5) ? abb::rws::SystemConstants::IOSignals::HIGH : abb::rws::SystemConstants::IOSignals::LOW;
+		std::cout << "input to set function: " << bellazi << std::endl;
+
+		std::string bellz = this->p_rws_interface->getIOSignal(abb::rws::SystemConstants::IOSignals::OmnicoreDigitalOutputs[0]);
+		std::cout << "status of " <<  abb::rws::SystemConstants::IOSignals::OmnicoreDigitalOutputs[0] << " " << bellz << std::endl;
+
+		this->p_rws_interface->releaseMasterShip();
+		
+		return false;
+	}
 }
 
 void Rws::PublishOmnicoreState()

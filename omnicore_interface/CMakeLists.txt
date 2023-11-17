@@ -39,6 +39,7 @@ add_service_files(
   FILES
   moveJ_rapid.srv
   moveL_rapid.srv
+  set_digital_output.srv
 )
 
 ## Generate added messages and services with any dependencies listed here

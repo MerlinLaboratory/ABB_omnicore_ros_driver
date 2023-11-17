@@ -366,9 +366,54 @@ struct SystemConstants
     static const std::string ABB_SCALABLE_IO_0_DI16;
 
     /**
+     * \brief Name of defined IO signal for digital output 1
+     */
+    static const std::string ABB_SCALABLE_IO_0_DO1;
+  
+    /**
+     * \brief Name of defined IO signal for digital output 2
+     */
+    static const std::string ABB_SCALABLE_IO_0_DO2;
+
+    /**
+     * \brief Name of defined IO signal for digital output 3
+     */
+    static const std::string ABB_SCALABLE_IO_0_DO3;
+
+    /**
+     * \brief Name of defined IO signal for digital output 4
+     */
+    static const std::string ABB_SCALABLE_IO_0_DO4;
+
+    /**
+     * \brief Name of defined IO signal for digital output 5
+     */
+    static const std::string ABB_SCALABLE_IO_0_DO5;
+
+    /**
+     * \brief Name of defined IO signal for digital output 6
+     */
+    static const std::string ABB_SCALABLE_IO_0_DO6;
+
+    /**
+     * \brief Name of defined IO signal for digital output 7
+     */
+    static const std::string ABB_SCALABLE_IO_0_DO7;
+
+    /**
+     * \brief Name of defined IO signal for digital output 8
+     */
+    static const std::string ABB_SCALABLE_IO_0_DO8;
+
+    /**
      * \brief Vector containing all the possible digital inputs of omnicore controller
      */
     static const std::vector<std::string> OmnicoreDigitalInputs;
+
+    /**
+     * \brief Vector containing all the possible digital outputs of omnicore controller
+     */
+    static const std::vector<std::string> OmnicoreDigitalOutputs;
   };
     
   /**
