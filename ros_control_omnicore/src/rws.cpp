@@ -102,13 +102,14 @@ Rws::Rws(const ros::NodeHandle &nh) : nh(nh)
 	}
 
 	// Service client instantiation
-    this->client_load_controller      = this->nh.serviceClient<controller_manager_msgs::LoadController>  ("/controller_manager/load_controller");
-    this->client_unload_controller    = this->nh.serviceClient<controller_manager_msgs::UnloadController>("/controller_manager/unload_controller");
-    this->client_switch_controller    = this->nh.serviceClient<controller_manager_msgs::SwitchController>("/controller_manager/switch_controller");
+    this->client_load_controllers    = this->nh.serviceClient<controller_manager_msgs::LoadController>  ("/controller_manager/load_controller");
+    this->client_unload_controllers  = this->nh.serviceClient<controller_manager_msgs::UnloadController>("/controller_manager/unload_controller");
+    this->client_switch_controllers  = this->nh.serviceClient<controller_manager_msgs::SwitchController>("/controller_manager/switch_controller");
+    this->client_list_controllers    = this->nh.serviceClient<controller_manager_msgs::ListControllers> ("/controller_manager/list_controllers");
 
-	while(this->client_load_controller.waitForExistence(ros::Duration(1))   == false || 
-		  this->client_unload_controller.waitForExistence(ros::Duration(1)) == false ||
-		  this->client_unload_controller.waitForExistence(ros::Duration(1)) == false)
+	while(this->client_load_controllers.waitForExistence(ros::Duration(1))   == false || 
+		  this->client_unload_controllers.waitForExistence(ros::Duration(1)) == false ||
+		  this->client_unload_controllers.waitForExistence(ros::Duration(1)) == false)
 	{
 		ROS_INFO("Waiting for controller_manger services");
 	}
@@ -121,18 +122,20 @@ Rws::Rws(const ros::NodeHandle &nh) : nh(nh)
 	// --------------------------------------------------------------- //
 	// --------------  Loading required ros_controllers -------------- //
 	// --------------------------------------------------------------- //
-	std::vector<std::string> controllers_to_load;
-	nh.getParam("/ros_controllers/controllers_to_load", controllers_to_load);
-	controllers_to_load.push_back("joint_state_controller");
-	this->LoadControllers(controllers_to_load);
+	std::vector<std::string> controller_to_load = {"joint_state_controller"};
+
+	nh.getParam("/ros_controllers/controllers_to_load", controller_to_load);
+	controller_to_load.push_back("joint_state_controller");
+	this->LoadControllers(controller_to_load);
 
 	// ------------------------------------------------------- //
 	// --------------  Starting ros_controllers -------------- //
 	// ------------------------------------------------------- //
-	nh.getParam("/ros_controllers/controllers_to_start", this->controllers_running);
+	std::vector<std::string> controllers_to_start = {"joint_state_controller"};
 	std::vector<std::string> controllers_to_stop  = {};
-	std::vector<std::string> controllers_to_start  = this->controllers_running;
-	controllers_to_start.push_back("joint_state_controller");
+	this->SwitchControllers(controllers_to_start, controllers_to_stop, 2, false, 0.0);
+
+	nh.getParam("/ros_controllers/controllers_to_start", controllers_to_start);
 	this->SwitchControllers(controllers_to_start, controllers_to_stop, 2, false, 0.0);
 
 	ROS_INFO_STREAM_NAMED(this->robot_name, "Rws Ready!");
@@ -144,7 +147,9 @@ void Rws::shutdown()
 
 	// Unloading all controllers
 	std::cout << "Unoading ros controllers ..." << std::endl;
-	this->UnLoadControllers(this->controllers_running);
+	
+	std::vector<std::string> controllers_runnning = this->GetControllersRunning();
+	this->UnLoadControllers(controllers_runnning);
 
 	std::cout << "Killing EGM ..." << std::endl;
 	switch (this->state_machine_state)
@@ -290,7 +295,7 @@ bool Rws::SetControlToEgmSrv(std_srvs::TriggerRequest& req, std_srvs::TriggerRes
 	}
 
 	// Calling service SwitchController
-	std::vector<std::string> controllers_to_start = this->controllers_running;
+	std::vector<std::string> controllers_to_start = this->controllers_running_before_free_drive;
 	std::vector<std::string> controllers_to_stop  = {};
 	this->SwitchControllers(controllers_to_start, controllers_to_stop, 2, false, 0.0);
 
@@ -321,9 +326,20 @@ bool Rws::SetControlToFreeDriveSrv(std_srvs::TriggerRequest& req, std_srvs::Trig
 		return true;
 	}
 
+	// Getting all running controllers
+	std::vector<std::string> controllers_running = GetControllersRunning();
+
+	// Check whether you are starting/stopping joint_state_cotroller
+	this->controllers_running_before_free_drive.clear();
+	for(std::string controller : controllers_running)
+	{
+		if(controller != "joint_state_controller")
+			this->controllers_running_before_free_drive.push_back(controller);
+	}
+
 	// Calling service UnloadController
 	std::vector<std::string> controllers_to_start = {};
-	std::vector<std::string> controllers_to_stop  = this->controllers_running;
+	std::vector<std::string> controllers_to_stop  = controllers_running_before_free_drive;
 	this->SwitchControllers(controllers_to_start, controllers_to_stop, 2, false, 0.0);
 
 	if(this->egm_action != abb::rws::RWSStateMachineInterface::EGM_ACTION_STOP)
@@ -544,7 +560,6 @@ std_msgs::Byte Rws::ReadDigitalInputs()
 	return digital_input_status;
 }
 
-
 bool Rws::SetDigitalOutput(uint8_t port, uint8_t value)
 {
 	const unsigned int number_controller_digital_output_ports = abb::rws::SystemConstants::IOSignals::OmnicoreDigitalOutputs.size();
@@ -612,7 +627,7 @@ void Rws::LoadControllers  (std::vector<std::string>& controllers)
 		controller_manager_msgs::LoadController::Response res;
 
 		req.name = controller;
-		this->client_load_controller.call(req, res);
+		this->client_load_controllers.call(req, res);
 
 		if(!res.ok)
 			ROS_ERROR("Impossible to load %s", controller.c_str());
@@ -629,7 +644,7 @@ void Rws::UnLoadControllers(std::vector<std::string>& controllers)
 		controller_manager_msgs::UnloadController::Response res;
 
 		req.name = controller;
-		this->client_unload_controller.call(req, res);
+		this->client_unload_controllers.call(req, res);
 
 		if(!res.ok)
 			ROS_ERROR("Impossible to unload %s", controller.c_str());
@@ -637,6 +652,7 @@ void Rws::UnLoadControllers(std::vector<std::string>& controllers)
 			ROS_INFO("Controller %s unloaded successfully", controller.c_str());
 	}
 }
+
 void Rws::SwitchControllers(std::vector<std::string>& controllers_to_start,
 						std::vector<std::string>& controllers_to_stop,
 						int strictness,
@@ -652,10 +668,30 @@ void Rws::SwitchControllers(std::vector<std::string>& controllers_to_start,
 	req.strictness = req.STRICT;
 	req.timeout = 0.0;
 
-	this->client_switch_controller.call(req, res);
+	this->client_switch_controllers.call(req, res);
 
 	if(!res.ok)
 		ROS_ERROR("Impossible to switch controllers");
-	else
-		this->controllers_running = controllers_to_start;
+
+}
+
+std::vector<std::string> Rws::GetControllersRunning()
+{
+	std::vector<std::string> controllers_running;
+
+	controller_manager_msgs::ListControllers::Request  req;
+	controller_manager_msgs::ListControllers::Response res;
+
+	this->client_list_controllers.call(req, res);
+
+	for(auto controller : res.controller)
+	{
+		if(controller.state == "running")
+		{
+			ROS_INFO("Controller: %s is in state: %s", controller.name.c_str(), controller.state.c_str());
+			controllers_running.push_back(controller.name);
+		}
+	}
+
+	return controllers_running;
 }
