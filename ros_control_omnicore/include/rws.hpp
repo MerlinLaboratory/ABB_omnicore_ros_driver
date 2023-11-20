@@ -21,6 +21,7 @@
 #include <controller_manager_msgs/UnloadController.h>
 #include <controller_manager_msgs/LoadController.h>
 #include <controller_manager_msgs/SwitchController.h>
+#include <controller_manager_msgs/ListControllers.h>
 
 // Boost
 #include <boost/scoped_ptr.hpp>
@@ -48,6 +49,7 @@ private:
 						   int strictness,
 						   bool start_asap,
 						   int timeout);
+	std::vector<std::string> GetControllersRunning();
 
 	// EGM functions
 	bool EGMSetParams();
@@ -100,9 +102,10 @@ private:
 	ros::ServiceServer server_set_digital_output;
 
 	// Ros services clients
-	ros::ServiceClient client_load_controller;
-	ros::ServiceClient client_unload_controller;
-	ros::ServiceClient client_switch_controller;
+	ros::ServiceClient client_load_controllers;
+	ros::ServiceClient client_unload_controllers;
+	ros::ServiceClient client_switch_controllers;
+	ros::ServiceClient client_list_controllers;
 
 	// --------------------------------------------------------------- //
 	// -------------- Variables for connecting to Robot -------------- //
@@ -115,8 +118,7 @@ private:
 	std::string task_robot;
 
 	// Ros_controllers running
-	std::vector<std::string> controllers_running;
-	bool is_joint_state_controller_running = false;
+	std::vector<std::string> controllers_running_before_free_drive;
 
 	// StateMachine state
 	abb::rws::RWSStateMachineInterface::States state_machine_state = abb::rws::RWSStateMachineInterface::STATE_IDLE;

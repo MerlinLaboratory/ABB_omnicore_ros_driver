@@ -2,7 +2,7 @@
 
     <arg name="robot"      default="gofa" /> <!-- Possibilities: 'gofa' or 'yumi_single_arm'-->
     <arg name="load_Position_JointTrajectoryController"    default="no"/>
-    <arg name="load_Velocity_JointGroupVelocityController" default="no"/>
+    <arg name="load_Velocity_JointGroupVelocityController" default="yes"/>
     <arg name="load_Velocity_JointTrajectoryController"    default="yes"/>
   
     <!-- Launching ros-control pkg -->
@@ -14,7 +14,7 @@
     </include>
 
     <!-- Launching moveit pkg -->
-    <group if="$(eval arg('load_Velocity_JointGroupVelocityController') == 'no')">     
+    <group if="$(eval arg('load_Velocity_JointTrajectoryController') == 'yes')">     
         <group if="$(eval arg('robot') == 'yumi_single_arm')">     
             <include file="$(find yumi_single_arm_moveit_config)/launch/demo.launch">
                 <arg name="pipeline" default="pilz_industrial_motion_planner" /> 
@@ -40,7 +40,7 @@
     </group> 
 
     <!-- Run Rviz and load the default config to see the state of the move_group node -->
-    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find omnicore_launcher)/config/config_no_moveit.rviz" if="$(eval arg('load_Velocity_JointGroupVelocityController') == 'yes')"/>
-    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find omnicore_launcher)/config/config.rviz"           if="$(eval arg('load_Velocity_JointGroupVelocityController') == 'no')" />
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find omnicore_launcher)/config/config_no_moveit.rviz" if="$(eval arg('load_Velocity_JointTrajectoryController') == 'no')"/>
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find omnicore_launcher)/config/config.rviz"           if="$(eval arg('load_Velocity_JointTrajectoryController') == 'yes')" />
 
 </launch>

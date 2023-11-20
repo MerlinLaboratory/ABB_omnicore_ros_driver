@@ -133,7 +133,6 @@ namespace ros_control_omnicore
       nh.getParam("/robot/is_free_drive_on", is_free_drive_on);
       if (is_free_drive_on)
       {
-         ROS_INFO("Free drive on");
          this->joint_position_command = this->joint_position;
          this->joint_velocity_command = this->joint_velocity;
       }
