@@ -1,0 +1,10 @@
+# This service is used to set Digital Outputs valut (from 1 to 8) to values which are HIGH or LOW
+# To be noticed that the service works only if from RobotStudio has been set that the Digital Outputs
+# can be set from an external client 
+uint8 LOW  = 0
+uint8 HIGH = 1
+
+uint8 port     # digital output port(1 ~ 8)
+uint8 value     # 0 : OFF, 1 : ON
+---
+bool success

@@ -17,6 +17,7 @@
 // Custom ROS services
 #include <omnicore_interface/moveJ_rapid.h>
 #include <omnicore_interface/moveL_rapid.h>
+#include <omnicore_interface/set_digital_output.h>
 #include <controller_manager_msgs/UnloadController.h>
 #include <controller_manager_msgs/LoadController.h>
 #include <controller_manager_msgs/SwitchController.h>
@@ -65,10 +66,12 @@ private:
 	bool MoveJRapidSrv(omnicore_interface::moveJ_rapidRequest& req, omnicore_interface::moveJ_rapidResponse& res);
 	bool MoveLRapidSrv(omnicore_interface::moveL_rapidRequest& req, omnicore_interface::moveL_rapidResponse& res);
 	bool ShutdownSrv(std_srvs::TriggerRequest& req, std_srvs::TriggerResponse& res);
+	bool SetDigitalOutputSrv(omnicore_interface::set_digital_outputRequest& req, omnicore_interface::set_digital_outputResponse& res);
 
 	// Generic funtions
 	void 		   LoadToolData();
 	std_msgs::Byte ReadDigitalInputs();
+	bool		   SetDigitalOutput(uint8_t index, uint8_t value);
 	void 		   PublishOmnicoreState();
 
 	std::string robot_name;
@@ -94,6 +97,7 @@ private:
 	ros::ServiceServer server_moveL_rapid;
 	ros::ServiceServer server_set_egm_params;
 	ros::ServiceServer server_egm_shutdown;
+	ros::ServiceServer server_set_digital_output;
 
 	// Ros services clients
 	ros::ServiceClient client_load_controller;

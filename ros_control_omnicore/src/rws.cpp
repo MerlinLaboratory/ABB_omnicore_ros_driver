@@ -70,6 +70,7 @@ Rws::Rws(const ros::NodeHandle &nh) : nh(nh)
 	this->server_egm_shutdown		  = this->nh.advertiseService("egm_shutdown"	         , &Rws::ShutdownSrv, 		       this);
 	this->server_moveJ_rapid 		  = this->nh.advertiseService("moveJ_rapid"				 , &Rws::MoveJRapidSrv, 		   this);
 	this->server_moveL_rapid 		  = this->nh.advertiseService("moveL_rapid"				 , &Rws::MoveLRapidSrv, 		   this);
+	this->server_set_digital_output	  = this->nh.advertiseService("set_digital_output"	     , &Rws::SetDigitalOutputSrv, 	   this);
 
 	// Debug
 	ROS_INFO("For RWS, connecting to ip: %s and port: %s", this->ip_robot.c_str(), std::to_string(this->port_robot_rws).c_str());
@@ -457,6 +458,12 @@ bool Rws::ShutdownSrv(std_srvs::TriggerRequest& req, std_srvs::TriggerResponse& 
 	return true;
 }
 
+bool Rws::SetDigitalOutputSrv(omnicore_interface::set_digital_outputRequest& req, omnicore_interface::set_digital_outputResponse& res)
+{
+	res.success = this->SetDigitalOutput(req.index, req.value);
+	return true;
+}
+
 // ----------------------------------------------------------------- //
 // -------------------- Generic Robot functions -------------------- //
 // ----------------------------------------------------------------- //
@@ -535,6 +542,29 @@ std_msgs::Byte Rws::ReadDigitalInputs()
 	p_rws_interface->releaseMasterShip();
 
 	return digital_input_status;
+}
+
+
+bool Rws::SetDigitalOutput(uint8_t port, uint8_t value)
+{
+	const unsigned int number_controller_digital_output_ports = abb::rws::SystemConstants::IOSignals::OmnicoreDigitalOutputs.size();
+	if(port < 1 || port > number_controller_digital_output_ports)
+	{
+		ROS_ERROR("Digital Output port is out of bounds. Expected 1-8");
+		return false;
+	}
+
+	this->p_rws_interface->requestMasterShip();
+
+	std::string port_string  = abb::rws::SystemConstants::IOSignals::OmnicoreDigitalOutputs[port - 1];
+	std::string value_string = (value > 0) ? abb::rws::SystemConstants::IOSignals::HIGH : abb::rws::SystemConstants::IOSignals::LOW;
+	bool success = this->p_rws_interface->setIOSignal(abb::rws::SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DO1, value_string);
+
+	if(success == false)
+		ROS_INFO("Fail to set port %s to value %s", port_string.c_str(), value_string.c_str());
+
+	this->p_rws_interface->releaseMasterShip();
+	return success;
 }
 
 void Rws::PublishOmnicoreState()

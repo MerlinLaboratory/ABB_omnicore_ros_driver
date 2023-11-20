@@ -215,6 +215,15 @@ const std::string SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DI14  = "ABB_Sca
 const std::string SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DI15  = "ABB_Scalable_IO_0_DI15";
 const std::string SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DI16  = "ABB_Scalable_IO_0_DI16";
 
+const std::string SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DO1   = "ABB_Scalable_IO_0_DO1";
+const std::string SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DO2   = "ABB_Scalable_IO_0_DO2";
+const std::string SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DO3   = "ABB_Scalable_IO_0_DO3";
+const std::string SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DO4   = "ABB_Scalable_IO_0_DO4";
+const std::string SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DO5   = "ABB_Scalable_IO_0_DO5";
+const std::string SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DO6   = "ABB_Scalable_IO_0_DO6";
+const std::string SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DO7   = "ABB_Scalable_IO_0_DO7";
+const std::string SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DO8   = "ABB_Scalable_IO_0_DO8";
+
 const std::vector<std::string> SystemConstants::IOSignals::OmnicoreDigitalInputs = 
                                                   { 
                                                     SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DI1, 
@@ -233,6 +242,18 @@ const std::vector<std::string> SystemConstants::IOSignals::OmnicoreDigitalInputs
                                                     // SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DI14,
                                                     // SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DI15,
                                                     // SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DI16
+                                                  };
+
+const std::vector<std::string> SystemConstants::IOSignals::OmnicoreDigitalOutputs = 
+                                                  {
+                                                    SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DO1,
+                                                    SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DO2,
+                                                    SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DO3,
+                                                    SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DO4,
+                                                    SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DO5,
+                                                    SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DO6,
+                                                    SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DO7,
+                                                    SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DO8,
                                                   };
 
 const std::string SystemConstants::RAPID::RAPID_FALSE = "FALSE";
