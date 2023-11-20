@@ -545,44 +545,26 @@ std_msgs::Byte Rws::ReadDigitalInputs()
 }
 
 
-bool Rws::SetDigitalOutput(uint8_t index, uint8_t value)
+bool Rws::SetDigitalOutput(uint8_t port, uint8_t value)
 {
 	const unsigned int number_controller_digital_output_ports = abb::rws::SystemConstants::IOSignals::OmnicoreDigitalOutputs.size();
-	if(index < 1 || index > number_controller_digital_output_ports)
+	if(port < 1 || port > number_controller_digital_output_ports)
 	{
-		ROS_ERROR("Digital Output index is out of bounds. Expected 1-8");
+		ROS_ERROR("Digital Output port is out of bounds. Expected 1-8");
 		return false;
 	}
 
-	if(!this->p_rws_interface->requestMasterShip())
-	{
-		ROS_ERROR("Failed to request mastership");
-		return false;
-	}
+	this->p_rws_interface->requestMasterShip();
 
-	if(this->p_rws_interface->setIOSignal(abb::rws::SystemConstants::IOSignals::OmnicoreDigitalOutputs[index - 1], (value > 0.5) ? abb::rws::SystemConstants::IOSignals::HIGH : abb::rws::SystemConstants::IOSignals::LOW))
-	{
-		std::cout << "success" << std::endl;
-		this->p_rws_interface->releaseMasterShip();
-		return true;
-	}
-	else
-	{
-		std::cout << "fail" << std::endl;
-		std::cout << std::to_string(index) << std::endl;
-		std::cout << std::to_string(value) << std::endl;
-		std::cout << abb::rws::SystemConstants::IOSignals::OmnicoreDigitalOutputs[index-1] << std::endl;
+	std::string port_string  = abb::rws::SystemConstants::IOSignals::OmnicoreDigitalOutputs[port - 1];
+	std::string value_string = (value > 0) ? abb::rws::SystemConstants::IOSignals::HIGH : abb::rws::SystemConstants::IOSignals::LOW;
+	bool success = this->p_rws_interface->setIOSignal(abb::rws::SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DO1, value_string);
 
-		std::string bellazi = (value > 0.5) ? abb::rws::SystemConstants::IOSignals::HIGH : abb::rws::SystemConstants::IOSignals::LOW;
-		std::cout << "input to set function: " << bellazi << std::endl;
+	if(success == false)
+		ROS_INFO("Fail to set port %s to value %s", port_string.c_str(), value_string.c_str());
 
-		std::string bellz = this->p_rws_interface->getIOSignal(abb::rws::SystemConstants::IOSignals::OmnicoreDigitalOutputs[0]);
-		std::cout << "status of " <<  abb::rws::SystemConstants::IOSignals::OmnicoreDigitalOutputs[0] << " " << bellz << std::endl;
-
-		this->p_rws_interface->releaseMasterShip();
-		
-		return false;
-	}
+	this->p_rws_interface->releaseMasterShip();
+	return success;
 }
 
 void Rws::PublishOmnicoreState()
