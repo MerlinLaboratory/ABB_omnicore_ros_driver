@@ -558,7 +558,7 @@ bool Rws::SetDigitalOutput(uint8_t port, uint8_t value)
 
 	std::string port_string  = abb::rws::SystemConstants::IOSignals::OmnicoreDigitalOutputs[port - 1];
 	std::string value_string = (value > 0) ? abb::rws::SystemConstants::IOSignals::HIGH : abb::rws::SystemConstants::IOSignals::LOW;
-	bool success = this->p_rws_interface->setIOSignal(abb::rws::SystemConstants::IOSignals::ABB_SCALABLE_IO_0_DO1, value_string);
+	bool success = this->p_rws_interface->setIOSignal(port_string, value_string);
 
 	if(success == false)
 		ROS_INFO("Fail to set port %s to value %s", port_string.c_str(), value_string.c_str());
