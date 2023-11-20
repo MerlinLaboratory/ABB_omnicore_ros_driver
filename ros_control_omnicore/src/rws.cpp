@@ -460,7 +460,7 @@ bool Rws::ShutdownSrv(std_srvs::TriggerRequest& req, std_srvs::TriggerResponse& 
 
 bool Rws::SetDigitalOutputSrv(omnicore_interface::set_digital_outputRequest& req, omnicore_interface::set_digital_outputResponse& res)
 {
-	res.success = this->SetDigitalOutput(req.index, req.value);
+	res.success = this->SetDigitalOutput(req.port, req.value);
 	return true;
 }
 
