@@ -33,6 +33,7 @@
                 <arg name="debug" default="false" />                             
                 <arg name="load_robot_description" default="false"/>             
                 <arg name="moveit_controller_manager" default="simple" />        
+                <arg name="use_rviz" default="false" />    
                 <arg name="load_Position_JointTrajectoryController"    value="$(arg load_Position_JointTrajectoryController)"/> <!-- Whether you want to load PositionController_JointTrajectoryController -->
                 <arg name="load_Velocity_JointTrajectoryController"    value="$(arg load_Velocity_JointTrajectoryController)"/> <!-- Whether you want to load load_Velocity_JointTrajectoryController -->                 
             </include>
