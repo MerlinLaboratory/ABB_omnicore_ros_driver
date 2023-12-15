@@ -49,4 +49,6 @@
     <arg name="load_robot_description" value="false" />
     <arg name="moveit_controller_manager" value="ros_control" />
   </include>
+
+  <node name="traj_publisher" pkg="gazebo_ros_abb_wrapper" type="publisher.py" />
 </launch>
