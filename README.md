@@ -7,7 +7,7 @@ These packages are intended to ease the interaction between ABB robots supportin
 **OS**: Ubuntu 20.04 
 **ROS**: Noetic
 
-Tested on Ubuntu 20.04 with ROS Noetic. Support on other ROS distro is expected but not tested.
+Tested on Ubuntu 20.04 with ROS Noetic. Support on newer ROS distro is expected but not tested.
 
 ## Overview and Features
 
