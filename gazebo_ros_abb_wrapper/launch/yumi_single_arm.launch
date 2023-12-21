@@ -61,4 +61,5 @@
   </include>
 
   <node name="traj_publisher" pkg="gazebo_ros_abb_wrapper" type="publisher.py" />
+  <node name="gripper_handler" pkg="gazebo_ros_abb_wrapper" type="gripper_handler.py" />
 </launch>
