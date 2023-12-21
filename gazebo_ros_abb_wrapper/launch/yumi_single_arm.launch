@@ -9,17 +9,24 @@
   <arg name="world_name" default="worlds/empty.world" doc="Gazebo world file"/>
   <arg name="world_pose" default="-x 0 -y 0 -z 0 -R 0 -P 0 -Y 0" doc="Pose to spawn the robot at"/>
   <arg name="initial_joint_positions" default=" -J joint_1 0 -J joint_2 0 -J joint_3 0 -J joint_4 0 -J joint_5 0 -J joint_6 0 -J joint_7 0" doc="Initial joint configuration of the robot"/>
-  <arg name="hardware_interface" default="hardware_interface/EffortJointInterface"/>
+  <arg name="hardware_interface" default="hardware_interface/VelocityJointInterface"/>
   <arg name="gripper_interface" default="hardware_interface/EffortJointInterface"/>
+  <arg name="camera" default="false"/>
+  <arg name="base_translation" default="0" />
+  <arg name="base_orientation" default="0" />
+  <arg name="controllers" default="vel_arm_controller gripper_controller" doc="Controllers that are activated by default."/>
+  <arg name="stopped_controllers" default="vel_group_arm_controller" doc="Controllers that are initally loaded, but not started."/>
+  
 
   <!-- Launch Gazebo and spawn the robot -->
 <!-- Start Gazebo paused to allow the controllers to pickup the initial pose -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch" pass_all_args="true">
     <arg name="paused" value="true"/>
+    <arg name="world_name" value="$(arg world_name)"/>
   </include>
 
   <!-- Set the robot urdf on the parameter server -->
-  <param name="robot_description" command="xacro robot:=yumi_single_arm hardware_interface:=$(arg hardware_interface) gripper_interface:=$(arg gripper_interface) '$(find gazebo_ros_abb_wrapper)/urdf/yumi.xacro'" />
+  <param name="robot_description" command="xacro robot:=yumi_single_arm hardware_interface:=$(arg hardware_interface) gripper_interface:=$(arg gripper_interface) camera:=$(arg camera) base_translation:=$(arg base_translation) base_orientation:=$(arg base_orientation) '$(find gazebo_ros_abb_wrapper)/urdf/yumi.xacro'" />
 
   <!-- Unpause the simulation after loading the robot model -->
   <arg name="unpause" value="$(eval '' if arg('paused') else '-unpause')" />
@@ -29,14 +36,17 @@
     respawn="false" output="screen" />
 
   <!-- Load the controller parameters onto the parameter server -->
-  <rosparam file="$(find yumi_single_arm_moveit_config)/config/gazebo_controllers.yaml" />
-  <rosparam file="$(find gazebo_ros_abb_wrapper)/config/yumi_single_arm.yaml" command="load"/>
-  <rosparam file="$(find gazebo_ros_abb_wrapper)/config/yumi_gripper.yaml" command="load"/>
+  <rosparam file="$(find gazebo_ros_abb_wrapper)/config/controllers.yaml" command="load"/>
 
   <!-- Load the controllers -->
   <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
-    output="screen" args="arm_controller gripper_controller"/>
-
+    output="screen" args="$(arg controllers)"/>
+  <!-- Load other controllers, but do not start them -->
+  <group if="$(eval arg('stopped_controllers') != '')">
+    <node name="stopped_spawner" pkg="controller_manager" type="spawner" respawn="false"
+      args="--stopped $(arg stopped_controllers)" output="screen"/>
+  </group>
+  
   <!-- Spawn the Gazebo ROS controllers -->
   <node name="gazebo_controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="joint_state_controller" />
 
@@ -51,4 +61,5 @@
   </include>
 
   <node name="traj_publisher" pkg="gazebo_ros_abb_wrapper" type="publisher.py" />
+  <node name="gripper_handler" pkg="gazebo_ros_abb_wrapper" type="gripper_handler.py" />
 </launch>

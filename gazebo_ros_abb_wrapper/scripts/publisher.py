@@ -4,7 +4,8 @@ import rospy
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 
 def Publisher():
-    pub = rospy.Publisher('/arm_controller/command', JointTrajectory, queue_size=1)
+    eff_pub = rospy.Publisher('/arm_controller/command', JointTrajectory, queue_size=1)
+    vel_pub = rospy.Publisher('/vel_arm_controller/command', JointTrajectory, queue_size=1)
     rospy.init_node('init_traj_publisher', anonymous=True)
     traj = JointTrajectory()
     names = []
@@ -16,7 +17,8 @@ def Publisher():
     goal.time_from_start = rospy.Duration(1)
     traj.points.append(goal)
     rospy.sleep(1)
-    pub.publish(traj)
+    eff_pub.publish(traj)
+    vel_pub.publish(traj)
 
 if __name__ == '__main__':
     try:

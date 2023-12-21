@@ -1,0 +1,26 @@
+<?xml version="1.0" ?>
+<sdf version="1.4">
+    <model name="challenge_pivot">
+    <static>false</static>
+    <link name="link">
+        <pose>0 0 0 0 0 0</pose>
+        <collision name="collision"> 
+            <geometry> 
+                <mesh> 
+                    <uri>model://challenge_pivot/mesh/challenge_pivot.stl</uri> 
+                    <scale>0.001 0.001 0.001</scale> 
+                </mesh> 
+            </geometry>
+        </collision>
+        <visual name="visual">
+            <geometry>
+                <mesh>
+                    <uri>model://challenge_pivot/mesh/challenge_pivot.stl</uri>
+                    <scale>0.001 0.001 0.001</scale>
+                </mesh>
+            </geometry>
+        </visual>
+        </link>
+    </model>
+</sdf>
+

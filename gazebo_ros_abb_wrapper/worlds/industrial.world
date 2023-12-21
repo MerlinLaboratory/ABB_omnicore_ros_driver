@@ -1,0 +1,78 @@
+<?xml version="1.0" ?>
+<sdf version="1.4">
+  <world name="default">
+    <!-- A global light source -->
+    <include>
+      <uri>model://sun</uri>
+    </include>
+    <!-- A ground plane -->
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+    <include>
+      <name>stairs</name>
+      <uri>model://challenge_table</uri>
+      <pose>0.3 0 -0.015 0 0 1.57</pose>
+    </include>
+    <include>
+      <name>tray1</name>
+      <uri>model://challenge_tray</uri>
+      <pose>0 0.15 1 -1.57 0 0</pose>
+    </include>
+    <include>
+      <name>tray2</name>
+      <uri>model://challenge_tray</uri>
+      <pose>0 -0.7 1 -1.57 0 0</pose>
+    </include>
+    <include>
+      <name>base</name>
+      <uri>model://challenge_base</uri>
+      <pose>0.5 0 1.03 3.14 0 -1.57</pose>
+    </include>
+    <include>
+      <name>pivot1</name>
+      <uri>model://challenge_pivot</uri>
+      <pose>0.25 0.4 1.011 0 0 0</pose>
+    </include>
+    <include>
+      <name>pivot2</name>
+      <uri>model://challenge_pivot</uri>
+      <pose>0.25 0.5 1.011 0 0 0</pose>
+    </include>
+    <include>
+      <name>pivot3</name>
+      <uri>model://challenge_pivot</uri>
+      <pose>0.15 0.5 1.011 0 0 0</pose>
+    </include>
+    <include>
+      <name>pivot4</name>
+      <uri>model://challenge_pivot</uri>
+      <pose>0.15 0.4 1.011 0 0 0</pose>
+    </include>
+    <include>
+      <name>crown</name>
+      <uri>model://challenge_crown</uri>
+      <pose>0.23 -0.43 1.0235 3.1415 0 0</pose>
+    </include>
+    <include>
+      <name>gear1</name>
+      <uri>model://challenge_satellite_gear1</uri>
+      <pose>0.285 -0.32 1.0155 0 0 0</pose>
+    </include>
+    <include>
+      <name>gear2</name>
+      <uri>model://challenge_satellite_gear1</uri>
+      <pose>0.12 -0.32 1.0155 0 0 0</pose>
+    </include>
+    <include>
+      <name>gear3</name>
+      <uri>model://challenge_satellite_gear1</uri>
+      <pose>0.12 -0.48 1.0155 0 0 0</pose>
+    </include>
+    <include>
+      <name>sun_wheel</name>
+      <uri>model://challenge_sun_wheel</uri>
+      <pose>0.19 -0.32 1.0155 0 0 0</pose>
+    </include>
+  </world>
+</sdf>
