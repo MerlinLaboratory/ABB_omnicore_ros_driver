@@ -78,4 +78,4 @@ gripper_controller:
     - gripper_joint_r
   gains:
     gripper_joint_l: {p: 2000.0, i: 1, d: 20.0, i_clamp: 1}
-    gripper_joint_r: {p: 2000.0, i: 1, d: 20.0, i_clamp: 1}
+    gripper_joint_r: {p: 2000.0, i: 1, d: 20.0, i_clamp: 1}          
