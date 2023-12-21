@@ -9,10 +9,10 @@
   <arg name="world_name" default="$(find gazebo_ros_abb_wrapper)/worlds/industrial.world" doc="Gazebo world file"/>
   <arg name="world_pose" default="-x 0 -y 0 -z 0 -R 0 -P 0 -Y 0" doc="Pose to spawn the robot at"/>
   <arg name="initial_joint_positions" default=" -J joint_1 0 -J joint_2 0 -J joint_3 0 -J joint_4 0 -J joint_5 0 -J joint_6 0 -J joint_7 0" doc="Initial joint configuration of the robot"/>
-  <arg name="hardware_interface" default="hardware_interface/EffortJointInterface"/>
+  <arg name="hardware_interface" default="hardware_interface/VelocityJointInterface"/>
   <arg name="gripper_interface" default="hardware_interface/EffortJointInterface"/>
-  <arg name="controllers" default="arm_controller gripper_controller" doc="Controllers that are activated by default."/>
-  <arg name="stopped_controllers" default="" doc="Controllers that are initally loaded, but not started."/>
+  <arg name="controllers" default="vel_arm_controller gripper_controller" doc="Controllers that are activated by default."/>
+  <arg name="stopped_controllers" default="vel_group_arm_controller" doc="Controllers that are initally loaded, but not started."/>
   
   <arg name="camera" default="true"/>
   <arg name="base_translation" default="1" />
