@@ -15,7 +15,7 @@
   <arg name="base_translation" default="0" />
   <arg name="base_orientation" default="0" />
   <arg name="controllers" default="vel_arm_controller gripper_controller" doc="Controllers that are activated by default."/>
-  <arg name="stopped_controllers" default="" doc="Controllers that are initally loaded, but not started."/>
+  <arg name="stopped_controllers" default="vel_group_arm_controller" doc="Controllers that are initally loaded, but not started."/>
   
 
   <!-- Launch Gazebo and spawn the robot -->

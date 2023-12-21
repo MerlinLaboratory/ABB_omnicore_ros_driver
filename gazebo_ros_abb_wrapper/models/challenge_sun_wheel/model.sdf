@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <sdf version="1.4">
     <model name="challenge_sun_wheel">
-    <static>true</static>
+    <static>false</static>
     <link name="link">
         <pose>0 0 0 0 0 0</pose>
         <collision name="collision"> 
