@@ -13,8 +13,17 @@ robot:
   pos_corr_gain: 1
   max_speed_deviation: 300
   robot_port_egm: 6511
-  root_name: "base"
-  tip_name: "L6"
+  root_name: "single_yumi_base_link"
+  tip_name: "gripper_base"
+  is_free_drive_on: false
+
+  tool_data:
+    # tcp_pose       : [0.0, 0.0, 125.2, 1.0, 0.0, 0.0, 0.0] # x, y, z, w, x, y, z. Positions in [mm]
+    tcp_pose       : [0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0] # x, y, z, w, x, y, z. Positions in [mm]
+    mass           :  0.7                                  # [kg]
+    cog            : [-17.3, 13.6, 49.0]                   # [mm]
+    inertia_tensor : [0.0  ,  0.0,  0.0]                   # [kg*m^2]
+    aom            : [1.0  ,  0.0,  0.0, 0.0] 
 
 ###############################################
 #### Settings for ros_control control loop ####
@@ -38,62 +47,14 @@ robot_hardware_interface:
     - joint_6
     - joint_7
 
-###############################################
-############# Loading controllers  ############
-###############################################
+######################################################
+############# Loading default controller  ############
+######################################################
 
 joint_state_controller:
   type:         joint_state_controller/JointStateController
   publish_rate: 100
 
-###############################################
-######### Joint Trajectory Controller  ########
-###############################################
-# For detailed explanations of parameter see http://wiki.ros.org/joint_trajectory_controller
-robot_controller:
-  type: position_controllers/JointTrajectoryController
-  # These joints can likely just be copied from the hardware_interface list above
-  joints:
-    - joint_1
-    - joint_2
-    - joint_3
-    - joint_4
-    - joint_5
-    - joint_6
-    - joint_7
-  constraints:
-    goal_time: 5.0
-    #stopped_position_tolerance: 0.4 # Defaults to 0.01
-    joint_1:
-      trajectory: 0.05
-      goal:       0.01
-    joint_2:
-      trajectory: 0.05
-      goal:       0.01
-    joint_3:
-      trajectory: 0.05
-      goal:       0.01
-    joint_4:
-      trajectory: 0.05
-      goal:       0.01
-    joint_5:
-      trajectory: 0.05
-      goal:       0.01
-    joint_6:
-      trajectory: 0.05
-      goal:       0.01
-    joint_7:
-      trajectory: 0.05
-      goal:       0.01
-   # gains:
-   #     joint1: {p: 2.0,  i: 0.0, d: 0.01, i_clamp: 1}
-   #     joint2: {p: 2.0,  i: 0.0, d: 0.01, i_clamp: 1}
-   #     joint3: {p: 2.0,  i: 0.0, d: 0.01, i_clamp: 1}
-   #     joint4: {p: 2.0,  i: 0.0, d: 0.01, i_clamp: 1}
-   #     joint5: {p: 2.0,  i: 0.0, d: 0.01, i_clamp: 1}
-   #     joint6: {p: 2.0,  i: 0.0, d: 0.01, i_clamp: 1}
-   #     joint7: {p: 2.0,  i: 0.0, d: 0.01, i_clamp: 1}
-
-  state_publish_rate:  100     # Defaults to 50
-  #action_monitor_rate: 20     # Defaults to 20
-  #hold_trajectory_duration: 0 # Defaults to 0.5
+ros_controllers:
+  controllers_to_load: ["VelocityControllers_JointTrajectoryController", "VelocityControllers_JointGroupVelocityController"]
+  controllers_to_start: ["VelocityControllers_JointTrajectoryController"]

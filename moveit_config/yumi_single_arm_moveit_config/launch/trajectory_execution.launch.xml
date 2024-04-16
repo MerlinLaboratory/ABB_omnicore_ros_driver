@@ -18,6 +18,8 @@
   <!-- Allowed joint-value tolerance for validation that trajectory's first point matches current robot state -->
   <param name="trajectory_execution/allowed_start_tolerance" value="0.01"/> <!-- default 0.01 -->
 
+  <!-- Load the config launching for ros_controllers Arm -->
+  <param name="moveit_controller_manager" value="moveit_simple_controller_manager/MoveItSimpleControllerManager" />
 
   <group if="$(eval arg('load_Position_JointTrajectoryController') == 'yes')">     
     <arg name="yaml_Position_JointTrajContr" default="$(find yumi_single_arm_moveit_config)/config/PositionControllers_JointTrajectoryController.yaml" />
@@ -28,9 +30,6 @@
     <arg name="yaml_Velocity_TrajVelContr" default="$(find yumi_single_arm_moveit_config)/config/VelocityControllers_JointTrajectoryController.yaml" />
     <rosparam command="load" file="$(arg yaml_Velocity_TrajVelContr)" />
   </group> 
-
-
-
 
   <!-- <include file="$(dirname)/$(arg moveit_controller_manager)_moveit_controller_manager.launch.xml" pass_all_args="true" /> -->
 

@@ -11,17 +11,17 @@
 
   <!-- Load the config launching for ros_controllers Arm -->
   <group if="$(eval arg('load_Position_JointTrajectoryController') == 'yes')">     
-    <arg name="yaml_Position_JointTrajContr" default="$(find ros_control_omnicore)/config/Controllers/PositionControllers_JointTrajectoryController.yaml" />
+    <arg name="yaml_Position_JointTrajContr" default="$(find ros_control_omnicore)/config/Controllers/$(arg robot)/PositionControllers_JointTrajectoryController.yaml" />
     <rosparam command="load" file="$(arg yaml_Position_JointTrajContr)" />
   </group>
 
   <group if="$(eval arg('load_Velocity_JointGroupVelocityController') == 'yes')">     
-    <arg name="yaml_Velocity_GroupVelContr" default="$(find ros_control_omnicore)/config/Controllers/VelocityControllers_JointGroupVelocityController.yaml" />
+    <arg name="yaml_Velocity_GroupVelContr" default="$(find ros_control_omnicore)/config/Controllers/$(arg robot)/VelocityControllers_JointGroupVelocityController.yaml" />
     <rosparam command="load" file="$(arg yaml_Velocity_GroupVelContr)" />
   </group>
 
   <group if="$(eval arg('load_Velocity_JointTrajectoryController') == 'yes')">     
-    <arg name="yaml_Velocity_TrajVelContr" default="$(find ros_control_omnicore)/config/Controllers/VelocityControllers_JointTrajectoryController.yaml" />
+    <arg name="yaml_Velocity_TrajVelContr" default="$(find ros_control_omnicore)/config/Controllers/$(arg robot)/VelocityControllers_JointTrajectoryController.yaml" />
     <rosparam command="load" file="$(arg yaml_Velocity_TrajVelContr)" />
   </group> 
 
