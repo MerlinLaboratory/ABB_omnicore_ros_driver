@@ -10,14 +10,20 @@
   <arg name="load_robot_description" default="true"/>
 
   <!-- Choose controller manager: fake, simple, or ros_control -->
-  <arg name="moveit_controller_manager" default="fake" />
-  <arg name="use_gui" default="false" />
+  <arg name="moveit_controller_manager" default="simple" />
+
+  <!-- Choose controller manager: fake, simple, or ros_control -->
+  <arg name="load_Position_JointTrajectoryController"    default="no"/>
+  <arg name="load_Velocity_JointTrajectoryController"    default="no"/>
 
   <!-- Set execution mode for fake execution controllers -->
   <arg name="fake_execution_type" default="interpolate" />
 
   <!-- By default, hide joint_state_publisher's GUI in 'fake' controller_manager mode -->
   <arg name="use_rviz" default="true" />
+
+
+  
 
   <!-- If needed, broadcast static tf for robot root -->
   <group if="$(eval arg('moveit_controller_manager') == 'fake')">
@@ -28,9 +34,7 @@
     </node>
     <!-- If desired, a GUI version is available allowing to move the simulated robot around manually
          This corresponds to moving around the real robot without the use of MoveIt. -->
-    <node name="joint_state_publisher" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" if="$(arg use_gui)">
-      <rosparam param="source_list">[move_group/fake_controller_joint_states]</rosparam>
-    </node>
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" />
 
     <!-- Given the published joint states, publish tf for the robot links -->
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" />
@@ -40,6 +44,8 @@
   <include file="$(dirname)/move_group.launch">
     <arg name="allow_trajectory_execution" value="true"/>
     <arg name="moveit_controller_manager" value="$(arg moveit_controller_manager)" />
+    <arg name="load_Position_JointTrajectoryController"    value="$(arg load_Position_JointTrajectoryController)"/> <!-- Whether you want to load PositionController_JointTrajectoryController -->
+    <arg name="load_Velocity_JointTrajectoryController"    value="$(arg load_Velocity_JointTrajectoryController)"/> <!-- Whether you want to load load_Velocity_JointTrajectoryController -->
     <arg name="fake_execution_type" value="$(arg fake_execution_type)"/>
     <arg name="info" value="true"/>
     <arg name="debug" value="$(arg debug)"/>

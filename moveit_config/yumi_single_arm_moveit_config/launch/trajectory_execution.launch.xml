@@ -4,6 +4,8 @@
   <!-- Define moveit controller manager plugin: fake, simple, or ros_control -->
   <arg name="moveit_controller_manager" />
   <arg name="fake_execution_type" default="interpolate" />
+  <arg name="load_Position_JointTrajectoryController"    default="no"/>
+  <arg name="load_Velocity_JointTrajectoryController"    default="no"/>
 
   <!-- Flag indicating whether MoveIt is allowed to load/unload  or switch controllers -->
   <arg name="moveit_manage_controllers" default="true"/>
@@ -16,8 +18,20 @@
   <!-- Allowed joint-value tolerance for validation that trajectory's first point matches current robot state -->
   <param name="trajectory_execution/allowed_start_tolerance" value="0.01"/> <!-- default 0.01 -->
 
-  <!-- We use pass_all_args=true here to pass fake_execution_type, which is required by fake controllers, but not by real-robot controllers.
-       As real-robot controller_manager.launch files shouldn't be required to define this argument, we use the trick of passing all args. -->
-  <include file="$(dirname)/$(arg moveit_controller_manager)_moveit_controller_manager.launch.xml" pass_all_args="true" />
+
+  <group if="$(eval arg('load_Position_JointTrajectoryController') == 'yes')">     
+    <arg name="yaml_Position_JointTrajContr" default="$(find yumi_single_arm_moveit_config)/config/PositionControllers_JointTrajectoryController.yaml" />
+    <rosparam command="load" file="$(arg yaml_Position_JointTrajContr)" />
+  </group>
+
+  <group if="$(eval arg('load_Velocity_JointTrajectoryController') == 'yes')">     
+    <arg name="yaml_Velocity_TrajVelContr" default="$(find yumi_single_arm_moveit_config)/config/VelocityControllers_JointTrajectoryController.yaml" />
+    <rosparam command="load" file="$(arg yaml_Velocity_TrajVelContr)" />
+  </group> 
+
+
+
+
+  <!-- <include file="$(dirname)/$(arg moveit_controller_manager)_moveit_controller_manager.launch.xml" pass_all_args="true" /> -->
 
 </launch>
