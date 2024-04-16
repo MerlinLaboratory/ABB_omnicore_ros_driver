@@ -20,6 +20,31 @@ VelocityControllers_JointTrajectoryController:
     joint_5: {p: 20,  d: 0, i: 1, i_clamp: 0}
     joint_6: {p: 20,  d: 0, i: 1, i_clamp: 0}
     joint_7: {p: 20,  d: 0, i: 1, i_clamp: 0}
+  
+  constraints:
+    goal_time: 5.0
+    #stopped_position_tolerance: 0.4 # Defaults to 0.01
+    joint_1:
+      trajectory: 0.05
+      goal:       0.01
+    joint_2:
+      trajectory: 0.05
+      goal:       0.01
+    joint_3:
+      trajectory: 0.05
+      goal:       0.01
+    joint_4:
+      trajectory: 0.05
+      goal:       0.01
+    joint_5:
+      trajectory: 0.05
+      goal:       0.01
+    joint_6:
+      trajectory: 0.05
+      goal:       0.01
+    joint_7:
+      trajectory: 0.05
+      goal:       0.01
 
 robot:
   pos_corr_gain: 0 # parameter in RAPID that needs to be set to zero to accept velocity commands alone
