@@ -18,7 +18,6 @@
         <joint name="joint_5"/>
         <joint name="joint_6"/>
         <joint name="joint_7"/>
-        <link  name="grasp_link"/>
     </group>
     <!--GROUP STATES: Purpose: Define a named state for a particular group, in terms of joint values. This is useful to define states like 'folded arms'-->
     <group_state name="home" group="arm">
@@ -30,37 +29,15 @@
         <joint name="joint_6" value="0"/>
         <joint name="joint_7" value="0"/>
     </group_state>
-    <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
-    <end_effector name="hand" parent_link="gripper_base" group="arm"/>
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
-    <disable_collisions link1="gripper_base" link2="gripper_finger_l" reason="Adjacent"/>
-    <disable_collisions link1="gripper_base" link2="gripper_finger_r" reason="Adjacent"/>
-    <disable_collisions link1="gripper_base" link2="link_3" reason="Never"/>
-    <disable_collisions link1="gripper_base" link2="link_4" reason="Never"/>
-    <disable_collisions link1="gripper_base" link2="link_6" reason="Never"/>
-    <disable_collisions link1="gripper_base" link2="link_7" reason="Adjacent"/>
-    <disable_collisions link1="gripper_finger_l" link2="gripper_finger_r" reason="Default"/>
-    <disable_collisions link1="gripper_finger_l" link2="link_3" reason="Never"/>
-    <disable_collisions link1="gripper_finger_l" link2="link_4" reason="Never"/>
-    <disable_collisions link1="gripper_finger_l" link2="link_5" reason="Never"/>
-    <disable_collisions link1="gripper_finger_l" link2="link_6" reason="Never"/>
-    <disable_collisions link1="gripper_finger_l" link2="link_7" reason="Never"/>
-    <disable_collisions link1="gripper_finger_r" link2="link_3" reason="Never"/>
-    <disable_collisions link1="gripper_finger_r" link2="link_4" reason="Never"/>
-    <disable_collisions link1="gripper_finger_r" link2="link_5" reason="Never"/>
-    <disable_collisions link1="gripper_finger_r" link2="link_6" reason="Never"/>
-    <disable_collisions link1="gripper_finger_r" link2="link_7" reason="Never"/>
     <disable_collisions link1="link_1" link2="link_2" reason="Adjacent"/>
     <disable_collisions link1="link_1" link2="link_3" reason="Never"/>
     <disable_collisions link1="link_1" link2="link_4" reason="Never"/>
-    <disable_collisions link1="link_1" link2="single_yumi_base_link" reason="Adjacent"/>
     <disable_collisions link1="link_2" link2="link_3" reason="Adjacent"/>
-    <disable_collisions link1="link_2" link2="single_yumi_base_link" reason="Never"/>
     <disable_collisions link1="link_3" link2="link_4" reason="Adjacent"/>
     <disable_collisions link1="link_3" link2="link_5" reason="Never"/>
     <disable_collisions link1="link_3" link2="link_6" reason="Never"/>
     <disable_collisions link1="link_3" link2="link_7" reason="Never"/>
-    <disable_collisions link1="link_3" link2="single_yumi_base_link" reason="Never"/>
     <disable_collisions link1="link_4" link2="link_5" reason="Adjacent"/>
     <disable_collisions link1="link_4" link2="link_6" reason="Never"/>
     <disable_collisions link1="link_4" link2="link_7" reason="Never"/>
