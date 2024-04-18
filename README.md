@@ -64,8 +64,8 @@ catkin build
 #### Install Moveit! and ros_control
 
 ```bash
-sudo apt install ros-noetic-ros-control ros-noetic-ros-controllers
-sudo apt install ros-noetic-moveit
+sudo apt install ros-${ROS_DISTRO}-ros-control ros-${ROS_DISTRO}-ros-controllers
+sudo apt install ros-${ROS_DISTRO}-moveit
 ```
 
 #### Install POCO
@@ -92,7 +92,7 @@ cd /tmp/
 
 Clone the Poco git repo:
 ```bash
-git clone -b master https://github.com/pocoproject/poco.git
+git clone https://github.com/pocoproject/poco.git
 ```
 
 Compile the libraries:
@@ -111,7 +111,11 @@ Install the libraries to include in C++ code:
 sudo cmake --build . --target install
 ```
 
-Copy all the poco file from /usr/local/lib/ to /usr/lib using the root privileges. Afterward you may remove the created /tmp directory.
+Copy or move all the poco file from /usr/local/lib/ to /usr/lib using the root privileges. Afterward you may remove the created /tmp directory:
+
+```bash
+sudo mv /usr/local/lib/*Poco* /usr/lib
+```
 
 #### Install Boost C++
 
@@ -125,7 +129,7 @@ sudo apt-get install libboost-all-dev
 Clone the current repository in the newly created ROS workspace 'catkin_ws' and build it:
 ```bash
 cd catkin_ws/src
-git clone https://github.com/MerlinLaboratory/abb_wrapper.git
+git clone https://github.com/MerlinLaboratory/ABB_omnicore_ros_driver.git
 cd ..
 catkin build
 ```
