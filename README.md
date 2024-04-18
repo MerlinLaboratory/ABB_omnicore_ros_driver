@@ -114,7 +114,7 @@ sudo cmake --build . --target install
 Copy or move all the poco file from /usr/local/lib/ to /usr/lib using the root privileges. Afterward you may remove the created /tmp directory:
 
 ```bash
-sudo mv /usr/local/lib/*Poco* /usr/lib
+sudo cp /usr/local/lib/*Poco* /usr/lib
 ```
 
 #### Install Boost C++
