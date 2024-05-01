@@ -133,7 +133,7 @@ Connect your robot controller to you network through the MGMT port:
 
 <img src="Doc/images/omnicoreController.png" alt="RobotStudio">
 
-The MGMT port have a fixed IP address (*192.168.125.1 ) and a DHCP server. Despite the DHCP server, as you will see in the next steps,you will need to specify a static ip for your computer.
+The MGMT port have a fixed IP address (*192.168.125.1*) and a DHCP server. Despite the DHCP server, as you will see in the next steps,you will need to specify a static ip for your computer.
 
 ### Setup the UDP server
 
