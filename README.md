@@ -26,7 +26,7 @@ The principal packages are briefly described in the following table:
 | [omnicore_interface](omnicore_interface) | Provides all messages and services definition this pkg uses. |
 | [omnicore_launcher](omnicore_launcher) | Provides all the .launch files to correctly launch the robots in real or simulation. |
 | [robots_description](gofa_description) | Provides ROS nodes for kinematic calculation using the URDF model of the robot (For now only Gofa robot is available). |
-| [ros_control_ominicore](ros_control_ominicore) | Provides hardware interface for the robots supporting ABB Omnicore controller. |
+| [ros_control_omnicore](ros_control_omnicore) | Provides hardware interface for the robots supporting ABB Omnicore controller. |
 
 ## Build Instructions
 
@@ -219,7 +219,7 @@ The pkg has been tested with the following ros_control controllers:
 - joint_state_controller (launched by default by the pkg)
 
 It is possible to switch from one controller to the other using [ros_control nodes](https://answers.ros.org/question/259022/switching-between-controllers-with-ros_control-controller_manager/). 
-**Note:** velocity_controller and position_controller are mutually exclusive and cannot be used together. See [ros_control_omnicore/config](configuration file) for each robot to decide with controller to load and which controller to start 
+**Note:** velocity_controller and position_controller are mutually exclusive and cannot be used together. See [configuration file](ros_control_omnicore/config) for each robot to decide with controller to load and which controller to start 
 
 Furthermore, it is possible to set the robot in free drive without the necessity to stop the node:
 
