@@ -1,15 +1,17 @@
 # Wrapper ros_control for ABB Omnicore Controller
-These packages are intended to ease the interaction between ABB robots supporting the new Omnicore controller and ROS-based systems, by providing ready-to-run ROS nodes. In particular, we developed the robots' control with ros_control. Furthermore, we integrated moveit! for the supported robots so that you can sends trajectories directly to ros_control and then to the real controller.
-**The supported robots are: Gofa and Yumi Single Arm (together with the SmartGripper).**
+These packages are intended to ease the interaction between ABB robots supporting the new Omnicore controller and ROS-based systems, by providing ready-to-run ROS nodes. In particular, we developed the robots' control with [ros_control](https://wiki.ros.org/ros_control) integrating it with [MoveIt](https://moveit.picknik.ai/main/index.html).
+The supported [Omnicore controller](https://new.abb.com/products/robotics/controllers/omnicore) based robots are: 
+- CRB 15000-5 - Gofa
+- IRB 14050 - Yumi Single Arm.
 
 ## Hardware Dependencies
 
 **OS**: Ubuntu 20.04 
 **ROS**: Noetic
 
-Tested on Ubuntu 20.04 with ROS Noetic. Support on newer ROS distro is expected but not tested.
+Tested on Ubuntu 20.04 with ROS Noetic. Support on newer ROS distro (melodic see: [#18](/../../issues/18)) is expected but not tested.
 
-## Overview and Features
+## Overview
 
 These packages are intended to ease the interaction between ABB OmniCore controllers and ROS-based systems, by providing ready-to-run ROS nodes.
 
@@ -21,28 +23,10 @@ The principal packages are briefly described in the following table:
 | [abb_librws](abb_librws) | (A modified version of https://github.com/ros-industrial/abb_librws) Provides a ROS node that communicate with the controller using Robot Web Services 2.0  |
 | [Doc](Doc) | Provides some documentation about how the RAPID StateMachine running inside the Omnicore Controller  |
 | [moveit_config](moveit) | Provides the Moveit configurations for the supported robots. |
-| [omnicore_launcher](ros_control) | Provides all the .launch files to correctly launch the robots in real or simulation. |
+| [omnicore_interface](omnicore_interface) | Provides all messages and services definition this pkg uses. |
+| [omnicore_launcher](omnicore_launcher) | Provides all the .launch files to correctly launch the robots in real or simulation. |
 | [robots_description](gofa_description) | Provides ROS nodes for kinematic calculation using the URDF model of the robot (For now only Gofa robot is available). |
-| [ros_control_ominicore](ros_control) | Provides hardware interface for the robots supporting ABB Omnicore controller. |
-| [rws_service](rws) | Provides some services for the yumi_single_arm SmartGripper. **Will be removed in future releases** |
-
-Please see each package for more details (*e.g. additional requirements, limitations and troubleshooting*).
-Further features of the system are:
-
-- Read robot's joints values (Dha...)
-- Read the first 8 Digital Input state of the controller
-- Possible to switch through a service FreeDrive control when ROS is running: 
-    ```bash
-    service call /set_control_to_free_drive
-    ```
-- Possible to switch to position control (EGM) when ROS is running:
-    ```bash
-    service call /set_control_to_egm
-    ```
-- Move the robot in position control with MoveIt!
-- Actuate the Smart Grippers (only available on Yumi Single Arm)
-
-
+| [ros_control_ominicore](ros_control_ominicore) | Provides hardware interface for the robots supporting ABB Omnicore controller. |
 
 ## Build Instructions
 
@@ -104,8 +88,6 @@ cmake ..
 cmake --build . --config Release
 ```
 
-**Note**: If you get a library not found error, just install that library via apt.
-
 Install the libraries to include in C++ code:
 ```bash
 sudo cmake --build . --target install
@@ -144,49 +126,22 @@ If there are no errors you are ready to proceed to set up the robot in [RobotStu
 * A license for the RobotWare option *Externally Guided Motion* (`3124-1`).
 * StateMachine 2.0 RobotWare Add-In (present on the RobotApps of RobotStudio)
 
-<img src="Doc/images/flexpendant1.png" alt="FlexPendant" width="50%" height="50%">
-<img src="Doc/images/flexpendant2.png" alt="FlexPendant" width="50%" height="50%">
+<img src="Doc/images/flexpendant1.png" alt="FlexPendant" width="100%" height="50%">
 
-After the creation of the system just configure robot to accept external communication both for EGM and Web Services (see next steps).
-### RobotStudio
+### Connect to MGMT port
+Connect your robot controller to you network through the MGMT port:
 
-Open RobotStudio
+<img src="Doc/images/omnicoreController.png" alt="RobotStudio">
 
-<img src="Doc/images/robotstudio1.png" alt="RobotStudio">
+The MGMT port have a fixed IP address (*192.168.125.1 ) and a DHCP server. Despite the DHCP server, as you will see in the next steps,you will need to specify a static ip for your computer.
 
-On the Controller Tab, click Add Controller > One Click Connect..
+### Setup the UDP server
+
+In this step we will configure the IP address that EGM exploits to commununicate with an external device. In particular, we need to specify the ip and port of an UDP server that will run on your computer and EGM connects to. Therefore, the ip we are going to specify **must be the same of the PC running ROS.**
+
+Open RobotStudio go under the Controller Tab, click Add Controller > One Click Connect and log in as default user: 
 
 <img src="Doc/images/robotstudio2.png" alt="RobotStudio">
-
-Click on "Log in as Default User" button
-
-<img src="Doc/images/robotstudio3.png" alt="RobotStudio">
-
-
-### Setup the IP address for the WAN port
-With this configuration, we will set up the IP address of the WAN port where the computer running ROS will be connected.
-
-* On the Controller tab, in the Configuration group, click Properties and then click `Network settings`.
-  The Network settings dialog opens.
-  
-  <img src="Doc/images/robotstudio4.png" alt="RobotStudio">
-
-* Select `Use the following IP address` and then enter the required IP address and Subnet mask boxes to manually set the IP address of the controller
-
-
-  <img src="Doc/images/robotstudio5.png" alt="RobotStudio">
-
-**POLIMI SETUP: 
-set WAN IP = 192.168.131.200**
-
-**This step is optional, also the MGMT port can be used.**
-
-The MGMT port have a fixed IP address (*192.168.125.1* ) and a DHCP server.
-
-If you are using the MGMT port make sure that the connected computer running ROS is on the same network (*192.168.125.xx* ) or the DHCP is enabled.
-
-### Setup the UDP device
-Configure the IP address and the port to use for the UDP protocol. **This IP address must be the same of the PC running ROS.**
 
 Using RobotStudio, first **request the write access**.
 
@@ -200,16 +155,12 @@ Double click on the `UDP Unicast Device` item.
 
   <img src="Doc/images/robotstudio9.png" alt="RobotStudio">
 
-**POLIMI SETUP:**
+Set **ROB 1 IP = 192.168.125.100**
+Set **UCDEVICE IP = 192.168.125.100**
 
-**set ROB 1 IP = 192.168.131.5**
-
-**set UCDEVICE IP = 192.168.131.5**
-The ip address `192.168.131.5` is the ip of the Linux machine running ROS. Set the ip address of the Linux machine as static and to the address `192.168.131.5`.
+**Set 192.168.125.100 as static ip of the Linux machine running ROS**.
 
 ### Setup the Controller Firewall
-Using the WAN port the firewall on the public network must be configured.
-
 Using RobotStudio, first **request the write access**.
 On the Controller tab, in the Configuration group, click Configuration and then click `Communication`.
 
@@ -247,21 +198,41 @@ Any other user can be used by passing the name and the password to **rws_interfa
 
  
 ## Set up Config File and launch your abb robot (e.g. Gofa) 
-Navigate to ros_control_gofa/config/gofa_cfg.yaml
-Modify the parameters based on your robot configuration (e.g. ip_robot, name_robot,task_robot, etc.). Note that the IP robot in the yaml has to be the same of the WAN port of the robot controller (**POLIMI Setup = 192.168.131.200**)
-
-Finally 
+Navigate to ros_control_omnicore/config/XXX_cfg.yaml
+Modify the parameters based on your robot configuration (e.g. ip_robot, name_robot, task_robot, etc.). Note that the robot IP in the yaml has to be the the one of the MGMT port of the robot controller (**default is 192.168.125.1**)
+Finally:
 
 - Make sure that the application StateMachine 2.0 has loaded in robotstudio in rapid codes from the controller folder "EGM" 
 - Set robot in Automatic and Motors ON
-- Connect an ethernet cable from your Linux machine to the controller WAN port
-- Set the Linux machine IP address to 192.168.131.5 (it needs to be the same as the one in "Setup the UDP device")
+- Connect an ethernet cable from your Linux machine to the controller MGMT port
+- Set the Linux machine IP address to 192.168.125.100 (it needs to be the same as the one in "Setup the UDP device")
 
-By default, the repo launches the **Gofa** robot with a **position_controllers/JointTrajectoryController**:
+By default, the repo launches the **Gofa** robot with a **velocity_controller/JointTrajectoryController**:
 ```bash
   source devel/setup.bash
   roslaunch omnicore_launcher real_robot.launch
 ```
+The pkg has been tested with the following ros_control controllers:
+- velocity_controller/JointTrajectoryController
+- position_controller/JointTrajectoryController
+- joinGroupVelocityController
+- joint_state_controller (launched by default by the pkg)
+
+It is possible to switch from one controller to the other using [ros_control nodes](https://answers.ros.org/question/259022/switching-between-controllers-with-ros_control-controller_manager/). 
+**Note:** velocity_controller and position_controller are mutually exclusive and cannot be used together. See [ros_control_omnicore/config](configuration file) for each robot to decide with controller to load and which controller to start 
+
+Furthermore, it is possible to set the robot in free drive without the necessity to stop the node:
+
+- Switch to FreeDrive control when ROS is running:
+    ```bash
+    rosservice call /set_control_to_free_drive
+    ```
+- Switch back to velocity control (EGM):
+    ```bash
+    rosservice call /set_control_to_egm
+    ```
+
+# Troubleshooting
 
 If the previous command's output is **"EGM IS NOT CONNECTED"**, Linux's firewall blocks UDP communications with the robot controller. Therefore, you will need to allow the communication in INPUT and OUTPUT to your Linux machine with these two commands:
 
@@ -269,8 +240,3 @@ If the previous command's output is **"EGM IS NOT CONNECTED"**, Linux's firewall
   sudo iptables -I INPUT -p udp --dport 6511 -j ACCEPT
   sudo iptables -A OUTPUT -p udp -m udp --sport 6511 -j ACCEPT
 ```
-
-# Final notes
-Before you try to use the robot purely in simulation with RobotStudio + ROS, let me save you valuable time: **it does not work**. Or at least, it works if you want to control the robot with RWS only and not with EGM (note that if you want to move the robot without a RAPID script, you will need EGM pkg).
-
-The fun thing is that it does not work not because of a software problem from ROS or this package but because ABB, at least when you want to virtualise the controller with RobotStudio, does not allow any communication with external computers except the one where RobotStudio is running. RobotStudio can only run on Windows, so it is possible (as far as I know) to have the two running on the same machine. If you solve this issue somehow, email me at niccolo.lucci@polimi.it or make a pull request.  
