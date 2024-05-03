@@ -34,12 +34,12 @@ VelocityControllers_JointTrajectoryController:
       goal:       0.01
 
   gains: # Required because we're controlling a velocity interface
-    J1: {p: 10,  d: 0, i: 2, i_clamp: 0}
-    J2: {p: 10,  d: 0, i: 2, i_clamp: 0}
-    J3: {p: 10,  d: 0, i: 2, i_clamp: 0}
-    J4: {p: 10,  d: 0, i: 2, i_clamp: 0}
-    J5: {p: 10,  d: 0, i: 2, i_clamp: 0}
-    J6: {p: 10,  d: 0, i: 2, i_clamp: 0}
+    J1: {p: 5,  d: 0, i: 0, i_clamp: 0}
+    J2: {p: 5,  d: 0, i: 0, i_clamp: 0}
+    J3: {p: 5,  d: 0, i: 0, i_clamp: 0}
+    J4: {p: 5,  d: 0, i: 0, i_clamp: 0}
+    J5: {p: 5,  d: 0, i: 0, i_clamp: 0}
+    J6: {p: 5,  d: 0, i: 0, i_clamp: 0}
 
 robot:
   pos_corr_gain: 0 # parameter in RAPID that needs to be set to zero to accept velocity commands alone
