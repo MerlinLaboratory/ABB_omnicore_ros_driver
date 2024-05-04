@@ -9,6 +9,9 @@
   <arg name="yamlFileRobot"      default="$(find ros_control_omnicore)/config/$(arg robot)_cfg.yaml" />
   <rosparam command="load" file="$(arg yamlFileRobot)" />
 
+  <!-- Load common controller for Gofa and Yumi Single Arm -->
+  <rosparam command="load" file="$(find ros_control_omnicore)/config/Controllers/joint_state_controller.yaml"/>
+
   <!-- Load the config launching for ros_controllers Arm -->
   <group if="$(eval arg('load_Position_JointTrajectoryController') == 'yes')">     
     <arg name="yaml_Position_JointTrajContr" default="$(find ros_control_omnicore)/config/Controllers/$(arg robot)/PositionControllers_JointTrajectoryController.yaml" />

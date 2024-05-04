@@ -14,12 +14,12 @@
   <arg name="camera" default="false"/>
   <arg name="base_translation" default="0" />
   <arg name="base_orientation" default="0" />
-  <arg name="controllers" default="vel_arm_controller gripper_controller" doc="Controllers that are activated by default."/>
-  <arg name="stopped_controllers" default="vel_group_arm_controller" doc="Controllers that are initally loaded, but not started."/>
+  <arg name="controllers" default="VelocityControllers_JointTrajectoryController gripper_controller" doc="Controllers that are activated by default."/>
+  <arg name="stopped_controllers" default="VelocityControllers_JointGroupVelocityController" doc="Controllers that are initally loaded, but not started."/>
   
 
   <!-- Launch Gazebo and spawn the robot -->
-<!-- Start Gazebo paused to allow the controllers to pickup the initial pose -->
+  <!-- Start Gazebo paused to allow the controllers to pickup the initial pose -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch" pass_all_args="true">
     <arg name="paused" value="true"/>
     <arg name="world_name" value="$(arg world_name)"/>
@@ -36,7 +36,11 @@
     respawn="false" output="screen" />
 
   <!-- Load the controller parameters onto the parameter server -->
-  <rosparam file="$(find gazebo_ros_abb_wrapper)/config/controllers.yaml" command="load"/>
+  <rosparam file="$(find ros_control_omnicore)/config/Controllers/joint_state_controller.yaml" command="load"/>
+  <rosparam file="$(find ros_control_omnicore)/config/Controllers/yumi_single_arm/gripper_controller.yaml" command="load"/>
+  <rosparam file="$(find ros_control_omnicore)/config/Controllers/yumi_single_arm/PositionControllers_JointTrajectoryController.yaml" command="load"/>
+  <rosparam file="$(find ros_control_omnicore)/config/Controllers/yumi_single_arm/VelocityControllers_JointGroupVelocityController.yaml" command="load"/>
+  <rosparam file="$(find ros_control_omnicore)/config/Controllers/yumi_single_arm/VelocityControllers_JointTrajectoryController.yaml" command="load"/>
 
   <!-- Load the controllers -->
   <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
@@ -57,6 +61,7 @@
   <include file="$(find yumi_single_arm_moveit_config)/launch/demo.launch" pass_all_args="true">
     <!-- robot_description is loaded by gazebo.launch, to enable Gazebo features -->
     <arg name="load_robot_description" value="false" />
+    <arg name="load_Velocity_JointTrajectoryController" value="yes" />
     <arg name="moveit_controller_manager" value="ros_control" />
   </include>
 

@@ -39,9 +39,6 @@
     <material name="White">
         <color rgba="1.0 1.0 1.0 1.0" />
     </material>
-    <!--Import
-        the yumi servo gripper macro -->
-    <!-- <xacro:include filename="$(find robots_description)/Grippers/YumiServoGripper/yumi_servo_gripper.xacro" /> -->
     <!-- joint between external and base -->
     <joint name="joint_0" type="fixed">
         <origin rpy="0 0 0" xyz="0 0 0" />
@@ -349,13 +346,140 @@
             <mechanicalReduction>1</mechanicalReduction>
         </actuator>
     </transmission>
-    <!-- Gripper -->
-    <!-- <xacro:yumi_servo_gripper name="gripper" parent="link_7" hardware_interface="${gripper_interface}">
-            <origin xyz="0 0 0.007" rpy="0 0 ${PI}" />
-        </xacro:yumi_servo_gripper> -->
-    <gazebo>
+    <!--joint
+      between {parent} and base-->
+    <joint name="link_7_joint" type="fixed">
+        <origin rpy="0 0 0" xyz="0 0.0 0.0" />
+        <parent link="link_7" />
+        <child link="gripper_base" />
+    </joint>
+    <link name="gripper_base">
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0" />
+            <mass value="0.2" />
+            <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001" />
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0" />
+            <geometry>
+                <mesh filename="package://robots_description/meshes/Yumi/gripper/base.stl" />
+            </geometry>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0" />
+            <geometry>
+                <mesh filename="package://robots_description/meshes/Yumi/gripper/coarse/base.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <link name="grasp_link" />
+    <joint name="grasp_joint" type="fixed">
+        <origin rpy="0 0 0" xyz="0 0.0 0.13" />
+        <child link="grasp_link" />
+        <parent link="gripper_base" />
+    </joint>
+    <!-- joint between base and right finger -->
+    <joint name="gripper_joint_r" type="prismatic">
+        <parent link="gripper_base" />
+        <child link="gripper_finger_r" />
+        <origin rpy="0 0 0" xyz="0 -0.0065 0.0837" />
+        <axis xyz="-1 0 0" />
+        <limit effort="20" lower="0" upper="0.025" velocity="2" />
+        <dynamics damping="1.0" />
+    </joint>
+    <link name="gripper_finger_r">
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0" />
+            <mass value="0.1" />
+            <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01" />
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0" />
+            <geometry>
+                <mesh filename="package://robots_description/meshes/Yumi/gripper/finger.stl" />
+            </geometry>
+            <material name="Blue" />
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0" />
+            <geometry>
+                <mesh filename="package://robots_description/meshes/Yumi/gripper/coarse/finger.stl" />
+            </geometry>
+            <material name="Blue" />
+        </collision>
+    </link>
+    <!-- joint between base and left finger -->
+    <joint name="gripper_joint_l" type="prismatic">
+        <parent link="gripper_base" />
+        <child link="gripper_finger_l" />
+        <origin rpy="0 0 3.141592653589793" xyz="0 0.0065 0.0837" />
+        <axis xyz="-1 0 0" />
+        <limit effort="20" lower="0" upper="0.025" velocity="2" />
+        <dynamics damping="1.0" />
+    </joint>
+    <link name="gripper_finger_l">
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0" />
+            <mass value="0.1" />
+            <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01" />
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0" />
+            <geometry>
+                <mesh filename="package://robots_description/meshes/Yumi/gripper/finger.stl" />
+            </geometry>
+            <material name="Blue" />
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0" />
+            <geometry>
+                <mesh filename="package://robots_description/meshes/Yumi/gripper/coarse/finger.stl" />
+            </geometry>
+            <material name="Blue" />
+        </collision>
+    </link>
+    <transmission name="SmartGripper_tran">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="gripper_joint_l">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="SmartGripper_motor_l">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="SmartGripper_tran">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="gripper_joint_r">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="SmartGripper_motor_r">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <gazebo reference="link_7_joint">
+        <disableFixedJointLumping>true</disableFixedJointLumping>
+        <preserveFixedJoint>true</preserveFixedJoint>
         <plugin name="gazebo_ros_control">
             <robotNamespace>/</robotNamespace>
+        </plugin>
+    </gazebo>
+    <gazebo>
+        <plugin filename="libgazebo_grasp_fix.so" name="gazebo_grasp_fix">
+            <arm>
+                <arm_name>yumi</arm_name>
+                <palm_link>gripper_base</palm_link>
+                <gripper_link>gripper_finger_l</gripper_link>
+                <gripper_link>gripper_finger_r</gripper_link>
+            </arm>
+            <forces_angle_tolerance>100</forces_angle_tolerance>
+            <update_rate>4</update_rate>
+            <grip_count_threshold>4</grip_count_threshold>
+            <max_grip_count>8</max_grip_count>
+            <release_tolerance>0.005</release_tolerance>
+            <disable_collisions_on_attach>false</disable_collisions_on_attach>
+            <contact_topic>__default_topic__</contact_topic>
         </plugin>
     </gazebo>
 </robot>

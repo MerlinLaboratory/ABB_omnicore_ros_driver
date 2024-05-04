@@ -51,9 +51,9 @@ robot_hardware_interface:
 ############# Loading default controller  ############
 ######################################################
 
-joint_state_controller:
-  type:         joint_state_controller/JointStateController
-  publish_rate: 100
+# joint_state_controller:
+#   type:         joint_state_controller/JointStateController
+#   publish_rate: 250
 
 ros_controllers:
   controllers_to_load: ["VelocityControllers_JointTrajectoryController", "VelocityControllers_JointGroupVelocityController"]
