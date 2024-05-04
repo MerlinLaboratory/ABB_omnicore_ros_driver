@@ -9,7 +9,7 @@ The supported [Omnicore controller](https://new.abb.com/products/robotics/contro
 **OS**: Ubuntu 20.04 
 **ROS**: Noetic
 
-Tested on Ubuntu 20.04 with ROS Noetic. Support on newer ROS distro (melodic see: [#18](/../../issues/18)) is expected but not tested.
+Tested on Ubuntu 20.04 with ROS Noetic. Support on older ROS distro (melodic see: [#18](/../../issues/18)) is expected but not tested.
 
 ## Overview
 
