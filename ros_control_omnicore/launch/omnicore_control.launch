@@ -4,6 +4,7 @@
   <arg name="load_Position_JointTrajectoryController"    default="no"/>
   <arg name="load_Velocity_JointGroupVelocityController" default="yes"/>
   <arg name="load_Velocity_JointTrajectoryController"    default="yes"/>
+  <arg name="simulation"                             default="yes"/>
 
   <!-- Load the config launching Gofa or Yumi Single Arm -->
   <arg name="yamlFileRobot"      default="$(find ros_control_omnicore)/config/$(arg robot)_cfg.yaml" />
@@ -30,14 +31,15 @@
 
   <!-- Load the URDF pkg -->
   <include file="$(find robots_description)/launch/display.launch">
-    <arg name="robot"       value="$(arg robot)" />
-    <arg name="launch_rviz" value="false" />
+    <arg name="robot"          value="$(arg robot)" />
+    <arg name="launch_rviz"    value="false" />
+    <arg name="simulation" value="${simulation}"/>
   </include>
 
-  <!-- Load the Hardware Interface -->
-  <node pkg="ros_control_omnicore" name="omnicore_hw_interface" type="omnicore_control_node" output="screen" />
-
-  <!-- Load the Rws Interface -->
-  <node pkg="ros_control_omnicore" name="omnicore_rws_interface" type="omnicore_rws_node" output="screen" />
+  <!-- Load the Hardware Interface and Rws Interface if launching the real robot-->
+  <group if="$(eval arg('simulation') == 'no')">     
+    <node pkg="ros_control_omnicore" name="omnicore_hw_interface" type="omnicore_control_node" output="screen" />
+    <node pkg="ros_control_omnicore" name="omnicore_rws_interface" type="omnicore_rws_node" output="screen" />
+  </group> 
 
 </launch>
