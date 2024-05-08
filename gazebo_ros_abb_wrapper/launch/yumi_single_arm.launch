@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
   <!-- MoveIt options -->
-  <arg name="pipeline" default="ompl" doc="Planning pipeline to use with MoveIt"/>
+  <arg name="pipeline" default="pilz_industrial_motion_planner" doc="Planning pipeline to use with MoveIt"/>
 
   <!-- Gazebo options -->
   <arg name="gazebo_gui" default="true" doc="Start Gazebo GUI"/>
@@ -11,12 +11,11 @@
   <arg name="initial_joint_positions" default=" -J joint_1 0 -J joint_2 0 -J joint_3 0 -J joint_4 0 -J joint_5 0 -J joint_6 0 -J joint_7 0" doc="Initial joint configuration of the robot"/>
   <arg name="hardware_interface" default="hardware_interface/VelocityJointInterface"/>
   <arg name="gripper_interface" default="hardware_interface/EffortJointInterface"/>
-  <arg name="camera" default="false"/>
   <arg name="base_translation" default="0" />
   <arg name="base_orientation" default="0" />
-  <arg name="controllers" default="VelocityControllers_JointTrajectoryController gripper_controller" doc="Controllers that are activated by default."/>
-  <arg name="stopped_controllers" default="VelocityControllers_JointGroupVelocityController" doc="Controllers that are initally loaded, but not started."/>
-  
+  <arg name="load_Position_JointTrajectoryController"    value="no"/>
+  <arg name="load_Velocity_JointGroupVelocityController" value="no"/>
+  <arg name="load_Velocity_JointTrajectoryController"    value="yes"/>
 
   <!-- Launch Gazebo and spawn the robot -->
   <!-- Start Gazebo paused to allow the controllers to pickup the initial pose -->
@@ -26,43 +25,51 @@
   </include>
 
   <!-- Set the robot urdf on the parameter server -->
-  <param name="robot_description" command="xacro robot:=yumi_single_arm hardware_interface:=$(arg hardware_interface) gripper_interface:=$(arg gripper_interface) camera:=$(arg camera) base_translation:=$(arg base_translation) base_orientation:=$(arg base_orientation) '$(find gazebo_ros_abb_wrapper)/urdf/yumi.xacro'" />
+  <param name="robot_description" command="xacro hardware_interface:=$(arg hardware_interface) gripper_interface:=$(arg gripper_interface) base_translation:=$(arg base_translation) base_orientation:=$(arg base_orientation) '$(find gazebo_ros_abb_wrapper)/urdf/yumi.xacro'" />
+
+  <!-- Set ros_control with robot description -->
+  <include file="$(find ros_control_omnicore)/launch/omnicore_control.launch" pass_all_args="true">
+    <arg name="robot"                                      value="yumi_single_arm"/>
+    <arg name="load_Position_JointTrajectoryController"    value="$(arg load_Position_JointTrajectoryController)"/>
+    <arg name="load_Velocity_JointGroupVelocityController" value="$(arg load_Velocity_JointGroupVelocityController)"/>
+    <arg name="load_Velocity_JointTrajectoryController"    value="$(arg load_Velocity_JointTrajectoryController)"/>
+    <arg name="simulation"                                 value="true"/>
+  </include>
 
   <!-- Unpause the simulation after loading the robot model -->
   <arg name="unpause" value="$(eval '' if arg('paused') else '-unpause')" />
 
   <!-- Spawn the robot in Gazebo -->
-  <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model robot $(arg unpause) $(arg world_pose) $(arg initial_joint_positions)"
-    respawn="false" output="screen" />
-
-  <!-- Load the controller parameters onto the parameter server -->
-  <rosparam file="$(find ros_control_omnicore)/config/Controllers/joint_state_controller.yaml" command="load"/>
-  <rosparam file="$(find ros_control_omnicore)/config/Controllers/yumi_single_arm/gripper_controller.yaml" command="load"/>
-  <rosparam file="$(find ros_control_omnicore)/config/Controllers/yumi_single_arm/PositionControllers_JointTrajectoryController.yaml" command="load"/>
-  <rosparam file="$(find ros_control_omnicore)/config/Controllers/yumi_single_arm/VelocityControllers_JointGroupVelocityController.yaml" command="load"/>
-  <rosparam file="$(find ros_control_omnicore)/config/Controllers/yumi_single_arm/VelocityControllers_JointTrajectoryController.yaml" command="load"/>
+  <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model robot $(arg unpause) $(arg world_pose) $(arg initial_joint_positions)" respawn="false" output="screen" />
 
   <!-- Load the controllers -->
-  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
-    output="screen" args="$(arg controllers)"/>
-  <!-- Load other controllers, but do not start them -->
-  <group if="$(eval arg('stopped_controllers') != '')">
-    <node name="stopped_spawner" pkg="controller_manager" type="spawner" respawn="false"
-      args="--stopped $(arg stopped_controllers)" output="screen"/>
+  <group if="$(eval arg('load_Position_JointTrajectoryController') == 'yes')">
+    <node name="controller_spawner_1" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="PositionControllers_JointTrajectoryController gripper_controller"/>
   </group>
+
+  <group if="$(eval arg('load_Velocity_JointGroupVelocityController') == 'yes')">
+    <node name="controller_spawner_2" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="VelocityControllers_JointGroupVelocityController gripper_controller"/>
+  </group>
+
+  <group if="$(eval arg('load_Velocity_JointTrajectoryController') == 'yes')">
+    <node name="controller_spawner_3" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="VelocityControllers_JointTrajectoryController gripper_controller"/>
+  </group> 
   
   <!-- Spawn the Gazebo ROS controllers -->
   <node name="gazebo_controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="joint_state_controller" />
 
   <!-- Given the published joint states, publish tf for the robot links -->
-  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" />
+  <!-- <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" /> -->
   
   <!-- Launch MoveIt -->
   <include file="$(find yumi_single_arm_moveit_config)/launch/demo.launch" pass_all_args="true">
-    <!-- robot_description is loaded by gazebo.launch, to enable Gazebo features -->
-    <arg name="load_robot_description" value="false" />
-    <arg name="load_Velocity_JointTrajectoryController" value="yes" />
-    <arg name="moveit_controller_manager" value="ros_control" />
+    <arg name="pipeline"                                value="$(arg pipeline)" /> 
+    <arg name="debug"                                   value="false" />
+    <arg name="load_robot_description"                  value="false"/>             
+    <arg name="moveit_controller_manager"               value="simple" />
+    <arg name="use_rviz"                                value="true" />
+    <arg name="load_Position_JointTrajectoryController" value="$(arg load_Position_JointTrajectoryController)"/> <!-- Whether you want to load PositionController_JointTrajectoryController -->
+    <arg name="load_Velocity_JointTrajectoryController" value="$(arg load_Velocity_JointTrajectoryController)"/> <!-- Whether you want to load load_Velocity_JointTrajectoryController -->
   </include>
 
   <node name="traj_publisher" pkg="gazebo_ros_abb_wrapper" type="publisher.py" />

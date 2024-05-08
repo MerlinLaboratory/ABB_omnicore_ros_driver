@@ -4,12 +4,14 @@
   <arg name="load_Position_JointTrajectoryController"    default="no"/>
   <arg name="load_Velocity_JointGroupVelocityController" default="yes"/>
   <arg name="load_Velocity_JointTrajectoryController"    default="yes"/>
-  <arg name="simulation"                             default="yes"/>
+  <arg name="simulation"                                 default="true"/>
 
   <!-- Load the config launching Gofa or Yumi Single Arm -->
-  <arg name="yamlFileRobot"      default="$(find ros_control_omnicore)/config/$(arg robot)_cfg.yaml" />
-  <rosparam command="load" file="$(arg yamlFileRobot)" />
-
+  <group if="$(eval arg('simulation') == false)">
+    <arg name="yamlFileRobot"  default="$(find ros_control_omnicore)/config/$(arg robot)_cfg.yaml" />
+    <rosparam command="load"   file="$(arg yamlFileRobot)" />
+  </group>
+  
   <!-- Load common controller for Gofa and Yumi Single Arm -->
   <rosparam command="load" file="$(find ros_control_omnicore)/config/Controllers/joint_state_controller.yaml"/>
 
@@ -29,17 +31,19 @@
     <rosparam command="load" file="$(arg yaml_Velocity_TrajVelContr)" />
   </group> 
 
-  <!-- Load the URDF pkg -->
-  <include file="$(find robots_description)/launch/display.launch">
-    <arg name="robot"          value="$(arg robot)" />
-    <arg name="launch_rviz"    value="false" />
-    <arg name="simulation" value="${simulation}"/>
-  </include>
+  <!-- Load the URDF pkg only if lauching real robot -->
+  <group if="$(eval arg('simulation') == false)">
+    <include file="$(find robots_description)/launch/display.launch">
+      <arg name="robot"                        value="$(arg robot)" />
+      <arg name="launch_rviz"                  value="false" />
+      <arg name="launch_joint_state_publisher" value="false"/>
+    </include>
+  </group>
 
   <!-- Load the Hardware Interface and Rws Interface if launching the real robot-->
-  <group if="$(eval arg('simulation') == 'no')">     
-    <node pkg="ros_control_omnicore" name="omnicore_hw_interface" type="omnicore_control_node" output="screen" />
-    <node pkg="ros_control_omnicore" name="omnicore_rws_interface" type="omnicore_rws_node" output="screen" />
-  </group> 
+  <group if="$(eval arg('simulation') == false)">
+    <node pkg="ros_control_omnicore" name="omnicore_hw_interface" type="omnicore_control_node" output="screen" if="$(eval arg('simulation'))"/>
+    <node pkg="ros_control_omnicore" name="omnicore_rws_interface" type="omnicore_rws_node" output="screen" if="$(eval arg('simulation'))"/>
+  </group>
 
 </launch>

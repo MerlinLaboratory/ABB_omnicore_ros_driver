@@ -1,20 +1,17 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://wiki.ros.org/xacro" name="robot">
-  
-  <!-- Parameters -->
-  <arg name="name"                    default="yumi_single_arm" />
-  <xacro:arg name="robot"              default="$(arg name)" />
-  <xacro:arg name="hardware_interface" default="PositionJointInterface" />
-  <xacro:arg name="gripper_interface"  default="EffortJointInterface" />
-  <xacro:arg name="yumi_setup"         default="default" />
-  <xacro:arg name="camera"         default="false" />
-  <xacro:arg name="base_translation"         default="0" />
-  <xacro:arg name="base_orientation"         default="0" />
-  
 
-  <xacro:property name="robot"              value="$(arg robot)" />
+  <!-- Parameters -->
+  <arg name="name" default="yumi_single_arm" />
+  <xacro:arg name="hardware_interface" default="PositionJointInterface" />
+  <xacro:arg name="gripper_interface" default="EffortJointInterface" />
+  <xacro:arg name="yumi_setup" default="default" />
+  <xacro:arg name="base_translation" default="0" />
+  <xacro:arg name="base_orientation" default="0" />
+
+  <!-- <xacro:property name="robot" value="$(arg robot)" /> -->
   <xacro:property name="hardware_interface" value="$(arg hardware_interface)" />
-  <xacro:property name="gripper_interface"  value="$(arg gripper_interface)" />
+  <xacro:property name="gripper_interface" value="$(arg gripper_interface)" />
 
   <!-- World fixed joint -->
   <link name="world" />
@@ -22,20 +19,19 @@
   <xacro:include filename="$(find robots_description)/Util/materials.xacro" />
   <!-- Import utilities -->
   <xacro:include filename="$(find robots_description)/Util/utilities.xacro" />
-  <!--Import
-  the single yumi macro -->
+  <!--Import the single yumi macro -->
   <xacro:include filename="$(find robots_description)/xacro/YumiSingleArm/single_yumi.xacro" />
-  <!--Import
-  the yumi servo gripper macro -->
-  <xacro:include filename="$(find robots_description)/Grippers/YumiServoGripper/yumi_servo_gripper.xacro" />
+  <!--Import the yumi servo gripper macro -->
+  <xacro:include
+    filename="$(find robots_description)/Grippers/YumiServoGripper/yumi_servo_gripper.xacro" />
 
   <xacro:single_yumi parent="world" hardware_interface="${hardware_interface}">
-      <origin xyz="0 0 $(arg base_translation)" rpy="0 0 $(arg base_orientation)" />
+    <origin xyz="0 0 $(arg base_translation)" rpy="0 0 $(arg base_orientation)" />
   </xacro:single_yumi>
 
   <!-- Gripper -->
   <xacro:yumi_servo_gripper name="gripper" parent="link_7" hardware_interface="${gripper_interface}">
-      <origin xyz="0 0 0.007" rpy="0 0 ${PI}" />
+    <origin xyz="0 0 0.007" rpy="0 0 ${PI}" />
   </xacro:yumi_servo_gripper>
   <gazebo>
     <plugin name="ros_control" filename="libgazebo_ros_control.so">
@@ -43,69 +39,5 @@
       <!--robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType-->
     </plugin>
   </gazebo>
-
-    <xacro:if value="$(arg camera)">
-    <joint name="camera_joint" type="fixed">
-      <axis xyz="0 1 0" />
-      <origin xyz="0 0 1" rpy="0 ${PI/2} 0"/>
-      <parent link="single_yumi_base_link"/>
-      <child link="camera_link"/>
-    </joint>
-
-    <!-- Camera -->
-    <link name="camera_link">
-      <visual>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-        <geometry>
-      <box size="0.05 0.05 0.1"/>
-        </geometry>
-        <material name="grey"/>
-      </visual>
-    </link>
-
-    <gazebo reference="camera_link">
-      <sensor type="depth" name="camera1">
-        <update_rate>20</update_rate>
-      <camera>
-        <horizontal_fov>1.047198</horizontal_fov>
-        <image>
-          <width>640</width>
-          <height>480</height>
-          <format>R8G8B8</format>
-        </image>
-        <clip>
-          <near>0.05</near>
-          <far>3</far>
-        </clip>
-      </camera>
-      <plugin name="camera_controller" filename="libgazebo_ros_openni_kinect.so">
-        <baseline>0.2</baseline>
-        <alwaysOn>true</alwaysOn>
-        <updateRate>1.0</updateRate>
-        <cameraName>camera_ir</cameraName>
-        <imageTopicName>/camera/color/image_raw</imageTopicName>
-        <cameraInfoTopicName>/camera/color/camera_info</cameraInfoTopicName>
-        <depthImageTopicName>/camera/depth/image_raw</depthImageTopicName>
-        <depthImageInfoTopicName>/camera/depth/camera_info</depthImageInfoTopicName>
-        <pointCloudTopicName>/camera/depth/points</pointCloudTopicName>
-        <frameName>camera_link</frameName>
-        <pointCloudCutoff>0.5</pointCloudCutoff>
-        <pointCloudCutoffMax>3.0</pointCloudCutoffMax>
-        <distortionK1>0.00000001</distortionK1>
-        <distortionK2>0.00000001</distortionK2>
-        <distortionK3>0.00000001</distortionK3>
-        <distortionT1>0.00000001</distortionT1>
-        <distortionT2>0.00000001</distortionT2>
-        <CxPrime>0</CxPrime>
-        <Cx>0</Cx>
-        <Cy>0</Cy>
-        <focalLength>0</focalLength>
-        <hackBaseline>0</hackBaseline>
-      </plugin>
-      </sensor>
-    </gazebo>
-  </xacro:if>
-
-  
 
 </robot>
