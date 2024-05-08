@@ -31,6 +31,11 @@
     <rosparam command="load" file="$(arg yaml_Velocity_TrajVelContr)" />
   </group> 
 
+  <group if="$(eval arg('robot') == 'yumi_single_arm')">
+    <arg name="yaml_Gripper_Controller" default="$(find ros_control_omnicore)/config/Controllers/$(arg robot)/gripper_controller.yaml" />
+    <rosparam command="load" file="$(arg yaml_Gripper_Controller)" />
+  </group> 
+
   <!-- Load the URDF pkg only if lauching real robot -->
   <group if="$(eval arg('simulation') == false)">
     <include file="$(find robots_description)/launch/display.launch">

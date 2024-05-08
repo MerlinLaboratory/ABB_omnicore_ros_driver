@@ -72,6 +72,6 @@
     <arg name="load_Velocity_JointTrajectoryController" value="$(arg load_Velocity_JointTrajectoryController)"/> <!-- Whether you want to load load_Velocity_JointTrajectoryController -->
   </include>
 
-  <node name="traj_publisher" pkg="gazebo_ros_abb_wrapper" type="publisher.py" />
+  <!-- <node name="traj_publisher" pkg="gazebo_ros_abb_wrapper" type="publisher.py" /> -->
   <node name="gripper_handler" pkg="gazebo_ros_abb_wrapper" type="gripper_handler.py" />
 </launch>

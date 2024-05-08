@@ -22,8 +22,7 @@
   <!--Import the single yumi macro -->
   <xacro:include filename="$(find robots_description)/xacro/YumiSingleArm/single_yumi.xacro" />
   <!--Import the yumi servo gripper macro -->
-  <xacro:include
-    filename="$(find robots_description)/Grippers/YumiServoGripper/yumi_servo_gripper.xacro" />
+  <xacro:include filename="$(find robots_description)/Grippers/YumiServoGripper/yumi_servo_gripper.xacro" />
 
   <xacro:single_yumi parent="world" hardware_interface="${hardware_interface}">
     <origin xyz="0 0 $(arg base_translation)" rpy="0 0 $(arg base_orientation)" />
@@ -33,6 +32,8 @@
   <xacro:yumi_servo_gripper name="gripper" parent="link_7" hardware_interface="${gripper_interface}">
     <origin xyz="0 0 0.007" rpy="0 0 ${PI}" />
   </xacro:yumi_servo_gripper>
+
+  <!-- Loading Gazebo plugins -->
   <gazebo>
     <plugin name="ros_control" filename="libgazebo_ros_control.so">
       <!--robotNamespace>/</robotNamespace-->
