@@ -117,9 +117,23 @@ cd ..
 catkin build
 ```
 
-If there are no errors you are ready to proceed to set up the robot in [RobotStudio](https://new.abb.com/products/robotics/robotstudio/downloads).
+If there are no errors and you want to setup the real robot download [RobotStudio](https://new.abb.com/products/robotics/robotstudio/downloads) and go to the [appropriate chapter](#robotstudio) to setup the real robot. Conversely, you can start to use the robots in simulation following [this chapter](#simulation).
 
-## RobotStudio Setup
+## Simulation
+
+It is possible to launch both the gofa and yumi single arm in Gazebo with the following commands: 
+
+```bash
+  roslaunch gazebo_omnicore yumi_single_arm.launch # To launch Yumi Single Arm
+  roslaunch gazebo_omnicore gofa.launch # To launch Gofa
+```
+
+<div style="display: flex; justify-content: space-between;">
+  <img src="Doc/gifs/yumi_single_arm.gif" alt="Yumi single arm gif" style="width: 47%; margin-right: 3%;">
+  <img src="Doc/gifs/gofa.gif" alt="Gofa gif" style="width: 47%; margin-left: 3%;">
+</div>
+
+## RobotStudio
 
 ### Requirements
 
