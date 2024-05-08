@@ -128,10 +128,9 @@ It is possible to launch both the gofa and yumi single arm in Gazebo with the fo
   roslaunch gazebo_omnicore gofa.launch # To launch Gofa
 ```
 
-<div style="display: flex; justify-content: space-between;">
-  <img src="Doc/gifs/yumi_single_arm.gif" alt="Yumi single arm gif" style="width: 47%; margin-right: 3%;">
-  <img src="Doc/gifs/gofa.gif" alt="Gofa gif" style="width: 47%; margin-left: 3%;">
-</div>
+| Yumi Single Arm | Gofa |
+|:---:|:---:|
+| ![Yumi single arm gif](Doc/gifs/yumi_single_arm.gif) | ![Gofa gif](Doc/gifs/gofa.gif) |
 
 ## RobotStudio
 
