@@ -5,7 +5,7 @@
     <!-- Parameters -->
     <arg name="name"                    default="gofa" />
     <xacro:arg name="robot"              default="$(arg name)" />
-    <xacro:arg name="hardware_interface" default="PositionJointInterface" />
+    <xacro:arg name="hardware_interface" default="VelocityJointInterface" />
     <xacro:arg name="gripper_interface"  default="EffortJointInterface" />
     <xacro:arg name="yumi_setup"         default="default" />
 
@@ -21,7 +21,7 @@
     <!-- Gofa -->
     <xacro:if value="${robot == 'gofa'}">
         <xacro:include filename="$(find robots_description)/xacro/Gofa/gofa.urdf.xacro" />
-        <xacro:gofa parent="world" child="flange">
+        <xacro:gofa parent="world" hardware_interface="${hardware_interface}" child="flange">
             <origin xyz="0 0 0" rpy="0 0 0" />
         </xacro:gofa>
 

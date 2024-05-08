@@ -1,10 +1,16 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="gofa">
 
+	<!-- Import Transmissions -->
+	<xacro:include filename="$(find robots_description)/xacro/Gofa/gofa.transmission.xacro" />
+
 	<!-- GoFa color -->
 	<material name="gofa_color">
 		<color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1"/>
 	</material>
+
+	<xacro:property name="joint_damping" value="0.5" />
+	<xacro:property name="max_effort" value="300" />
 
 	<!-- VC macro -->
 	<xacro:macro name="VC" params="suffix">
@@ -35,7 +41,7 @@
 	<xacro:arg name="6th_link_name" 	default="L6"/>
 
 	<!-- GoFa URDF model -->
-	<xacro:macro name="gofa" params="parent child *origin">
+	<xacro:macro name="gofa" params="parent hardware_interface child *origin">
 		<!-- Base -->
 		<joint name="${parent}_to_$(arg base_link_name)" type="fixed">
 			<xacro:insert_block name="origin"/>
@@ -67,7 +73,8 @@
 			<parent link="$(arg base_link_name)"/>
 			<child link="$(arg 1st_link_name)"/>
 			<axis xyz="0 0 1"/>
-			<limit effort="0" lower="${radians(-180)}" upper="${radians(180)}" velocity="${radians(125)}"/>
+			<limit effort="${max_effort}" lower="${radians(-180)}" upper="${radians(180)}" velocity="${radians(125)}"/>
+			<dynamics damping="${joint_damping}" />
 		</joint>
 
 		<!-- Link2 -->
@@ -85,7 +92,8 @@
 			<parent link="$(arg 1st_link_name)"/>
 			<child link="$(arg 2nd_link_name)"/>
 			<axis xyz="0 1 0"/>
-			<limit effort="0" lower="${radians(-180)}" upper="${radians(180)}" velocity="${radians(125)}"/>
+			<limit effort="${max_effort}" lower="${radians(-180)}" upper="${radians(180)}" velocity="${radians(125)}"/>
+			<dynamics damping="${joint_damping}" />
 		</joint>
 
 		<!-- Link3 -->
@@ -103,7 +111,8 @@
 			<parent link="$(arg 2nd_link_name)"/>
 			<child link="$(arg 3rd_link_name)"/>
 			<axis xyz="0 1 0"/>
-			<limit effort="0" lower="${radians(-225)}" upper="${radians(85)}" velocity="${radians(140)}"/>
+			<limit effort="${max_effort}" lower="${radians(-225)}" upper="${radians(85)}" velocity="${radians(140)}"/>
+			<dynamics damping="${joint_damping}" />
 		</joint>
 
 		<!-- Link4 -->
@@ -121,7 +130,8 @@
 			<parent link="$(arg 3rd_link_name)"/>
 			<child link="$(arg 4th_link_name)"/>
 			<axis xyz="1 0 0"/>
-			<limit effort="0" lower="${radians(-180)}" upper="${radians(180)}" velocity="${radians(200)}"/>
+			<limit effort="${max_effort}" lower="${radians(-180)}" upper="${radians(180)}" velocity="${radians(200)}"/>
+			<dynamics damping="${joint_damping}" />
 		</joint>
 
 		<!-- Link5 -->
@@ -139,7 +149,8 @@
 			<parent link="$(arg 4th_link_name)"/>
 			<child link="$(arg 5th_link_name)"/>
 			<axis xyz="0 1 0"/>
-			<limit effort="0" lower="${radians(-180)}" upper="${radians(180)}" velocity="${radians(200)}"/>
+			<limit effort="${max_effort}" lower="${radians(-180)}" upper="${radians(180)}" velocity="${radians(200)}"/>
+			<dynamics damping="${joint_damping}" />
 		</joint>
 
 		<!-- Link6 -->
@@ -157,7 +168,8 @@
 			<parent link="$(arg 5th_link_name)"/>
 			<child link="$(arg 6th_link_name)"/>
 			<axis xyz="1 0 0"/>
-			<limit effort="0" lower="${radians(-270)}" upper="${radians(270)}" velocity="${radians(200)}"/>
+			<limit effort="${max_effort}" lower="${radians(-270)}" upper="${radians(270)}" velocity="${radians(200)}"/>
+			<dynamics damping="${joint_damping}" />
 		</joint>
 
 		<!-- Flange -->
@@ -168,6 +180,10 @@
 			<parent link="$(arg 6th_link_name)"/>
 			<child link="${child}"/>
 		</joint>
+
+		<!--Extensions -->
+		<xacro:gofa_transmission name="gofa" hardware_interface="${hardware_interface}"/>
+
 	</xacro:macro>
 
 </robot>

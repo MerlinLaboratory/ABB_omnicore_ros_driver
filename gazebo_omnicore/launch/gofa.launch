@@ -8,9 +8,8 @@
   <arg name="paused" default="false" doc="Start Gazebo paused"/>
   <arg name="world_name" default="worlds/empty.world" doc="Gazebo world file"/>
   <arg name="world_pose" default="-x 0 -y 0 -z 0 -R 0 -P 0 -Y 0" doc="Pose to spawn the robot at"/>
-  <arg name="initial_joint_positions" default=" -J joint_1 0 -J joint_2 0 -J joint_3 0 -J joint_4 0 -J joint_5 0 -J joint_6 0 -J joint_7 0" doc="Initial joint configuration of the robot"/>
+  <arg name="initial_joint_positions" default=" -J J1 0 -J J2 0 -J J3 0 -J J4 0 -J J5 0 -J J6 0" doc="Initial joint configuration of the robot"/>
   <arg name="hardware_interface" default="hardware_interface/VelocityJointInterface"/>
-  <arg name="gripper_interface" default="hardware_interface/EffortJointInterface"/>
   <arg name="base_translation" default="0" />
   <arg name="base_orientation" default="0" />
   <arg name="load_Position_JointTrajectoryController"    value="no"/>
@@ -25,11 +24,11 @@
   </include>
 
   <!-- Set the robot urdf on the parameter server -->
-  <param name="robot_description" command="xacro hardware_interface:=$(arg hardware_interface) gripper_interface:=$(arg gripper_interface) base_translation:=$(arg base_translation) base_orientation:=$(arg base_orientation) '$(find gazebo_omnicore)/urdf/yumi.xacro'" />
+  <param name="robot_description" command="xacro hardware_interface:=$(arg hardware_interface) base_translation:=$(arg base_translation) base_orientation:=$(arg base_orientation) '$(find gazebo_omnicore)/urdf/gofa.xacro'" />
 
   <!-- Set ros_control with robot description -->
   <include file="$(find ros_control_omnicore)/launch/omnicore_control.launch" pass_all_args="true">
-    <arg name="robot"                                      value="yumi_single_arm"/>
+    <arg name="robot"                                      value="gofa"/>
     <arg name="load_Position_JointTrajectoryController"    value="$(arg load_Position_JointTrajectoryController)"/>
     <arg name="load_Velocity_JointGroupVelocityController" value="$(arg load_Velocity_JointGroupVelocityController)"/>
     <arg name="load_Velocity_JointTrajectoryController"    value="$(arg load_Velocity_JointTrajectoryController)"/>
@@ -44,15 +43,15 @@
 
   <!-- Load the controllers -->
   <group if="$(eval arg('load_Position_JointTrajectoryController') == 'yes')">
-    <node name="controller_spawner_1" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="PositionControllers_JointTrajectoryController gripper_controller"/>
+    <node name="controller_spawner_1" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="PositionControllers_JointTrajectoryController"/>
   </group>
 
   <group if="$(eval arg('load_Velocity_JointGroupVelocityController') == 'yes')">
-    <node name="controller_spawner_2" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="VelocityControllers_JointGroupVelocityController gripper_controller"/>
+    <node name="controller_spawner_2" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="VelocityControllers_JointGroupVelocityController"/>
   </group>
 
   <group if="$(eval arg('load_Velocity_JointTrajectoryController') == 'yes')">
-    <node name="controller_spawner_3" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="VelocityControllers_JointTrajectoryController gripper_controller"/>
+    <node name="controller_spawner_3" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="VelocityControllers_JointTrajectoryController"/>
   </group> 
   
   <!-- Spawn the Gazebo ROS controllers -->
@@ -62,7 +61,7 @@
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" />
   
   <!-- Launch MoveIt -->
-  <include file="$(find yumi_single_arm_moveit_config)/launch/demo.launch" pass_all_args="true">
+  <include file="$(find gofa_moveit_config)/launch/demo.launch" pass_all_args="true">
     <arg name="pipeline"                                value="$(arg pipeline)" /> 
     <arg name="debug"                                   value="false" />
     <arg name="load_robot_description"                  value="false"/>             
@@ -72,6 +71,4 @@
     <arg name="load_Velocity_JointTrajectoryController" value="$(arg load_Velocity_JointTrajectoryController)"/> <!-- Whether you want to load load_Velocity_JointTrajectoryController -->
   </include>
 
-  <!-- <node name="traj_publisher" pkg="gazebo_omnicore" type="publisher.py" /> -->
-  <node name="gripper_handler" pkg="gazebo_omnicore" type="gripper_handler.py" />
 </launch>
