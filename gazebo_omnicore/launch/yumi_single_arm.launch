@@ -25,7 +25,7 @@
   </include>
 
   <!-- Set the robot urdf on the parameter server -->
-  <param name="robot_description" command="xacro hardware_interface:=$(arg hardware_interface) gripper_interface:=$(arg gripper_interface) base_translation:=$(arg base_translation) base_orientation:=$(arg base_orientation) '$(find gazebo_omnicore)/urdf/yumi.xacro'" />
+  <param name="robot_description" command="xacro hardware_interface:=$(arg hardware_interface) gripper_interface:=$(arg gripper_interface) base_translation:=$(arg base_translation) base_orientation:=$(arg base_orientation) '$(find gazebo_omnicore)/urdf/yumi_single_arm.xacro'" />
 
   <!-- Set ros_control with robot description -->
   <include file="$(find ros_control_omnicore)/launch/omnicore_control.launch" pass_all_args="true">
