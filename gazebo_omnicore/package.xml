@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>gazebo_ros_abb_wrapper</name>
+  <name>gazebo_omnicore</name>
   <version>1.3.1</version>
   <description>
       ROS package for gazebo.
@@ -8,6 +8,7 @@
 
   <author>Andrea Pupa</author>
   <maintainer email="andrea.pupa@unimore.it">Andrea Pupa</maintainer>
+  <maintainer email="niccolo.lucci@polimi.it">Andrea Pupa</maintainer>
 
   <license>BSD</license>
 

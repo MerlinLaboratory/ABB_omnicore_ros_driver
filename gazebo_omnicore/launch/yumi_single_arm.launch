@@ -25,7 +25,7 @@
   </include>
 
   <!-- Set the robot urdf on the parameter server -->
-  <param name="robot_description" command="xacro hardware_interface:=$(arg hardware_interface) gripper_interface:=$(arg gripper_interface) base_translation:=$(arg base_translation) base_orientation:=$(arg base_orientation) '$(find gazebo_ros_abb_wrapper)/urdf/yumi.xacro'" />
+  <param name="robot_description" command="xacro hardware_interface:=$(arg hardware_interface) gripper_interface:=$(arg gripper_interface) base_translation:=$(arg base_translation) base_orientation:=$(arg base_orientation) '$(find gazebo_omnicore)/urdf/yumi.xacro'" />
 
   <!-- Set ros_control with robot description -->
   <include file="$(find ros_control_omnicore)/launch/omnicore_control.launch" pass_all_args="true">
@@ -72,6 +72,6 @@
     <arg name="load_Velocity_JointTrajectoryController" value="$(arg load_Velocity_JointTrajectoryController)"/> <!-- Whether you want to load load_Velocity_JointTrajectoryController -->
   </include>
 
-  <!-- <node name="traj_publisher" pkg="gazebo_ros_abb_wrapper" type="publisher.py" /> -->
-  <node name="gripper_handler" pkg="gazebo_ros_abb_wrapper" type="gripper_handler.py" />
+  <!-- <node name="traj_publisher" pkg="gazebo_omnicore" type="publisher.py" /> -->
+  <node name="gripper_handler" pkg="gazebo_omnicore" type="gripper_handler.py" />
 </launch>

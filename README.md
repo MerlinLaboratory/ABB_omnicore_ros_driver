@@ -22,6 +22,7 @@ The principal packages are briefly described in the following table:
 | [abb_libegm](abb_libegm) | (A modified version of https://github.com/ros-industrial/abb_libegm) Provides a ROS node that exposes hardware interface, for *direct motion control* of ABB robots (via the *Externally Guided Motion* (`EGM`) interface). |
 | [abb_librws](abb_librws) | (A modified version of https://github.com/ros-industrial/abb_librws) Provides a ROS node that communicate with the controller using Robot Web Services 2.0  |
 | [Doc](Doc) | Provides some documentation about how the RAPID StateMachine running inside the Omnicore Controller  |
+| [gazebo_omnicore](gazebo_omnicore) | Provides the possibility to simulate the robots in Gazebo  |
 | [moveit_config](moveit) | Provides the Moveit configurations for the supported robots. |
 | [omnicore_interface](omnicore_interface) | Provides all messages and services definition this pkg uses. |
 | [omnicore_launcher](omnicore_launcher) | Provides all the .launch files to correctly launch the robots in real or simulation. |
