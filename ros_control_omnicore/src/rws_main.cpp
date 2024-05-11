@@ -7,13 +7,8 @@ int main(int argc, char **argv)
 
 	// Create the rws specific to your robot
 	std::shared_ptr<Rws> p_rws = std::make_shared<Rws>(nh);
-	ros::Rate r(10);
 
-	while (ros::ok())
-	{
-		ros::spinOnce();
-		r.sleep();
-	}
+	ros::spin();
 	
 	p_rws->shutdown();
 

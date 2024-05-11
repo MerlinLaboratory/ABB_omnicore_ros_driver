@@ -127,7 +127,7 @@ void Rws::shutdown()
 	std::cout << "Calling shutdown procedure..." << std::endl;
 
 	// Unloading all controllers
-	std::cout << "Unoading ros controllers ..." << std::endl;
+	std::cout << "Unloading ros controllers ..." << std::endl;
 	
 	std::vector<std::string> controllers_runnning = this->GetControllersRunning();
 	this->UnLoadControllers(controllers_runnning);
