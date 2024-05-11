@@ -1,7 +1,7 @@
 <launch>
 
     <arg name="robot"                                      default="gofa" /> <!-- Possibilities: 'gofa' or 'yumi_single_arm'-->
-    <arg name="simulation"                                 default="true" /> <!-- Possibilities: 'true' or 'false'-->
+    <arg name="simulation"                                 default="false" /> <!-- Possibilities: 'true' or 'false'-->
     <arg name="load_Position_JointTrajectoryController"    default="no"/>
     <arg name="load_Velocity_JointGroupVelocityController" default="yes"/>
     <arg name="load_Velocity_JointTrajectoryController"    default="yes"/>

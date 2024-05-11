@@ -47,8 +47,8 @@
 
   <!-- Load the Hardware Interface and Rws Interface if launching the real robot-->
   <group if="$(eval arg('simulation') == false)">
-    <node pkg="ros_control_omnicore" name="omnicore_hw_interface" type="omnicore_control_node" output="screen" if="$(eval arg('simulation'))"/>
-    <node pkg="ros_control_omnicore" name="omnicore_rws_interface" type="omnicore_rws_node" output="screen" if="$(eval arg('simulation'))"/>
+    <node pkg="ros_control_omnicore" name="omnicore_hw_interface" type="omnicore_control_node" output="screen"/>
+    <node pkg="ros_control_omnicore" name="omnicore_rws_interface" type="omnicore_rws_node" output="screen"/>
   </group>
 
 </launch>
