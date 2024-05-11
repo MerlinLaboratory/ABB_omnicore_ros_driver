@@ -216,8 +216,8 @@ Navigate to ros_control_omnicore/config/XXX_cfg.yaml
 Modify the parameters based on your robot configuration (e.g. ip_robot, name_robot, task_robot, etc.). Note that the robot IP in the yaml has to be the the one of the MGMT port of the robot controller (**default is 192.168.125.1**)
 Finally:
 
-- Make sure that the application StateMachine 2.0 has loaded in robotstudio in rapid codes from the controller folder "EGM" 
-- Set robot in Automatic and Motors ON
+- Make sure that the application StateMachine 2.0 has loaded in robotstudio the rapid code 
+- Set robot in Automatic mode and Motors ON
 - Connect an ethernet cable from your Linux machine to the controller MGMT port
 - Set the Linux machine IP address to 192.168.125.100 (it needs to be the same as the one in "Setup the UDP device")
 
@@ -228,13 +228,10 @@ By default, the repo launches the **Gofa** robot with a **velocity_controller/Jo
 ```
 The pkg has been tested with the following ros_control controllers:
 - velocity_controller/JointTrajectoryController
-- position_controller/JointTrajectoryController
 - joinGroupVelocityController
-- joint_state_controller (launched by default by the pkg)
+- joint_state_controller
 
-It is possible to switch from one controller to the other using [ros_control nodes](https://answers.ros.org/question/259022/switching-between-controllers-with-ros_control-controller_manager/). 
-**Note:** velocity_controller and position_controller are mutually exclusive and cannot be used together. See [configuration file](ros_control_omnicore/config) for each robot to decide with controller to load and which controller to start 
-
+It is possible to switch from one controller to the other using [ros_control nodes](https://answers.ros.org/question/259022/switching-between-controllers-with-ros_control-controller_manager/) or the available service. 
 Furthermore, it is possible to set the robot in free drive without the necessity to stop the node:
 
 - Switch to FreeDrive control when ROS is running:
