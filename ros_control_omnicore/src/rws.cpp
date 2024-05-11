@@ -590,15 +590,15 @@ void Rws::PublishOmnicoreState()
 	switch (this->egm_action)
 	{
 		case abb::rws::RWSStateMachineInterface::EGM_ACTION_RUN_JOINT: 
-		omnicoreStateMsg.controller_state = omnicore_interface::OmnicoreState::EGM_MODE;
-		break;
+			omnicoreStateMsg.controller_state = omnicore_interface::OmnicoreState::EGM_MODE;
+			break;
 		
 		case abb::rws::RWSStateMachineInterface::EGM_ACTION_STREAMING: 
-		omnicoreStateMsg.controller_state = omnicore_interface::OmnicoreState::FREE_DRIVE_MODE;
-		break;
+			omnicoreStateMsg.controller_state = omnicore_interface::OmnicoreState::FREE_DRIVE_MODE;
+			break;
 
 		default:
-		break;
+			break;
 	}
 
 	// Digital inputs
