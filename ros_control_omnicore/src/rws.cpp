@@ -102,14 +102,14 @@ Rws::Rws(const ros::NodeHandle &nh) : nh(nh)
 	}
 
 	// Service client instantiation
-    this->client_load_controllers    = this->nh.serviceClient<controller_manager_msgs::LoadController>  ("/controller_manager/load_controller");
+    // this->client_load_controllers    = this->nh.serviceClient<controller_manager_msgs::LoadController>  ("/controller_manager/load_controller");
     this->client_unload_controllers  = this->nh.serviceClient<controller_manager_msgs::UnloadController>("/controller_manager/unload_controller");
     this->client_switch_controllers  = this->nh.serviceClient<controller_manager_msgs::SwitchController>("/controller_manager/switch_controller");
     this->client_list_controllers    = this->nh.serviceClient<controller_manager_msgs::ListControllers> ("/controller_manager/list_controllers");
 
-	while(this->client_load_controllers.waitForExistence(ros::Duration(1))   == false || 
-		  this->client_unload_controllers.waitForExistence(ros::Duration(1)) == false ||
-		  this->client_unload_controllers.waitForExistence(ros::Duration(1)) == false)
+	while(this->client_unload_controllers.waitForExistence(ros::Duration(1))   == false || 
+		  this->client_switch_controllers.waitForExistence(ros::Duration(1)) == false ||
+		  this->client_list_controllers.waitForExistence(ros::Duration(1)) == false)
 	{
 		ROS_INFO("Waiting for controller_manger services");
 	}
@@ -119,24 +119,6 @@ Rws::Rws(const ros::NodeHandle &nh) : nh(nh)
 	// --------------------------------------------------------------- //
 	this->LoadToolData();
 
-	// --------------------------------------------------------------- //
-	// --------------  Loading required ros_controllers -------------- //
-	// --------------------------------------------------------------- //
-	std::vector<std::string> controller_to_load = {"joint_state_controller"};
-
-	nh.getParam("/ros_controllers/controllers_to_load", controller_to_load);
-	controller_to_load.push_back("joint_state_controller");
-	this->LoadControllers(controller_to_load);
-
-	// ------------------------------------------------------- //
-	// --------------  Starting ros_controllers -------------- //
-	// ------------------------------------------------------- //
-	std::vector<std::string> controllers_to_start = {"joint_state_controller"};
-	std::vector<std::string> controllers_to_stop  = {};
-	this->SwitchControllers(controllers_to_start, controllers_to_stop, 2, false, 0.0);
-
-	nh.getParam("/ros_controllers/controllers_to_start", controllers_to_start);
-	this->SwitchControllers(controllers_to_start, controllers_to_stop, 2, false, 0.0);
 
 	ROS_INFO_STREAM_NAMED(this->robot_name, "Rws Ready!");
 }
@@ -617,24 +599,6 @@ void Rws::PublishOmnicoreState()
 // --------------------------------------------------------------- //
 // -------------------- Ros control functions -------------------- //
 // --------------------------------------------------------------- //
-
-
-void Rws::LoadControllers  (std::vector<std::string>& controllers)
-{
-	for(std::string controller : controllers)
-	{
-		controller_manager_msgs::LoadController::Request  req;
-		controller_manager_msgs::LoadController::Response res;
-
-		req.name = controller;
-		this->client_load_controllers.call(req, res);
-
-		if(!res.ok)
-			ROS_ERROR("Impossible to load %s", controller.c_str());
-		else
-			ROS_INFO("Controller %s loaded successfully", controller.c_str());
-	}
-}
 
 void Rws::UnLoadControllers(std::vector<std::string>& controllers)
 {

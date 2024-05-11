@@ -102,7 +102,6 @@ private:
 	ros::ServiceServer server_set_digital_output;
 
 	// Ros services clients
-	ros::ServiceClient client_load_controllers;
 	ros::ServiceClient client_unload_controllers;
 	ros::ServiceClient client_switch_controllers;
 	ros::ServiceClient client_list_controllers;
