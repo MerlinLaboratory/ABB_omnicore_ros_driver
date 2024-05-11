@@ -1,49 +1,40 @@
 <launch>
 
-    <arg name="robot"                                      default="gofa" /> <!-- Possibilities: 'gofa' or 'yumi_single_arm'-->
-    <arg name="simulation"                                 default="false" /> <!-- Possibilities: 'true' or 'false'-->
-    <arg name="load_Position_JointTrajectoryController"    default="no"/>
-    <arg name="load_Velocity_JointGroupVelocityController" default="yes"/>
-    <arg name="load_Velocity_JointTrajectoryController"    default="yes"/>
+    <arg name="robot"               default="gofa" /> <!-- Possibilities: 'gofa' or 'yumi_single_arm'-->
+    <arg name="simulation"          default="false" /> <!-- Possibilities: 'true' or 'false'-->
+    <arg name="controllers"         default="VelocityControllers_JointTrajectoryController" doc="Controllers that are activated by default."/>
+    <arg name="stopped_controllers" default="VelocityControllers_JointGroupVelocityController" doc="Controllers that are initally loaded, but not started."/>
   
     <!-- Launching ros-control pkg -->
     <include file="$(find ros_control_omnicore)/launch/omnicore_control.launch">
-        <arg name="robot"                                      value="$(arg robot)"/> <!-- Robot you want to launch -->
-        <arg name="simulation"                                 value="$(arg simulation)"/> <!-- Whether using real or simulated robot -->
-        <arg name="load_Position_JointTrajectoryController"    value="$(arg load_Position_JointTrajectoryController)"/> <!-- Whether you want to load PositionController_JointTrajectoryController -->
-        <arg name="load_Velocity_JointGroupVelocityController" value="$(arg load_Velocity_JointGroupVelocityController)"/> <!-- Whether you want to load load_Velocity_JointGroupVelocityController -->
-        <arg name="load_Velocity_JointTrajectoryController"    value="$(arg load_Velocity_JointTrajectoryController)"/> <!-- Whether you want to load load_Velocity_JointTrajectoryController -->
+        <arg name="robot"               value="$(arg robot)"/> <!-- Robot you want to launch -->
+        <arg name="simulation"          value="$(arg simulation)"/> <!-- Whether using real or simulated robot -->
+        <arg name="controllers"         value="$(arg controllers)"/>
+        <arg name="stopped_controllers" value="$(arg stopped_controllers)"/>
     </include>
 
     <!-- Launching moveit pkg -->
-    <group if="$(eval arg('load_Velocity_JointTrajectoryController') == 'yes')">     
-        <group if="$(eval arg('robot') == 'yumi_single_arm')">     
-            <include file="$(find yumi_single_arm_moveit_config)/launch/demo.launch">
-                <arg name="pipeline" default="pilz_industrial_motion_planner" /> 
-                <arg name="debug" default="false" />                             
-                <arg name="load_robot_description" default="false"/>             
-                <arg name="moveit_controller_manager" default="simple" />        
-                <arg name="use_rviz" default="false" />    
-                <arg name="load_Position_JointTrajectoryController"    value="$(arg load_Position_JointTrajectoryController)"/> <!-- Whether you want to load PositionController_JointTrajectoryController -->
-                <arg name="load_Velocity_JointTrajectoryController"    value="$(arg load_Velocity_JointTrajectoryController)"/> <!-- Whether you want to load load_Velocity_JointTrajectoryController -->
-            </include>
-        </group>
+    <group if="$(eval arg('robot') == 'yumi_single_arm')">     
+        <include file="$(find yumi_single_arm_moveit_config)/launch/demo.launch">
+            <arg name="pipeline" default="pilz_industrial_motion_planner" /> 
+            <arg name="debug" default="false" />                             
+            <arg name="load_robot_description" default="false"/>             
+            <arg name="moveit_controller_manager" default="simple" />        
+            <arg name="use_rviz" default="false" />    
+        </include>
+    </group>
 
-        <group if="$(eval arg('robot') == 'gofa')">         
-            <include file="$(find gofa_moveit_config)/launch/demo.launch">
-                <arg name="pipeline" default="pilz_industrial_motion_planner" /> 
-                <arg name="debug" default="false" />                             
-                <arg name="load_robot_description" default="false"/>             
-                <arg name="moveit_controller_manager" default="simple" />        
-                <arg name="use_rviz" default="false" />    
-                <arg name="load_Position_JointTrajectoryController"    value="$(arg load_Position_JointTrajectoryController)"/> <!-- Whether you want to load PositionController_JointTrajectoryController -->
-                <arg name="load_Velocity_JointTrajectoryController"    value="$(arg load_Velocity_JointTrajectoryController)"/> <!-- Whether you want to load load_Velocity_JointTrajectoryController -->                 
-            </include>
-        </group> 
+    <group if="$(eval arg('robot') == 'gofa')">         
+        <include file="$(find gofa_moveit_config)/launch/demo.launch">
+            <arg name="pipeline" default="pilz_industrial_motion_planner" /> 
+            <arg name="debug" default="false" />                             
+            <arg name="load_robot_description" default="false"/>             
+            <arg name="moveit_controller_manager" default="simple" />        
+            <arg name="use_rviz" default="false" />    
+        </include>
     </group> 
 
     <!-- Run Rviz and load the default config to see the state of the move_group node -->
-    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find omnicore_launcher)/config/config_no_moveit.rviz" if="$(eval arg('load_Velocity_JointTrajectoryController') == 'no')"/>
-    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find omnicore_launcher)/config/config.rviz"           if="$(eval arg('load_Velocity_JointTrajectoryController') == 'yes')" />
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find omnicore_launcher)/config/config.rviz"/>
 
 </launch>

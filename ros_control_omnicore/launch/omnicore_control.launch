@@ -1,42 +1,33 @@
 <launch>
 
-  <arg name="robot"                                      default="gofa" /> <!-- Possibilities: 'gofa' or 'yumi_single_arm'-->
-  <arg name="load_Position_JointTrajectoryController"    default="no"/>
-  <arg name="load_Velocity_JointGroupVelocityController" default="yes"/>
-  <arg name="load_Velocity_JointTrajectoryController"    default="yes"/>
-  <arg name="simulation"                                 default="true"/>
+  <arg name="robot" default="gofa" doc="Which robot to lauch." /> <!-- Possibilities: 'gofa' or 'yumi_single_arm'-->
+  <arg name="simulation"  default="true" doc="Whether you want to launch the robot in Gazebo."/>
+  <arg name="controllers" default="VelocityControllers_JointTrajectoryController" doc="Controllers that are activated by default."/>
+  <arg name="stopped_controllers" default="VelocityControllers_JointGroupVelocityController" doc="Controllers that are initally loaded, but not started."/>
 
-  <!-- Load the config launching Gofa or Yumi Single Arm -->
+  <!-- Load the config for Gofa/Yumi Single Arm -->
   <group if="$(eval arg('simulation') == false)">
     <arg name="yamlFileRobot"  default="$(find ros_control_omnicore)/config/$(arg robot)_cfg.yaml" />
     <rosparam command="load"   file="$(arg yamlFileRobot)" />
   </group>
   
-  <!-- Load common controller for Gofa and Yumi Single Arm -->
+  <!-- Load controllers params for Gofa/Yumi Single Arm -->
   <rosparam command="load" file="$(find ros_control_omnicore)/config/Controllers/joint_state_controller.yaml"/>
-
-  <!-- Load the config launching for ros_controllers Arm -->
-  <group if="$(eval arg('load_Position_JointTrajectoryController') == 'yes')">     
-    <arg name="yaml_Position_JointTrajContr" default="$(find ros_control_omnicore)/config/Controllers/$(arg robot)/PositionControllers_JointTrajectoryController.yaml" />
-    <rosparam command="load" file="$(arg yaml_Position_JointTrajContr)" />
-  </group>
-
-  <group if="$(eval arg('load_Velocity_JointGroupVelocityController') == 'yes')">     
-    <arg name="yaml_Velocity_GroupVelContr" default="$(find ros_control_omnicore)/config/Controllers/$(arg robot)/VelocityControllers_JointGroupVelocityController.yaml" />
-    <rosparam command="load" file="$(arg yaml_Velocity_GroupVelContr)" />
-  </group>
-
-  <group if="$(eval arg('load_Velocity_JointTrajectoryController') == 'yes')">     
-    <arg name="yaml_Velocity_TrajVelContr" default="$(find ros_control_omnicore)/config/Controllers/$(arg robot)/VelocityControllers_JointTrajectoryController.yaml" />
-    <rosparam command="load" file="$(arg yaml_Velocity_TrajVelContr)" />
-  </group> 
-
+  <rosparam command="load" file="$(find ros_control_omnicore)/config/Controllers/$(arg robot)/VelocityControllers_JointGroupVelocityController.yaml" />
+  <rosparam command="load" file="$(find ros_control_omnicore)/config/Controllers/$(arg robot)/VelocityControllers_JointTrajectoryController.yaml" />
   <group if="$(eval arg('robot') == 'yumi_single_arm')">
     <arg name="yaml_Gripper_Controller" default="$(find ros_control_omnicore)/config/Controllers/$(arg robot)/gripper_controller.yaml" />
     <rosparam command="load" file="$(arg yaml_Gripper_Controller)" />
   </group> 
 
-  <!-- Load the URDF pkg only if lauching real robot -->
+  <!-- Load the controllers -->
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="$(arg controllers) joint_state_controller"/>
+  <!-- Load other controllers, but do not start them -->
+  <group if="$(eval arg('stopped_controllers') != '')">
+    <node name="stopped_spawner" pkg="controller_manager" type="spawner" respawn="false" args="--stopped $(arg stopped_controllers)" output="screen"/>
+  </group>
+
+  <!-- Load the URDF pkg only if launching real robot. Otherwise gazebo_omnicore pkg loads it -->
   <group if="$(eval arg('simulation') == false)">
     <include file="$(find robots_description)/launch/display.launch">
       <arg name="robot"                        value="$(arg robot)" />
