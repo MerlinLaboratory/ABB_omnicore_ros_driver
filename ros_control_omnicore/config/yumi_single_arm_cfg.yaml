@@ -4,7 +4,7 @@
 
 robot:
   name: "yumi_single_arm"
-  ip_robot: "192.168.131.200"
+  ip_robot: "192.168.125.1"
   robot_port_rws: 443
   # ip_robot: "192.168.56.101" # for virtual robot (robotstudio)
   # robot_port_rws: 80 # for virtual robot (robotstudio)
@@ -30,7 +30,7 @@ robot:
 ###############################################
 
 robot_hw_control_loop:
-  loop_hz: 100
+  loop_hz: 250
   cycle_time_error_threshold: 0.004
 
 ###############################################
@@ -46,11 +46,3 @@ robot_hardware_interface:
     - joint_5
     - joint_6
     - joint_7
-
-######################################################
-############# Loading default controller  ############
-######################################################
-
-ros_controllers:
-  controllers_to_load: ["VelocityControllers_JointTrajectoryController", "VelocityControllers_JointGroupVelocityController"]
-  controllers_to_start: ["VelocityControllers_JointTrajectoryController"]

@@ -102,7 +102,6 @@ Rws::Rws(const ros::NodeHandle &nh) : nh(nh)
 	}
 
 	// Service client instantiation
-    // this->client_load_controllers    = this->nh.serviceClient<controller_manager_msgs::LoadController>  ("/controller_manager/load_controller");
     this->client_unload_controllers  = this->nh.serviceClient<controller_manager_msgs::UnloadController>("/controller_manager/unload_controller");
     this->client_switch_controllers  = this->nh.serviceClient<controller_manager_msgs::SwitchController>("/controller_manager/switch_controller");
     this->client_list_controllers    = this->nh.serviceClient<controller_manager_msgs::ListControllers> ("/controller_manager/list_controllers");
