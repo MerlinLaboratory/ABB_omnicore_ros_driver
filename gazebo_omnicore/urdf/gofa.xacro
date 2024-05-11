@@ -4,6 +4,7 @@
   <!-- Parameters -->
   <arg name="name" default="gofa" />
   <xacro:arg name="hardware_interface" default="VelocityJointInterface" />
+  <xacro:arg name="gripper_interface" default="" />
   <xacro:arg name="base_translation" default="0" />
   <xacro:arg name="base_orientation" default="0" />
   <xacro:arg name="child" default="flange" />
