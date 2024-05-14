@@ -125,6 +125,7 @@ private:
 	// StateMachine state
 	abb::rws::RWSStateMachineInterface::States state_machine_state = abb::rws::RWSStateMachineInterface::STATE_IDLE;
 	abb::rws::RWSStateMachineInterface::EGMActions egm_action = abb::rws::RWSStateMachineInterface::EGM_ACTION_UNKNOWN;
+	std::string omnicore_controller_state = omnicore_interface::OmnicoreState::UNKNOWN;
 
 	// EGM parameters
 	int pos_corr_gain;

@@ -155,9 +155,9 @@ EGMActions RWSStateMachineInterface::Services::EGM::getCurrentAction(const std::
   {
     switch ((int) temp_current_action.value)
     {
-      case EGM_ACTION_STOP:
-        result = EGM_ACTION_STOP;
-      break;
+      case EGM_ACTION_UNKNOWN:
+        result = EGM_ACTION_UNKNOWN;
+        break;
 
       case EGM_ACTION_RUN_JOINT:
         result = EGM_ACTION_RUN_JOINT;
@@ -165,6 +165,18 @@ EGMActions RWSStateMachineInterface::Services::EGM::getCurrentAction(const std::
 
       case EGM_ACTION_RUN_POSE:
         result = EGM_ACTION_RUN_POSE;
+      break;
+
+      case EGM_ACTION_STOP:
+        result = EGM_ACTION_STOP;
+      break;
+
+      case EGM_ACTION_START_STREAMING:
+        result = EGM_ACTION_START_STREAMING;
+      break;
+
+      case EGM_ACTION_STOP_STREAMING:
+        result = EGM_ACTION_STOP_STREAMING;
       break;
 
       default:

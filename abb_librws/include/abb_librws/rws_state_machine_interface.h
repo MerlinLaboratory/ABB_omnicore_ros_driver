@@ -93,11 +93,12 @@ public:
    */
   enum EGMActions
   {
-    EGM_ACTION_STOP,      ///< \brief Stop action.
+    EGM_ACTION_UNKNOWN,    ///< \brief Unknown action.
     EGM_ACTION_RUN_JOINT, ///< \brief Joint action.
     EGM_ACTION_RUN_POSE,  ///< \brief Pose action.
-    EGM_ACTION_STREAMING, ///< \brief streaming action.
-    EGM_ACTION_UNKNOWN    ///< \brief Unknown action.
+    EGM_ACTION_STOP,      ///< \brief Stop action.
+    EGM_ACTION_START_STREAMING, ///< \brief streaming action.
+    EGM_ACTION_STOP_STREAMING  ///< \brief streaming action.
   };
 
   /**

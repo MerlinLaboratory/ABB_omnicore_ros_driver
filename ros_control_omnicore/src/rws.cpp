@@ -96,10 +96,8 @@ Rws::Rws(const ros::NodeHandle &nh) : nh(nh)
 	if(EGMSetParams() == false)
 		ROS_ERROR("Cannot load EGM params");
 	if(this->EGMStartJointSignal() == false)
-	{
 		ROS_ERROR("Cannot put robot in EGM mode");
-		this->egm_action = abb::rws::RWSStateMachineInterface::EGM_ACTION_RUN_JOINT;
-	}
+	this->omnicore_controller_state = omnicore_interface::OmnicoreState::EGM_MODE;
 
 	// Service client instantiation
     this->client_unload_controllers    = this->nh.serviceClient<controller_manager_msgs::UnloadController>("/controller_manager/unload_controller");
@@ -244,7 +242,7 @@ bool Rws::FreeDriveStartSignal()
 	else
 	{
 		nh.setParam("/robot/is_free_drive_on", true);
-		this->state_machine_state = abb::rws::RWSStateMachineInterface::STATE_FREE_DRIVE_ROUTINE;
+		// this->state_machine_state = abb::rws::RWSStateMachineInterface::STATE_FREE_DRIVE_ROUTINE;
 	}
 
 	return success;
@@ -252,7 +250,7 @@ bool Rws::FreeDriveStartSignal()
 
 bool Rws::FreeDriveStopSignal()
 {
-	this->state_machine_state = abb::rws::RWSStateMachineInterface::STATE_IDLE;
+	// this->state_machine_state = abb::rws::RWSStateMachineInterface::STATE_IDLE;
 
 	p_rws_interface->requestMasterShip();
 	bool success = this->p_rws_interface->services().rapid().setLeadthroughOff(this->task_robot);
@@ -274,8 +272,7 @@ bool Rws::FreeDriveStopSignal()
 
 bool Rws::SetControlToEgmSrv(std_srvs::TriggerRequest& req, std_srvs::TriggerResponse& res)
 {
-	if(this->egm_action == abb::rws::RWSStateMachineInterface::EGM_ACTION_RUN_JOINT || 
-	   this->egm_action == abb::rws::RWSStateMachineInterface::EGM_ACTION_RUN_POSE)
+	if(this->omnicore_controller_state == omnicore_interface::OmnicoreState::EGM_MODE)
 	{
 		ROS_WARN("Robot is already in Egm");
 		res.success = true;
@@ -288,13 +285,13 @@ bool Rws::SetControlToEgmSrv(std_srvs::TriggerRequest& req, std_srvs::TriggerRes
 	this->SwitchControllers(controllers_to_start, controllers_to_stop, 2, false, 0.0);
 
 	// Stopping streaming if active
-	if( this->egm_action == abb::rws::RWSStateMachineInterface::EGM_ACTION_STREAMING)
+	if( this->egm_action == abb::rws::RWSStateMachineInterface::EGM_ACTION_START_STREAMING)
 	{
 		res.success = this->EGMStopStreamingSignal();
 		ros::Duration(2).sleep();
 	}
 
-	if(this->state_machine_state == abb::rws::RWSStateMachineInterface::STATE_FREE_DRIVE_ROUTINE)
+	if(this->omnicore_controller_state == omnicore_interface::OmnicoreState::FREE_DRIVE_MODE)
 	{
 		res.success = res.success && this->FreeDriveStopSignal();
 		ros::Duration(2).sleep();
@@ -302,12 +299,15 @@ bool Rws::SetControlToEgmSrv(std_srvs::TriggerRequest& req, std_srvs::TriggerRes
 
 	res.success = res.success && this->EGMStartJointSignal();
 
+	if(res.success)
+		this->omnicore_controller_state = omnicore_interface::OmnicoreState::EGM_MODE;
+
 	return true;
 }
 
 bool Rws::SetControlToFreeDriveSrv(std_srvs::TriggerRequest& req, std_srvs::TriggerResponse& res)
 {
-	if(this->state_machine_state == abb::rws::RWSStateMachineInterface::STATE_FREE_DRIVE_ROUTINE)
+	if(this->omnicore_controller_state == omnicore_interface::OmnicoreState::FREE_DRIVE_MODE)
 	{
 		ROS_WARN("Robot is already in Free Drive");
 		res.success = true;
@@ -339,8 +339,11 @@ bool Rws::SetControlToFreeDriveSrv(std_srvs::TriggerRequest& req, std_srvs::Trig
 	res.success = res.success && this->FreeDriveStartSignal();
 	ros::Duration(2).sleep();
 
-	if(this->egm_action != abb::rws::RWSStateMachineInterface::EGM_ACTION_STREAMING)
+	if(this->egm_action != abb::rws::RWSStateMachineInterface::EGM_ACTION_START_STREAMING)
 		res.success = res.success && this->EGMStartStreamingSignal();
+	
+	if(res.success)
+		this->omnicore_controller_state = omnicore_interface::OmnicoreState::FREE_DRIVE_MODE;
 
 	return true;
 }
@@ -596,20 +599,37 @@ void Rws::PublishOmnicoreState()
 			break;
 	}
 
-	// Controller state
 	switch (this->egm_action)
 	{
-		case abb::rws::RWSStateMachineInterface::EGM_ACTION_RUN_JOINT: 
-			omnicoreStateMsg.controller_state = omnicore_interface::OmnicoreState::EGM_MODE;
+		case abb::rws::RWSStateMachineInterface::EGMActions::EGM_ACTION_UNKNOWN:
+			omnicoreStateMsg.egm_action_state = omnicore_interface::OmnicoreState::EGM_ACTION_UNKNOWN;
 			break;
 		
-		case abb::rws::RWSStateMachineInterface::EGM_ACTION_STREAMING: 
-			omnicoreStateMsg.controller_state = omnicore_interface::OmnicoreState::FREE_DRIVE_MODE;
+		case abb::rws::RWSStateMachineInterface::EGMActions::EGM_ACTION_RUN_JOINT:
+			omnicoreStateMsg.egm_action_state = omnicore_interface::OmnicoreState::EGM_ACTION_RUN_JOINT;
 			break;
 
+		case abb::rws::RWSStateMachineInterface::EGMActions::EGM_ACTION_RUN_POSE:
+			omnicoreStateMsg.egm_action_state = omnicore_interface::OmnicoreState::EGM_ACTION_RUN_POSE;
+			break;
+
+		case abb::rws::RWSStateMachineInterface::EGMActions::EGM_ACTION_STOP:
+			omnicoreStateMsg.egm_action_state = omnicore_interface::OmnicoreState::EGM_ACTION_STOP;
+			break;
+		
+		case abb::rws::RWSStateMachineInterface::EGMActions::EGM_ACTION_START_STREAMING:
+			omnicoreStateMsg.egm_action_state = omnicore_interface::OmnicoreState::EGM_ACTION_START_STREAMING;
+			break;
+		
+		case abb::rws::RWSStateMachineInterface::EGMActions::EGM_ACTION_STOP_STREAMING:
+			omnicoreStateMsg.egm_action_state = omnicore_interface::OmnicoreState::EGM_ACTION_STOP_STREAMING;
+
 		default:
+			omnicoreStateMsg.state_machine_state = omnicore_interface::OmnicoreState::UNKNOWN;
 			break;
 	}
+
+	omnicoreStateMsg.controller_state = this->omnicore_controller_state;
 
 	// Digital inputs
 	omnicoreStateMsg.digital_inputs_state = ReadDigitalInputs().data;
