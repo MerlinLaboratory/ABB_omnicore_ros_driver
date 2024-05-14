@@ -43,7 +43,7 @@ private:
 
 	// Ros control functions
 	void LoadControllers  (std::vector<std::string>& controllers);
-	void UnLoadControllers(std::vector<std::string>& controllers);
+	void UnloadControllers(std::vector<std::string>& controllers);
 	void SwitchControllers(std::vector<std::string>& controllers_to_start,
 						   std::vector<std::string>& controllers_to_stop,
 						   int strictness,
@@ -67,7 +67,6 @@ private:
 	bool SetControlToFreeDriveSrv(std_srvs::TriggerRequest& req, std_srvs::TriggerResponse& res);
 	bool MoveJRapidSrv(omnicore_interface::moveJ_rapidRequest& req, omnicore_interface::moveJ_rapidResponse& res);
 	bool MoveLRapidSrv(omnicore_interface::moveL_rapidRequest& req, omnicore_interface::moveL_rapidResponse& res);
-	bool ShutdownSrv(std_srvs::TriggerRequest& req, std_srvs::TriggerResponse& res);
 	bool SetDigitalOutputSrv(omnicore_interface::set_digital_outputRequest& req, omnicore_interface::set_digital_outputResponse& res);
 
 	// Generic funtions
@@ -75,6 +74,7 @@ private:
 	std_msgs::Byte ReadDigitalInputs();
 	bool		   SetDigitalOutput(uint8_t index, uint8_t value);
 	void 		   PublishOmnicoreState();
+	void 		   MonitorEmergencyStop();
 
 	std::string robot_name;
 	std::string task_name;
@@ -87,6 +87,9 @@ private:
 	// --------------------------------------------------------------- //
 	// ---------------------- Variables for ROS ---------------------- //
 	// --------------------------------------------------------------- //
+
+	// Monitors
+	ros::Timer timerMonitorEmergencyStop;
 	
 	// Publishers
 	ros::Timer timerOmnicoreState;
@@ -98,13 +101,13 @@ private:
 	ros::ServiceServer server_moveJ_rapid;
 	ros::ServiceServer server_moveL_rapid;
 	ros::ServiceServer server_set_egm_params;
-	ros::ServiceServer server_egm_shutdown;
 	ros::ServiceServer server_set_digital_output;
 
 	// Ros services clients
 	ros::ServiceClient client_unload_controllers;
 	ros::ServiceClient client_switch_controllers;
 	ros::ServiceClient client_list_controllers;
+	ros::ServiceClient client_shutdown_control_loop;
 
 	// --------------------------------------------------------------- //
 	// -------------- Variables for connecting to Robot -------------- //

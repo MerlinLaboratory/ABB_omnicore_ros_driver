@@ -177,6 +177,20 @@ namespace ros_control_omnicore
       return;
    }
 
+   void OmnicoreHWInterface::shutdown()
+   {
+      // Setting position to last read one and velocity to 0
+      this->joint_position_command = this->joint_position;
+      std::fill(this->joint_velocity_command.begin(), this->joint_velocity_command.end(), 0.0);
+
+      // Writing in the EGM buffer of size 4 the last roobt position and zero velocity
+      ros::Duration duration(0.001);
+      this->write( duration );
+      this->write( duration );
+      this->write( duration );
+      this->write( duration );
+   }
+
    void OmnicoreHWInterface::registerJointLimits(const hardware_interface::JointHandle &joint_handle_position,
                                                  const hardware_interface::JointHandle &joint_handle_velocity,
                                                  std::size_t joint_id)

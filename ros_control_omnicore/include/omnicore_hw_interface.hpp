@@ -48,6 +48,9 @@ namespace ros_control_omnicore
 		/** \brief Write the command to the robot hardware. */
 		void write(ros::Duration &elapsed_time);
 
+		/** \brief Shutdown the robot hardware. */
+		void shutdown();
+
 		/** \brief Set all members to default values */
 		virtual void reset();
 

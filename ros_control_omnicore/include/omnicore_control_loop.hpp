@@ -1,6 +1,7 @@
 #include <time.h>
 #include <controller_manager/controller_manager.h>
 #include "omnicore_hw_interface.hpp"
+#include "std_srvs/Trigger.h"
 
 namespace ros_control_omnicore
 {
@@ -28,6 +29,9 @@ namespace ros_control_omnicore
 		void run();
 
 	private:
+		// Callbacks
+		bool shutdownControlLoopSrv(std_srvs::Trigger::Request& req, std_srvs::Trigger::Response& res);
+
 		// Update funcion called with loop_hz_ rate
 		void update();
 
@@ -40,6 +44,9 @@ namespace ros_control_omnicore
 		// Settings
 		ros::Duration desired_update_period_;
 		double cycle_time_error_threshold_;
+
+		// Shutdown
+		bool shutdown = false;
 
 		// Timing
 		double loop_hz_;
@@ -55,6 +62,9 @@ namespace ros_control_omnicore
 
 		/** \brief Abstract Hardware Interface for your robot */
 		std::shared_ptr<ros_control_omnicore::OmnicoreHWInterface> hardware_interface;
+
+		// Services
+		ros::ServiceServer server_shutdown_control_loop_srv;
 
 	}; // end class
 

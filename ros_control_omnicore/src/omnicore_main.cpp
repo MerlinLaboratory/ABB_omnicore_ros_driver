@@ -17,7 +17,7 @@ int main(int argc, char **argv)
 	// Create the control loop
 	ros_control_omnicore::OmnicoreControlLoop control_loop(nh, p_hw_interface);
 
-	control_loop.run(); // Blocks until shutdown signal recieved
-
+	control_loop.run(); // Blocks until shutdown signal received
+	
 	return 0;
 }

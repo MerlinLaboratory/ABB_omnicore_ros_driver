@@ -16,6 +16,8 @@ namespace ros_control_omnicore
 		clock_gettime(CLOCK_MONOTONIC, &last_time_);
 
 		this->desired_update_period_ = ros::Duration(1 / loop_hz_);
+
+		this->server_shutdown_control_loop_srv = this->nh_.advertiseService("shutdown_control_loop", &OmnicoreControlLoop::shutdownControlLoopSrv, this);
 	}
 
 	void OmnicoreControlLoop::run()
@@ -23,8 +25,13 @@ namespace ros_control_omnicore
 		ros::Rate rate(loop_hz_);
 		while (ros::ok())
 		{
-			update();
-			rate.sleep();
+			if(this->shutdown)
+				ros::shutdown();
+			else
+			{
+				update();
+				rate.sleep();
+			}
 		}		
 	}
 
@@ -54,6 +61,15 @@ namespace ros_control_omnicore
 
 		// Output
 		this->hardware_interface->write(elapsed_time_);
+	}
+
+	bool OmnicoreControlLoop::shutdownControlLoopSrv(std_srvs::Trigger::Request& req, std_srvs::Trigger::Response& res)
+	{
+		this->shutdown = true;
+		this->hardware_interface->shutdown();
+		ROS_INFO("hardware interface shutdown");
+		res.success = true;
+		return true;
 	}
 
 } // namespace ros_control_omnicore

@@ -1,5 +1,13 @@
 # This message represents the state of the Omnicore Controller
 
+uint8 state_machine_state
+
+uint8 IDLE          = 0
+uint8 INITIALISE    = 1
+uint8 EGM_ROUTINE   = 2
+uint8 RAPID_ROUTINE = 3
+uint8 UNKNOWN       = 4
+
 uint8 controller_state
 
 uint8 EGM_MODE        = 0

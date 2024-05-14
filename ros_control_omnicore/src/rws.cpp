@@ -62,12 +62,12 @@ Rws::Rws(const ros::NodeHandle &nh) : nh(nh)
 	this->omnicore_state_publisher = this->nh.advertise<omnicore_interface::OmnicoreState>("omnicore_state", 1);
 
 	// Publishers to topics with timer
-	this->timerOmnicoreState = this->nh.createTimer(ros::Duration(0.5), std::bind(&Rws::PublishOmnicoreState, this));
+	this->timerOmnicoreState		= this->nh.createTimer(ros::Duration(0.5), std::bind(&Rws::PublishOmnicoreState, this));
+	this->timerMonitorEmergencyStop = this->nh.createTimer(ros::Duration(0.5), std::bind(&Rws::MonitorEmergencyStop, this));
 
 	// Service server instantiation
 	this->server_set_egm_state        = this->nh.advertiseService("set_control_to_egm",        &Rws::SetControlToEgmSrv,       this);
 	this->server_set_free_drive_state = this->nh.advertiseService("set_control_to_free_drive", &Rws::SetControlToFreeDriveSrv, this);
-	this->server_egm_shutdown		  = this->nh.advertiseService("egm_shutdown"	         , &Rws::ShutdownSrv, 		       this);
 	this->server_moveJ_rapid 		  = this->nh.advertiseService("moveJ_rapid"				 , &Rws::MoveJRapidSrv, 		   this);
 	this->server_moveL_rapid 		  = this->nh.advertiseService("moveL_rapid"				 , &Rws::MoveLRapidSrv, 		   this);
 	this->server_set_digital_output	  = this->nh.advertiseService("set_digital_output"	     , &Rws::SetDigitalOutputSrv, 	   this);
@@ -102,15 +102,16 @@ Rws::Rws(const ros::NodeHandle &nh) : nh(nh)
 	}
 
 	// Service client instantiation
-    this->client_unload_controllers  = this->nh.serviceClient<controller_manager_msgs::UnloadController>("/controller_manager/unload_controller");
-    this->client_switch_controllers  = this->nh.serviceClient<controller_manager_msgs::SwitchController>("/controller_manager/switch_controller");
-    this->client_list_controllers    = this->nh.serviceClient<controller_manager_msgs::ListControllers> ("/controller_manager/list_controllers");
-
+    this->client_unload_controllers    = this->nh.serviceClient<controller_manager_msgs::UnloadController>("/controller_manager/unload_controller");
+    this->client_switch_controllers    = this->nh.serviceClient<controller_manager_msgs::SwitchController>("/controller_manager/switch_controller");
+    this->client_list_controllers      = this->nh.serviceClient<controller_manager_msgs::ListControllers> ("/controller_manager/list_controllers");
+	this->client_shutdown_control_loop = this->nh.serviceClient<std_srvs::Trigger> ("shutdown_control_loop");
 	while(this->client_unload_controllers.waitForExistence(ros::Duration(1))   == false || 
 		  this->client_switch_controllers.waitForExistence(ros::Duration(1)) == false ||
-		  this->client_list_controllers.waitForExistence(ros::Duration(1)) == false)
+		  this->client_list_controllers.waitForExistence(ros::Duration(1)) == false ||
+		  this->client_shutdown_control_loop.waitForExistence(ros::Duration(1)) == false)
 	{
-		ROS_INFO("Waiting for controller_manger services");
+		ROS_INFO("Waiting for controller_manger/control_loop services");
 	}
 
 	// --------------------------------------------------------------- //
@@ -130,9 +131,13 @@ void Rws::shutdown()
 	std::cout << "Unloading ros controllers ..." << std::endl;
 	
 	std::vector<std::string> controllers_runnning = this->GetControllersRunning();
-	this->UnLoadControllers(controllers_runnning);
+	this->UnloadControllers(controllers_runnning);
 
 	std::cout << "Killing EGM ..." << std::endl;
+
+	// Getting state machine state
+	this->state_machine_state = p_rws_interface->services().main().getCurrentState(this->task_robot);
+
 	switch (this->state_machine_state)
 	{
 		case abb::rws::RWSStateMachineInterface::STATE_IDLE:
@@ -152,10 +157,12 @@ void Rws::shutdown()
 			break;
 		}
 		default:
+			this->EGMStopJointSignal();
 			ROS_ERROR("Statemachine State not found! Unpredictable robot behaviours could happen!");
 	}
 
-	ros::shutdown();
+	// Stopping RAPID
+	this->p_rws_interface->stopRAPIDExecution();
 
 	return;
 }
@@ -174,8 +181,8 @@ bool Rws::EGMStartJointSignal()
 		return success;
 	}
 
-	this->state_machine_state = abb::rws::RWSStateMachineInterface::STATE_RUN_EGM_ROUTINE;
-	this->egm_action = abb::rws::RWSStateMachineInterface::EGM_ACTION_RUN_JOINT;
+	// this->state_machine_state = abb::rws::RWSStateMachineInterface::STATE_RUN_EGM_ROUTINE;
+	// this->egm_action = abb::rws::RWSStateMachineInterface::EGM_ACTION_RUN_JOINT;
 
 	return success;
 }
@@ -190,8 +197,8 @@ bool Rws::EGMStopJointSignal()
 		return success; 
 	}
 
-	this->state_machine_state = abb::rws::RWSStateMachineInterface::STATE_IDLE;
-	this->egm_action = abb::rws::RWSStateMachineInterface::EGM_ACTION_STOP;
+	// this->state_machine_state = abb::rws::RWSStateMachineInterface::STATE_IDLE;
+	// this->egm_action = abb::rws::RWSStateMachineInterface::EGM_ACTION_STOP;
 
 	return success;
 }
@@ -206,7 +213,7 @@ bool Rws::EGMStartStreamingSignal()
 		return success;
 	}
 
-	this->egm_action = abb::rws::RWSStateMachineInterface::EGM_ACTION_STREAMING;
+	// this->egm_action = abb::rws::RWSStateMachineInterface::EGM_ACTION_STREAMING;
 
 	return success;
 }
@@ -221,7 +228,7 @@ bool Rws::EGMStopStreamingSignal()
 		return success; 
 	}
 
-	this->egm_action = abb::rws::RWSStateMachineInterface::EGM_ACTION_STOP;
+	// this->egm_action = abb::rws::RWSStateMachineInterface::EGM_ACTION_STOP;
 
 	return success;
 }
@@ -255,7 +262,7 @@ bool Rws::FreeDriveStopSignal()
 		ROS_ERROR("Cannot stop robot free drive");
 	{
 		nh.setParam("/robot/is_free_drive_on", false);
-		this->state_machine_state = abb::rws::RWSStateMachineInterface::STATE_IDLE;
+		// this->state_machine_state = abb::rws::RWSStateMachineInterface::STATE_IDLE;
 	}
 
 	return success;
@@ -449,12 +456,6 @@ bool Rws::EGMSetParams()
 	return true;
 }
 
-bool Rws::ShutdownSrv(std_srvs::TriggerRequest& req, std_srvs::TriggerResponse& res)
-{
-	this->shutdown();
-	return true;
-}
-
 bool Rws::SetDigitalOutputSrv(omnicore_interface::set_digital_outputRequest& req, omnicore_interface::set_digital_outputResponse& res)
 {
 	res.success = this->SetDigitalOutput(req.port, req.value);
@@ -567,6 +568,34 @@ void Rws::PublishOmnicoreState()
 {
 	omnicore_interface::OmnicoreState omnicoreStateMsg = omnicore_interface::OmnicoreState();
 
+	// Getting state_machine and egm_action states from controller
+	this->state_machine_state = p_rws_interface->services().main().getCurrentState(this->task_robot);
+	this->egm_action = p_rws_interface->services().egm().getCurrentAction(this->task_robot);
+
+	// State machine state
+	switch (this->state_machine_state)
+	{
+		case abb::rws::RWSStateMachineInterface::States::STATE_IDLE:
+			omnicoreStateMsg.state_machine_state = omnicore_interface::OmnicoreState::IDLE;
+			break;
+		
+		case abb::rws::RWSStateMachineInterface::States::STATE_INITIALIZE:
+			omnicoreStateMsg.state_machine_state = omnicore_interface::OmnicoreState::INITIALISE;
+			break;
+
+		case abb::rws::RWSStateMachineInterface::States::STATE_RUN_EGM_ROUTINE:
+			omnicoreStateMsg.state_machine_state = omnicore_interface::OmnicoreState::EGM_ROUTINE;
+			break;
+
+		case abb::rws::RWSStateMachineInterface::States::STATE_RUN_RAPID_ROUTINE:
+			omnicoreStateMsg.state_machine_state = omnicore_interface::OmnicoreState::RAPID_ROUTINE;
+			break;
+
+		default:
+			omnicoreStateMsg.state_machine_state = omnicore_interface::OmnicoreState::UNKNOWN;
+			break;
+	}
+
 	// Controller state
 	switch (this->egm_action)
 	{
@@ -595,11 +624,33 @@ void Rws::PublishOmnicoreState()
 	return;
 }
 
+void Rws::MonitorEmergencyStop()
+{
+	p_rws_interface->requestMasterShip();
+
+	std::string emergency_stop_value = this->p_rws_interface->getIOSignal("scEmergencyStop");
+
+	// In case the Emergency Stop is pressed, the system is shutdown or safety reasons
+	if(emergency_stop_value == "0")
+	{
+		// trigger shutdown control loop first
+		std_srvs::Trigger::Request req; std_srvs::Trigger::Response res;
+		this->client_shutdown_control_loop.call(req, res);
+
+		ROS_INFO("Finished calling srv shutdown_control_loop");
+
+		// kill this
+		ros::shutdown();
+	}
+
+	p_rws_interface->releaseMasterShip();
+}
+
 // --------------------------------------------------------------- //
 // -------------------- Ros control functions -------------------- //
 // --------------------------------------------------------------- //
 
-void Rws::UnLoadControllers(std::vector<std::string>& controllers)
+void Rws::UnloadControllers(std::vector<std::string>& controllers)
 {
 	for(std::string controller : controllers)
 	{
