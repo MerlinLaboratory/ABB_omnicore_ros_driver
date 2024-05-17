@@ -34,4 +34,28 @@
     </plugin>
   </gazebo>
 
+  <gazebo reference="L1">
+    <gravity>0</gravity>
+  </gazebo>
+
+  <gazebo reference="L2">
+    <gravity>0</gravity>
+  </gazebo>
+
+  <gazebo reference="L3">
+    <gravity>0</gravity>
+  </gazebo>
+
+  <gazebo reference="L4">
+    <gravity>0</gravity>
+  </gazebo>
+
+  <gazebo reference="L5">
+    <gravity>0</gravity>
+  </gazebo>
+
+  <gazebo reference="L6">
+    <gravity>0</gravity>
+  </gazebo>
+
 </robot>
