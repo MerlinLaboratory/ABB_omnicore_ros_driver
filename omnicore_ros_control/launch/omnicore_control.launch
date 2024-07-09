@@ -27,9 +27,9 @@
     <node name="stopped_spawner" pkg="controller_manager" type="spawner" respawn="false" args="--stopped $(arg stopped_controllers)" output="screen"/>
   </group>
 
-  <!-- Load the URDF pkg only if launching real robot. Otherwise gazebo_omnicore pkg loads it -->
+  <!-- Load the URDF pkg only if launching real robot. Otherwise omnicore_gazebo pkg loads it -->
   <group if="$(eval arg('simulation') == false)">
-    <include file="$(find robots_description)/launch/display.launch">
+    <include file="$(find omnicore_description)/launch/display.launch">
       <arg name="robot"                        value="$(arg robot)" />
       <arg name="launch_rviz"                  value="false" />
       <arg name="launch_joint_state_publisher" value="false"/>

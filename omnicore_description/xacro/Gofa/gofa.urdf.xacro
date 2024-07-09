@@ -2,7 +2,7 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="gofa">
 
 	<!-- Import Transmissions -->
-	<xacro:include filename="$(find robots_description)/xacro/Gofa/gofa.transmission.xacro" />
+	<xacro:include filename="$(find omnicore_description)/xacro/Gofa/gofa.transmission.xacro" />
 
 	<!-- GoFa color -->
 	<material name="gofa_color">
@@ -16,7 +16,7 @@
 	<xacro:macro name="VC" params="suffix">
 		<origin xyz="0 0 0" rpy="0 0 0"/>
 		<geometry>
-			<mesh filename="package://robots_description/meshes/Gofa/${suffix}.STL"/>
+			<mesh filename="package://omnicore_description/meshes/Gofa/${suffix}.STL"/>
 		</geometry>
 	</xacro:macro>
 

@@ -16,11 +16,11 @@
   <!-- World fixed joint -->
   <link name="world" />
   <!-- Import Rviz colors -->
-  <xacro:include filename="$(find robots_description)/Util/materials.xacro" />
+  <xacro:include filename="$(find omnicore_description)/Util/materials.xacro" />
   <!-- Import utilities -->
-  <xacro:include filename="$(find robots_description)/Util/utilities.xacro" />
+  <xacro:include filename="$(find omnicore_description)/Util/utilities.xacro" />
   <!--Import the gofa macro -->
-  <xacro:include filename="$(find robots_description)/xacro/Gofa/gofa.urdf.xacro" />
+  <xacro:include filename="$(find omnicore_description)/xacro/Gofa/gofa.urdf.xacro" />
 
   <xacro:gofa parent="world" hardware_interface="${hardware_interface}" child="${child}"> 
     <origin xyz="0 0 $(arg base_translation)" rpy="0 0 $(arg base_orientation)" />

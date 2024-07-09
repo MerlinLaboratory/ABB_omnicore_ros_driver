@@ -22,12 +22,12 @@ The principal packages are briefly described in the following table:
 | [abb_libegm](abb_libegm) | (A modified version of https://github.com/ros-industrial/abb_libegm) Provides a ROS node that exposes hardware interface, for *direct motion control* of ABB robots (via the *Externally Guided Motion* (`EGM`) interface). |
 | [abb_librws](abb_librws) | (A modified version of https://github.com/ros-industrial/abb_librws) Provides a ROS node that communicate with the controller using Robot Web Services 2.0  |
 | [Doc](Doc) | Provides some documentation about how the RAPID StateMachine running inside the Omnicore Controller  |
-| [gazebo_omnicore](gazebo_omnicore) | Provides the possibility to simulate the robots in Gazebo  |
-| [moveit_config](moveit) | Provides the Moveit configurations for the supported robots. |
+| [omnicore_gazebo](gazebo_omnicore) | Provides the possibility to simulate the robots in Gazebo  |
+| [omnicore_moveit_config](moveit) | Provides the Moveit configurations for the supported robots. |
 | [omnicore_interface](omnicore_interface) | Provides all messages and services definition this pkg uses. |
-| [omnicore_launcher](omnicore_launcher) | Provides all the .launch files to correctly launch the robots in real or simulation. |
-| [robots_description](gofa_description) | Provides ROS nodes for kinematic calculation using the URDF model of the robot (For now only Gofa robot is available). |
-| [ros_control_omnicore](ros_control_omnicore) | Provides hardware interface for the robots supporting ABB Omnicore controller. |
+| [omnicore_bringup](omnicore_launcher) | Provides all the .launch files to correctly launch the robots in real or simulation. |
+| [omnicore_description](gofa_description) | Provides ROS nodes for kinematic calculation using the URDF model of the robot (For now only Gofa robot is available). |
+| [omnicore_ros_control](ros_control_omnicore) | Provides hardware interface for the robots supporting ABB Omnicore controller. |
 
 ## Build Instructions
 

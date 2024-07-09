@@ -2,9 +2,9 @@
 <robot name="single_yumi" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
   <!-- Import all Gazebo-customization elements, including Gazebo colors -->
-  <!-- <xacro:include filename="$(find robots_description)/xacro/YumiSingleArm/single_yumi.gazebo.xacro" /> -->
+  <!-- <xacro:include filename="$(find omnicore_description)/xacro/YumiSingleArm/single_yumi.gazebo.xacro" /> -->
   <!-- Import Transmissions -->
-  <xacro:include filename="$(find robots_description)/xacro/YumiSingleArm/single_yumi.transmission.xacro" />
+  <xacro:include filename="$(find omnicore_description)/xacro/YumiSingleArm/single_yumi.transmission.xacro" />
 
   <!-- some constants -->
   <xacro:property name="joint_damping" value="0.5" />
@@ -23,7 +23,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://robots_description/meshes/Yumi/single_arm_base.stl" />
+          <mesh filename="package://omnicore_description/meshes/Yumi/single_arm_base.stl" />
         </geometry>
         <material name="Grey" />
       </visual>
@@ -31,7 +31,7 @@
       <!-- <collision>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://robots_description/meshes/Yumi/single_arm_base.stl" />
+          <mesh filename="package://omnicore_description/meshes/Yumi/single_arm_base.stl" />
         </geometry>
         <material name="Grey" />
       </collision> -->
@@ -64,7 +64,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://robots_description/meshes/Yumi/link_1.stl" />
+          <mesh filename="package://omnicore_description/meshes/Yumi/link_1.stl" />
         </geometry>
         <material name="Grey" />
       </visual>
@@ -72,7 +72,7 @@
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://robots_description/meshes/Yumi/coarse/link_1.stl" />
+          <mesh filename="package://omnicore_description/meshes/Yumi/coarse/link_1.stl" />
         </geometry>
         <material name="Grey" />
       </collision>
@@ -99,7 +99,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://robots_description/meshes/Yumi/link_2.stl" />
+          <mesh filename="package://omnicore_description/meshes/Yumi/link_2.stl" />
         </geometry>
         <material name="Grey" />
       </visual>
@@ -107,7 +107,7 @@
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://robots_description/meshes/Yumi/coarse/link_2.stl" />
+          <mesh filename="package://omnicore_description/meshes/Yumi/coarse/link_2.stl" />
         </geometry>
         <material name="Grey" />
       </collision>
@@ -134,7 +134,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://robots_description/meshes/Yumi/link_3.stl" />
+          <mesh filename="package://omnicore_description/meshes/Yumi/link_3.stl" />
         </geometry>
         <material name="Grey" />
       </visual>
@@ -142,7 +142,7 @@
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://robots_description/meshes/Yumi/coarse/link_3.stl" />
+          <mesh filename="package://omnicore_description/meshes/Yumi/coarse/link_3.stl" />
         </geometry>
         <material name="Grey" />
       </collision>
@@ -169,7 +169,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://robots_description/meshes/Yumi/link_4.stl" />
+          <mesh filename="package://omnicore_description/meshes/Yumi/link_4.stl" />
         </geometry>
         <material name="Grey" />
       </visual>
@@ -177,7 +177,7 @@
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://robots_description/meshes/Yumi/coarse/link_4.stl" />
+          <mesh filename="package://omnicore_description/meshes/Yumi/coarse/link_4.stl" />
         </geometry>
         <material name="Grey" />
       </collision>
@@ -204,7 +204,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://robots_description/meshes/Yumi/link_5.stl" />
+          <mesh filename="package://omnicore_description/meshes/Yumi/link_5.stl" />
         </geometry>
         <material name="Grey" />
       </visual>
@@ -212,7 +212,7 @@
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://robots_description/meshes/Yumi/coarse/link_5.stl" />
+          <mesh filename="package://omnicore_description/meshes/Yumi/coarse/link_5.stl" />
         </geometry>
         <material name="Grey" />
       </collision>
@@ -239,7 +239,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://robots_description/meshes/Yumi/link_6.stl" />
+          <mesh filename="package://omnicore_description/meshes/Yumi/link_6.stl" />
         </geometry>
         <material name="Grey" />
       </visual>
@@ -247,7 +247,7 @@
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://robots_description/meshes/Yumi/coarse/link_6.stl" />
+          <mesh filename="package://omnicore_description/meshes/Yumi/coarse/link_6.stl" />
         </geometry>
         <material name="Grey" />
       </collision>
@@ -274,7 +274,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://robots_description/meshes/Yumi/link_7.stl" />
+          <mesh filename="package://omnicore_description/meshes/Yumi/link_7.stl" />
         </geometry>
         <material name="Grey" />
       </visual>
@@ -282,7 +282,7 @@
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://robots_description/meshes/Yumi/coarse/link_7.stl" />
+          <mesh filename="package://omnicore_description/meshes/Yumi/coarse/link_7.stl" />
         </geometry>
         <material name="Grey" />
       </collision>

@@ -2,7 +2,7 @@
 <robot name="yumi" xmlns:xacro="http://www.ros.org/wiki/xacro">
    
    <!-- Import Transmissions -->
-   <xacro:include filename="$(find robots_description)/Grippers/YumiServoGripper/yumi_servo_gripper.transmission.xacro" />
+   <xacro:include filename="$(find omnicore_description)/Grippers/YumiServoGripper/yumi_servo_gripper.transmission.xacro" />
 
    <!-- some constants -->
    <xacro:property name="joint_damping" value="0.5" />
@@ -29,13 +29,13 @@
          <visual>
             <origin xyz="0 0 0" rpy="0 0 0" />
             <geometry>
-               <mesh filename="package://robots_description/meshes/Yumi/gripper/base.stl" />
+               <mesh filename="package://omnicore_description/meshes/Yumi/gripper/base.stl" />
             </geometry>
          </visual>
          <collision>
             <origin xyz="0 0 0" rpy="0 0 0" />
             <geometry>
-               <mesh filename="package://robots_description/meshes/Yumi/gripper/coarse/base.stl" />
+               <mesh filename="package://omnicore_description/meshes/Yumi/gripper/coarse/base.stl" />
             </geometry>
          </collision>
       </link>
@@ -70,7 +70,7 @@
          <visual>
             <origin xyz="0 0 0" rpy="0 0 0" />
             <geometry>
-               <mesh filename="package://robots_description/meshes/Yumi/gripper/finger.stl" />
+               <mesh filename="package://omnicore_description/meshes/Yumi/gripper/finger.stl" />
             </geometry>
             <material name="Blue" />
          </visual>
@@ -78,7 +78,7 @@
          <collision>
             <origin xyz="0 0 0" rpy="0 0 0" />
             <geometry>
-               <mesh filename="package://robots_description/meshes/Yumi/gripper/coarse/finger.stl" />
+               <mesh filename="package://omnicore_description/meshes/Yumi/gripper/coarse/finger.stl" />
             </geometry>
             <material name="Blue" />
          </collision>
@@ -105,7 +105,7 @@
          <visual>
             <origin xyz="0 0 0" rpy="0 0 0" />
             <geometry>
-               <mesh filename="package://robots_description/meshes/Yumi/gripper/finger.stl" />
+               <mesh filename="package://omnicore_description/meshes/Yumi/gripper/finger.stl" />
             </geometry>
             <material name="Blue" />
          </visual>
@@ -113,7 +113,7 @@
          <collision>
             <origin xyz="0 0 0" rpy="0 0 0" />
             <geometry>
-               <mesh filename="package://robots_description/meshes/Yumi/gripper/coarse/finger.stl" />
+               <mesh filename="package://omnicore_description/meshes/Yumi/gripper/coarse/finger.stl" />
             </geometry>
             <material name="Blue" />
          </collision>

@@ -15,13 +15,13 @@
   <!-- World fixed joint -->
   <link name="world" />
   <!-- Import Rviz colors -->
-  <xacro:include filename="$(find robots_description)/Util/materials.xacro" />
+  <xacro:include filename="$(find omnicore_description)/Util/materials.xacro" />
   <!-- Import utilities -->
-  <xacro:include filename="$(find robots_description)/Util/utilities.xacro" />
+  <xacro:include filename="$(find omnicore_description)/Util/utilities.xacro" />
   <!--Import the single yumi macro -->
-  <xacro:include filename="$(find robots_description)/xacro/YumiSingleArm/single_yumi.xacro" />
+  <xacro:include filename="$(find omnicore_description)/xacro/YumiSingleArm/single_yumi.xacro" />
   <!--Import the yumi servo gripper macro -->
-  <xacro:include filename="$(find robots_description)/Grippers/YumiServoGripper/yumi_servo_gripper.xacro" />
+  <xacro:include filename="$(find omnicore_description)/Grippers/YumiServoGripper/yumi_servo_gripper.xacro" />
 
   <xacro:single_yumi parent="world" hardware_interface="${hardware_interface}">
     <origin xyz="0 0 $(arg base_translation)" rpy="0 0 $(arg base_orientation)" />

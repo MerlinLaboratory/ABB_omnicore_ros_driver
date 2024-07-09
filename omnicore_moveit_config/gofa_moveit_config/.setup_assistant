@@ -1,6 +1,6 @@
 moveit_setup_assistant_config:
   URDF:
-    package: robots_description
+    package: omnicore_description
     relative_path: xacro/robot.urdf.xacro
     xacro_args: name:=gofa
   SRDF:
