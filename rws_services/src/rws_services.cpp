@@ -1,4 +1,4 @@
-#include "../include/rws_service.hpp"
+#include "../include/rws_services.hpp"
 
 RwsService::RwsService()
 {

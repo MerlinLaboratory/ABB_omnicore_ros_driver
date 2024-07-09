@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(rws_service)
+project(rws_services)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -28,7 +28,7 @@ link_directories("/usr/local/lib")
 
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES rws_service
+#  LIBRARIES rws_services
 #  CATKIN_DEPENDS abb_librws roscpp rospy std_msgs
   CATKIN_DEPENDS abb_librws  roscpp  rospy  std_msgs  std_srvs omnicore_interface
   DEPENDS Poco
@@ -48,7 +48,7 @@ include_directories(
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/rws_service.cpp
+#   src/${PROJECT_NAME}/rws_services.cpp
 # )
 
 ## Add cmake target dependencies of the library
@@ -59,7 +59,7 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-# add_executable(${PROJECT_NAME}_node src/rws_service_node.cpp)
+# add_executable(${PROJECT_NAME}_node src/rws_services_node.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -118,7 +118,7 @@ include_directories(
 #   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 # )
 
-add_executable(rws_service_node src/rws_service_main.cpp src/rws_service.cpp)
-set_target_properties(rws_service_node PROPERTIES OUTPUT_NAME rws_service_node PREFIX "")
-add_dependencies(rws_service_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(rws_service_node ${catkin_LIBRARIES} PocoNetSSL)
+add_executable(rws_services src/rws_services_main.cpp src/rws_services.cpp)
+set_target_properties(rws_services PROPERTIES OUTPUT_NAME rws_services_node PREFIX "")
+add_dependencies(rws_services ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(rws_services ${catkin_LIBRARIES} PocoNetSSL)

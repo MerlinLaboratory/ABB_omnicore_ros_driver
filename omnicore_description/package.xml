@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>robots_description</name>
+  <name>omnicore_description</name>
   <version>0.0.0</version>
-  <description>The robot_description package</description>
+  <description>The omnicore_description package</description>
 
   <maintainer email="nuk1@todo.todo">nuk1</maintainer>
 
-  <license>TODO</license>
+  <license>Apache2.0</license>
 
   <!--   <doc_depend>doxygen</doc_depend> -->
   <buildtool_depend>catkin</buildtool_depend>

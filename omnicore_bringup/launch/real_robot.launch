@@ -6,7 +6,7 @@
     <arg name="stopped_controllers" default="VelocityControllers_JointGroupVelocityController" doc="Controllers that are initally loaded, but not started."/>
   
     <!-- Launching ros-control pkg -->
-    <include file="$(find ros_control_omnicore)/launch/omnicore_control.launch">
+    <include file="$(find omnicore_ros_control)/launch/omnicore_control.launch">
         <arg name="robot"               value="$(arg robot)"/> <!-- Robot you want to launch -->
         <arg name="simulation"          value="$(arg simulation)"/> <!-- Whether using real or simulated robot -->
         <arg name="controllers"         value="$(arg controllers)"/>
@@ -35,6 +35,6 @@
     </group> 
 
     <!-- Run Rviz and load the default config to see the state of the move_group node -->
-    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find omnicore_launcher)/config/config.rviz"/>
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find omnicore_bringup)/config/config.rviz"/>
 
 </launch>
