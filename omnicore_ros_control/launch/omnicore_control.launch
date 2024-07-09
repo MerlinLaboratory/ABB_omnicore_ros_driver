@@ -7,16 +7,16 @@
 
   <!-- Load the config for Gofa/Yumi Single Arm -->
   <group if="$(eval arg('simulation') == false)">
-    <arg name="yamlFileRobot"  default="$(find ros_control_omnicore)/config/$(arg robot)_cfg.yaml" />
+    <arg name="yamlFileRobot"  default="$(find omnicore_ros_control)/config/$(arg robot)_cfg.yaml" />
     <rosparam command="load"   file="$(arg yamlFileRobot)" />
   </group>
   
   <!-- Load controllers params for Gofa/Yumi Single Arm -->
-  <rosparam command="load" file="$(find ros_control_omnicore)/config/Controllers/joint_state_controller.yaml"/>
-  <rosparam command="load" file="$(find ros_control_omnicore)/config/Controllers/$(arg robot)/VelocityControllers_JointGroupVelocityController.yaml" />
-  <rosparam command="load" file="$(find ros_control_omnicore)/config/Controllers/$(arg robot)/VelocityControllers_JointTrajectoryController.yaml" />
+  <rosparam command="load" file="$(find omnicore_ros_control)/config/Controllers/joint_state_controller.yaml"/>
+  <rosparam command="load" file="$(find omnicore_ros_control)/config/Controllers/$(arg robot)/VelocityControllers_JointGroupVelocityController.yaml" />
+  <rosparam command="load" file="$(find omnicore_ros_control)/config/Controllers/$(arg robot)/VelocityControllers_JointTrajectoryController.yaml" />
   <group if="$(eval arg('robot') == 'yumi_single_arm')">
-    <arg name="yaml_Gripper_Controller" default="$(find ros_control_omnicore)/config/Controllers/$(arg robot)/gripper_controller.yaml" />
+    <arg name="yaml_Gripper_Controller" default="$(find omnicore_ros_control)/config/Controllers/$(arg robot)/gripper_controller.yaml" />
     <rosparam command="load" file="$(arg yaml_Gripper_Controller)" />
   </group> 
 
@@ -38,8 +38,8 @@
 
   <!-- Load the Hardware Interface and Rws Interface if launching the real robot-->
   <group if="$(eval arg('simulation') == false)">
-    <node pkg="ros_control_omnicore" name="omnicore_hw_interface" type="omnicore_control_node" output="screen"/>
-    <node pkg="ros_control_omnicore" name="omnicore_rws_interface" type="omnicore_rws_node" output="screen"/>
+    <node pkg="omnicore_ros_control" name="omnicore_hw_interface" type="omnicore_control_node" output="screen"/>
+    <node pkg="omnicore_ros_control" name="omnicore_rws_interface" type="omnicore_rws_node" output="screen"/>
   </group>
 
 </launch>
