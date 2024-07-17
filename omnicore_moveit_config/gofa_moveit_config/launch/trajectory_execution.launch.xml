@@ -18,9 +18,9 @@
 
   <!-- Load the config launching for ros_controllers Arm -->
   <param name="moveit_controller_manager" value="moveit_simple_controller_manager/MoveItSimpleControllerManager" />
-
+<!-- 
   <arg name="yaml_Velocity_TrajVelContr" default="$(find gofa_moveit_config)/config/VelocityControllers_JointTrajectoryController.yaml" />
-  <rosparam command="load" file="$(arg yaml_Velocity_TrajVelContr)" />
-  <!--include file="$(dirname)/$(arg moveit_controller_manager)_moveit_controller_manager.launch.xml" pass_all_args="true" /-->
+  <rosparam command="load" file="$(arg yaml_Velocity_TrajVelContr)" /> -->
+  <include file="$(dirname)/$(arg moveit_controller_manager)_moveit_controller_manager.launch.xml" pass_all_args="true" />
 
 </launch>

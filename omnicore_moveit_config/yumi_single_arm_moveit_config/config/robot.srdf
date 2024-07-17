@@ -18,6 +18,7 @@
         <joint name="joint_5"/>
         <joint name="joint_6"/>
         <joint name="joint_7"/>
+        <chain base_link="yumi_single_arm_base_link" tip_link="grasp_link"/>
     </group>
     <!--GROUP STATES: Purpose: Define a named state for a particular group, in terms of joint values. This is useful to define states like 'folded arms'-->
     <group_state name="home" group="arm">

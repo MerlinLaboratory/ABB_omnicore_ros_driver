@@ -39,23 +39,24 @@
 	<xacro:arg name="4th_link_name" 	default="L4"/>
 	<xacro:arg name="5th_link_name" 	default="L5"/>
 	<xacro:arg name="6th_link_name" 	default="L6"/>
+	<xacro:arg name="flange" 	        default="flange"/>
 
 	<!-- GoFa URDF model -->
-	<xacro:macro name="gofa" params="parent hardware_interface child *origin">
+	<xacro:macro name="gofa" params="parent child hardware_interface  *origin">
 		<!-- Base -->
-		<joint name="${parent}_to_$(arg base_link_name)" type="fixed">
+		<joint name="${parent}_to_${child}" type="fixed">
 			<xacro:insert_block name="origin"/>
 			<parent link="${parent}"/>
-			<child link="$(arg base_link_name)"/>
+			<child link="${child}"/>
 		</joint>
-		<link name="$(arg base_link_name)">
+		<link name="${child}">
 			<inertial>
 				<origin xyz="-0.0012013793465437 -0.000175191786981708 0.0862146007385352" rpy="0 0 0"/>
 				<mass value="3.50083457958494"/>
 				<inertia ixx="0.0153015257917955" ixy="-6.40155032892694E-05" ixz="-0.000276708687772683" 
 						 iyy="0.0159333503953857" iyz="-3.98029144780725E-05" izz="0.0112162302268266"/>
 			</inertial>
-			<xacro:visual_plus_collision v_p_c_name="$(arg base_link_name)"/>
+			<xacro:visual_plus_collision v_p_c_name="${child}"/>
 		</link>
 
 		<!-- Link 1 -->
@@ -70,7 +71,7 @@
 		</link>
 		<joint name="J1" type="revolute">
 			<origin xyz="0 0 0.1875" rpy="0 0 0"/>
-			<parent link="$(arg base_link_name)"/>
+			<parent link="${child}"/>
 			<child link="$(arg 1st_link_name)"/>
 			<axis xyz="0 0 1"/>
 			<limit effort="${max_effort}" lower="${radians(-180)}" upper="${radians(180)}" velocity="${radians(125)}"/>
@@ -173,12 +174,12 @@
 		</joint>
 
 		<!-- Flange -->
-		<link name="${child}">
+		<link name="$(arg flange)">
 		</link>
-		<joint name="$(arg 6th_link_name)_to_${child}" type="fixed">
+		<joint name="$(arg 6th_link_name)_to_$(arg flange)" type="fixed">
 			<origin xyz="0.033599981 0 0" rpy="0 ${radians(90)} 0"/>
 			<parent link="$(arg 6th_link_name)"/>
-			<child link="${child}"/>
+			<child link="$(arg flange)"/>
 		</joint>
 
 		<!--Extensions -->

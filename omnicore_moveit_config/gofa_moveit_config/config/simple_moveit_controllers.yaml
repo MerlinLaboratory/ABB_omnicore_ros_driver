@@ -1,5 +1,5 @@
 controller_list:
-  - name: robot_controller
+  - name: /robot_controller/follow_joint_trajectory/
     action_ns: follow_joint_trajectory
     type: FollowJointTrajectory
     default: True

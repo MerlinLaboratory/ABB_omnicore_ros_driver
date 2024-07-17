@@ -10,16 +10,16 @@
   <xacro:property name="joint_damping" value="0.5" />
   <xacro:property name="max_effort" value="300" />
 
-  <xacro:macro name="single_yumi" params="parent hardware_interface *origin">
+  <xacro:macro name="single_yumi" params="parent child hardware_interface *origin">
 
     <!-- joint between external and base -->
     <joint name="joint_0" type="fixed">
       <xacro:insert_block name="origin"/>
       <parent link="${parent}" />
-      <child link="single_yumi_base_link" />
+      <child link="${child}" />
     </joint>
 
-    <link name="single_yumi_base_link">
+    <link name="${child}">
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
@@ -45,7 +45,7 @@
 
     <!-- joint between body and link_1 -->
     <joint name="joint_1" type="revolute">
-      <parent link="single_yumi_base_link" />
+      <parent link="${child}" />
       <child link="link_1" />
       <origin xyz="0.0 0.0 0.2048" rpy="0.0 0.0 ${PI}" />
       <axis xyz="0 0 1" />
