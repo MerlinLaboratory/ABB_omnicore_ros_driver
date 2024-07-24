@@ -182,6 +182,15 @@
 			<child link="$(arg flange)"/>
 		</joint>
 
+		<!-- Add fake joint for grasp_link -->
+		<link name="grasp_link">
+		</link>
+		<joint name="flange_to_grasp_link" type="fixed">
+			<origin xyz="0 0 0.05" rpy="0 0 ${pi}"/>
+			<parent link="flange"/>
+			<child link="grasp_link"/>
+		</joint>
+
 		<!--Extensions -->
 		<xacro:gofa_transmission name="gofa" hardware_interface="${hardware_interface}"/>
 
