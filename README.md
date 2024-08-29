@@ -55,7 +55,7 @@ sudo apt install ros-${ROS_DISTRO}-moveit
 
 #### Install POCO
 
-Install essential dependencies and git, execute the following commands one by one:
+Install essential dependencies, execute the following commands one by one:
 
 ```bash
 sudo apt update
@@ -63,41 +63,7 @@ sudo apt upgrade
 sudo apt install build-essential gdb cmake git
 sudo apt-get install openssl libssl-dev
 sudo apt-get install libmysqlclient-dev
-```
-
-Get root access:
-```bash
-sudo -i
-```
-
-Navigate to /tmp/ directory (or any other directory to store temporary files).
-```bash
-cd /tmp/
-```
-
-Clone the Poco git repo:
-```bash
-git clone https://github.com/pocoproject/poco.git
-```
-
-Compile the libraries:
-```bash
-cd poco
-mkdir cmake-build
-cd cmake-build
-cmake ..
-cmake --build . --config Release
-```
-
-Install the libraries to include in C++ code:
-```bash
-sudo cmake --build . --target install
-```
-
-Copy or move all the poco file from /usr/local/lib/ to /usr/lib using the root privileges. Afterward you may remove the created /tmp directory:
-
-```bash
-sudo cp /usr/local/lib/*Poco* /usr/lib
+sudo apt-get install -y libpoco-dev 
 ```
 
 #### Install Boost C++
