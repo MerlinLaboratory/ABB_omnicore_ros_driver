@@ -132,8 +132,8 @@
             <arm>
                <arm_name>yumi</arm_name>
                <palm_link>gripper_base</palm_link>
-               <gripper_link> gripper_finger_l </gripper_link>
-               <gripper_link> gripper_finger_r </gripper_link>
+               <gripper_link>gripper_finger_l</gripper_link>
+               <gripper_link>gripper_finger_r</gripper_link>
             </arm>
             <forces_angle_tolerance>100</forces_angle_tolerance>
             <update_rate>4</update_rate>

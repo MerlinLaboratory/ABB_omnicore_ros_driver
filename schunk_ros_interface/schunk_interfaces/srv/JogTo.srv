@@ -1,0 +1,16 @@
+# This service is used to move the gripper to a specified position with a specific velocity. Consider position/velocities limits before sending 
+#  .
+# position is the target position in mm.
+# velocity is the target velocity in mm/s.
+# motion_type is either absolute (wrt the set zero) or RELATIVE_MOTION (wrt to the current position).
+
+float32 position             # [mm]
+float32 velocity             # [mm/s]
+
+uint8 ABSOLUTE_MOTION = 0
+uint8 RELATIVE_MOTION = 1
+uint8 motion_type           # either ABSOLUTE_MOTION or RELATIVE_MOTION
+
+---
+bool success
+string debug

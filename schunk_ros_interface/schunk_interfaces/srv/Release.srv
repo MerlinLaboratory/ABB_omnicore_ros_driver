@@ -1,0 +1,7 @@
+# Starting from the current position, a defined distance of the parameter <wp_release_delta>
+# is moved # in the opposite direction to the gripping direction of the last gripping movement
+# Notice that this service works only if something has been grasped beforehand
+
+---
+bool success
+string debug

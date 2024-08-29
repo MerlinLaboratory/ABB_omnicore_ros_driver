@@ -1,0 +1,2186 @@
+$ HMS EDS Generator Tool Version 1.2.1.1. Generated Electronic Data Sheet.
+$ SCHUNK Generator Tool Version 5.2.0.36
+
+[File]
+        DescText = "EGK 40-EI-M-B EDS file";
+        CreateDate = 07-07-2023;
+        CreateTime = 22:10:00;
+        ModDate = 07-07-2023;
+        ModTime = 22:10:00;
+        Revision = 1.38;
+
+
+[Device]
+        VendCode = 900;
+        VendName = "SCHUNK SE & Co. KG";
+        ProdType = 43;
+        ProdTypeStr = "Generic Device (keyable)";
+        ProdCode = 41;
+        MajRev = 5;
+        MinRev = 2;
+        ProdName = "SFP-5.2_EGK 40-EI-M-B";
+        Catalog = "SFP-EGK";
+        Icon = "EGK 40-EI-M-B.ico";
+        IconContents = "AAABAAQAQEAAAAEAGAAoMgAARgAAADAwAAABABgAqBwAAG4yAAAgIAAAAQAYAKgMAAAWTwAAEBAAAAEAGABoAwAAvlsAACgAAABAAAAAgAAAAAEAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAvjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwBVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAvjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwBVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAvjnwDjnwDjnwDjnwDjnwDjnwDjnwD////////jnwDjnwDjnwDjnwD////////////////jnwDjnwDjnwDjnwD////////jnwDjnwDjnwDjnwDjnwDjnwDjnwBVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAvjnwDjnwDjnwDjnwDjnwDjnwD////////////jnwDjnwD////////////////////////////////jnwDjnwD////////////jnwDjnwDjnwDjnwDjnwDjnwBVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAvjnwDjnwDjnwDjnwDjnwDjnwD////////jnwDjnwD////////////jnwDjnwDjnwDjnwD////////////jnwDjnwD////////jnwDjnwDjnwDjnwDjnwDjnwBVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAvjnwDjnwDjnwDjnwDjnwD////////jnwDjnwDjnwD////////jnwDjnwDjnwDjnwDjnwDjnwD////////jnwDjnwDjnwD////////jnwDjnwDjnwDjnwDjnwBVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAvjnwDjnwDjnwDjnwDjnwD////////jnwDjnwD////////jnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwD////////jnwDjnwD////////jnwDjnwDjnwDjnwDjnwBVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAvjnwDjnwDjnwDjnwDjnwD////////jnwDjnwD////////jnwDjnwDjnwDjnwDjnwDjnwDjnwDjnwD////////jnwDjnwD////////jnwDjnwDjnwDjnwDjnwBVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAvjnwDjnwD///////9VLAtVLAv///////9VLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAv///////9VLAtVLAv////////jnwDjnwBVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAvjnwDjnwD///////9VLAtVLAv///////9VLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAv///////9VLAtVLAv////////jnwDjnwBVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAvjnwDjnwD///////9VLAtVLAtVLAv///////9VLAtVLAtVLAtVLAtVLAtVLAv///////9VLAtVLAtVLAv////////jnwDjnwBVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAvjnwDjnwDjnwD///////9VLAtVLAv///////////9VLAtVLAtVLAtVLAv///////////9VLAtVLAv////////jnwDjnwDjnwBVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAvjnwDjnwDjnwD///////////9VLAtVLAv///////////////////////////////9VLAtVLAv////////////jnwDjnwDjnwBVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAvjnwDjnwDjnwDjnwD///////9VLAtVLAtVLAtVLAv///////////////9VLAtVLAtVLAtVLAv////////jnwDjnwDjnwDjnwBVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAvjnwDjnwDjnwDjnwBVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAvjnwDjnwDjnwDjnwBVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAvjnwDjnwDjnwDjnwBVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAvjnwDjnwDjnwDjnwBVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAuRXAbjngDjngDSjgKTXgZaMAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAuRXAbjngDjngDjngDjngDJiQKKVgdWLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAvGwb/+/v79/f3FwL5VLAtVLAtVLAtVLAtVLAuckY7h3t34+Pf9/f339vbh396upqNaNiFVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAuRXAbjngDjnwDjnwDjnwDjngDjngDDhAOGUwdVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAuyqqj////////t7OtVLAtVLAtVLAtVLAuooJ3////////////////////////////k4uFqUUZVLAtVLAtVLAtVLAtVLAtVLAtVLAuRXAbjngDjnwDjnwDjngDjngDjnwDjngDjngC+gAN5SQhmOgqKVgecZQWobwWobwWlbAWUXwZ5SQhhNgpVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAuGdnH///////////9uVk1VLAtVLAtVLAvx8PD////////////////////////////////f3dxYMxtVLAtVLAtVLAtVLAtVLAtVLAuRXAbjngDjnwDjngDjngDjngDjnwDjngDjngDjngDingDfnADjngDjngDjnwDjngDjngDjnwDjngDVkgGvdQR5SQhVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAvp6Of////////////////////////////////////////7+/t5Zl5uVk3////////////JxcNoTUJ2YVnPy8r///////////+upqNVLAtVLAtVLAtVLAtVLAtVLAuRXAbjnwDjnwDjngDjngDjngDjngDjngDjngDjngDjngDjngDjngDjnwDjnwDjngDjngDjnwDjngDjngDjngDjngC2eQRuQAlVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAvo5uX///////////////////////////////////////////+yq6mLfXj///////////9+bGZVLAtVLAtVLAvh3t3////////w7u5XMBVVLAtVLAtVLAtVLAtVLAuRXAbjnwDjngDjngDjngDjngDjngDjngDjngDjnwDjngDjnwDjngDjnwDjnwDjngDjngDjnwDjnwDjnwDjngDjngDjnwDYlgGGUwdVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAvNycf///////////////////////////////////////////+6s7GIenT///////////+Dc21VLAtVLAtVLAuZjor///////////+ViYVVLAtVLAtVLAtVLAtVLAuPWwbjnwDjnwDjnwDjngDjnwDjnwDjngDjnwDjnwDjngDjngDjngDjnwDjnwDjngDjngDjnwDjngDjngDjngDjngDjnwDjngDjngCUXwZVLAtVLAtVLAtVLAtVLAtVLAtVLAuXi4f////////U0M9VLAtVLAtVLAuzrKn////////u7exVLAtVLAtvWE////////////+flZFVLAtVLAtVLAtVLAv08/P////////Mx8ZVLAtVLAtVLAtVLAtVLAuSXAjjngDjngDjnwDjngDjngDjngDjngDjnwDjnwDjngDjngDkngDjngDjngDjngDjngDjnwDjngDjngDjngDjngDjngDjngDjnwDjnwCRXAZVLAtVLAtVLAtVLAtVLAtVLAtVLAvOysn///////+6s7FVLAtVLAuMfnn////////+/v5oTUJVLAtVLAv49/f///////++uLZVLAtVLAtVLAtVLAvSzs3////////q6ehVLAtVLAtVLAtVLAtVLAuEVAzimwDjngDjngDjngDjngDjngDjnwDjngDjngDjngDjngDjnwDjngDjngDjngDjngDjnwDjngDjngDjngDjnwDjnwDjnwDjngDjnwDgmwB3RwhVLAtVLAtVLAtVLAtVLAtVLAtbOSbk4uH////+/v6dko9VLAtbOSb7+/v///////+ZjopVLAtVLAvg3t3////////c2tlVLAtVLAtVLAtVLAuxqqf////////+/v5hQzRVLAtVLAtVLAtVLAtWLAt5SQi8fwPjnwDjngDjnwDjngDjngDjnwDjngDjngDjngDjngDjngDjngDjngDjngDjngDjnwDjnwDjngDjnwDjngDjngDjngDjngDjngDJiQJaMAtVLAtVLAtVLAtVLAtVLAtVLAtxW1Lz8vL////4+PeBcGpVLAvm5OT///////+9t7VVLAtVLAu/ubf////////6+flePi5VLAtVLAtVLAuPgn3///////////+HeXNVLAtVLAtVLAtVLAtVLAtWLAtdMgp+TQjEhgLjnwDjngDjngDjngDjngDjngDjnwDjngDjngDjngDjngDjngDjngDjngDjngDjngDjnwDjnwDjnwDjnwDjngDjnwDjnwCTXgZVLAtVLAtVLAtVLAtVLAtVLAtVLAuOgHv7+/v////t7OxoTULMyMb////////a19ZVLAtVLAuAb2n///////////+poJ1VLAtVLAtVLAttVUv///////////+ckY5VLAtVLAtVLAtVLAtVLAuUXwbJiQKATwhaMAuKVgfNjQLjngDjngDjngDjnwDjnwDfmQC2eQSWYAaPWwalbAXNigLjngDjngDjngDjnwDjngDjngDjnwDjngDjnwDjngDNjQJaMAtVLAtVLAtVLAtVLAtVLAtVLAtVLAutpaL////////d2tmtpaL////////y8fFVLAtVLAtVLAvk4uL////////s6upePi5VLAtVLAtoTUL///////////+flZFVLAtVLAtVLAtVLAtWLAvEhgLjngDjngC+gAN3RwhaMAuOWgfVkgHjnwDjngDEgQJxRA9vSCCLb1eXelt5UytjOhScZQXgnADjngDjngDjngDjngDjnwDjngDjngDjngDjngB+TQhVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAvLx8X////////Z1tX///////////9yXVRVLAtVLAubkIz////////////Z1tV/bmdlST3Au7n///////////+HeXNVLAtVLAtVLAtVLAtqPQngnADjngDjngDjngDjngC2eQRqPQldMgqcZQW8ewNjOhStl4H5+Pb////////////XzcZrQheKVgfjngDjngDjnwDjngDjngDjngDjngDjngDjngClbAVVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtaNiHi4N////////////////////+hmJRVLAtVLAtVLAvSzs3////////////////////////////////5+PhgQDFVLAtVLAtVLAtVLAuGUwfjngDjngDjngDjngDjnwDjnwDgmwCtcwRmOgpWLAuzoZL////////////////////////p5N9fOBe2eQTjngDjngDjngDjngDjngDjngDjngDjngDAggNWLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtvWE/y8fD////////////////DvrxVLAtVLAtVLAtePi7c2tn///////////////////////////+5srBVLAtVLAtVLAtVLAtVLAucZQXjngDjngDjngDjnwDjnwDjngDjnwDjngCxdgRuSSn8/Pv///////////////////////////+lj3p5SgzjngDjnwDjngDjngDjngDjngDjngDjngDNjQJdMgpVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAuKfHft7Ov7+/v////7+vrIw8FVLAtVLAtVLAtVLAtXMBWmnZnd2tn09PP9/Pz4+Pjj4OClnJhVLAtVLAtVLAtVLAtVLAtVLAuhaQXjngDjngDjnwDjnwDjnwDjnwDjngDimgCXaiWRdmD////////////////////////////////XzcRjOhTYlAHjnwDjnwDjngDjngDjngDjnwDjngDYlgFmOgpVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAuhaQXjngDjngDjngDjngDjngDjngDjnwDimQCXaiWXfmr////////////////////////////////c08xgNxTSjgLjngDjngDjnwDjngDjngDjngDjngDblwFmOgpVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAuhaQXjngDjngDjngDjngDjngDjnwDjngDimwChbheCY0j////////////////////////////////FtadrQhfimwDjngDjngDjnwDjngDjnwDjngDjnwDSkQFhNgpVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAuPWwbjngDjnwDjngDjnwDjnwDjngDjngDjnwDIhQJgNxTl39r///////////////////////////+EZUhmOgrNjQLjnwDjngDjngDjngDjngDjngDjnwDIhQJXLg1VLAtVLAt+bGb8/Pv///////////////////////////////+imJVVLAtVLAtVLAtVLAtVLAtYMxumnZrZ1tXw7+/6+vr9/f339vbq6OjRzsymnZpgQDFVLAtVLAtVLAuOgHv7+vr//v779e/lpUDjnwDjnwDjnwDkoi768en//v79/fzLxMDx7uv///////////////////+xno9gNhF3RwhdMgqWYAbVkgHjngDjngDjngDjngDjngC2eQRWLAtVLAtVLAtyXVT////////////////////////////////////Py8pVLAtVLAtVLAtVLAt1YFjn5eX////////////////////////////////////v7u5aNiFVLAtVLAtuVk3////////////rvovjngDjngDjnwDvzKr///////////+9rqVqRii5qJvm4Nzp5N/Sx76GaVJgNhG6fAPjngCxdgRuQAlhNgqhaQXcmQHjngDjngDjngCSXQZfOBdVLAtVLAtVLAvz8vL////////////////////////////////V0tFVLAtVLAtVLAtaNiHq6ej///////////////////////////////////////////+Nf3pVLAtVLAtVLAvw7+/////////x07bjngDjngDjoBz79e/////////79e/hnCKlbAVrQhdgNxRgNxRjOhSHWhnNigLjngDjngDjngDgnACqcAVmOgpmOgqobwXhngDingBqPQlXLg1VLAtVLAtVLAvb2Nf////////Lx8VVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAutpaL////////////4+Pi+uLaDc21gQDFkRzqGdnH4+Pf///////+1rqtVLAtVLAtVLAvX1NP////////35tfjngDjngDtyKD////////////uyqXjnwDjngDhmQDNigLGhgLVkgHimwDjnwDjnwDjngDjnwDjnwDjngDYlgGcZQVdMgpwQgmSXQZWLAtVLAtVLAtVLAtVLAu/ubf////////p5+dVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAvY1dT////////+/v6ZjopVLAtVLAtVLAtVLAtVLAvi39/////////U0M9VLAtVLAtWLAu5s7H////////89/PjnwDjnw368ur////////79O7joBzjnwDjnwDjngDjngDjngDjngDjnwDjnwDjnwDjngDjngDjngDjngDjngDjngDSkQGTXgZaMAtVLAtVLAtVLAtVLAtVLAuckY7////////+/v5mSz9VLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAvn5eT////////k4uFVLAtVLAtVLAtVLAtVLAtVLAvHwsH////////u7exVLAtVLAtVLAuUh4P////////////mq1rswpX////////////uyaTjnwDjngDjngDjngDjngDkngDjnwDjngDjngDjngDjnwDjngDjngDjngDjnwDjngDjngDjngDNjQKKVgdVLAtVLAtVLAtVLAtrU0n///////////+dko9VLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAvn5eX////////X1NNVLAtVLAtVLAtVLAtVLAtVLAumnZr////////+/v5pT0RVLAtVLAthQzT9/f3////////sw5j57uX////////79O7joRzjnwDjngDjngDjnwDjnwDjnwDjngDjnwDjnwDjngDjnwDjnwDjnwDjngDjnwDjngDjngDjngDjngDJiQJWLAtVLAtVLAtVLAtVLAvw7u7////////////////////////////o5uZVLAtVLAtVLAvb2dj////////k4uFVLAtVLAtVLAvQzMr///////////////////////+bkY1VLAtVLAtVLAvp6Of////////t5+P////////////uyqPjnwDjngDjngDjngDjngDjnwDjngDjngDjnwDjnwDjngDjngDjnwDjngDjngDjngDjngDjngDjngDjnwDEhQJWLAtVLAtVLAtVLAtVLAvX1NP///////////////////////////////9yXVRVLAtVLAvCvLr////////7+vpmSz9VLAtVLAvJxMP///////////////////////+2r6xVLAtVLAtVLAvPy8r////////4+Pf9/Pv////////tx5/jngDjngDjngDjngDjnwDjnwDjngDjngDjngDjngDjnwDkngDjngDjngDjnwDjngDjngDjnwDjnwDjngDEhQJWLAtVLAtVLAtVLAtVLAu6tLL///////////////////////////////+BcGpVLAtVLAuMfnn///////////+3sK5VLAtVLAuZjor+/v7////////////////9/f2UiIRVLAtVLAtVLAuwqKX////////7+vqmnZn+/f3//////v3txp3jngDjnwDjnwDjngDjngDjngDjngDjngDjnwDjngDjngDjngDjnwDjngDjnwDjngDjngDjngDjngDEhQJWLAtVLAtVLAtVLAtVLAuWiob////////8/PxiRTdVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAvl4+P////////6+fl/bmdVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAuHd3L///////////+Je3WupqP//////////v7tx5/jnwDjngDjngDjngDjngDjnwDjngDjngDjngDjngDjngDjngDjngDjnwDjngDjngDjnwDjnwDEhgJWLAtVLAtVLAtVLAtVLAtkRzr+/v7///////+elJBVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAuRhID+/v7////////z8/KLfXhVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtYMxv5+fn///////+xqqdVLAu3sa7////////+/v7Tt6DNigLcmQHjngDjngDhngDSkQG8fwOtcwTYlAHjngDjngDjngDjngDjnwDjngDjngDjngDEhgJWLAtVLAtVLAtVLAtVLAtVLAvs6+r////////KxsRVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAu/ubf////////////9/f3W09GYjIhpT0RaNiFvWE+ZjorHwsDy8fCjmZZVLAtVLAtVLAvj4OD////////QzMtVLAtVLAvCvLr////////+/v6vpaFmOgpqPQlqPQlqPQlhNgpVLAtVLAtmOgqobwXdmgHjngDjngDjnwDjngDjngDjnwDEhgJWLAtVLAtVLAtVLAtVLAtVLAvT0M/////////////////////////////////49/dqUUZVLAtVLAtVLAvDvrz////////////////////////////////////////////QzMpVLAtVLAtVLAvHwsH////////q6ehVLAtVLAtVLAvLx8X////////+/v6upqNVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtuQAmxdgTgnADjngDjngDjngDjngDEhgJWLAtVLAtVLAtVLAtVLAtVLAu2r6z///////////////////////////////////+imJVVLAtVLAtVLAtVLAuek5Du7e3///////////////////////////////////+8tbNVLAtVLAtVLAumnZn////////9/f1hQzRVLAtVLAtXMBXT0M/////////9/f2MfnlVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAt3Rwi6fAPjnwDjngDjnwDEhgJWLAtVLAtVLAtVLAtVLAtVLAt5Zl7w7+////////////////////////////////+spKFVLAtVLAtVLAtVLAtVLAtYMxuhl5PTz87t6+v5+Pj9/f329vbp5+bJxcOLfXhVLAtVLAtVLAtVLAtvWE/u7ez9/f3y8fBtVUtVLAtVLAtVLAtdOyrf3dz8/Pz7+vqvp6VVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAt+TQi+gAPjnwDJiQJVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtWLAuKVgeqcAVaMAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACgAAAAwAAAAYAAAAAEAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtZMAt1SQpzRwpzRwpzRwpzRwpzRwpzRwpzRwpzRwpzRwpzRwpzRwpzRwpzRwpzRwpzRwpzRwpzRwpzRwpzRwpzRwp1SQpZMAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAt1SQrupwDoowDoowDoowDoow3oowDoowDoowDoowDoowDoowDoowDoowDoowDoowDoowDoowDoow3oowDoowDoowDupwB1SQpVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtzRwroowDjnwDjnwDjoA3jnwD++/nw0LHjnwDjnwDvzqz89/L89/LvzqzjnwDjnwDw0LH++/njnwDjoA3jnwDjnwDoowBzRwpVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtzRwroowDjnwDjnwDjnwD9+vf////vz67kpTv////+/fz89vH89vH+/fz////kpTvvz67////9+vfjnwDjnwDjnwDoowBzRwpVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtzRwroowDjnwDjnwDquoH+/fzvzarjnwD9+fb////otnfjnwDjnwDotnf////9+fbjnwDvzar+/fzquoHjnwDjnwDoowBzRwpVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtzRwroowDjnwDjnwDy173////jnwDw0K/////lpkLjnwDjnwDjnwDjnwDlpkL////w0K/jnwD////y173jnwDjnwDoowBzRwpVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtwRQrdmwHXlgHknwDy1rz////XlgHt1Lz////YlwHYlwHYlwHYlwHYlwHYlwH////t1LzXlgH////y1rzknwDXlgHdmwFwRQpVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtTKgs8DAwUAAzoowDy1rz///8UAAzFwcH///8+EAxAGBU+EAw+EAxAGBU+EAz////FwcEUAAz////y1rzoowAUAAw8DAxTKgtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtAEwzoowDy2cH///9AEwxYMxv19PTl4+JVLAtVLAtVLAtVLAvl4+L19PRYMxtAEwz////y2cHoowBAEwxVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtAEwzoowDjnwD89vH5+flVLAvl4+P////Rzcx5Zl55Zl7Rzcz////l4+NVLAv5+fn89vHjnwDoowBAEwxVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtAEwzoowDjnwDyz6v////NyMdVLAvHwsDr6en////////r6enHwsBVLAvNyMf////yz6vjnwDoowBAEwxVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtAEwzoowDjnwDoowB0Z2ZqUUZVLAtVLAtpT0R8amN8amNpT0RVLAtVLAtqUUZ0Z2boowDjnwDoowBAEwxVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtDFwzdmgHYlwHdmgFDFwxVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtDFwzdmgHYlwHdmgFDFwxVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtWLQs9DQw+EAw9DQxWLQtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtWLQs9DQw+EAw9DQxWLQtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtUKwtiOAp1SApwQwpbMQtTKgtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtWLhBJAAAzAAA9AABUKQBVLAtVLAtVLQ5MDwA6AAA1AAA4AABFAABUKQFVLAtVLAtVLAtVLAtVLAtPJwukawXtpgDinAC9gAODUghLIAtSKQtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtIAACxqqf09PPa2NZmTD9VLAtVLQ5IAACajovj4d/w7+/o5uW+uLZVLAtUKwdVLAxVLAtVLAtVLAtQJwugaQXnoQDjnwDjnwDgmwC/gQRvPwlKIQxUKwtQKAtNJQtNJAtNJQtRKAtUKwtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtVKwdQIABQHwBQHwBFAACckI3////+/v53Y1tRIQBJAACnn5z////////////////////08/JxW1JRIQBVLAtVLAtVLAtQJwugaQXnogDjnwDjngDjnwDknwDknwCrcQV9TgmeZgavdQS0eQSvdQSYYwZ7TAlhNwpUKwtUKwtVLAtVLAtVLAtVLAtVLAtVLAtmSz+/urjDvrzDvrzCvbvIw8H////////Rzcy3sa46AADv7u7////29vXLx8XPy8r5+Pj////q6OhhQzRUKgVVLAtVLAtQJwugaQXnogDjngDjngDjngDjngDjngDmoQDmoQDnoQDmoQDmoADmoQDoogDjnQDLiwKlbQZdMQpRKQtVLAtVLAtVLAtVLAtVLAt1YFj7+/r////////////////////////////49/eIeXX09PP////QzctYMhpWLQ63r639/f3+/v6wqKZRIQBVLAtVLAtQJwugaQXnogDjngDjngDjngDjngDjngDjngDjnwDjngDjnwDjngDjngDjnwDjnwDkngDingDUkwFtPQlPJwtVLAtVLAtVLAtVLAtqUEXp5+f////5+Pjy8fDy8fH5+Pj////+/v7r6umNf3r08/P////QzMtZNR9UKgRmSz/08/P////Z1tVfPy9VLAtVLAtQJwufaAXnogDjnwDjngDjnwDjngDjnwDjnwDjngDjngDjnwDjngDjngDjnwDjngDjngDjngDjngDhnAB/TwhUKwtVLAtVLAtVLAtWLxS8trT////d2tpMDQAeAACvqKX////8/PwAAAA4AADx7+/////e3NtjRjhVLAw4AADY1NP////z8/JwWlFVLAtVLAtQJwueZwnqowDjnwDjngDjngDjngDjngDjngDjngDknwDjngDjngDjngDjnwDjngDjngDjnwDjnwDknwDYlgFvQglUKwtVLAtVLAtUKwdRJADg3t3////NychXMRmDc23///////+CcWs1AADY1dT////x8PBuWE5VLAtJAACpoJ3///////9/bmhVKwdVLAtVLAtjOAurcQTkoADknwDjngDjngDjnwDjngDjngDjngDjngDjngDjngDjnwDjnwDjngDjnwDjngDjngDloADJiQJIHgxVLAtVLAtVLAtUKgNOGQDx8PD///+poJ1uVk329fX///+1rqs3AACpoJ3///////+IeXNUKQBQIAB4ZV3///////+imJVQIABVLAtVLAtWLQtjOApsPQnAgwPgnADkngDjngDjngDjnwDjngDdmQDbmADemgDjngDjngDjngDjnwDjnwDjnwDjngDnowCRXQZOJQtVLAtVLAtVLAxSJAB+bWb19PT///+nnprg3t3////a19Y5AABSJAD8/Pz////a19Y0AABSJgBFAAD///////+yqqhOGABVLAtVLAtjOQrLiwHBhAOFVAiAUAi6fgTjngDnogDclwKpbAB/RQCAUgCBQQCwcwDingHjngDjngDjngDjnwDjngDjngDRkAJRJgtVLAtVLAtVLAtVLAtTJwCmnZn9/f339vbn5eX////y8fFJAQBMDgC5s7D////////Bu7lGAAClnJn///////+imZVQIABVLAtUKwt9TgjloADknwDfmwDGhwNrPQl4SQm+fwV6QwCtmYX09PL29PPw7eyahnmNVgDoogDjngDjngDjngDjngDjngDdmQF6SglUKwtVLAtVLAtVLAtVLAw7AADJxcP////////////39/Z8a2RUKQFlST3m5OT///////////////////////98aWJVKwhVLAtRKAubZAbnoQDjngDjngDkoADnoQCudARKAgCyopX////////////////+/ft9a2G4egDmoADjngDjngDjngDjngDgnACWYgdTKgtVLAtVLAtVLAtVLAtVLApFAADTz83////////+/f2ZjopSJQBSJQB9bGbV0dD29vX////////z8vK4sa9bOCVVLAtVLAtOJQutcgTmoQDjngDjnwDjnwDjnwDgmgGFUAD29vX////////////////////Pw7h4QwDloADjnwDjngDjngDjnwDinQCmbwZUKwtVLAtVLAtVLAtVLAtVLAtUKgZePy95Z198aWJ5ZV5gQTJVKwlVLAtSJgBePi1yXVR6Z2B6Z2BwWlFYMxxVKwhVLAtVLAtOJQuucwTmoQDjngDjngDjngDjnwDblAOGYDH29PP////////////////////m39lpLwDfmQDjngDjnwDjngDjngDjngCudAVUKwtVLAtSJQBQHwBQHwBQHwBQHwBQHwBQHwBTJwBVLAxVLAtVLAtVLAtUKgZSJQBRIQBQIABQIABRIwBTJwBVKwlVLAtVLAtNJAeqbwDmnwDjngDjngDjnwDjngHclgCARwDx7+7////////////////////KvLB7SADnoADjngDjnwDjngDjngDingCjbQZUKgtWLxOelJDDvrzDvrzDvrzDvrzDvrzGwcCLfHdSJABVLAtVLAxPHgBePSyflZK5srHBvLq+uLavqKWOgXxLCABWLQ9SJQBtVk3Wxrzz1rnlpkbjnwDjnwLimgDvz6/UxLrSy8f////////////////39fN8Y1RqPAaxeAXdmQDmoQDjngDjngDgnACUXgdTKgtVLQ7Mx8b////////////////////////W09JGAABVLAtUKQF7aGLt7Oz7+/v////////////9/f36+fnq6elBAABTJgBgQDH////////txZvjnADinADrvYr////////IwLyGcmbe1s/y7urVy8N2YFWkawjXlQGEUgdrPwq3ewPmoQDjngDcmQB4ShBVLQ1QIQC2r63+/v7+/v719fTy8fHy8fH09PPV0tFGAABUKQFUKQL4+Pj////////4+Pfz8vLz8vL29fX///////+EdG5PHAA7AAD08/T////03srimgDimgD58Of////+/ProqlSobgBtNwBkIwB0QAC5fA3kngDjngDoogC+gANvQwp7SgjRkgLRkQJOIgtVLAtSJQCbkIz6+vr7+/ubkY0tAAA0AAAzAAA/AABWLhFGAAC4srD////////b2NeEdW9KBQA/AAB+bGb8/Pz///+4sa5GAABHAADU0dD////89e/hlgDrv4z+/fv////z3MfjoBnnoQDimwDZlQDinADmoADjnwDjngDjnwDmoADfmwC0egR2RghjNgpQKAtVLAtUKQB4ZF339vb////DvbxSJABVLAtVLAtVLAtVLAs9AADZ1tT////5+fh6Z2BSJQBVKwhVLAprUkjr6ur////e29o7AABPGwCupaP////////kozX14c7////++/nptnjjnQDjngDjngDkngDjnwDjngDjngDjnwDjngDjngDjnwDjngDemgC6fgRmOQpUKwtVLAlDAADx8PD////e29qBcWt8aWJ8amN2Y1tSJgA9AADZ1tX////x8PBvWE9VKwhiRDV6aGGCcmzf3Nz////z8/JOFwBUKgV+bWb////////ty6n++/n////25tfhmADjngDjngDjnwDjnwDjngDjnwDjngDjnwDjnwDjngDjnwDjngDjngDinQCdZwZSKQtVLAs8AADX1NP///////////////////////9NFwBCAADEv73////9/f13Y1tSJQCglZL////////////////49/eBcWpTKABwWlHz8/L////08/L////////puX7imgDjngHjngDjnwDjngDjngDjngDjnwDkngDjngDjnwDjngDjngDjnwDgnACXYgdTKgtVLAtHAACyq6j///////////////////////9vV05KBwCGdnD///////+7tLJHAAB3ZFz7+/v////////////6+flxXFNUKQFlSTzh397////y8fHc2Nf////78urlqE/jngDjnwDjngDjngDjngDjnwDjngDjngDjnwDjngDjnwDjngDjngDgnACXYgdTKgtVLAtQHgB+bGb///////99a2Q0AAA3AAA1AABTKABVLQ48AADl4+P///////+Gd3BOGQA4AAA3AAA3AAA1AAA3AABQIABVLApYMRnNycj////19PSCcmzv7u7////57eLip1DhmwDknwHknwDjnwDhnADemgDjngDjngDjngDjnwDjngDjnwDgnQCXYwdTKgtVLAtVLAo/AAD9/f3////DvrwZAAA0AAA0AAA0AABHAABTKACEdG/5+Pj////5+fm5s7B4ZFxCAAA/AABqUUadko6jmZZaNiJQIQC2r63+/v75+fmMfnl5Z17u7ez////u5+OyhFOvcgC1egWyeQSbZgaDUgixdgXalwHmoADjngDjnwDjngDgnACXYwdTKgtVLAtVLAtDAADh4N/////7+/ry8fHy8fHy8fHy8fG4sa5TKABUKgOimJT////////+/v739vbz8vLz8vL19fT7+/vs6upsU0lSJQCaj4v6+vr9/f2vqKVOFwB8amPx8PD////t7Ox1YVlTJgBVKwtTKgtTKgtWLAtvQwmzeATnoQDknwDjngDgnACXYwdTKgtVLAtVLAtMDgC+uLX////////////////////////c2dlhQjRVLAxIAACBcGro5ub6+fn+/f3////////+/v76+fna1tVkSDtUKQF1YFf19fT////FwL5SJgBRIgCShoL39/b////W09JcOihVLAtVLAtVLAtVLAtVLAtKIQx0RAjIiQLfmwDhngCYZAdTKgtVLAtVLAtUKgRyXFPBu7nDvrzDvrzDvrzDvrzDvryso6BcOihVLAtVLQ5PHQBFAACNgHuyqqi/ube/uri0raqRhYBSJABTKABVLApPHQCtpaLCvLqViYVVLApVLAxEAACglpLCvburo6BdPCtVLAtVLAtVLAtVLAtVLAtVLAtRKAtPJAuKWAjChAOWYgdTKgtVLAtVLAtVLAtUKgNQIABQHwBQHwBQHwBQHwBQHwBSJABVLApVLAtVLAtVLAtVLApTJwBRIgBQIABQIABRIgBTJgBVKwhVLAtVLAtVLAtRIwBQHwBTJwBVLAtVLAtVLAxSJQBQHwBSJABVLApVLAtVLAtVLAtVLAtVLAtVLAtVLAtVLAtTKgtdMgteNAtVLAsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAIAAAAEAAAAABABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLi1sIr3cGr3cGr3cGr3cGr3cGr3cGr3cGr3cGr3cGr3cGr3cGr3cGr3cGr3cGi1sIVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLr3cG458A458A458A8ta8458A458A8ta88ta8458A458A8ta8458A458A458Ar3cGVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLr3cG458A458A8ta8+Ozg6r2J////8ta88ta8////6r2J+Ozg8ta8458A458Ar3cGVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLr3cG458A458A////458A+Ozg6r2J458A458A6r2J+Ozg458A////458A458Ar3cGVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLi1sIr3cG458A////r3cG////r3cGr3cGr3cGr3cG////r3cG////458Ar3cGi1sIVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwL458A////VSwL4+HhmY6KVSwLVSwLmY6K4+HhVSwL////458AVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwL458A8ta84+HhmY6K////w768w768////mY6K4+Hh8ta8458AVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwL458A458Aw768VSwLVSwLw768w768VSwLVSwLw768458A458AVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLr3cGr3cGVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLr3cGr3cGVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLl2MHqXEGaj4KVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLfm1mwr27fmxlVSwLVSwLmY2JwLq4tq+sdWBYVSwLVSwLVSwLVSwLwIID458A3ZkBrXMFZDkKVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLgG9p////v7q4VSwLopmW////////////+fj4jYB7VSwLVSwLVSwLwIID458A454A458A25cBtHoFwYMDyIkDxIYDsHcFfE0IVSwLVSwLVSwLVSwLVSwLs6yp////////////////////08/OzMjG////inx3iHl0+Pf36ujoVi0OVSwLVSwLwIMD454A454A454A454A454A458A458A458A458A454Av4IEZDkKVSwLVSwLVSwLj4J9////2NXUw7687+7t+/v6raWizMfG////eGVdVSwLyMPC////joF8VSwLVSwLwIIE458A454A454A458A454A454A454A458A454A454A454A05ICaDwKVSwLVSwLVSwLz8vK8O/ubVVLycTD////b1lPtq+s////oJeTVSwLmY2J////vbe0VSwLVSwLmWQI2pcB454A454A454A454A454A454A454A458A458A458A454Ax4gDVi0LVSwLVSwLXTwq5ePi4d/eq6Kg////n5WShHRu////zsnIVSwLbVVL////0s7NVSwLVSwLaj4KkF0HrXUF3poB454A458A2JUBwIMD0I4C454A458A458A458A458Aj10HVSwLVSwLVSwLc15W8/Py29jX////wry6VSwL5OLh+vr6kIN+gnFr////0s/NVSwLVSwLpnAG454AxYcDiFYItnsEuXwHrp6T0srEu7CppG0K454A454A454A454AwYMDVSwLVSwLVSwLVSwLkIN+/Pz7////3dvaVSwLhXVw9/b2////////////rKOgVSwLVSwLwIMD454A458A4p4AsXcFraGZ////////////yL+5w4UE454A454A454A1ZMBVy4LVSwLVSwLVSwLVSwLmY+Kwry6r6elVSwLVSwLcVtRs6ypwLq4nJGNVSwLVSwLVSwLxocD454A458A458AwYQY08vG////////////7enmqHAM458A454A454A3poBXjQLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLwoQD454A458A454Azo0Iwbey////////////2dPNrHMK454A454A454A2JYBWS8LaE9E/v7+////////////4N7dVSwLVSwLk4aC4+Hg+vr6/fz87+7uysXEVi8TbVVL/v7+89rD458A5qxc/vv55N/cz8jD9PHv3dfTk21MpW4Fl2IG05IC454Ax4gDWC8PVSwL9PPy8/Pyw768w768ta6sVSwLdGBX+vr6/f392NXUxcC/5uXk////g3NtVSwL8vHx+u/l454A89vF////7MOYvYAIoGkMs3kO3poB454A1pQBmmUGoWsGmmUGVi0MVSwL3NnY+fn5WjYhVSwLVSwLVSwLraWi////w728VSwLVSwLpZyZ////rqajVSwL2dbV/v385qxa/vz6+vDo458K454A454A458A458A454A454A454Azo4CjVsIVSwLVSwLwLq4////zMjHw768u7WzVSwLrqak////q6OgVSwLs6ypzsrJ////zsrIVSwLvLa0////9Ofc////7MSX454A454A458A458A458A458A454A454A454A1ZMBViwLVSwLnZOP////////////////aVBFiHlz////0s7NVSwL3dra////////2NXUVSwLl4uH////6efm////786t454A458A454A454A458A454A458A454A458A1JIBViwLVSwLbVVM////zcnHVSwLVSwLVSwLVSwL4+Dg/v7+o5mWVSwLVSwLVSwLVSwLVSwLZUk9/v7+1tPSu7Wz////6cuu3JgB454A3psAzo0C4JwA454A458A454A1JMBViwLVSwLVSwL8O/v8/Lyw768w768wLu5Wzgke2li8vHx////4N7dxcC/zsrJ7+7tlIeDVSwL7Orq7+7uVSwLxcC+////u7KvYDUKXjMKVSwLdUcJv4IE4p4A454A1JMBViwLVSwLVSwL0MzL////////////////hndxVSwLbVVMyMPC8O/v/f399/f329nYemdfVSwLy8fF+/v6Xz8uVi0Oz8vK/f39gXBqVSwLVSwLVSwLVSwLgE8IxogD1ZQBVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLfk4IVi0LAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAEAAAACAAAAABABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwL458A458A458A458A458A458A458A458A458A458A458A458A458A458AVSwLVSwL458A458A458A458A458A458A458A458A458A458A458A458A458A458AVSwLVSwL458A458A458A458A458A458A458A458A458A458A458A458A458A458AVSwLVSwL458A458A458A458A458A458A458A458A458A458A458A458A458A458AVSwLVSwLVSwLVSwL458A458AVSwLVSwLVSwLVSwLVSwLVSwL458A458AWS8LVSwLVSwLVSwLVSwLVSwL458A458AVSwLVSwLVSwLVSwLVSwLVSwL458A458AVy4LVSwLVSwLVSwLVSwLVSwL458A458AVSwLVSwLVSwLVSwLVSwLVSwL458A458AVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwL////////////VSwLVSwL////////////VSwL////VSwLVSwL////VSwLVSwLVSwL////VSwLVSwLVSwL////VSwLVSwL////VSwL////VSwL////VSwLVSwLVSwLVSwL////////////VSwL////VSwL////////VSwL////////VSwLVSwLVSwLVSwLVSwL////VSwLVSwLVSwL////VSwLVSwLVSwLVSwL////VSwL////VSwLVSwLVSwLVSwL////////////VSwLVSwL////////////VSwL////VSwLVSwL////VSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLVSwLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==";
+
+[Device Classification]
+        Class1 = EtherNetIP;
+
+
+[Params]
+        Param4 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 08 01 30 05", $ Link path
+                0x0010,                 $ Descriptor
+                0xC8,                   $ Data type (Unsigned 32-bit integer value)
+                4,                      $ Data size
+                "system_state",         $ Parameter name
+                "",                     $ Units string
+                "System state",         $ Help string
+                0,                      $ Minimum value
+                4294967295,             $ Maximum value
+                0,                      $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param6 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 18 01 30 05", $ Link path
+                0x0012,                 $ Descriptor
+                0xC6,                   $ Data type (Unsigned 8-bit integer value)
+                1,                      $ Data size
+                "err_code",             $ Parameter name
+                "",                     $ Units string
+                "Error code",           $ Help string
+                0,                      $ Minimum value
+                252,                    $ Maximum value
+                0,                      $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Enum6 =
+                0,"ERR_NONE",
+                1,"",
+                2,"",
+                3,"ERR_NO_RIGHTS",
+                4,"INF_UNKNOWN_CMD",
+                5,"INF_FAILED",
+                6,"",
+                7,"",
+                8,"",
+                9,"",
+                10,"",
+                11,"",
+                12,"",
+                13,"",
+                14,"",
+                15,"",
+                16,"",
+                17,"",
+                18,"INF_WRONG_TYPE",
+                19,"",
+                20,"INF_NO_AUTHORITY",
+                21,"",
+                22,"",
+                23,"",
+                24,"",
+                25,"",
+                26,"",
+                27,"INF_VAL_LIM_MAX",
+                28,"INF_VAL_LIM_MIN",
+                29,"",
+                30,"",
+                31,"",
+                32,"",
+                33,"",
+                34,"",
+                35,"",
+                36,"",
+                37,"",
+                38,"",
+                39,"",
+                40,"ERR_BT_FAILED",
+                41,"",
+                42,"",
+                43,"",
+                44,"",
+                45,"",
+                46,"",
+                47,"",
+                48,"",
+                49,"",
+                50,"",
+                51,"",
+                52,"",
+                53,"",
+                54,"",
+                55,"",
+                56,"",
+                57,"",
+                58,"",
+                59,"",
+                60,"",
+                61,"",
+                62,"",
+                63,"",
+                64,"",
+                65,"",
+                66,"",
+                67,"",
+                68,"",
+                69,"",
+                70,"",
+                71,"",
+                72,"",
+                73,"",
+                74,"",
+                75,"",
+                76,"",
+                77,"",
+                78,"",
+                79,"",
+                80,"",
+                81,"",
+                82,"",
+                83,"",
+                84,"",
+                85,"",
+                86,"",
+                87,"",
+                88,"",
+                89,"",
+                90,"",
+                91,"",
+                92,"",
+                93,"",
+                94,"",
+                95,"",
+                96,"",
+                97,"",
+                98,"",
+                99,"",
+                100,"",
+                101,"",
+                102,"",
+                103,"",
+                104,"",
+                105,"",
+                106,"",
+                107,"",
+                108,"ERR_MOT_TEMP_LO",
+                109,"ERR_MOT_TEMP_HI",
+                110,"",
+                111,"",
+                112,"ERR_LGC_TEMP_LO",
+                113,"ERR_LGC_TEMP_HI",
+                114,"ERR_LGC_VOLT_LO",
+                115,"ERR_LGC_VOLT_HI",
+                116,"ERR_MOT_VOLT_LO",
+                117,"ERR_MOT_VOLT_HI",
+                118,"",
+                119,"",
+                120,"",
+                121,"",
+                122,"",
+                123,"",
+                124,"ERR_REBOOT",
+                125,"",
+                126,"ERR_POWER_STAGE",
+                127,"",
+                128,"",
+                129,"",
+                130,"",
+                131,"",
+                132,"",
+                133,"",
+                134,"",
+                135,"",
+                136,"",
+                137,"ERR_ZV_NOT_FOUND",
+                138,"ERR_ENC_PHASE",
+                139,"ERR_ENC_SIN_LO",
+                140,"ERR_ENC_SIN_HI",
+                141,"ERR_ENC_COS_LO",
+                142,"ERR_ENC_COS_HI",
+                143,"ERR_ENC_SHORTCUT",
+                144,"WRN_LGC_TEMP_LO",
+                145,"WRN_LGC_TEMP_HI",
+                146,"WRN_MOT_TEMP_LO",
+                147,"WRN_MOT_TEMP_HI",
+                148,"WRN_NOT_FEASIBLE",
+                149,"WRN_POS_LIMIT",
+                150,"WRN_LGC_VOLT_LO",
+                151,"WRN_LGC_VOLT_HI",
+                152,"WRN_MOT_VOLT_LO",
+                153,"WRN_MOT_VOLT_HI",
+                154,"",
+                155,"WRN_FLASH_FAILED",
+                156,"WRN_ERASE_FAILED",
+                157,"WRN_FACT_FAILED",
+                158,"WRN_AUTH_FAILED",
+                159,"WRN_SD_NOT_PREP",
+                160,"",
+                161,"WRN_NO_PART",
+                162,"WRN_BCKUP_RSTORE",
+                163,"",
+                164,"",
+                165,"",
+                166,"",
+                167,"",
+                168,"",
+                169,"",
+                170,"",
+                171,"",
+                172,"",
+                173,"",
+                174,"",
+                175,"",
+                176,"",
+                177,"",
+                178,"",
+                179,"",
+                180,"ERR_ENC_PULSES",
+                181,"ERR_ENC_NO_INDEX",
+                182,"ERR_ENC_MN_INDEX",
+                183,"ERR_ENC_HALL_ILL",
+                184,"ERR_ENC_NO_HALL",
+                185,"ERR_ENC_ABS_FAIL",
+                186,"ERR_CHP_TIMEOUT",
+                187,"ERR_CHP_FAILED",
+                188,"",
+                189,"",
+                190,"",
+                191,"",
+                192,"",
+                193,"",
+                194,"",
+                195,"",
+                196,"",
+                197,"",
+                198,"",
+                199,"",
+                200,"",
+                201,"",
+                202,"",
+                203,"",
+                204,"",
+                205,"",
+                206,"",
+                207,"",
+                208,"",
+                209,"",
+                210,"",
+                211,"",
+                212,"ERR_INVAL_PHRASE",
+                213,"ERR_SOFT_LOW",
+                214,"ERR_SOFT_HIGH",
+                215,"",
+                216,"",
+                217,"ERR_FAST_STOP",
+                218,"",
+                219,"",
+                220,"",
+                221,"",
+                222,"ERR_CURRENT",
+                223,"ERR_I2T",
+                224,"",
+                225,"ERR_INTERNAL",
+                226,"",
+                227,"",
+                228,"ERR_TOO_FAST",
+                229,"",
+                230,"",
+                231,"ERR_FLASH_FAILED",
+                232,"",
+                233,"",
+                234,"",
+                235,"",
+                236,"",
+                237,"",
+                238,"",
+                239,"ERR_COMM_LOST",
+                240,"ERR_REF_ABORT_TO",
+                241,"ERR_MOV_ABORT_TO",
+                242,"ERR_NO_REF",
+                243,"",
+                244,"ERR_MOVE_BLOCKED",
+                245,"ERR_UNKNOWN_HW",
+                246,"ERR_BLOCK_FAILED",
+                247,"ERR_NO_COMM",
+                248,"ERR_WRONG_HW",
+                249,"ERR_WRONG_MODULE",
+                250,"ERR_SD_FAILED",
+                251,"ERR_FLASH_LOST",
+                252,"ERR_SW_COMM";
+        Param7 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 20 01 30 05", $ Link path
+                0x0012,                 $ Descriptor
+                0xC6,                   $ Data type (Unsigned 8-bit integer value)
+                1,                      $ Data size
+                "wrn_code",             $ Parameter name
+                "",                     $ Units string
+                "Warning code",         $ Help string
+                0,                      $ Minimum value
+                252,                    $ Maximum value
+                0,                      $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Enum7 =
+                0,"ERR_NONE",
+                1,"",
+                2,"",
+                3,"ERR_NO_RIGHTS",
+                4,"INF_UNKNOWN_CMD",
+                5,"INF_FAILED",
+                6,"",
+                7,"",
+                8,"",
+                9,"",
+                10,"",
+                11,"",
+                12,"",
+                13,"",
+                14,"",
+                15,"",
+                16,"",
+                17,"",
+                18,"INF_WRONG_TYPE",
+                19,"",
+                20,"INF_NO_AUTHORITY",
+                21,"",
+                22,"",
+                23,"",
+                24,"",
+                25,"",
+                26,"",
+                27,"INF_VAL_LIM_MAX",
+                28,"INF_VAL_LIM_MIN",
+                29,"",
+                30,"",
+                31,"",
+                32,"",
+                33,"",
+                34,"",
+                35,"",
+                36,"",
+                37,"",
+                38,"",
+                39,"",
+                40,"ERR_BT_FAILED",
+                41,"",
+                42,"",
+                43,"",
+                44,"",
+                45,"",
+                46,"",
+                47,"",
+                48,"",
+                49,"",
+                50,"",
+                51,"",
+                52,"",
+                53,"",
+                54,"",
+                55,"",
+                56,"",
+                57,"",
+                58,"",
+                59,"",
+                60,"",
+                61,"",
+                62,"",
+                63,"",
+                64,"",
+                65,"",
+                66,"",
+                67,"",
+                68,"",
+                69,"",
+                70,"",
+                71,"",
+                72,"",
+                73,"",
+                74,"",
+                75,"",
+                76,"",
+                77,"",
+                78,"",
+                79,"",
+                80,"",
+                81,"",
+                82,"",
+                83,"",
+                84,"",
+                85,"",
+                86,"",
+                87,"",
+                88,"",
+                89,"",
+                90,"",
+                91,"",
+                92,"",
+                93,"",
+                94,"",
+                95,"",
+                96,"",
+                97,"",
+                98,"",
+                99,"",
+                100,"",
+                101,"",
+                102,"",
+                103,"",
+                104,"",
+                105,"",
+                106,"",
+                107,"",
+                108,"ERR_MOT_TEMP_LO",
+                109,"ERR_MOT_TEMP_HI",
+                110,"",
+                111,"",
+                112,"ERR_LGC_TEMP_LO",
+                113,"ERR_LGC_TEMP_HI",
+                114,"ERR_LGC_VOLT_LO",
+                115,"ERR_LGC_VOLT_HI",
+                116,"ERR_MOT_VOLT_LO",
+                117,"ERR_MOT_VOLT_HI",
+                118,"",
+                119,"",
+                120,"",
+                121,"",
+                122,"",
+                123,"",
+                124,"ERR_REBOOT",
+                125,"",
+                126,"ERR_POWER_STAGE",
+                127,"",
+                128,"",
+                129,"",
+                130,"",
+                131,"",
+                132,"",
+                133,"",
+                134,"",
+                135,"",
+                136,"",
+                137,"ERR_ZV_NOT_FOUND",
+                138,"ERR_ENC_PHASE",
+                139,"ERR_ENC_SIN_LO",
+                140,"ERR_ENC_SIN_HI",
+                141,"ERR_ENC_COS_LO",
+                142,"ERR_ENC_COS_HI",
+                143,"ERR_ENC_SHORTCUT",
+                144,"WRN_LGC_TEMP_LO",
+                145,"WRN_LGC_TEMP_HI",
+                146,"WRN_MOT_TEMP_LO",
+                147,"WRN_MOT_TEMP_HI",
+                148,"WRN_NOT_FEASIBLE",
+                149,"WRN_POS_LIMIT",
+                150,"WRN_LGC_VOLT_LO",
+                151,"WRN_LGC_VOLT_HI",
+                152,"WRN_MOT_VOLT_LO",
+                153,"WRN_MOT_VOLT_HI",
+                154,"",
+                155,"WRN_FLASH_FAILED",
+                156,"WRN_ERASE_FAILED",
+                157,"WRN_FACT_FAILED",
+                158,"WRN_AUTH_FAILED",
+                159,"WRN_SD_NOT_PREP",
+                160,"",
+                161,"WRN_NO_PART",
+                162,"WRN_BCKUP_RSTORE",
+                163,"",
+                164,"",
+                165,"",
+                166,"",
+                167,"",
+                168,"",
+                169,"",
+                170,"",
+                171,"",
+                172,"",
+                173,"",
+                174,"",
+                175,"",
+                176,"",
+                177,"",
+                178,"",
+                179,"",
+                180,"ERR_ENC_PULSES",
+                181,"ERR_ENC_NO_INDEX",
+                182,"ERR_ENC_MN_INDEX",
+                183,"ERR_ENC_HALL_ILL",
+                184,"ERR_ENC_NO_HALL",
+                185,"ERR_ENC_ABS_FAIL",
+                186,"ERR_CHP_TIMEOUT",
+                187,"ERR_CHP_FAILED",
+                188,"",
+                189,"",
+                190,"",
+                191,"",
+                192,"",
+                193,"",
+                194,"",
+                195,"",
+                196,"",
+                197,"",
+                198,"",
+                199,"",
+                200,"",
+                201,"",
+                202,"",
+                203,"",
+                204,"",
+                205,"",
+                206,"",
+                207,"",
+                208,"",
+                209,"",
+                210,"",
+                211,"",
+                212,"ERR_INVAL_PHRASE",
+                213,"ERR_SOFT_LOW",
+                214,"ERR_SOFT_HIGH",
+                215,"",
+                216,"",
+                217,"ERR_FAST_STOP",
+                218,"",
+                219,"",
+                220,"",
+                221,"",
+                222,"ERR_CURRENT",
+                223,"ERR_I2T",
+                224,"",
+                225,"ERR_INTERNAL",
+                226,"",
+                227,"",
+                228,"ERR_TOO_FAST",
+                229,"",
+                230,"",
+                231,"ERR_FLASH_FAILED",
+                232,"",
+                233,"",
+                234,"",
+                235,"",
+                236,"",
+                237,"",
+                238,"",
+                239,"ERR_COMM_LOST",
+                240,"ERR_REF_ABORT_TO",
+                241,"ERR_MOV_ABORT_TO",
+                242,"ERR_NO_REF",
+                243,"",
+                244,"ERR_MOVE_BLOCKED",
+                245,"ERR_UNKNOWN_HW",
+                246,"ERR_BLOCK_FAILED",
+                247,"ERR_NO_COMM",
+                248,"ERR_WRONG_HW",
+                249,"ERR_WRONG_MODULE",
+                250,"ERR_SD_FAILED",
+                251,"ERR_FLASH_LOST",
+                252,"ERR_SW_COMM";
+        Param8 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 28 01 30 05", $ Link path
+                0x0000,                 $ Descriptor
+                0xC7,                   $ Data type (Unsigned 16-bit integer value)
+                2,                      $ Data size
+                "sys_msg_req",          $ Parameter name
+                "",                     $ Units string
+                "Request system message",$ Help string
+                0,                      $ Minimum value
+                65535,                  $ Maximum value
+                0,                      $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param9 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 30 01 30 05", $ Link path
+                0x0010,                 $ Descriptor
+                0xDA,                   $ Data type (Character string (1 byte per character, 1 byte length indicator))
+                1,                      $ Data size
+                "sys_msg_buffer",       $ Parameter name
+                "",                     $ Units string
+                "System message buffer",$ Help string
+                0,                      $ Minimum value
+                214,                    $ Maximum value
+                "",                     $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param16 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 30 02 30 05", $ Link path
+                0x0010,                 $ Descriptor
+                0xCA,                   $ Data type (32-bit floating point value)
+                4,                      $ Data size
+                "actual_pos",           $ Parameter name
+                "mm",                   $ Units string
+                "Position",             $ Help string
+                -3.402823466E+38,       $ Minimum value
+                3.402823466E+38,        $ Maximum value
+                0.0,                    $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param17 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 38 02 30 05", $ Link path
+                0x0010,                 $ Descriptor
+                0xCA,                   $ Data type (32-bit floating point value)
+                4,                      $ Data size
+                "actual_vel",           $ Parameter name
+                "mm/s",                 $ Units string
+                "Velocity",             $ Help string
+                -3.402823466E+38,       $ Minimum value
+                3.402823466E+38,        $ Maximum value
+                0.0,                    $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param36 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 80 03 30 05", $ Link path
+                0x0000,                 $ Descriptor
+                0xC7,                   $ Data type (Unsigned 16-bit integer value)
+                2,                      $ Data size
+                "grp_prehold_time",     $ Parameter name
+                "ms",                   $ Units string
+                "Grip prehold time",    $ Help string
+                0,                      $ Minimum value
+                60000,                  $ Maximum value
+                0,                      $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param41 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 A8 03 30 05", $ Link path
+                0x0000,                 $ Descriptor
+                0xCA,                   $ Data type (32-bit floating point value)
+                4,                      $ Data size
+                "dead_load_kg",         $ Parameter name
+                "kg",                   $ Units string
+                "Net mass of the gripper",$ Help string
+                0.1,                    $ Minimum value
+                15.0,                   $ Maximum value
+                1.02,                   $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param57 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 00 05 30 05", $ Link path
+                0x0002,                 $ Descriptor
+                0xC6,                   $ Data type (Unsigned 8-bit integer value)
+                1,                      $ Data size
+                "module_type",          $ Parameter name
+                "",                     $ Units string
+                "Module type",          $ Help string
+                0,                      $ Minimum value
+                27,                     $ Maximum value
+                1,                      $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Enum57 =
+                0,"EGI_40",
+                1,"EGI_80",
+                2,"EGL2_90",
+                3,"UG4_DIO_80",
+                4,"EGL_C",
+                5,"EGH",
+                6,"EGU_50_N_B",
+                7,"EGU_60_N_B",
+                8,"EGU_70_N_B",
+                9,"EGU_80_N_B",
+                10,"EGU_50_M_B",
+                11,"EGU_60_M_B",
+                12,"EGU_70_M_B",
+                13,"EGU_80_M_B",
+                14,"EGK_25_N_B",
+                15,"EGK_40_N_B",
+                16,"EGK_50_N_B",
+                17,"EGK_25_M_B",
+                18,"EGK_40_M_B",
+                19,"EGK_50_M_B",
+                20,"EGU_50_N_SD",
+                21,"EGU_60_N_SD",
+                22,"EGU_70_N_SD",
+                23,"EGU_80_N_SD",
+                24,"EGU_50_M_SD",
+                25,"EGU_60_M_SD",
+                26,"EGU_70_M_SD",
+                27,"EGU_80_M_SD";
+        Param61 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 28 05 30 05", $ Link path
+                0x0000,                 $ Descriptor
+                0xCA,                   $ Data type (32-bit floating point value)
+                4,                      $ Data size
+                "wp_lost_dst",          $ Parameter name
+                "mm",                   $ Units string
+                "Max. distance after workpiece lost",$ Help string
+                0.1,                    $ Minimum value
+                50.0,                   $ Maximum value
+                1.0,                    $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param64 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 40 05 30 05", $ Link path
+                0x0000,                 $ Descriptor
+                0xCA,                   $ Data type (32-bit floating point value)
+                4,                      $ Data size
+                "wp_release_delta",     $ Parameter name
+                "mm",                   $ Units string
+                "Workpiece release delta position",$ Help string
+                1.0,                    $ Minimum value
+                50.0,                   $ Maximum value
+                5.0,                    $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param70 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 80 05 30 05", $ Link path
+                0x0000,                 $ Descriptor
+                0xCA,                   $ Data type (32-bit floating point value)
+                4,                      $ Data size
+                "grp_pos_margin",       $ Parameter name
+                "mm",                   $ Units string
+                "Margin for workpiece detection",$ Help string
+                1.0,                    $ Minimum value
+                10.0,                   $ Maximum value
+                2.0,                    $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param71 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 88 05 30 05", $ Link path
+                0x0000,                 $ Descriptor
+                0xCA,                   $ Data type (32-bit floating point value)
+                4,                      $ Data size
+                "max_phys_stroke",      $ Parameter name
+                "mm",                   $ Units string
+                "Max. physical stroke", $ Help string
+                1.0,                    $ Minimum value
+                500.0,                  $ Maximum value
+                83.0,                   $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param75 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 A8 05 30 05", $ Link path
+                0x0000,                 $ Descriptor
+                0xCA,                   $ Data type (32-bit floating point value)
+                4,                      $ Data size
+                "grp_prepos_delta",     $ Parameter name
+                "mm",                   $ Units string
+                "Gripping pre-position delta",$ Help string
+                1.0,                    $ Minimum value
+                50.0,                   $ Maximum value
+                5.0,                    $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param77 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 00 06 30 05", $ Link path
+                0x0000,                 $ Descriptor
+                0xCA,                   $ Data type (32-bit floating point value)
+                4,                      $ Data size
+                "min_pos",              $ Parameter name
+                "mm",                   $ Units string
+                "Min. absolute position",$ Help string
+                0,                      $ Minimum value
+                83.0,                   $ Maximum value
+                0.0,                    $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param78 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 08 06 30 05", $ Link path
+                0x0000,                 $ Descriptor
+                0xCA,                   $ Data type (32-bit floating point value)
+                4,                      $ Data size
+                "max_pos",              $ Parameter name
+                "mm",                   $ Units string
+                "Max. absolute position",$ Help string
+                0,                      $ Minimum value
+                83.0,                   $ Maximum value
+                83.0,                   $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param79 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 10 06 30 05", $ Link path
+                0x0000,                 $ Descriptor
+                0xCA,                   $ Data type (32-bit floating point value)
+                4,                      $ Data size
+                "zero_pos_ofs",         $ Parameter name
+                "mm",                   $ Units string
+                "Zero position offset", $ Help string
+                -10000.0,               $ Minimum value
+                10000.0,                $ Maximum value
+                0.0,                    $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param82 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 28 06 30 05", $ Link path
+                0x0000,                 $ Descriptor
+                0xCA,                   $ Data type (32-bit floating point value)
+                4,                      $ Data size
+                "min_vel",              $ Parameter name
+                "mm/s",                 $ Units string
+                "Min. velocity",        $ Help string
+                1.0,                    $ Minimum value
+                3.402823466E+38,        $ Maximum value
+                5.5,                    $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param83 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 30 06 30 05", $ Link path
+                0x0000,                 $ Descriptor
+                0xCA,                   $ Data type (32-bit floating point value)
+                4,                      $ Data size
+                "max_vel",              $ Parameter name
+                "mm/s",                 $ Units string
+                "Max. velocity",        $ Help string
+                15.0,                   $ Minimum value
+                115.0,                  $ Maximum value
+                115.0,                  $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param86 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 50 06 30 05", $ Link path
+                0x0000,                 $ Descriptor
+                0xCA,                   $ Data type (32-bit floating point value)
+                4,                      $ Data size
+                "max_grp_vel",          $ Parameter name
+                "mm/s",                 $ Units string
+                "Max. grip velocity",   $ Help string
+                1.0,                    $ Minimum value
+                50.0,                   $ Maximum value
+                22.0,                   $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param87 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 58 06 30 05", $ Link path
+                0x0000,                 $ Descriptor
+                0xCA,                   $ Data type (32-bit floating point value)
+                4,                      $ Data size
+                "min_grp_force",        $ Parameter name
+                "N",                    $ Units string
+                "Min. grip force",      $ Help string
+                15.0,                   $ Minimum value
+                150.0,                  $ Maximum value
+                75.0,                   $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param88 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 60 06 30 05", $ Link path
+                0x0000,                 $ Descriptor
+                0xCA,                   $ Data type (32-bit floating point value)
+                4,                      $ Data size
+                "max_grp_force",        $ Parameter name
+                "N",                    $ Units string
+                "Max. grip force",      $ Help string
+                110.0,                  $ Minimum value
+                300.0,                  $ Maximum value
+                150.0,                  $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param94 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 A8 06 30 05", $ Link path
+                0x0000,                 $ Descriptor
+                0xCA,                   $ Data type (32-bit floating point value)
+                4,                      $ Data size
+                "max_allow_force",      $ Parameter name
+                "N",                    $ Units string
+                "Max. allowed grip force StrongGrip",$ Help string
+                0.0,                    $ Minimum value
+                0.0,                    $ Maximum value
+                0.0,                    $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param97 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 00 08 30 05", $ Link path
+                0x0000,                 $ Descriptor
+                0xCA,                   $ Data type (32-bit floating point value)
+                4,                      $ Data size
+                "min_err_mot_volt",     $ Parameter name
+                "V",                    $ Units string
+                "Min. error motor voltage",$ Help string
+                19.0,                   $ Minimum value
+                36.0,                   $ Maximum value
+                19.2,                   $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param98 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 08 08 30 05", $ Link path
+                0x0000,                 $ Descriptor
+                0xCA,                   $ Data type (32-bit floating point value)
+                4,                      $ Data size
+                "max_err_mot_volt",     $ Parameter name
+                "V",                    $ Units string
+                "Max. error motor voltage",$ Help string
+                19.0,                   $ Minimum value
+                36.0,                   $ Maximum value
+                30.0,                   $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param99 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 10 08 30 05", $ Link path
+                0x0000,                 $ Descriptor
+                0xCA,                   $ Data type (32-bit floating point value)
+                4,                      $ Data size
+                "min_err_lgc_volt",     $ Parameter name
+                "V",                    $ Units string
+                "Min. error logic voltage",$ Help string
+                5.0,                    $ Minimum value
+                36.0,                   $ Maximum value
+                19.2,                   $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param100 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 18 08 30 05", $ Link path
+                0x0000,                 $ Descriptor
+                0xCA,                   $ Data type (32-bit floating point value)
+                4,                      $ Data size
+                "max_err_lgc_volt",     $ Parameter name
+                "V",                    $ Units string
+                "Max. error logic voltage",$ Help string
+                5.0,                    $ Minimum value
+                36.0,                   $ Maximum value
+                28.8,                   $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param101 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 20 08 30 05", $ Link path
+                0x0000,                 $ Descriptor
+                0xCA,                   $ Data type (32-bit floating point value)
+                4,                      $ Data size
+                "min_err_lgc_temp",     $ Parameter name
+                "°C",                   $ Units string
+                "Min. error logic temperature",$ Help string
+                -20.0,                  $ Minimum value
+                89.0,                   $ Maximum value
+                -5.0,                   $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param102 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 28 08 30 05", $ Link path
+                0x0000,                 $ Descriptor
+                0xCA,                   $ Data type (32-bit floating point value)
+                4,                      $ Data size
+                "max_err_lgc_temp",     $ Parameter name
+                "°C",                   $ Units string
+                "Max. error logic temperature",$ Help string
+                -19.0,                  $ Minimum value
+                90.0,                   $ Maximum value
+                85.0,                   $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param105 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 40 08 30 05", $ Link path
+                0x0010,                 $ Descriptor
+                0xCA,                   $ Data type (32-bit floating point value)
+                4,                      $ Data size
+                "meas_lgc_temp",        $ Parameter name
+                "°C",                   $ Units string
+                "Measured logic temperature",$ Help string
+                -3.402823466E+38,       $ Minimum value
+                3.402823466E+38,        $ Maximum value
+                0.0,                    $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param111 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 70 08 30 05", $ Link path
+                0x0010,                 $ Descriptor
+                0xCA,                   $ Data type (32-bit floating point value)
+                4,                      $ Data size
+                "meas_lgc_volt",        $ Parameter name
+                "V",                    $ Units string
+                "Measured logic voltage",$ Help string
+                -3.402823466E+38,       $ Minimum value
+                3.402823466E+38,        $ Maximum value
+                0.0,                    $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param112 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 78 08 30 05", $ Link path
+                0x0010,                 $ Descriptor
+                0xCA,                   $ Data type (32-bit floating point value)
+                4,                      $ Data size
+                "meas_mot_volt",        $ Parameter name
+                "V",                    $ Units string
+                "Measured motor voltage",$ Help string
+                -3.402823466E+38,       $ Minimum value
+                3.402823466E+38,        $ Maximum value
+                0.0,                    $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param113 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 80 08 30 05", $ Link path
+                0x0000,                 $ Descriptor
+                0xCA,                   $ Data type (32-bit floating point value)
+                4,                      $ Data size
+                "min_wrn_mot_volt",     $ Parameter name
+                "V",                    $ Units string
+                "Min. warning motor voltage",$ Help string
+                19.0,                   $ Minimum value
+                36.0,                   $ Maximum value
+                21.6,                   $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param114 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 88 08 30 05", $ Link path
+                0x0000,                 $ Descriptor
+                0xCA,                   $ Data type (32-bit floating point value)
+                4,                      $ Data size
+                "max_wrn_mot_volt",     $ Parameter name
+                "V",                    $ Units string
+                "Max. warning motor voltage",$ Help string
+                19.0,                   $ Minimum value
+                36.0,                   $ Maximum value
+                26.4,                   $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param115 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 90 08 30 05", $ Link path
+                0x0000,                 $ Descriptor
+                0xCA,                   $ Data type (32-bit floating point value)
+                4,                      $ Data size
+                "min_wrn_lgc_volt",     $ Parameter name
+                "V",                    $ Units string
+                "Min. warning logic voltage",$ Help string
+                11.0,                   $ Minimum value
+                48.0,                   $ Maximum value
+                21.6,                   $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param116 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 98 08 30 05", $ Link path
+                0x0000,                 $ Descriptor
+                0xCA,                   $ Data type (32-bit floating point value)
+                4,                      $ Data size
+                "max_wrn_lgc_volt",     $ Parameter name
+                "V",                    $ Units string
+                "Max. warning logic voltage",$ Help string
+                11.0,                   $ Minimum value
+                48.0,                   $ Maximum value
+                26.4,                   $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param117 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 A0 08 30 05", $ Link path
+                0x0000,                 $ Descriptor
+                0xCA,                   $ Data type (32-bit floating point value)
+                4,                      $ Data size
+                "min_wrn_lgc_temp",     $ Parameter name
+                "°C",                   $ Units string
+                "Min. warning logic temperature",$ Help string
+                -20.0,                  $ Minimum value
+                89.0,                   $ Maximum value
+                5.0,                    $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param118 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 A8 08 30 05", $ Link path
+                0x0000,                 $ Descriptor
+                0xCA,                   $ Data type (32-bit floating point value)
+                4,                      $ Data size
+                "max_wrn_lgc_temp",     $ Parameter name
+                "°C",                   $ Units string
+                "Max. warning logic temperature",$ Help string
+                -19.0,                  $ Minimum value
+                90.0,                   $ Maximum value
+                75.0,                   $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param123 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 00 10 30 05", $ Link path
+                0x0000,                 $ Descriptor
+                0xDA,                   $ Data type (Character string (1 byte per character, 1 byte length indicator))
+                1,                      $ Data size
+                "serial_no_txt",        $ Parameter name
+                "",                     $ Units string
+                "Device serial number", $ Help string
+                0,                      $ Minimum value
+                16,                     $ Maximum value
+                "",                     $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param124 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 08 10 30 05", $ Link path
+                0x0000,                 $ Descriptor
+                0xDA,                   $ Data type (Character string (1 byte per character, 1 byte length indicator))
+                1,                      $ Data size
+                "order_no_txt",         $ Parameter name
+                "",                     $ Units string
+                "Order number",         $ Help string
+                0,                      $ Minimum value
+                16,                     $ Maximum value
+                "",                     $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param127 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 20 10 30 05", $ Link path
+                0x0000,                 $ Descriptor
+                0xC8,                   $ Data type (Unsigned 32-bit integer value)
+                4,                      $ Data size
+                "serial_no_num",        $ Parameter name
+                "",                     $ Units string
+                "Device serial number encoded",$ Help string
+                0,                      $ Minimum value
+                4294967295,             $ Maximum value
+                0,                      $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param128 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 00 11 30 05", $ Link path
+                0x0010,                 $ Descriptor
+                0xDA,                   $ Data type (Character string (1 byte per character, 1 byte length indicator))
+                1,                      $ Data size
+                "sw_build_date",        $ Parameter name
+                "",                     $ Units string
+                "Main software build date",$ Help string
+                0,                      $ Minimum value
+                12,                     $ Maximum value
+                "",                     $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param129 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 08 11 30 05", $ Link path
+                0x0010,                 $ Descriptor
+                0xDA,                   $ Data type (Character string (1 byte per character, 1 byte length indicator))
+                1,                      $ Data size
+                "sw_build_time",        $ Parameter name
+                "",                     $ Units string
+                "Main software build time",$ Help string
+                0,                      $ Minimum value
+                9,                      $ Maximum value
+                "",                     $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param130 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 10 11 30 05", $ Link path
+                0x0010,                 $ Descriptor
+                0xC7,                   $ Data type (Unsigned 16-bit integer value)
+                2,                      $ Data size
+                "sw_version_num",       $ Parameter name
+                "",                     $ Units string
+                "Main software version short",$ Help string
+                0,                      $ Minimum value
+                65535,                  $ Maximum value
+                0,                      $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param131 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 18 11 30 05", $ Link path
+                0x0010,                 $ Descriptor
+                0xDA,                   $ Data type (Character string (1 byte per character, 1 byte length indicator))
+                1,                      $ Data size
+                "sw_version_txt",       $ Parameter name
+                "",                     $ Units string
+                "Main software version",$ Help string
+                0,                      $ Minimum value
+                22,                     $ Maximum value
+                "",                     $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param146 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 30 13 30 05", $ Link path
+                0x0000,                 $ Descriptor
+                0xC1,                   $ Data type (Logical Boolean with values TRUE and FALSE)
+                1,                      $ Data size
+                "enable_softreset",     $ Parameter name
+                "",                     $ Units string
+                "Enable software reboot",$ Help string
+                0,                      $ Minimum value
+                1,                      $ Maximum value
+                0,                      $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param152 =
+                0,                      $ Reserved (always 0)
+                7,                      $ Link path size
+                "20 A2 25 00 14 30 05", $ Link path
+                0x0010,                 $ Descriptor
+                0xC8,                   $ Data type (Unsigned 32-bit integer value)
+                4,                      $ Data size
+                "system_uptime",        $ Parameter name
+                "s",                    $ Units string
+                "System uptime",        $ Help string
+                0,                      $ Minimum value
+                4294967295,             $ Maximum value
+                0,                      $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param186 =
+                0,                      $ Reserved (always 0)
+                ,                       $ Link path size
+                ,                       $ Link path
+                0x0000,                 $ Descriptor
+                0xC8,                   $ Data type (Unsigned 32-bit integer value)
+                4,                      $ Data size
+                "RPI range",            $ Parameter name
+                "",                     $ Units string
+                "",                     $ Help string
+                1000,                   $ Minimum value
+                3200000,                $ Maximum value
+                10000,                  $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param187 =
+                0,                      $ reserved, shall equal 0
+                ,                       $ Link path size
+                ,                       $ Link path
+                0x0000,                 $ Descriptor
+                0xC8,                   $ Data Type (Unsigned 32-bit integer value)
+                4,                      $ Data Size in bytes
+                "Input DWord 0",        $ name
+                "",                     $ units
+                "status double word",   $ help string
+                ,                       $ Minimum value
+                ,                       $ Maximum value
+                0,                      $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param188 =
+                0,                      $ reserved, shall equal 0
+                ,                       $ Link path size
+                ,                       $ Link path
+                0x0000,                 $ Descriptor
+                0xC4,                   $ Data Type (Signed 32-bit integer value)
+                4,                      $ Data Size in bytes
+                "Input DWord 1",        $ name
+                "um",                   $ units
+                "actual position",      $ help string
+                ,                       $ Minimum value
+                ,                       $ Maximum value
+                0,                      $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param189 =
+                0,                      $ reserved, shall equal 0
+                ,                       $ Link path size
+                ,                       $ Link path
+                0x0000,                 $ Descriptor
+                0xC4,                   $ Data Type (Signed 32-bit integer value)
+                4,                      $ Data Size in bytes
+                "Input DWord 2",        $ name
+                "",                     $ units
+                "reserve",              $ help string
+                ,                       $ Minimum value
+                ,                       $ Maximum value
+                0,                      $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param190 =
+                0,                      $ reserved, shall equal 0
+                ,                       $ Link path size
+                ,                       $ Link path
+                0x0000,                 $ Descriptor
+                0xC8,                   $ Data Type (Unsigned 32-bit integer value)
+                4,                      $ Data Size in bytes
+                "Input DWord 3",        $ name
+                "",                     $ units
+                "diagnosis double word", $ help string
+                ,                       $ Minimum value
+                ,                       $ Maximum value
+                0,                      $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param191 =
+                0,                      $ reserved, shall equal 0
+                ,                       $ Link path size
+                ,                       $ Link path
+                0x0000,                 $ Descriptor
+                0xC8,                   $ Data Type (Unsigned 32-bit integer value)
+                4,                      $ Data Size in bytes
+                "Output DWord 0",       $ name
+                "",                     $ units
+                "control double word",        $ help string
+                ,                       $ Minimum value
+                ,                       $ Maximum value
+                0,                      $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param192 =
+                0,                      $ reserved, shall equal 0
+                ,                       $ Link path size
+                ,                       $ Link path
+                0x0000,                 $ Descriptor
+                0xC4,                   $ Data Type (Signed 32-bit integer value)
+                4,                      $ Data Size in bytes
+                "Output DWord 1",       $ name
+                "um",                   $ units
+                "positioning parameter", $ help string
+                ,                       $ Minimum value
+                ,                       $ Maximum value
+                0,                      $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param193 =
+                0,                      $ reserved, shall equal 0
+                ,                       $ Link path size
+                ,                       $ Link path
+                0x0000,                 $ Descriptor
+                0xC4,                   $ Data Type (Signed 32-bit integer value)
+                4,                      $ Data Size in bytes
+                "Output DWord 2",       $ name
+                "um/s",                 $ units
+                "velocity parameter",   $ help string
+                ,                       $ Minimum value
+                ,                       $ Maximum value
+                0,                      $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+        Param194 =
+                0,                      $ reserved, shall equal 0
+                ,                       $ Link path size
+                ,                       $ Link path
+                0x0000,                 $ Descriptor
+                0xC4,                   $ Data Type (Signed 32-bit integer value)
+                4,                      $ Data Size in bytes
+                "Output DWord 3",       $ name
+                "%",                    $ units
+                "gripping force parameter", $ help string
+                ,                       $ Minimum value
+                ,                       $ Maximum value
+                0,                      $ default value
+                ,                       $ Scaling multiplier (not used)
+                ,                       $ Scaling divider (not used)
+                ,                       $ Scaling base (not used)
+                ,                       $ Scaling offset (not used)
+                ,                       $ Multiplier link (not used)
+                ,                       $ Divisor link (not used)
+                ,                       $ Base link (not used)
+                ,                       $ Offset link (not used)
+                ;                       $ Decimal precision (not used)
+
+[Assembly]
+        Revision = 2;
+        MaxInst = 150;
+        Number_Of_Static_Instances = 6;
+        Max_Number_Of_Dynamic_Instances = 0;
+        Object_Name = "Assembly Object";
+        Object_Class_Code = 0x00000004;
+        Assem3 =
+                "Heartbeat, Input Only",$ Name
+                ,                       $ Path
+                0,                      $ Size
+                0x0001,                 $ Descriptor
+                ,                       $ Reserved
+                ,                       $ Reserved
+                0,                      $ Member size
+                ;                       $ Member reference
+        Assem4 =
+                "Heartbeat, Listen Only",$ Name
+                ,                       $ Path
+                0,                      $ Size
+                0x0001,                 $ Descriptor
+                ,                       $ Reserved
+                ,                       $ Reserved
+                0,                      $ Member size
+                ;                       $ Member reference
+        Assem6 =
+                "Heartbeat, Input Only Extended",$ Name
+                ,                       $ Path
+                0,                      $ Size
+                0x0001,                 $ Descriptor
+                ,                       $ Reserved
+                ,                       $ Reserved
+                0,                      $ Member size
+                ;                       $ Member reference
+        Assem7 =
+                "Heartbeat, Listen Only Extended",$ Name
+                ,                       $ Path
+                0,                      $ Size
+                0x0001,                 $ Descriptor
+                ,                       $ Reserved
+                ,                       $ Reserved
+                0,                      $ Member size
+                ;                       $ Member reference
+        Assem100 =
+                "Producing Data",       $ Name
+                ,                       $ Path
+                16,                     $ Size
+                0x0001,                 $ Descriptor
+                ,                       $ Reserved
+                ,                       $ Reserved
+                32,Param187,            $ Member size, Member reference
+                32,Param188,
+                32,Param189,
+                32,Param190;
+        Assem150 =
+                "Consuming Data",       $ Name
+                ,                       $ Path
+                16,                     $ Size
+                0x0001,                 $ Descriptor
+                ,                       $ Reserved
+                ,                       $ Reserved
+                32,Param191,            $ Member size, Member reference
+                32,Param192,
+                32,Param193,
+                32,Param194;
+
+
+[Connection Manager]
+        Revision = 1;
+        MaxInst = 1;
+        Number_Of_Static_Instances = 1;
+        Max_Number_Of_Dynamic_Instances = 0;
+        Object_Name = "Connection Manager Object";
+        Object_Class_Code = 0x00000006;
+        Connection1 =
+                0x04030002,             $ Trigger and transport mask
+                                        $ Supported transport classes: class 1
+                                        $ Supported triggers: cyclic, change of state
+                                        $ Application type: exclusive-owner
+                                        $ Direction: client
+                0x77640405,             $ Connection parameters
+                                        $ O->T supported size type(s): Fixed
+                                        $ T->O supported size type(s): Fixed
+                                        $ O->T real time transfer format: 32-bit run/idle header
+                                        $ T->O real time transfer format: connection is pure data and is modeless
+                                        $ O->T supported connection type(s): point-to-point
+                                        $ T->O supported connection type(s): multicast, point-to-point
+                                        $ O->T supported priorities: low, high, scheduled
+                                        $ T->O supported priorities: low, high, scheduled
+                Param186,               $ O->T RPI
+                16,                     $ O->T size
+                Assem150,               $ O->T format
+                Param186,               $ T->O RPI
+                16,                     $ T->O size
+                Assem100,               $ T->O format
+                ,                       $ Proxy config size (not used)
+                ,                       $ Proxy config format (not used)
+                ,                       $ Target config size (no config data)
+                ,                       $ Target config format (not used)
+                "Exclusive owner",      $ Connection name string
+                "",                     $ Help string
+                "20 04 24 00 2C 96 2C 64";$ Path
+        Connection2 =
+                0x01030002,             $ Trigger and transport mask
+                                        $ Supported transport classes: class 1
+                                        $ Supported triggers: cyclic, change of state
+                                        $ Application type: listen-only
+                                        $ Direction: client
+                0x77240305,             $ Connection parameters
+                                        $ O->T supported size type(s): Fixed
+                                        $ T->O supported size type(s): Fixed
+                                        $ O->T real time transfer format: heartbeat
+                                        $ T->O real time transfer format: connection is pure data and is modeless
+                                        $ O->T supported connection type(s): point-to-point
+                                        $ T->O supported connection type(s): multicast
+                                        $ O->T supported priorities: low, high, scheduled
+                                        $ T->O supported priorities: low, high, scheduled
+                Param186,               $ O->T RPI
+                0,                      $ O->T size
+                Assem4,                 $ O->T format
+                Param186,               $ T->O RPI
+                16,                     $ T->O size
+                Assem100,               $ T->O format
+                ,                       $ Proxy config size (not used)
+                ,                       $ Proxy config format (not used)
+                ,                       $ Target config size (no config data)
+                ,                       $ Target config format (not used)
+                "Listen only",          $ Connection name string
+                "",                     $ Help string
+                "20 04 24 00 2C 04 2C 64";$ Path
+        Connection3 =
+                0x02030002,             $ Trigger and transport mask
+                                        $ Supported transport classes: class 1
+                                        $ Supported triggers: cyclic, change of state
+                                        $ Application type: input-only
+                                        $ Direction: client
+                0x77640305,             $ Connection parameters
+                                        $ O->T supported size type(s): Fixed
+                                        $ T->O supported size type(s): Fixed
+                                        $ O->T real time transfer format: heartbeat
+                                        $ T->O real time transfer format: connection is pure data and is modeless
+                                        $ O->T supported connection type(s): point-to-point
+                                        $ T->O supported connection type(s): multicast, point-to-point
+                                        $ O->T supported priorities: low, high, scheduled
+                                        $ T->O supported priorities: low, high, scheduled
+                Param186,               $ O->T RPI
+                0,                      $ O->T size
+                Assem3,                 $ O->T format
+                Param186,               $ T->O RPI
+                16,                     $ T->O size
+                Assem100,               $ T->O format
+                ,                       $ Proxy config size (not used)
+                ,                       $ Proxy config format (not used)
+                ,                       $ Target config size (no config data)
+                ,                       $ Target config format (not used)
+                "Input only",           $ Connection name string
+                "",                     $ Help string
+                "20 04 24 00 2C 03 2C 64";$ Path
+        Connection4 =
+                0x01030002,             $ Trigger and transport mask
+                                        $ Supported transport classes: class 1
+                                        $ Supported triggers: cyclic, change of state
+                                        $ Application type: listen-only
+                                        $ Direction: client
+                0x77240305,             $ Connection parameters
+                                        $ O->T supported size type(s): Fixed
+                                        $ T->O supported size type(s): Fixed
+                                        $ O->T real time transfer format: heartbeat
+                                        $ T->O real time transfer format: connection is pure data and is modeless
+                                        $ O->T supported connection type(s): point-to-point
+                                        $ T->O supported connection type(s): multicast
+                                        $ O->T supported priorities: low, high, scheduled
+                                        $ T->O supported priorities: low, high, scheduled
+                Param186,               $ O->T RPI
+                0,                      $ O->T size
+                Assem7,                 $ O->T format
+                Param186,               $ T->O RPI
+                16,                     $ T->O size
+                Assem100,               $ T->O format
+                ,                       $ Proxy config size (not used)
+                ,                       $ Proxy config format (not used)
+                ,                       $ Target config size (no config data)
+                ,                       $ Target config format (not used)
+                "Listen only extended", $ Connection name string
+                "",                     $ Help string
+                "20 04 24 00 2C 07 2C 64";$ Path
+        Connection5 =
+                0x02030002,             $ Trigger and transport mask
+                                        $ Supported transport classes: class 1
+                                        $ Supported triggers: cyclic, change of state
+                                        $ Application type: input-only
+                                        $ Direction: client
+                0x77640305,             $ Connection parameters
+                                        $ O->T supported size type(s): Fixed
+                                        $ T->O supported size type(s): Fixed
+                                        $ O->T real time transfer format: heartbeat
+                                        $ T->O real time transfer format: connection is pure data and is modeless
+                                        $ O->T supported connection type(s): point-to-point
+                                        $ T->O supported connection type(s): multicast, point-to-point
+                                        $ O->T supported priorities: low, high, scheduled
+                                        $ T->O supported priorities: low, high, scheduled
+                Param186,               $ O->T RPI
+                0,                      $ O->T size
+                Assem6,                 $ O->T format
+                Param186,               $ T->O RPI
+                16,                     $ T->O size
+                Assem100,               $ T->O format
+                ,                       $ Proxy config size (not used)
+                ,                       $ Proxy config format (not used)
+                ,                       $ Target config size (no config data)
+                ,                       $ Target config format (not used)
+                "Input only extended",  $ Connection name string
+                "",                     $ Help string
+                "20 04 24 00 2C 06 2C 64";$ Path
+
+
+[Capacity]
+        MaxIOConnections = 4;
+        MaxMsgConnections = 6;
+        TSpec1 =                        $ 1000 packets per sec @ 1 bytes
+                TxRx,
+                1,                      $ Connection size
+                1000;                   $ Packets per second
+        TSpec2 =                        $ 1000 packets per sec @ 256 bytes
+                TxRx,
+                256,                    $ Connection size
+                1000;                   $ Packets per second
+
+
+[QoS Class]
+        Revision = 1;
+        MaxInst = 1;
+        Number_Of_Static_Instances = 1;
+        Max_Number_Of_Dynamic_Instances = 0;
+        Class_Attributes = 1;
+        Instance_Attributes =
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8;
+        Class_Services = 0x0E;
+        Instance_Services =
+                0x0E,
+                0x10;
+        Object_Name = "QoS Object";
+        Object_Class_Code = 0x00000048;
+
+
+[TCP/IP Interface Class]
+        Revision = 4;
+        MaxInst = 1;
+        Number_Of_Static_Instances = 1;
+        Max_Number_Of_Dynamic_Instances = 0;
+        Class_Attributes =
+                1,
+                2,
+                3,
+                6,
+                7;
+        Instance_Attributes =
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                8,
+                9,
+                10,
+                11,
+                13;
+        Class_Services =
+                0x01,
+                0x0E;
+        Instance_Services =
+                0x01,
+                0x0E,
+                0x10;
+        Object_Name = "TCP/IP Interface Object";
+        Object_Class_Code = 0x000000F5;
+
+
+[Ethernet Link Class]
+        Revision = 4;
+        MaxInst = 1;
+        Number_Of_Static_Instances = 1;
+        Max_Number_Of_Dynamic_Instances = 0;
+        Class_Attributes =
+                1,
+                2,
+                3,
+                6,
+                7;
+        Instance_Attributes =
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                10,
+                11;
+        Class_Services =
+                0x01,
+                0x0E;
+        Instance_Services =
+                0x01,
+                0x0E,
+                0x10,
+                0x4C;
+        Object_Name = "Ethernet Link Object";
+        Object_Class_Code = 0x000000F6;
+        InterfaceLabel1 = "Port 1";
+        InterfaceType1 = 2;
+
+
+[LLDP Management Class]
+        Revision = 1;
+        MaxInst = 1;
+        Number_Of_Static_Instances = 1;
+        Max_Number_Of_Dynamic_Instances = 0;
+        Instance_Attributes =
+                1,
+                2,
+                3,
+                4,
+                5;
+        Instance_Services =
+                0x0E,
+                0x10;
+        Object_Name = "LLDP Management Object";
+        Object_Class_code = 0x00000109;
+
+
+[LLDP Data Table Object]
+        Revision = 1;
+        MaxInst = 0;
+        Number_Of_Static_Instances = 0;
+        Max_Number_Of_Dynamic_Instances = 8;
+        Class_Attributes =
+                2,
+                3;
+        Instance_Attributes =
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9;
+        Class_Services =
+                0x0E,
+                0x11;
+        Instance_Services = 0x0E;
+        Object_Name = "LLDP Data Table Class";
+        Object_Class_code = 0x0000010A;

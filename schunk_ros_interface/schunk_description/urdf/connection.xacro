@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="robot_connection">
+    
+    <xacro:property name="pi" value="3.141592653589793" />
+    <xacro:macro name="robot_connection" params="parent px py pz rx ry rz">
+
+        <!-- Joint connecting flange link to gripper base link -->
+        <joint name="${parent}_to_robot_connection_joint" type="fixed">
+            <parent link="${parent}" />
+            <child link="robot_connection_link" />
+            <origin xyz="${px} ${py} ${pz}" rpy="${rx} ${ry} ${rz}" />
+        </joint>
+
+        <!-- plate link-->
+        <link name="robot_connection_link">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://schunk_description/meshes/connection/robot_connection.stl" />
+                </geometry>
+                <material name="Grey" />
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://schunk_description/meshes/connection/robot_connection.stl" />
+                </geometry>
+            </collision>
+        </link>
+
+        <joint name="robot_connection_to_gripper_base_joint" type="fixed">
+            <parent link="robot_connection_link" />
+            <child link="gripper_base_link" />
+            <origin xyz="0.0 0.0 0.0169" rpy="0.0 0.0 0.0" />
+        </joint>
+
+        <link name="gripper_base_link" />
+
+    </xacro:macro>
+
+</robot>

@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="egk_40">
+
+  <xacro:macro name="egk_40_transmission" params="hardware_interface">
+
+    <!-- Trasmissions -->
+    <transmission name="tran_1">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="finger1_joint">
+        <hardwareInterface>${hardware_interface}</hardwareInterface>
+      </joint>
+      <actuator name="motor_1">
+        <hardwareInterface>${hardware_interface}</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+    <transmission name="tran_2">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="finger2_joint">
+        <hardwareInterface>${hardware_interface}</hardwareInterface>
+      </joint>
+      <actuator name="motor_2">
+        <hardwareInterface>${hardware_interface}</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+  </xacro:macro>
+
+</robot>

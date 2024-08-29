@@ -1,0 +1,17 @@
+schunk:
+  gripper_name: "egk_40"
+  gripper_ip: "192.168.125.160"
+
+  grp_prehold_time: 0.0 # [ms]
+  wp_lost_dst: 10.0 # [mm]
+  wp_release_delta: 10.0 # [mm]
+  grp_pos_margin: 2.0 # [mm]
+  grp_prepos_delta: 5.0 # [mm]
+  min_pos: 0.0  # [mm]
+  max_pos: 80.0 # [mm]
+  zero_pos_ofs: 0.0 # [mm]
+
+# TO BE NOTICED: if you input a value that does not make sense (it is outside the system boundaries), 
+# the code will throw a communication error due to the fact the gripper rejects the requested value.
+# These boundaries values can be found in the documentation of your gripper (in my case that I have an EGK-40: pag 54/120 )
+# so pay attention before saying it my code's fault that it does not work :)

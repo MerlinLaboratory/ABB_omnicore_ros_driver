@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="test_schunk_description">
+
+
+  <!-- parameters -->
+  <xacro:arg name="prefix" default=""/>
+  <xacro:arg name="parent" default="world"/>
+  <xacro:arg name="px" default="0.0"/>
+  <xacro:arg name="py" default="0.0"/>
+  <xacro:arg name="pz" default="0.0"/>
+  <xacro:arg name="rx" default="0.0"/>
+  <xacro:arg name="ry" default="0.0"/>
+  <xacro:arg name="rz" default="0.0"/>
+
+  <!-- includes -->
+  <xacro:include filename="$(find schunk_description)/urdf/egk_40_complete.xacro" />
+
+  <!-- define world link -->
+  <link name="world" />
+
+  <!-- Gripper's main body -->
+  <xacro:egk_40_complete 
+    prefix="$(arg prefix)" 
+    parent="$(arg parent)" 
+    px="$(arg px)" py="$(arg py)" pz="$(arg pz)" 
+    rx="$(arg rx)" ry="$(arg ry)" rz="$(arg rz)" />
+
+</robot>

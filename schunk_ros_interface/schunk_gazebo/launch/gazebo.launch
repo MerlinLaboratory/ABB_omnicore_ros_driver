@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- Gazebo options -->
+  <arg name="paused" default="false" doc="Start Gazebo paused"/>
+  <arg name="world_name" default="worlds/empty.world" doc="Gazebo world file"/>
+  <arg name="world_pose" default="-x 0 -y 0 -z 0.1 -R 1.54 -P 0 -Y 0" doc="Pose to spawn the gripper at"/>
+  <arg name="initial_joint_positions" default=" -J finger1_joint 0 -J finger2_joint 0" doc="Initial joint configuration of the gripper"/>
+  <arg name="controllers" default="gripper_controller gripper_joint_state_controller" doc="Controllers that are activated by default."/>
+  <arg name="launch_rviz" default="true" doc="Whether or not to launch Rviz."/>
+  <arg name="gui" default="true" doc="Whether or not launch Gazebo GUI."/>
+
+  <!-- Loading the gripper description -->
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find schunk_gazebo)/urdf/test.xacro'" />
+
+  <!-- Launch Gazebo and spawn the robot -->
+  <!-- Start Gazebo paused to allow the controllers to pickup the initial pose -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch" pass_all_args="true">
+    <arg name="paused" value="true"/>
+    <arg name="world_name" value="$(arg world_name)"/>
+    <arg name="gui" value="$(arg gui)"/>
+  </include>
+
+  <!-- Load the controllers -->
+  <include file="$(find schunk_gazebo)/launch/schunk_control.launch">
+    <arg name="controllers" value="$(arg controllers)"/>
+  </include>
+
+  <!-- Unpause the simulation after loading the robot model -->
+  <arg name="unpause" value="$(eval '' if arg('paused') else '-unpause')" />
+
+  <!-- Spawn the gripper in Gazebo -->
+  <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model robot $(arg unpause) $(arg world_pose) $(arg initial_joint_positions)" respawn="false" output="screen" />
+
+  <!-- Given the published joint states, publish tf for the robot links -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" />
+
+  <!-- Launching mockup services to simulate how to command real hardware -->
+  <node name="schunk_srv_mockup" pkg="schunk_gazebo" type="gripper.py" output="screen"/>
+
+  <!-- rviz -->
+  <node pkg="rviz" type="rviz" name="rviz" output="screen" args="-d $(find schunk_gazebo)/config/rviz.rviz" if="$(arg launch_rviz)"/>
+
+</launch>

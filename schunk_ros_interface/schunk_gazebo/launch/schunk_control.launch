@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+
+  <arg name="controllers_gripper" default="gripper_controller joint_state_controller" doc="Controllers that are activated by default."/>
+
+  <!-- Load the controllers -->
+  <rosparam command="load" file="$(find schunk_gazebo)/config/controllers.yaml"/>
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="$(arg controllers_gripper)"/>
+
+</launch>

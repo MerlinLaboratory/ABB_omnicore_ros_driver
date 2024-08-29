@@ -1,0 +1,14 @@
+# This service is used to grip an object without specifying its position. 
+#  .
+# gripping_force represents the force percentage (wrt the total) to which the gripper should be closed. The min value is 50%
+# gripping_direction represents wrt which part the fingers are going to move. 
+
+uint8 gripping_force
+
+uint8 INWARD = 0
+uint8 OUTWARD = 1
+uint8 gripping_direction
+
+---
+bool success
+string debug

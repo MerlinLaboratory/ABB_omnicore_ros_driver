@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="egk_40">
+
+  <xacro:macro name="egk_40_gazebo"
+    params="prefix parent px py pz rx ry rz hardware_interface launch_gazebo_ros_control_plugin='true'">
+
+    <!-- includes -->
+    <xacro:include filename="$(find schunk_description)/urdf/egk_40_complete.xacro" />
+    <xacro:include filename="$(find schunk_gazebo)/urdf/transmissions.xacro" />
+
+    <!-- Launching each component -->
+    <!-- Gripper's main body -->
+
+    <xacro:egk_40_complete
+      prefix="${prefix}"
+      parent="${parent}"
+      px="${px}" py="${py}" pz="${pz}"
+      rx="${rx}" ry="${ry}" rz="${rz}" />
+
+    <!-- Tramsmissions -->
+    <xacro:egk_40_transmission hardware_interface="${hardware_interface}" />
+
+    <!-- Loading Gazebo plugins -->
+    <xacro:if value="${launch_gazebo_ros_control_plugin}">
+      <gazebo>
+        <!-- <plugin name="ros_control" filename="libgazebo_ros_control.so">
+        </plugin> -->
+        <!-- It is loaded in the robot_arm.urdf.xacro -->
+      </gazebo>
+    </xacro:if>
+
+    <!-- Disabling gravity -->
+    <gazebo reference="finger1">
+      <gravity>0</gravity>
+    </gazebo>
+
+    <gazebo reference="finger2">
+      <gravity>0</gravity>
+    </gazebo>
+    
+    <gazebo>
+      <plugin name="gazebo_grasp_fix" filename="libgazebo_grasp_fix.so">
+        <arm>
+          <arm_name>gofa</arm_name>
+          <palm_link> finger1 </palm_link>
+          <gripper_link> leftfinger_body </gripper_link>
+          <palm_link> finger2 </palm_link>
+          <gripper_link> rightfinger_body </gripper_link>
+        </arm>
+        <forces_angle_tolerance>100</forces_angle_tolerance>
+        <update_rate>4</update_rate>
+        <grip_count_threshold>4</grip_count_threshold>
+        <max_grip_count>8</max_grip_count>
+        <release_tolerance>0.005</release_tolerance>
+        <disable_collisions_on_attach>false</disable_collisions_on_attach>
+        <contact_topic>__default_topic__</contact_topic>
+      </plugin>
+    </gazebo>
+
+  </xacro:macro>
+
+</robot>
