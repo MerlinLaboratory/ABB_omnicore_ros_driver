@@ -6,7 +6,6 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
-        - /TF1
         - /TF1/Frames1
       Splitter Ratio: 0.5
     Tree Height: 806
@@ -62,6 +61,36 @@ Visualization Manager:
         Expand Joint Details: false
         Expand Link Details: false
         Expand Tree: false
+        L1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        L2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        L3:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        L4:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        L5:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        L6:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         Link Tree Style: Links in Alphabetic Order
         base_link_camera_stand:
           Alpha: 1
@@ -88,56 +117,40 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        finger1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        finger2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        flange:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        gofa_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         grasp_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        gripper_base:
+        gripper_body:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        gripper_finger_l:
+        leftfinger_body:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        gripper_finger_r:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        link_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        link_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        link_3:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        link_4:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        link_5:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        link_6:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        link_7:
+        rightfinger_body:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -146,11 +159,6 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        yumi_base_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
       Name: RobotModel
       Robot Description: robot_description
       TF Prefix: ""
@@ -164,6 +172,18 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: false
+        L1:
+          Value: false
+        L2:
+          Value: false
+        L3:
+          Value: false
+        L4:
+          Value: false
+        L5:
+          Value: false
+        L6:
+          Value: false
         base_link_camera_stand:
           Value: false
         base_link_surface:
@@ -174,31 +194,23 @@ Visualization Manager:
           Value: false
         ext_camera_link:
           Value: false
+        finger1:
+          Value: false
+        finger2:
+          Value: false
+        flange:
+          Value: false
+        gofa_base_link:
+          Value: false
         grasp_link:
+          Value: true
+        gripper_body:
           Value: false
-        gripper_base:
+        leftfinger_body:
           Value: false
-        gripper_finger_l:
-          Value: false
-        gripper_finger_r:
-          Value: false
-        link_1:
-          Value: false
-        link_2:
-          Value: false
-        link_3:
-          Value: false
-        link_4:
-          Value: false
-        link_5:
-          Value: false
-        link_6:
-          Value: false
-        link_7:
+        rightfinger_body:
           Value: false
         world:
-          Value: false
-        yumi_base_link:
           Value: false
       Marker Alpha: 1
       Marker Scale: 1
@@ -213,23 +225,25 @@ Visualization Manager:
               camera_holder:
                 ext_camera_link:
                   {}
-            yumi_base_link:
+            gofa_base_link:
+              L1:
+                L2:
+                  L3:
+                    L4:
+                      L5:
+                        L6:
+                          flange:
+                            grasp_link:
+                              {}
+                            gripper_body:
+                              finger1:
+                                leftfinger_body:
+                                  {}
+                              finger2:
+                                rightfinger_body:
+                                  {}
               base_link_surface:
                 {}
-              link_1:
-                link_2:
-                  link_3:
-                    link_4:
-                      link_5:
-                        link_6:
-                          link_7:
-                            gripper_base:
-                              grasp_link:
-                                {}
-                              gripper_finger_l:
-                                {}
-                              gripper_finger_r:
-                                {}
       Update Interval: 0
       Value: true
   Enabled: true
@@ -260,7 +274,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 2.4742157459259033
+      Distance: 3.103656053543091
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -276,9 +290,9 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.8553974628448486
+      Pitch: 0.7903974652290344
       Target Frame: <Fixed Frame>
-      Yaw: 4.6185712814331055
+      Yaw: 5.098576545715332
     Saved: ~
 Window Geometry:
   Displays:

@@ -19,12 +19,12 @@
         <chain base_link="gofa_base_link" tip_link="grasp_link" />
     </group>
     <group_state name="home" group="gofa_arm">
-        <joint name="J1" value="0"/>
-        <joint name="J2" value="0"/>
-        <joint name="J3" value="0"/>
+        <joint name="J1" value="1.58"/>
+        <joint name="J2" value="-1.26"/>
+        <joint name="J3" value="0.76"/>
         <joint name="J4" value="0"/>
-        <joint name="J5" value="0"/>
-        <joint name="J6" value="0"/>
+        <joint name="J5" value="1.81"/>
+        <joint name="J6" value="0.10"/>
     </group_state>
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
     <disable_collisions link1="L1" link2="L2" reason="Adjacent"/>
@@ -78,4 +78,6 @@
     <disable_collisions link1="finger2" link2="rightfinger_body" reason="Adjacent"/>
     <disable_collisions link1="gripper_body" link2="leftfinger_body" reason="Never"/>
     <disable_collisions link1="gripper_body" link2="rightfinger_body" reason="Never"/>
+    <disable_collisions link1="leftfinger_body" link2="rightfinger_body" reason="Never"/>
+
 </robot>
