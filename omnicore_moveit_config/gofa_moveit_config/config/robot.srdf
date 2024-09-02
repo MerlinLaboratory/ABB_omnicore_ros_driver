@@ -79,5 +79,7 @@
     <disable_collisions link1="gripper_body" link2="leftfinger_body" reason="Never"/>
     <disable_collisions link1="gripper_body" link2="rightfinger_body" reason="Never"/>
     <disable_collisions link1="leftfinger_body" link2="rightfinger_body" reason="Never"/>
+    <disable_collisions link1="base_link_surface" link2="rightfinger_body" reason="Never"/>
+    <disable_collisions link1="base_link_surface" link2="leftfinger_body" reason="Never"/>
 
 </robot>
