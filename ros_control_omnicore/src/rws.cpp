@@ -81,16 +81,35 @@ Rws::Rws(const ros::NodeHandle &nh) : nh(nh)
 	const Poco::Net::Context::Ptr ptrContext(new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, "", "", "", Poco::Net::Context::VERIFY_NONE));
 	this->p_rws_interface = new abb::rws::RWSStateMachineInterface(this->ip_robot, this->port_robot_rws, ptrContext);
 
-	this->p_rws_interface->stopRAPIDExecution();
+  if (!this->p_rws_interface->stopRAPIDExecution())
+  {
+    ROS_ERROR("stopRAPIDExecution failed");
+  }
+  usleep(250000);
+
+  if (!this->p_rws_interface->requestMasterShip())
+  {
+    ROS_ERROR("requestMasterShip failed");
+  }
 	usleep(250000);
-	this->p_rws_interface->requestMasterShip();
-	usleep(250000);
-	this->p_rws_interface->resetRAPIDProgramPointer();
-	usleep(250000);
-	this->p_rws_interface->releaseMasterShip();
-	usleep(250000);
-	this->p_rws_interface->startRAPIDExecution();
-	usleep(250000);
+
+  if (!this->p_rws_interface->resetRAPIDProgramPointer())
+  {
+    ROS_ERROR("resetRAPIDProgramPointer failed");
+  }
+  usleep(250000);
+
+  if (!this->p_rws_interface->releaseMasterShip())
+  {
+    ROS_ERROR("releaseMasterShip failed");
+  }
+  usleep(250000);
+
+  if (!this->p_rws_interface->startRAPIDExecution())
+  {
+    ROS_ERROR("startRAPIDExecution failed");
+  }
+  usleep(250000);
 
 	// Setting params + control to EGM
 	if(EGMSetParams() == false)
