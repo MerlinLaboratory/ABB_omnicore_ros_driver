@@ -28,9 +28,9 @@ find_package(catkin REQUIRED COMPONENTS
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES schunk_hardware_interface
-#  CATKIN_DEPENDS roscpp rospy schunk_interfaces std_msgs std_srvs
+ INCLUDE_DIRS include
+ LIBRARIES schunk_hardware_interface
+ CATKIN_DEPENDS roscpp rospy schunk_interfaces std_msgs std_srvs
 #  DEPENDS system_lib
 )
 
@@ -51,7 +51,7 @@ include_directories(
 # )
 
 add_executable(schunk_gripper_node src/schunk_node.cpp src/schunk_eip_interface.cpp)
+add_dependencies(schunk_gripper_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 include_directories(/usr/local/include/EIPScanner)
-target_link_libraries(schunk_gripper_node EIPScanner)
-target_link_libraries(schunk_gripper_node ${catkin_LIBRARIES})
+target_link_libraries(schunk_gripper_node EIPScanner ${catkin_LIBRARIES})
