@@ -1,3 +1,5 @@
+<?xml version="1.0"?>
+
 <launch>
 
   <arg name="robot" default="gofa" doc="Which robot to lauch." /> <!-- Possibilities: 'gofa' or 'yumi_single_arm'-->
@@ -36,6 +38,9 @@
         <arg name="launch_rviz"                  value="false" />
         <arg name="launch_joint_state_publisher" value="false"/>
       </include>
+    </group>
+    <group if="$(eval arg('load_robot_description') == false)">
+      <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
     </group>
   </group>
   
