@@ -12,15 +12,14 @@ import rospy
 
 from std_msgs.msg import Float64MultiArray
 
-
 class GripperMockup:
     
   def __init__(self):
 
     # Mockup services
-    self.jot_to_srv = rospy.Service('jog_to', JogTo, self.jog_to_cb)
+    self.jot_to_srv = rospy.Service('schunk/egk_40/jog_to', JogTo, self.jog_to_cb)
     self.release_srv = rospy.Service('release', Release, self.release_cb)
-    self.simple_grip_srv = rospy.Service('simple_grip', SimpleGrip, self.simple_grip_cb)
+    self.simple_grip_srv = rospy.Service('schunk/egk_40/simple_grip', SimpleGrip, self.simple_grip_cb)
 
     # Publisher
     self.command_pub = rospy.Publisher('gripper_controller/command', Float64MultiArray, queue_size=10)
