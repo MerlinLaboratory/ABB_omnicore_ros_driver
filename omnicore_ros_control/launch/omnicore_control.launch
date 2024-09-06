@@ -4,6 +4,7 @@
   <arg name="simulation"  default="true" doc="Whether you want to launch the robot in Gazebo."/>
   <arg name="controllers" default="VelocityControllers_JointTrajectoryController" doc="Controllers that are activated by default."/>
   <arg name="stopped_controllers" default="VelocityControllers_JointGroupVelocityController" doc="Controllers that are initally loaded, but not started."/>
+  <arg name="load_robot_description" default="true"/> 
 
   <!-- Load the config for Gofa/Yumi Single Arm -->
   <group if="$(eval arg('simulation') == false)">
@@ -29,13 +30,15 @@
 
   <!-- Load the URDF pkg only if launching real robot. Otherwise omnicore_gazebo pkg loads it -->
   <group if="$(eval arg('simulation') == false)">
-    <include file="$(find omnicore_description)/launch/display.launch">
-      <arg name="robot"                        value="$(arg robot)" />
-      <arg name="launch_rviz"                  value="false" />
-      <arg name="launch_joint_state_publisher" value="false"/>
-    </include>
+    <group if="$(eval arg('load_robot_description') == true)">
+      <include file="$(find omnicore_description)/launch/display.launch">
+        <arg name="robot"                        value="$(arg robot)" />
+        <arg name="launch_rviz"                  value="false" />
+        <arg name="launch_joint_state_publisher" value="false"/>
+      </include>
+    </group>
   </group>
-
+  
   <!-- Load the Hardware Interface and Rws Interface if launching the real robot-->
   <group if="$(eval arg('simulation') == false)">
     <node pkg="omnicore_ros_control" name="omnicore_hw_interface" type="omnicore_control_node" output="screen"/>
