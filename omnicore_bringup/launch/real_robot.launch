@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <launch>
 
     <arg name="robot"               default="gofa" /> <!-- Possibilities: 'gofa' or 'yumi_single_arm'-->
