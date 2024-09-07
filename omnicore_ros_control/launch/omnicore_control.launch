@@ -18,10 +18,10 @@
   <rosparam command="load" file="$(find omnicore_ros_control)/config/Controllers/joint_state_controller.yaml"/>
   <rosparam command="load" file="$(find omnicore_ros_control)/config/Controllers/$(arg robot)/VelocityControllers_JointGroupVelocityController.yaml" />
   <rosparam command="load" file="$(find omnicore_ros_control)/config/Controllers/$(arg robot)/VelocityControllers_JointTrajectoryController.yaml" />
-  <group if="$(eval arg('robot') == 'yumi_single_arm')">
+  <!-- <group if="$(eval arg('robot') == 'yumi_single_arm')">
     <arg name="yaml_Gripper_Controller" default="$(find omnicore_ros_control)/config/Controllers/$(arg robot)/gripper_controller.yaml" />
     <rosparam command="load" file="$(arg yaml_Gripper_Controller)" />
-  </group> 
+  </group>  -->
 
   <!-- Load the controllers -->
   <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="$(arg controllers) joint_state_controller"/>
