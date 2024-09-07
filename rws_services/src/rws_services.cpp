@@ -5,6 +5,13 @@ RwsService::RwsService()
     // Reading config file
     nh.getParam("/robot/ip_robot"      , this->ip_robot      );
     nh.getParam("/robot/robot_port_rws", this->port_robot_rws);
+    float max_force = 200;
+    float max_speed = 120;
+    if(nh.hasParam("/robot/smart_gripper/max_force") && nh.hasParam("/robot/smart_gripper/max_force"))
+    {
+        nh.getParam("/robot/smart_gripper/max_force", max_force);
+        nh.getParam("/robot/smart_gripper/max_speed", max_speed);
+    }
 
     // Enstablishing connection with RWS server
     const Poco::Net::Context::Ptr ptrContext(new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, "", "", "", Poco::Net::Context::VERIFY_NONE));
@@ -14,6 +21,7 @@ RwsService::RwsService()
     server_grip_in  = this->nh.advertiseService("grip_in",  &RwsService::GripInSrv , this);
     server_grip_out = this->nh.advertiseService("grip_out", &RwsService::GripOutSrv, this);
     server_move_to  = this->nh.advertiseService("move_gripper_to",  &RwsService::MoveToSrv , this);
+    this->p_rws_interface->services().sg().Calibrate((uint)max_force,(uint)max_speed);
 }
 
 bool RwsService::GripInSrv(std_srvs::Trigger::Request  &req, 

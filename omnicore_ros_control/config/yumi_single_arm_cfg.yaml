@@ -20,7 +20,7 @@ robot:
   tool_data:
     # tcp_pose       : [0.0, 0.0, 125.2, 1.0, 0.0, 0.0, 0.0] # x, y, z, w, x, y, z. Positions in [mm]
     tcp_pose       : [0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0] # x, y, z, w, x, y, z. Positions in [mm]
-    mass           :  0.7                                  # [kg]
+    mass           :  0.230                                  # [kg]
     cog            : [-17.3, 13.6, 49.0]                   # [mm]
     inertia_tensor : [0.0  ,  0.0,  0.0]                   # [kg*m^2]
     aom            : [1.0  ,  0.0,  0.0, 0.0] 
