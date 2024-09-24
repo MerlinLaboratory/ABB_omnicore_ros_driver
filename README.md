@@ -124,8 +124,8 @@ If there are no errors and you want to setup the real robot download [RobotStudi
 It is possible to launch both the gofa and yumi single arm in Gazebo with the following commands: 
 
 ```bash
-  roslaunch roslaunch omnicore_launcher simulated_robot.launch robot:=yumi_single_arm # To launch Yumi Single Arm
-  roslaunch roslaunch omnicore_launcher simulated_robot.launch robot:=gofa # To launch Gofa
+  roslaunch roslaunch omnicore_bringup simulated_robot.launch robot:=yumi_single_arm # To launch Yumi Single Arm
+  roslaunch roslaunch omnicore_bringup simulated_robot.launch robot:=gofa # To launch Gofa
 ```
 
 | Yumi Single Arm | Gofa |
@@ -224,7 +224,7 @@ Finally:
 By default, the repo launches the **Gofa** robot with a **velocity_controller/JointTrajectoryController**:
 ```bash
   source devel/setup.bash
-  roslaunch omnicore_launcher real_robot.launch
+  roslaunch omnicore_bringup real_robot.launch robot:=gofa # or yumi_single_arm
 ```
 The pkg has been tested with the following ros_control controllers:
 - velocity_controller/JointTrajectoryController
