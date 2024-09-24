@@ -7,7 +7,7 @@
   <xacro:arg name="gripper_interface" default="" />
   <xacro:arg name="base_translation" default="0" />
   <xacro:arg name="base_orientation" default="0" />
-  <xacro:arg name="child" default="flange" />
+  <xacro:arg name="child" default="gofa_base_link" />
 
   <!-- <xacro:property name="robot" value="$(arg robot)" /> -->
   <xacro:property name="hardware_interface" value="$(arg hardware_interface)" />

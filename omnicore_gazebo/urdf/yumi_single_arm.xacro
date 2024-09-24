@@ -7,10 +7,13 @@
   <xacro:arg name="gripper_interface" default="EffortJointInterface" />
   <xacro:arg name="base_translation" default="0" />
   <xacro:arg name="base_orientation" default="0" />
+  <xacro:arg name="child" default="yumi_base_link" />
+
 
   <!-- <xacro:property name="robot" value="$(arg robot)" /> -->
   <xacro:property name="hardware_interface" value="$(arg hardware_interface)" />
   <xacro:property name="gripper_interface" value="$(arg gripper_interface)" />
+  <xacro:property name="child" value="$(arg child)" />
 
   <!-- World fixed joint -->
   <link name="world" />
@@ -23,7 +26,7 @@
   <!--Import the yumi servo gripper macro -->
   <xacro:include filename="$(find omnicore_description)/Grippers/YumiServoGripper/yumi_servo_gripper.xacro" />
 
-  <xacro:single_yumi parent="world" hardware_interface="${hardware_interface}">
+  <xacro:single_yumi parent="world" hardware_interface="${hardware_interface}" child="${child}">
     <origin xyz="0 0 $(arg base_translation)" rpy="0 0 $(arg base_orientation)" />
   </xacro:single_yumi>
 

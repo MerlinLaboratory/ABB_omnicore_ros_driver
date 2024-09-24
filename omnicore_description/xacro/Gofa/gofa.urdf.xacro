@@ -32,7 +32,7 @@
 	</xacro:macro>
 
 	<!-- Internal link names -->
-	<xacro:arg name="base_link_name" default="base" />
+	<!--<xacro:arg name="base_link_name" default="base" /> UNUSED -->
 	<xacro:arg name="1st_link_name" default="L1" />
 	<xacro:arg name="2nd_link_name" default="L2" />
 	<xacro:arg name="3rd_link_name" default="L3" />
