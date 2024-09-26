@@ -2,23 +2,24 @@
 
 <launch>
 
-  <arg name="robot" default="gofa_5" doc="Which robot to launch." /> <!-- Possibilities: 'gofa_5' or 'gofa_10' or 'gofa_12' or 'yumi_single_arm'-->
-  <arg name="robot_family" default="gofa" doc="Which robot family to launch." /> <!-- Possibilities: 'gofa' or 'yumi_single_arm'-->
-  <arg name="simulation"  default="true" doc="Whether you want to launch the robot in Gazebo."/>
-  <arg name="controllers" default="VelocityControllers_JointTrajectoryController" doc="Controllers that are activated by default."/>
-  <arg name="stopped_controllers" default="VelocityControllers_JointGroupVelocityController" doc="Controllers that are initally loaded, but not started."/>
-  <arg name="load_robot_description" default="true"/> 
+  <!-- Options: 'gofa_5' or 'gofa_10' or 'gofa_12' or 'yumi_single_arm'-->
+  <arg name="robot" doc="Which robot to launch." /> 
 
-  <!-- Load the config for Gofa/Yumi Single Arm -->
-  <group if="$(eval arg('simulation') == false)">
-    <arg name="yamlFileRobot"  default="$(find omnicore_ros_control)/config/$(arg robot_family)_cfg.yaml" />
-    <rosparam command="load"   file="$(arg yamlFileRobot)" />
-  </group>
+  <!-- Options: 'gofa' or 'yumi_single_arm'-->
+  <arg name="robot_family" doc="Which robot family to launch." /> 
+  <arg name="simulation"  default="true" doc="Whether you want to launch the robot in Gazebo."/>
+
+  <arg name="controllers" default="VelocityControllers_JointTrajectoryController" doc="Controllers that are activated by default."/>
+
+  <arg name="stopped_controllers" default="VelocityControllers_JointGroupVelocityController" doc="Controllers that are initally loaded, but not started."/>
+  
+  <arg name="load_robot_description" default="true"/> 
   
   <!-- Load controllers params for Gofa/Yumi Single Arm -->
   <rosparam command="load" file="$(find omnicore_ros_control)/config/Controllers/joint_state_controller.yaml"/>
   <rosparam command="load" file="$(find omnicore_ros_control)/config/Controllers/$(arg robot_family)/VelocityControllers_JointGroupVelocityController.yaml" />
   <rosparam command="load" file="$(find omnicore_ros_control)/config/Controllers/$(arg robot_family)/VelocityControllers_JointTrajectoryController.yaml" />
+
   <!-- <group if="$(eval arg('robot') == 'yumi_single_arm')">
     <arg name="yaml_Gripper_Controller" default="$(find omnicore_ros_control)/config/Controllers/$(arg robot)/gripper_controller.yaml" />
     <rosparam command="load" file="$(arg yaml_Gripper_Controller)" />
@@ -26,29 +27,24 @@
 
   <!-- Load the controllers -->
   <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="$(arg controllers) joint_state_controller"/>
+
   <!-- Load other controllers, but do not start them -->
   <group if="$(eval arg('stopped_controllers') != '')">
     <node name="stopped_spawner" pkg="controller_manager" type="spawner" respawn="false" args="--stopped $(arg stopped_controllers)" output="screen"/>
   </group>
 
-  <!-- Load the URDF pkg only if launching real robot. Otherwise omnicore_gazebo pkg loads it -->
-  <group if="$(eval arg('simulation') == false)">
-    <group if="$(eval arg('load_robot_description') == true)">
-      <include file="$(find omnicore_description)/launch/display.launch">
-        <arg name="robot"                        value="$(arg robot)" />
-        <arg name="launch_rviz"                  value="false" />
-        <arg name="launch_joint_state_publisher" value="false"/>
-      </include>
-    </group>
-    <group if="$(eval arg('load_robot_description') == false)">
-      <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
-    </group>
-  </group>
+
+  <!-- only for real robot--> 
+  <group if="$(eval arg('simulation') == false)"> 
+    
+    <!-- Load the config for Gofa/Yumi Single Arm -->
+    <arg name="yamlFileRobot"  default="$(find omnicore_ros_control)/config/$(arg robot_family)_cfg.yaml" />
   
-  <!-- Load the Hardware Interface and Rws Interface if launching the real robot-->
-  <group if="$(eval arg('simulation') == false)">
+    <!-- Load the Hardware Interface and Rws Interface if launching the real robot-->  
+    <rosparam command="load"   file="$(arg yamlFileRobot)" />
     <node pkg="omnicore_ros_control" name="omnicore_hw_interface" type="omnicore_control_node" output="screen"/>
     <node pkg="omnicore_ros_control" name="omnicore_rws_interface" type="omnicore_rws_node" output="screen"/>
+  
   </group>
 
 </launch>

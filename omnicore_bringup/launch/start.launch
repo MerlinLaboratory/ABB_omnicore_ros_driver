@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+
+<!-- 
+
+!!! DO NOT LAUNCH THIS LAUNCHER DIRECTLY !!!
+
+___ YOU MUST LAUNCH CONCRETE LAUNCHERS LIKE ___
+
+___ start_robot_gazebo.launch (for gazebo simulation) ___
+
+___ start_robot_real.launch (for real robot) ___
+
+___ start_robot_demo.launch (for fake control with moveit and rviz) ___
+
+-->
+
+<launch>
+
+    <!-- Options: 'gofa_5' or 'gofa_10' or 'gofa_12' or 'yumi_single_arm'-->
+    <arg name="robot" /> 
+
+    <!-- Options: 'demo' or 'gazebo' or 'real'-->
+    <arg name="mode" /> 
+
+    <arg name="pipeline" default="ompl" /> 
+
+
+
+    <arg name="controllers" doc="Controllers that are activated by default."/>
+    <arg name="stopped_controllers" doc="Controllers that are initally loaded, but not started."/>
+  
+    <!-- DO NOT SET -->
+    <arg name="robot_family" default="gofa" unless="$(eval arg('robot') == 'yumi_single_arm')"/>
+    <arg name="robot_family" default="yumi_single_arm" if="$(eval arg('robot') == 'yumi_single_arm')"/>
+
+    <!-- Launching ros-control pkg -->
+    <group unless="$(eval arg('mode') == 'demo')">
+        <include file="$(find omnicore_ros_control)/launch/omnicore_control.launch">
+            <arg name="robot" value="$(arg robot)"/> 
+            <arg name="robot_family" value="$(arg robot_family)"/> 
+            <arg if="$(eval arg('mode') == 'gazebo')" name="simulation" value="true"/>
+            <arg if="$(eval arg('mode') == 'real')" name="simulation" value="false"/>
+            <arg name="controllers" value="$(arg controllers)"/>
+            <arg name="stopped_controllers" value="$(arg stopped_controllers)"/>
+        </include>
+    </group>
+
+    <!-- Launch MoveIt -->
+    <arg if="$(eval arg('robot') == 'gofa_5')" name="moveit_config_path" default="$(find gofa_5_moveit_config)/launch/move_group.launch" />
+    <arg if="$(eval arg('robot') == 'gofa_10')" name="moveit_config_path" default="$(find gofa_10_moveit_config)/launch/move_group.launch" />
+    <arg if="$(eval arg('robot') == 'gofa_12')" name="moveit_config_path" default="$(find gofa_12_moveit_config)/launch/move_group.launch" />
+    <arg if="$(eval arg('robot') == 'yumi_single_arm')" name="moveit_config_path" default="$(find yumi_single_arm_moveit_config)/launch/move_group.launch" />
+  
+    <include file="$(arg moveit_config_path)" pass_all_args="true">
+        <arg if="$(eval arg('mode') == 'demo')" name="moveit_controller_manager" value="fake" />
+        <arg unless="$(eval arg('mode') == 'demo')" name="moveit_controller_manager" value="simple" />
+        <arg name="pipeline" value="$(arg pipeline)"/>
+        <arg name="info" value="true"/>
+        <arg name="load_robot_description" value="false"/>
+    </include>
+
+    <!-- Given the published joint states, publish tf for the robot links -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" />
+
+    <!-- Run Rviz and load the default config to see the state of the move_group node -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find omnicore_bringup)/config/config.rviz"/>
+
+</launch>
