@@ -55,7 +55,7 @@ sudo apt install ros-${ROS_DISTRO}-moveit
 
 #### Install POCO
 
-Install essential dependencies, execute the following commands one by one:
+Install essential dependencies and git, execute the following commands one by one:
 
 ```bash
 sudo apt update
@@ -63,7 +63,41 @@ sudo apt upgrade
 sudo apt install build-essential gdb cmake git
 sudo apt-get install openssl libssl-dev
 sudo apt-get install libmysqlclient-dev
-sudo apt-get install -y libpoco-dev 
+```
+
+Get root access:
+```bash
+sudo -i
+```
+
+Navigate to /tmp/ directory (or any other directory to store temporary files).
+```bash
+cd /tmp/
+```
+
+Clone the Poco git repo:
+```bash
+git clone https://github.com/pocoproject/poco.git
+```
+
+Compile the libraries:
+```bash
+cd poco
+mkdir cmake-build
+cd cmake-build
+cmake ..
+cmake --build . --config Release
+```
+
+Install the libraries to include in C++ code:
+```bash
+sudo cmake --build . --target install
+```
+
+Copy or move all the poco file from /usr/local/lib/ to /usr/lib using the root privileges. Afterward you may remove the created /tmp directory:
+
+```bash
+sudo cp /usr/local/lib/*Poco* /usr/lib
 ```
 
 #### Install Boost C++
@@ -90,8 +124,8 @@ If there are no errors and you want to setup the real robot download [RobotStudi
 It is possible to launch both the gofa and yumi single arm in Gazebo with the following commands: 
 
 ```bash
-  roslaunch roslaunch omnicore_launcher simulated_robot.launch robot:=yumi_single_arm # To launch Yumi Single Arm
-  roslaunch roslaunch omnicore_launcher simulated_robot.launch robot:=gofa # To launch Gofa
+  roslaunch roslaunch omnicore_bringup simulated_robot.launch robot:=yumi_single_arm # To launch Yumi Single Arm
+  roslaunch roslaunch omnicore_bringup simulated_robot.launch robot:=gofa # To launch Gofa
 ```
 
 | Yumi Single Arm | Gofa |
@@ -190,7 +224,7 @@ Finally:
 By default, the repo launches the **Gofa** robot with a **velocity_controller/JointTrajectoryController**:
 ```bash
   source devel/setup.bash
-  roslaunch omnicore_launcher real_robot.launch
+  roslaunch omnicore_bringup real_robot.launch robot:=gofa # or yumi_single_arm
 ```
 The pkg has been tested with the following ros_control controllers:
 - velocity_controller/JointTrajectoryController
