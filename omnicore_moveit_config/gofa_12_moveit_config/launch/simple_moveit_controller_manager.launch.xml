@@ -6,6 +6,6 @@
   <!--<rosparam file="$(find gofa_moveit_config)/config/simple_moveit_controllers.yaml" /> -->
   
   <!--<rosparam file="$(find gofa_moveit_config)/config/ros_controllers.yaml" /> -->
-  <rosparam command="load" file="$(find gofa_moveit_config)/config/VelocityControllers_JointTrajectoryController.yaml" />
+  <rosparam command="load" file="$(find gofa_12_moveit_config)/config/VelocityControllers_JointTrajectoryController.yaml" />
   
 </launch>

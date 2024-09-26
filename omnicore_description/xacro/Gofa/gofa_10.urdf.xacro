@@ -17,14 +17,14 @@
 		<visual>
 			<origin xyz="0 0 0" rpy="0 0 0" />
 			<geometry>
-				<mesh filename="package://omnicore_description/meshes/Gofa10/visual/${v_p_c_name}.stl"  />
+				<mesh filename="package://omnicore_description/meshes/Gofa10/visual/${v_p_c_name}.stl" />
 			</geometry>
 			<material name="gofa_color" />
 		</visual>
 		<collision>
 			<origin xyz="0 0 0" rpy="0 0 0" />
 			<geometry>
-				<mesh filename="package://omnicore_description/meshes/Gofa10/collision/${v_p_c_name}.stl"  />
+				<mesh filename="package://omnicore_description/meshes/Gofa10/collision/${v_p_c_name}.stl" />
 			</geometry>
 		</collision>
 	</xacro:macro>
@@ -71,7 +71,7 @@
 			<xacro:visual_plus_collision v_p_c_name="$(arg 1st_link_name)" />
 		</link>
 		<joint name="J1" type="revolute">
-			<origin xyz="0 0 0.4" rpy="0 0 0"/>
+			<origin xyz="0 0.0 0.4" rpy="0 0 0"/>
 			<axis xyz="0 0 1"/>
 			<parent link="${child}" />
 			<child link="$(arg 1st_link_name)" />
@@ -92,7 +92,7 @@
 			<xacro:visual_plus_collision v_p_c_name="$(arg 2nd_link_name)" />
 		</link>
 		<joint name="J2" type="revolute">
-			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<origin xyz="0.15 0 0" rpy="0 0 0"/>
 			<axis xyz="0 1 0"/>
 			<parent link="$(arg 1st_link_name)" />
 			<child link="$(arg 2nd_link_name)" />
