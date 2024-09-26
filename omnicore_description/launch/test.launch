@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="gazebo_sim" default="true" doc="whether or not you want to use Gazebo or not" />
+  <arg   name="robot" default="gofa" /> <!-- 'gofa', 'yumi_single_arm' -->
+
+
+  <include file="$(find omnicore_description)/launch/upload.launch">
+    <arg name="gazebo_sim" value="$(arg gazebo_sim)" />
+    <arg name="robot" value="$(arg robot)" />
+  </include>
+  
+  <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui"/> 
+
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+    <param name="ignore_timestamp" value="true" />
+  </node>
+  
+  <node pkg="rviz" type="rviz" name="rviz" output="screen" args="-d $(find omnicore_description)/config/rviz.rviz"/>
+
+</launch>

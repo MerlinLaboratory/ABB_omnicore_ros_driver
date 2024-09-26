@@ -3,7 +3,7 @@
 
 
     <!-- Parameters -->
-    <arg name="name" default="gofa" />
+    <arg name="name" default="gofa_5" />
     <xacro:arg name="robot" default="$(arg name)" />
     <xacro:arg name="hardware_interface" default="VelocityJointInterface" />
     <xacro:arg name="gripper_interface" default="EffortJointInterface" />
@@ -19,12 +19,29 @@
     <!-- Robot -->
 
     <!-- Gofa -->
-    <xacro:if value="${robot == 'gofa'}">
-        <xacro:include filename="$(find omnicore_description)/xacro/Gofa/gofa.urdf.xacro" />
-        <xacro:gofa parent="world" hardware_interface="${hardware_interface}" child="gofa_base_link">
+    <xacro:if value="${robot == 'gofa_5'}">
+        <xacro:include filename="$(find omnicore_description)/xacro/Gofa/gofa_5.urdf.xacro" />
+        <xacro:gofa5 parent="world" hardware_interface="${hardware_interface}" child="gofa_base_link">
             <origin xyz="0 0 0" rpy="0 0 0" />
-        </xacro:gofa>
+        </xacro:gofa5>
     </xacro:if>
+
+    <!-- Gofa 10 kg -->
+    <xacro:if value="${robot == 'gofa_10'}">
+        <xacro:include filename="$(find omnicore_description)/xacro/Gofa/gofa_10.urdf.xacro" />
+        <xacro:gofa10 parent="world" hardware_interface="${hardware_interface}" child="gofa_base_link">
+            <origin xyz="0 0 0" rpy="0 0 0" />
+        </xacro:gofa10>
+    </xacro:if>
+
+    <!-- Gofa 12 kg -->
+    <xacro:if value="${robot == 'gofa_12'}">
+        <xacro:include filename="$(find omnicore_description)/xacro/Gofa/gofa_12.urdf.xacro" />
+        <xacro:gofa12 parent="world" hardware_interface="${hardware_interface}" child="gofa_base_link">
+            <origin xyz="0 0 0" rpy="0 0 0" />
+        </xacro:gofa12>
+    </xacro:if>
+
 
     <!-- Single Yumi -->
     <xacro:if value="${robot == 'yumi_single_arm'}">
@@ -38,7 +55,7 @@
         <!--Import
         the yumi servo gripper macro -->
         <xacro:include
-            filename="$(find omnicore_description)/Grippers/YumiServoGripper/yumi_servo_gripper.xacro" />
+            filename="$(find omnicore_description)/xacro/YumiServoGripper/yumi_servo_gripper.xacro" />
 
         <xacro:single_yumi parent="world" hardware_interface="${hardware_interface}" child="yumi_base_link">
             <origin xyz="0 0 0" rpy="0 0 0" />

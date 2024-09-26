@@ -2,7 +2,9 @@
 <robot xmlns:xacro="http://wiki.ros.org/xacro" name="robot">
 
   <!-- Parameters -->
-  <arg name="name" default="gofa" />
+  <xacro:arg name="robot" default="gofa" />
+  <xacro:property name="robot" value="$(arg robot)" />
+
   <xacro:arg name="hardware_interface" default="VelocityJointInterface" />
   <xacro:arg name="gripper_interface" default="" />
   <xacro:arg name="base_translation" default="0" />
@@ -19,12 +21,31 @@
   <xacro:include filename="$(find omnicore_description)/Util/materials.xacro" />
   <!-- Import utilities -->
   <xacro:include filename="$(find omnicore_description)/Util/utilities.xacro" />
-  <!--Import the gofa macro -->
-  <xacro:include filename="$(find omnicore_description)/xacro/Gofa/gofa.urdf.xacro" />
+  <!--Import the gofa macro 
+  <xacro:include filename="$(find omnicore_description)/xacro/Gofa/gofa.urdf.xacro" />-->
 
-  <xacro:gofa parent="world" hardware_interface="${hardware_interface}" child="${child}"> 
-    <origin xyz="0 0 $(arg base_translation)" rpy="0 0 $(arg base_orientation)" />
-  </xacro:gofa>
+  <xacro:if value="${robot == 'gofa_5'}">
+    <xacro:include filename="$(find omnicore_description)/xacro/Gofa/gofa_5.urdf.xacro" />
+      <xacro:gofa5 parent="world" hardware_interface="${hardware_interface}" child="${child}">
+          <origin xyz="0 0 $(arg base_translation)" rpy="0 0 $(arg base_orientation)" />
+      </xacro:gofa5>
+    </xacro:if>
+
+    <!-- Gofa 10 kg -->
+    <xacro:if value="${robot == 'gofa_10'}">
+      <xacro:include filename="$(find omnicore_description)/xacro/Gofa/gofa_10.urdf.xacro" />
+      <xacro:gofa10 parent="world" hardware_interface="${hardware_interface}" child="${child}">
+          <origin xyz="0 0 $(arg base_translation)" rpy="0 0 $(arg base_orientation)" />
+      </xacro:gofa10>
+    </xacro:if>
+
+    <!-- Gofa 12 kg -->
+    <xacro:if value="${robot == 'gofa_12'}">
+      <xacro:include filename="$(find omnicore_description)/xacro/Gofa/gofa_12.urdf.xacro" />
+      <xacro:gofa12 parent="world" hardware_interface="${hardware_interface}" child="${child}">
+          <origin xyz="0 0 $(arg base_translation)" rpy="0 0 $(arg base_orientation)" />
+      </xacro:gofa12>
+    </xacro:if>
 
   <!-- Loading Gazebo plugins -->
   <gazebo>

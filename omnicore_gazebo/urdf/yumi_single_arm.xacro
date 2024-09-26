@@ -24,7 +24,7 @@
   <!--Import the single yumi macro -->
   <xacro:include filename="$(find omnicore_description)/xacro/YumiSingleArm/single_yumi.xacro" />
   <!--Import the yumi servo gripper macro -->
-  <xacro:include filename="$(find omnicore_description)/Grippers/YumiServoGripper/yumi_servo_gripper.xacro" />
+  <xacro:include filename="$(find omnicore_description)/xacro/YumiServoGripper/yumi_servo_gripper.xacro" />
 
   <xacro:single_yumi parent="world" hardware_interface="${hardware_interface}" child="${child}">
     <origin xyz="0 0 $(arg base_translation)" rpy="0 0 $(arg base_orientation)" />

@@ -4,7 +4,10 @@
   <arg name="pipeline" default="ompl" doc="Planning pipeline to use with MoveIt"/>
 
   <!-- Gazebo options -->
-  <arg name="robot" default="gofa" doc="Which robot to load"/>
+  <arg name="robot" default="gofa_5" doc="Which robot to load"/>
+  <arg name="robot_family" default="gofa" doc="Which robot to load"/>
+
+
   <arg name="gazebo_gui" default="true" doc="Start Gazebo GUI"/>
   <arg name="paused" default="false" doc="Start Gazebo paused"/>
   <arg name="world_name" default="worlds/empty.world" doc="Gazebo world file"/>
@@ -16,8 +19,9 @@
   <arg name="controllers" default="VelocityControllers_JointTrajectoryController" doc="Controllers that are activated by default."/>
   <arg name="stopped_controllers" default="VelocityControllers_JointGroupVelocityController" doc="Controllers that are initally loaded, but not started."/>
 
-  <arg name="gripper_interface" default="" if="$(eval arg('robot') == 'gofa')"/>
-  <arg name="gripper_interface" default="hardware_interface/EffortJointInterface" if="$(eval arg('robot') == 'yumi_single_arm')"/>
+
+  <arg name="gripper_interface" default="" if="$(eval arg('robot_family') == 'gofa')"/>
+  <arg name="gripper_interface" default="hardware_interface/EffortJointInterface" if="$(eval arg('robot_family') == 'yumi_single_arm')"/>
 
   <!-- Launch Gazebo and spawn the robot -->
   <!-- Start Gazebo paused to allow the controllers to pickup the initial pose -->
@@ -27,11 +31,13 @@
   </include>
 
   <!-- Set the robot urdf on the parameter server -->
-  <param name="robot_description" command="xacro hardware_interface:=$(arg hardware_interface) gripper_interface:=$(arg gripper_interface) base_translation:=$(arg base_translation) base_orientation:=$(arg base_orientation) '$(find omnicore_gazebo)/urdf/$(arg robot).xacro'" />
+  <param name="robot_description" command="xacro robot:=$(arg robot) hardware_interface:=$(arg hardware_interface) gripper_interface:=$(arg gripper_interface) base_translation:=$(arg base_translation) base_orientation:=$(arg base_orientation) '$(find omnicore_gazebo)/urdf/gofa.xacro'" if="$(eval arg('robot_family') == 'gofa')" />
+  <param name="robot_description" command="xacro hardware_interface:=$(arg hardware_interface) gripper_interface:=$(arg gripper_interface) base_translation:=$(arg base_translation) base_orientation:=$(arg base_orientation) '$(find omnicore_gazebo)/urdf/gofa.xacro'" if="$(eval arg('robot_family') == 'yumi_single_arm')" />
 
   <!-- Set ros_control with robot description -->
   <include file="$(find omnicore_ros_control)/launch/omnicore_control.launch" pass_all_args="true">
     <arg name="robot"               value="$(arg robot)"/>
+    <arg name="robot_family"        value="$(arg robot_family)"/>
     <arg name="simulation"          value="true"/>
     <arg name="controllers"         value="$(arg controllers)"/>
     <arg name="stopped_controllers" value="$(arg stopped_controllers)"/>
@@ -46,7 +52,9 @@
   <!-- Given the published joint states, publish tf for the robot links -->
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" />
 
-  <arg name="moveit_config_path" default="$(find gofa_moveit_config)/launch/demo.launch" if="$(eval arg('robot') == 'gofa')"/>
+  <arg name="moveit_config_path" default="$(find gofa_5_moveit_config)/launch/demo.launch" if="$(eval arg('robot') == 'gofa_5')"/>
+  <arg name="moveit_config_path" default="$(find gofa_10_moveit_config)/launch/demo.launch" if="$(eval arg('robot') == 'gofa_10')"/>
+  <arg name="moveit_config_path" default="$(find gofa_12_moveit_config)/launch/demo.launch" if="$(eval arg('robot') == 'gofa_12')"/>
   <arg name="moveit_config_path" default="$(find yumi_single_arm_moveit_config)/launch/demo.launch" if="$(eval arg('robot') == 'yumi_single_arm')"/>
   
   <!-- Launch MoveIt -->

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="gazebo_sim" default="true" doc="whether or not you want to use Gazebo or not" />
+  <arg   name="robot" default="gofa" /> <!-- 'gofa', 'yumi_single_arm' -->
+
+
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find omnicore_description)/xacro/robot.urdf.xacro' name:=$(arg robot) gazebo_sim:=$(arg gazebo_sim)" />
+</launch>

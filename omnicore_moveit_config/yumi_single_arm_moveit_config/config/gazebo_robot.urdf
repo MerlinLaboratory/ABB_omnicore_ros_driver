@@ -50,14 +50,14 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0" />
             <geometry>
-                <mesh filename="package://omnicore_description/meshes/Yumi/single_arm_base.stl" />
+                <mesh filename="package://omnicore_description/meshes/Yumi/visual/single_arm_base.stl" />
             </geometry>
             <material name="Grey" />
         </visual>
         <!-- <collision>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://omnicore_description/meshes/Yumi/single_arm_base.stl" />
+          <mesh filename="package://omnicore_description/meshes/Yumi/collision/single_arm_base.stl" />
         </geometry>
         <material name="Grey" />
       </collision> -->
@@ -85,14 +85,14 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0" />
             <geometry>
-                <mesh filename="package://omnicore_description/meshes/Yumi/link_1.stl" />
+                <mesh filename="package://omnicore_description/meshes/Yumi/visual/link_1.stl" />
             </geometry>
             <material name="Grey" />
         </visual>
         <collision>
             <origin rpy="0 0 0" xyz="0 0 0" />
             <geometry>
-                <mesh filename="package://omnicore_description/meshes/Yumi/coarse/link_1.stl" />
+                <mesh filename="package://omnicore_description/meshes/Yumi/collision/link_1.stl" />
             </geometry>
             <material name="Grey" />
         </collision>
@@ -115,14 +115,14 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0" />
             <geometry>
-                <mesh filename="package://omnicore_description/meshes/Yumi/link_2.stl" />
+                <mesh filename="package://omnicore_description/meshes/Yumi/visual/link_2.stl" />
             </geometry>
             <material name="Grey" />
         </visual>
         <collision>
             <origin rpy="0 0 0" xyz="0 0 0" />
             <geometry>
-                <mesh filename="package://omnicore_description/meshes/Yumi/coarse/link_2.stl" />
+                <mesh filename="package://omnicore_description/meshes/Yumi/collision/link_2.stl" />
             </geometry>
             <material name="Grey" />
         </collision>
@@ -145,14 +145,14 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0" />
             <geometry>
-                <mesh filename="package://omnicore_description/meshes/Yumi/link_3.stl" />
+                <mesh filename="package://omnicore_description/meshes/Yumi/visual/link_3.stl" />
             </geometry>
             <material name="Grey" />
         </visual>
         <collision>
             <origin rpy="0 0 0" xyz="0 0 0" />
             <geometry>
-                <mesh filename="package://omnicore_description/meshes/Yumi/coarse/link_3.stl" />
+                <mesh filename="package://omnicore_description/meshes/Yumi/collision/link_3.stl" />
             </geometry>
             <material name="Grey" />
         </collision>
@@ -175,14 +175,14 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0" />
             <geometry>
-                <mesh filename="package://omnicore_description/meshes/Yumi/link_4.stl" />
+                <mesh filename="package://omnicore_description/meshes/Yumi/visual/link_4.stl" />
             </geometry>
             <material name="Grey" />
         </visual>
         <collision>
             <origin rpy="0 0 0" xyz="0 0 0" />
             <geometry>
-                <mesh filename="package://omnicore_description/meshes/Yumi/coarse/link_4.stl" />
+                <mesh filename="package://omnicore_description/meshes/Yumi/collision/link_4.stl" />
             </geometry>
             <material name="Grey" />
         </collision>
@@ -205,14 +205,14 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0" />
             <geometry>
-                <mesh filename="package://omnicore_description/meshes/Yumi/link_5.stl" />
+                <mesh filename="package://omnicore_description/meshes/Yumi/visual/link_5.stl" />
             </geometry>
             <material name="Grey" />
         </visual>
         <collision>
             <origin rpy="0 0 0" xyz="0 0 0" />
             <geometry>
-                <mesh filename="package://omnicore_description/meshes/Yumi/coarse/link_5.stl" />
+                <mesh filename="package://omnicore_description/meshes/Yumi/collision/link_5.stl" />
             </geometry>
             <material name="Grey" />
         </collision>
@@ -235,14 +235,14 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0" />
             <geometry>
-                <mesh filename="package://omnicore_description/meshes/Yumi/link_6.stl" />
+                <mesh filename="package://omnicore_description/meshes/Yumi/visual/link_6.stl" />
             </geometry>
             <material name="Grey" />
         </visual>
         <collision>
             <origin rpy="0 0 0" xyz="0 0 0" />
             <geometry>
-                <mesh filename="package://omnicore_description/meshes/Yumi/coarse/link_6.stl" />
+                <mesh filename="package://omnicore_description/meshes/Yumi/collision/link_6.stl" />
             </geometry>
             <material name="Grey" />
         </collision>
@@ -265,14 +265,14 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0" />
             <geometry>
-                <mesh filename="package://omnicore_description/meshes/Yumi/link_7.stl" />
+                <mesh filename="package://omnicore_description/meshes/Yumi/visual/link_7.stl" />
             </geometry>
             <material name="Grey" />
         </visual>
         <collision>
             <origin rpy="0 0 0" xyz="0 0 0" />
             <geometry>
-                <mesh filename="package://omnicore_description/meshes/Yumi/coarse/link_7.stl" />
+                <mesh filename="package://omnicore_description/meshes/Yumi/collision/link_7.stl" />
             </geometry>
             <material name="Grey" />
         </collision>
@@ -363,13 +363,13 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0" />
             <geometry>
-                <mesh filename="package://omnicore_description/meshes/Yumi/gripper/base.stl" />
+                <mesh filename="package://omnicore_description/meshes/YumiGripper/visual/base.stl" />
             </geometry>
         </visual>
         <collision>
             <origin rpy="0 0 0" xyz="0 0 0" />
             <geometry>
-                <mesh filename="package://omnicore_description/meshes/Yumi/gripper/coarse/base.stl" />
+                <mesh filename="package://omnicore_description/meshes/YumiGripper/collision/base.stl" />
             </geometry>
         </collision>
     </link>
@@ -397,14 +397,14 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0" />
             <geometry>
-                <mesh filename="package://omnicore_description/meshes/Yumi/gripper/finger.stl" />
+                <mesh filename="package://omnicore_description/meshes/YumiGripper/visual/finger.stl" />
             </geometry>
             <material name="Blue" />
         </visual>
         <collision>
             <origin rpy="0 0 0" xyz="0 0 0" />
             <geometry>
-                <mesh filename="package://omnicore_description/meshes/Yumi/gripper/coarse/finger.stl" />
+                <mesh filename="package://omnicore_description/meshes/YumiGripper/collision//finger.stl" />
             </geometry>
             <material name="Blue" />
         </collision>
@@ -427,14 +427,14 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0" />
             <geometry>
-                <mesh filename="package://omnicore_description/meshes/Yumi/gripper/finger.stl" />
+                <mesh filename="package://omnicore_description/meshes/YumiGripper/visual/finger.stl" />
             </geometry>
             <material name="Blue" />
         </visual>
         <collision>
             <origin rpy="0 0 0" xyz="0 0 0" />
             <geometry>
-                <mesh filename="package://omnicore_description/meshes/Yumi/gripper/coarse/finger.stl" />
+                <mesh filename="package://omnicore_description/meshes/YumiGripper/collision/collision/finger.stl" />
             </geometry>
             <material name="Blue" />
         </collision>

@@ -1,6 +1,8 @@
+<?xml version="1.0"?>
+
 <launch>
 
-  <arg   name="robot"                        default="gofa" /> <!-- 'gofa', 'yumi_single_arm' -->
+  <arg   name="robot"                        default="gofa_5" /> <!-- 'gofa', 'yumi_single_arm' -->
   <arg   name="launch_joint_state_publisher" default="true"/> <!-- 'true' or 'false' -->
   <arg   name="launch_rviz"                  default="true"/>  <!-- 'true' or 'false' -->
   <param name="robot_description" command="$(find xacro)/xacro '$(find omnicore_description)/xacro/robot.urdf.xacro' name:=$(arg robot) "/>
