@@ -6,7 +6,6 @@
     <arg name="robot" default="gofa_5" doc="Which robot to load"/>
     <arg name="pipeline" default="ompl" /> 
 
-
     <param name="robot_description" command="$(find xacro)/xacro '$(find omnicore_description)/xacro/robot.urdf.xacro' name:=$(arg robot) "/>
 
     <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" >

@@ -2,16 +2,15 @@
 
 <launch>
 
-    <!-- Options: 'gofa_5' or 'gofa_10' or 'gofa_12' or 'yumi_single_arm'-->
-    <arg name="robot" default="gofa_5" doc="Which robot to load"/>
     <arg name="pipeline" default="ompl" /> 
-
+    <arg name="robot" default="gofa_5" doc="Which robot to load"/>
 
     <!-- Controllers -->
     <arg name="controllers" default="VelocityControllers_JointTrajectoryController" doc="Controllers that are activated by default."/>
     <arg name="stopped_controllers" default="VelocityControllers_JointGroupVelocityController" doc="Controllers that are initally loaded, but not started."/>
 
     <param name="robot_description" command="$(find xacro)/xacro '$(find omnicore_description)/xacro/robot.urdf.xacro' name:=$(arg robot) "/>
+
 
     <!-- Launching ROS robot -->
     <include file="$(find omnicore_bringup)/launch/start.launch">

@@ -28,10 +28,6 @@
     <!-- Set the robot urdf on the parameter server -->
     <param name="robot_description" command="$(find xacro)/xacro '$(find omnicore_description)/xacro/robot.urdf.xacro' name:=$(arg robot) "/>
 
-    <param unless="$(eval arg('robot') == 'yumi_single_arm')" name="robot_description" command="xacro robot:=$(arg robot) hardware_interface:=$(arg hardware_interface)  '$(find omnicore_gazebo)/urdf/gofa.xacro'"  />
-
-    <param if="$(eval arg('robot') == 'yumi_single_arm')" name="robot_description" command="xacro hardware_interface:=$(arg hardware_interface) '$(find omnicore_gazebo)/urdf/yumi_single_arm.xacro'"  />
-
     <!-- Launching ROS robot -->
     <include file="$(find omnicore_bringup)/launch/start.launch">
         <arg name="robot" value="$(arg robot)"/>
