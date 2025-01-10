@@ -1,8 +1,8 @@
 # Wrapper ros_control for ABB Omnicore Controller
-These packages are intended to ease the interaction between ABB robots supporting the new Omnicore controller and ROS-based systems, by providing ready-to-run ROS nodes. In particular, we developed the robots' control with [ros_control](https://wiki.ros.org/ros_control) integrating it with [MoveIt](https://moveit.picknik.ai/main/index.html).
+These packages are intended to ease the interaction between ABB robots supporting the new Omnicore controller and ROS1-based systems, by providing ready-to-run ROS nodes. In particular, we developed the robots' control with [ros_control](https://wiki.ros.org/ros_control) integrating it with [MoveIt](https://moveit.picknik.ai/main/index.html).
 The supported [Omnicore controller](https://new.abb.com/products/robotics/controllers/omnicore) based robots are: 
-- CRB 15000-5 - Gofa
-- IRB 14050 - Yumi Single Arm.
+- CRB 15000-5/10/12 (Gofa 5kg, 10kg, 12kg)
+- IRB 14050 (Yumi Single Arm)
 
 ## Hardware Dependencies
 
@@ -121,11 +121,14 @@ If there are no errors and you want to setup the real robot download [RobotStudi
 
 ## Simulation
 
-It is possible to launch both the gofa and yumi single arm in Gazebo with the following commands: 
-
+For simulation with fake moveit controllers and Rviz:
 ```bash
-  roslaunch roslaunch omnicore_bringup simulated_robot.launch robot:=yumi_single_arm # To launch Yumi Single Arm
-  roslaunch roslaunch omnicore_bringup simulated_robot.launch robot:=gofa # To launch Gofa
+  roslaunch roslaunch omnicore_bringup start_robot_demo.launch robot:=gofa_5 # options are [gofa_5, gofa_10, gofa_12, yumi_single_arm]
+```
+
+For Gazebo simulation:
+```bash 
+  roslaunch roslaunch omnicore_bringup start_robot_gazebo.launch robot:=gofa_5  # options are [gofa_5, gofa_10, gofa_12, yumi_single_arm]
 ```
 
 | Yumi Single Arm | Gofa |
