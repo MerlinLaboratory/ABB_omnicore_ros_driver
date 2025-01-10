@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+
+<launch>
+
+    <arg name="robot" default="gofa_5" doc="Which robot to load"/>
+    <arg name="pipeline" default="ompl" /> 
+    
+    <!-- Controllers -->
+    <arg name="hardware_interface" default="hardware_interface/VelocityJointInterface"/>
+    <arg name="controllers" default="VelocityControllers_JointTrajectoryController" doc="Controllers that are activated by default."/>
+    <arg name="stopped_controllers" default="VelocityControllers_JointGroupVelocityController" doc="Controllers that are initally loaded, but not started."/>
+
+    <!-- Gazebo options -->
+    <arg name="gazebo_gui" default="true" doc="Start Gazebo GUI"/>
+    <arg name="world_name" default="worlds/empty.world" doc="Gazebo world file"/>
+    <arg name="world_pose" default="-x 0 -y 0 -z 0 -R 0 -P 0 -Y 0" doc="Pose to spawn the robot at"/>
+    <arg name="initial_joint_positions" default=" -J J1 0 -J J2 0 -J J3 0 -J J4 0 -J J5 0 -J J6 0" doc="Initial joint configuration of the robot"/>
+
+    <!-- Launching Gazebo -->
+    <include file="$(find omnicore_gazebo)/launch/gazebo.launch">
+        <arg name="robot" value="$(arg robot)"/>
+        <arg name="gazebo_gui" value="$(arg gazebo_gui)"/>
+        <arg name="world_name" value="$(arg world_name)"/>
+        <arg name="world_pose" value="$(arg world_pose)"/>
+        <arg name="initial_joint_positions" value="$(arg initial_joint_positions)"/>
+    </include>
+
+    <!-- Set the robot urdf on the parameter server -->
+    <param name="robot_description" command="$(find xacro)/xacro '$(find omnicore_description)/xacro/robot.urdf.xacro' name:=$(arg robot) "/>
+
+    <!-- Launching ROS robot -->
+    <include file="$(find omnicore_bringup)/launch/start.launch">
+        <arg name="robot" value="$(arg robot)"/>
+        <arg name="mode" value="gazebo"/>
+        <arg name="pipeline" value="$(arg pipeline)"/>
+        <arg name="controllers" value="$(arg controllers)"/>
+        <arg name="stopped_controllers" value="$(arg stopped_controllers)"/> 
+    </include>
+
+</launch>

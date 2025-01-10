@@ -1,0 +1,13 @@
+controller_list:
+  - name: fake_gofa_arm_controller
+    type: $(arg fake_execution_type)
+    joints:
+      - J1
+      - J2
+      - J3
+      - J4
+      - J5
+      - J6
+initial:  # Define initial robot poses per group
+  - group: gofa_arm
+    pose: home

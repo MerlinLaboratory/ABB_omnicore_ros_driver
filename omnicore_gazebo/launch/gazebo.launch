@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<launch>
+
+  <arg name="robot" default="gofa_5" doc="Which robot to load"/>
+
+  <!-- Gazebo options -->
+  <arg name="gazebo_gui" default="true" doc="Start Gazebo GUI"/>
+  <arg name="paused" default="false" doc="Start Gazebo paused"/>
+  <arg name="world_name" default="worlds/empty.world" doc="Gazebo world file"/>
+  <arg name="world_pose" default="-x 0 -y 0 -z 0 -R 0 -P 0 -Y 0" doc="Pose to spawn the robot at"/>
+  <arg name="initial_joint_positions" default=" -J J1 0 -J J2 0 -J J3 0 -J J4 0 -J J5 0 -J J6 0" doc="Initial joint configuration of the robot"/>
+
+  <!-- DO NOT SET -->
+  <arg name="robot_family" default="gofa" unless="$(eval arg('robot') == 'yumi_single_arm')"/>
+  <arg name="robot_family" default="yumi_single_arm" if="$(eval arg('robot') == 'yumi_single_arm')"/>
+
+  <!-- Launch Gazebo and spawn the robot -->
+  <!-- Start Gazebo paused to allow the controllers to pickup the initial pose -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch" pass_all_args="true">
+    <arg name="paused" value="true"/>
+    <arg name="world_name" value="$(arg world_name)"/>
+  </include>
+
+  <!-- Unpause the simulation after loading the robot model -->
+  <arg name="unpause" value="$(eval '' if arg('paused') else '-unpause')" />
+
+  <!-- Spawn the robot in Gazebo -->
+  <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model robot $(arg unpause) $(arg world_pose) $(arg initial_joint_positions)" respawn="false" output="screen" />
+
+</launch>

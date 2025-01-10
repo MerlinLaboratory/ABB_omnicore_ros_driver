@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: omnicore_description
+    relative_path: xacro/robot.urdf.xacro
+    xacro_args: robot:=gofa_10
+  SRDF:
+    relative_path: config/robot.srdf
+  CONFIG:
+    author_name: marco faroni
+    author_email: marco.faroni@polimi.it
+    generated_timestamp: 1727372137

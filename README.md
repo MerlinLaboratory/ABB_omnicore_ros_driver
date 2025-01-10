@@ -22,12 +22,12 @@ The principal packages are briefly described in the following table:
 | [abb_libegm](abb_libegm) | (A modified version of https://github.com/ros-industrial/abb_libegm) Provides a ROS node that exposes hardware interface, for *direct motion control* of ABB robots (via the *Externally Guided Motion* (`EGM`) interface). |
 | [abb_librws](abb_librws) | (A modified version of https://github.com/ros-industrial/abb_librws) Provides a ROS node that communicate with the controller using Robot Web Services 2.0  |
 | [Doc](Doc) | Provides some documentation about how the RAPID StateMachine running inside the Omnicore Controller  |
-| [gazebo_omnicore](gazebo_omnicore) | Provides the possibility to simulate the robots in Gazebo  |
-| [moveit_config](moveit) | Provides the Moveit configurations for the supported robots. |
+| [omnicore_gazebo](gazebo_omnicore) | Provides the possibility to simulate the robots in Gazebo  |
+| [omnicore_moveit_config](moveit) | Provides the Moveit configurations for the supported robots. |
 | [omnicore_interface](omnicore_interface) | Provides all messages and services definition this pkg uses. |
-| [omnicore_launcher](omnicore_launcher) | Provides all the .launch files to correctly launch the robots in real or simulation. |
-| [robots_description](gofa_description) | Provides ROS nodes for kinematic calculation using the URDF model of the robot (For now only Gofa robot is available). |
-| [ros_control_omnicore](ros_control_omnicore) | Provides hardware interface for the robots supporting ABB Omnicore controller. |
+| [omnicore_bringup](omnicore_launcher) | Provides all the .launch files to correctly launch the robots in real or simulation. |
+| [omnicore_description](gofa_description) | Provides ROS nodes for kinematic calculation using the URDF model of the robot (For now only Gofa robot is available). |
+| [omnicore_ros_control](ros_control_omnicore) | Provides hardware interface for the robots supporting ABB Omnicore controller. |
 
 ## Build Instructions
 
@@ -124,8 +124,8 @@ If there are no errors and you want to setup the real robot download [RobotStudi
 It is possible to launch both the gofa and yumi single arm in Gazebo with the following commands: 
 
 ```bash
-  roslaunch roslaunch omnicore_launcher simulated_robot.launch robot:=yumi_single_arm # To launch Yumi Single Arm
-  roslaunch roslaunch omnicore_launcher simulated_robot.launch robot:=gofa # To launch Gofa
+  roslaunch roslaunch omnicore_bringup simulated_robot.launch robot:=yumi_single_arm # To launch Yumi Single Arm
+  roslaunch roslaunch omnicore_bringup simulated_robot.launch robot:=gofa # To launch Gofa
 ```
 
 | Yumi Single Arm | Gofa |
@@ -224,7 +224,7 @@ Finally:
 By default, the repo launches the **Gofa** robot with a **velocity_controller/JointTrajectoryController**:
 ```bash
   source devel/setup.bash
-  roslaunch omnicore_launcher real_robot.launch
+  roslaunch omnicore_bringup real_robot.launch robot:=gofa # or yumi_single_arm
 ```
 The pkg has been tested with the following ros_control controllers:
 - velocity_controller/JointTrajectoryController

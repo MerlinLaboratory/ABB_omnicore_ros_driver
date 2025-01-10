@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro" name="robot">
+
+  <!-- Parameters -->
+  <xacro:arg name="robot" default="gofa" />
+  <xacro:property name="robot" value="$(arg robot)" />
+
+  <xacro:arg name="hardware_interface" default="VelocityJointInterface" />
+  <xacro:arg name="gripper_interface" default="" />
+  <xacro:arg name="base_translation" default="0" />
+  <xacro:arg name="base_orientation" default="0" />
+  <xacro:arg name="child" default="gofa_base_link" />
+
+  <!-- <xacro:property name="robot" value="$(arg robot)" /> -->
+  <xacro:property name="hardware_interface" value="$(arg hardware_interface)" />
+  <xacro:property name="child" value="$(arg child)" />
+
+  <!-- World fixed joint -->
+  <link name="world" />
+  <!-- Import Rviz colors -->
+  <xacro:include filename="$(find omnicore_description)/Util/materials.xacro" />
+  <!-- Import utilities -->
+  <xacro:include filename="$(find omnicore_description)/Util/utilities.xacro" />
+  <!--Import the gofa macro 
+  <xacro:include filename="$(find omnicore_description)/xacro/Gofa/gofa.urdf.xacro" />-->
+
+  <xacro:if value="${robot == 'gofa_5'}">
+    <xacro:include filename="$(find omnicore_description)/xacro/Gofa/gofa_5.urdf.xacro" />
+      <xacro:gofa5 parent="world" hardware_interface="${hardware_interface}" child="${child}">
+          <origin xyz="0 0 $(arg base_translation)" rpy="0 0 $(arg base_orientation)" />
+      </xacro:gofa5>
+    </xacro:if>
+
+    <!-- Gofa 10 kg -->
+    <xacro:if value="${robot == 'gofa_10'}">
+      <xacro:include filename="$(find omnicore_description)/xacro/Gofa/gofa_10.urdf.xacro" />
+      <xacro:gofa10 parent="world" hardware_interface="${hardware_interface}" child="${child}">
+          <origin xyz="0 0 $(arg base_translation)" rpy="0 0 $(arg base_orientation)" />
+      </xacro:gofa10>
+    </xacro:if>
+
+    <!-- Gofa 12 kg -->
+    <xacro:if value="${robot == 'gofa_12'}">
+      <xacro:include filename="$(find omnicore_description)/xacro/Gofa/gofa_12.urdf.xacro" />
+      <xacro:gofa12 parent="world" hardware_interface="${hardware_interface}" child="${child}">
+          <origin xyz="0 0 $(arg base_translation)" rpy="0 0 $(arg base_orientation)" />
+      </xacro:gofa12>
+    </xacro:if>
+
+  <!-- Loading Gazebo plugins -->
+  <gazebo>
+    <plugin name="ros_control" filename="libgazebo_ros_control.so">
+      <!--robotNamespace>/</robotNamespace-->
+      <!--robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType-->
+    </plugin>
+  </gazebo>
+
+  <gazebo reference="L1">
+    <gravity>0</gravity>
+  </gazebo>
+
+  <gazebo reference="L2">
+    <gravity>0</gravity>
+  </gazebo>
+
+  <gazebo reference="L3">
+    <gravity>0</gravity>
+  </gazebo>
+
+  <gazebo reference="L4">
+    <gravity>0</gravity>
+  </gazebo>
+
+  <gazebo reference="L5">
+    <gravity>0</gravity>
+  </gazebo>
+
+  <gazebo reference="L6">
+    <gravity>0</gravity>
+  </gazebo>
+
+</robot>
