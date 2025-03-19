@@ -16,6 +16,14 @@
     <arg name="world_pose" default="-x 0 -y 0 -z 0 -R 0 -P 0 -Y 0" doc="Pose to spawn the robot at"/>
     <arg name="initial_joint_positions" default=" -J J1 0 -J J2 0 -J J3 0 -J J4 0 -J J5 0 -J J6 0" doc="Initial joint configuration of the robot"/>
 
+        <!-- DO NOT SET -->
+    <arg name="robot_family" default="gofa" unless="$(eval arg('robot') == 'yumi_single_arm')"/>
+    <arg name="robot_family" default="yumi_single_arm" if="$(eval arg('robot') == 'yumi_single_arm')"/>
+
+    <arg name="gripper_interface" default="" if="$(eval arg('robot_family') == 'gofa')"/>
+    <arg name="gripper_interface" default="hardware_interface/EffortJointInterface" if="$(eval arg('robot_family') == 'yumi_single_arm')"/>
+
+
     <!-- Launching Gazebo -->
     <include file="$(find omnicore_gazebo)/launch/gazebo.launch">
         <arg name="robot" value="$(arg robot)"/>
@@ -26,7 +34,9 @@
     </include>
 
     <!-- Set the robot urdf on the parameter server -->
-    <param name="robot_description" command="$(find xacro)/xacro '$(find omnicore_description)/xacro/robot.urdf.xacro' name:=$(arg robot) "/>
+    <param if="$(eval arg('robot_family') == 'gofa')" name="robot_description" command="$(find xacro)/xacro '$(find omnicore_gazebo)/urdf/gofa.xacro' name:=$(arg robot) hardware_interface:=$(arg hardware_interface) gripper_interface:=$(arg gripper_interface)" />
+    <param if="$(eval arg('robot_family') == 'yumi_single_arm')" name="robot_description" command="xacro hardware_interface:=$(arg hardware_interface) gripper_interface:=$(arg gripper_interface) '$(find omnicore_gazebo)/urdf/yumi_single_arm.xacro' name:=$(arg robot)" /> -->
+
 
     <!-- Launching ROS robot -->
     <include file="$(find omnicore_bringup)/launch/start.launch">

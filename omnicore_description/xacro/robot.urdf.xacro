@@ -5,8 +5,8 @@
     <arg name="name" default="gofa_5" />
     
     <xacro:arg name="robot" default="$(arg name)" />
-    <xacro:arg name="hardware_interface" default="VelocityJointInterface" />
-    <xacro:arg name="gripper_interface" default="EffortJointInterface" />
+    <xacro:arg name="hardware_interface" default="hardware_interface/VelocityJointInterface" />
+    <xacro:arg name="gripper_interface" default="hardware_interface/EffortJointInterface" />
     <!--<xacro:arg name="yumi_setup" default="default" /> UNUSED -->
 
     <xacro:property name="robot" value="$(arg robot)" />
