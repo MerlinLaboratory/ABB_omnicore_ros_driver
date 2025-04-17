@@ -3,6 +3,7 @@
 ###############################################
 VelocityControllers_JointTrajectoryController:
   type: "velocity_controllers/JointTrajectoryController"
+  state_publish_rate: 100
   joints:
     - J1
     - J2
@@ -11,35 +12,56 @@ VelocityControllers_JointTrajectoryController:
     - J5
     - J6
 
+# Uncomment for single-step
+  velocity_ff:
+    J1: 0.55
+    J2: 0.55
+    J3: 0.55
+    J4: 0.55
+    J5: 0.55
+    J6: 0.55
+
+
   constraints:
-    goal_time: 5.0
+    goal_time: 5
     #stopped_position_tolerance: 0.4 # Defaults to 0.01
     J1:
-      trajectory: 0.05
+      trajectory: 0.5
       goal:       0.01
     J2:
-      trajectory: 0.05
+      trajectory: 0.5
       goal:       0.01
     J3:
-      trajectory: 0.05
+      trajectory: 0.5
       goal:       0.01
     J4:
-      trajectory: 0.05
+      trajectory: 0.5
       goal:       0.01
     J5:
-      trajectory: 0.05
+      trajectory: 0.5
       goal:       0.01
     J6:
-      trajectory: 0.05
+      trajectory: 0.5
       goal:       0.01
 
   gains: # Required because we're controlling a velocity interface
-    J1: {p: 5,  d: 0, i: 0, i_clamp: 0}
-    J2: {p: 5,  d: 0, i: 0, i_clamp: 0}
-    J3: {p: 5,  d: 0, i: 0, i_clamp: 0}
-    J4: {p: 5,  d: 0, i: 0, i_clamp: 0}
-    J5: {p: 5,  d: 0, i: 0, i_clamp: 0}
-    J6: {p: 5,  d: 0, i: 0, i_clamp: 0}
+    # Gains single step
+    J1: {p: 4.5,  d: 0, i: 0, i_clamp: 0}
+    J2: {p: 4.5,  d: 0, i: 0, i_clamp: 0}
+    J3: {p: 4.5,  d: 0, i: 0, i_clamp: 0}
+    J4: {p: 4.5,  d: 0, i: 0, i_clamp: 0}
+    J5: {p: 4.5,  d: 0, i: 0, i_clamp: 0}
+    J6: {p: 4.5,  d: 0, i: 0, i_clamp: 0}
+
+    # Gains multiple-step, make sure to comment vel. FF
+    # J1: {p: 4.5,  d: 0, i: 0, i_clamp: 0}
+    # J2: {p: 4.5,  d: 0, i: 0, i_clamp: 0}
+    # J3: {p: 5.0,  d: 0, i: 0, i_clamp: 0}
+    # J4: {p: 5.0,  d: 0, i: 0, i_clamp: 0}
+    # J5: {p: 5.0,  d: 0, i: 0, i_clamp: 0}
+    # J6: {p: 5.0,  d: 0, i: 0, i_clamp: 0}
+
+  
 
 robot:
   pos_corr_gain: 0 # parameter in RAPID that needs to be set to zero to accept velocity commands alone

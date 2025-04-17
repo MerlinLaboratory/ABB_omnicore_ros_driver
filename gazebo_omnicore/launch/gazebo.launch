@@ -44,7 +44,9 @@
   <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model robot $(arg unpause) $(arg world_pose) $(arg initial_joint_positions)" respawn="false" output="screen" />
 
   <!-- Given the published joint states, publish tf for the robot links -->
-  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" />
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen">
+    <param name = "publish_frequency" value = "250" type = "double"/>
+  </node>
 
   <arg name="moveit_config_path" default="$(find gofa_moveit_config)/launch/demo.launch" if="$(eval arg('robot') == 'gofa')"/>
   <arg name="moveit_config_path" default="$(find yumi_single_arm_moveit_config)/launch/demo.launch" if="$(eval arg('robot') == 'yumi_single_arm')"/>
