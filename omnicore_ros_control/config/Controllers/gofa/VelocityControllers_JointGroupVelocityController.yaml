@@ -12,12 +12,12 @@ VelocityControllers_JointGroupVelocityController:
     - J6
 
   gains:
-    J1: {p: 10, i: 0, d: 0}
-    J2: {p: 10, i: 0, d: 0}
-    J3: {p: 10, i: 0, d: 0}
-    J4: {p: 10, i: 0, d: 0}
-    J5: {p: 10, i: 0, d: 0}
-    J6: {p: 10, i: 0, d: 0}
+    J1: {p: 0, i: 0, d: 0}
+    J2: {p: 0, i: 0, d: 0}
+    J3: {p: 0, i: 0, d: 0}
+    J4: {p: 0, i: 0, d: 0}
+    J5: {p: 0, i: 0, d: 0}
+    J6: {p: 0, i: 0, d: 0}
 
 robot:
   pos_corr_gain: 0 # parameter in RAPID that needs to be set to zero to accept velocity commands alone
