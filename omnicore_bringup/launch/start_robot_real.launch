@@ -18,7 +18,7 @@
         <arg name="mode" value="real"/>
         <arg name="pipeline" value="$(arg pipeline)"/>
         <arg name="controllers" value="$(arg controllers)"/>
-        <arg name="stopped_controllers" value="$(arg stopped_controllers)"/> 
+        <arg name="stopped_controllers" value="$(arg stopped_controllers)"/>
     </include>
 
 </launch>
